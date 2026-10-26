@@ -1,0 +1,62 @@
+
+# Temario {.unnumbered}
+
+| Tema | Subtema |
+|------------------------------|------------------------------------------|
+| **1. Introducción a R y organización de proyectos bioinformáticos** | 1.1 Instalación y configuración de R, RStudio y paquetes. |
+| | 1.2 Planificación y organización de proyectos bioinformáticos. |
+| | 1.3 Proyectos de RStudio, scripts y rutas relativas. |
+| | 1.4 Objetos, tipos de datos y estructuras en R. |
+| | 1.5 Operaciones, indexación y funciones. |
+| | 1.6 Estructuras de control e iteración. |
+| | 1.7 Buenas prácticas de programación y reproducibilidad. |
+| **2. Importación, exploración y validación de datos biológicos** | 2.1 Tipos y formatos de datos biológicos. |
+| | 2.2 Importación de archivos CSV, TSV y archivos comprimidos. |
+| | 2.3 Data frames, tibbles y tipos de columnas. |
+| | 2.4 Exploración de la estructura y contenido de los datos. |
+| | 2.5 Identificación de valores faltantes y registros duplicados. |
+| | 2.6 Validación de identificadores y coordenadas genómicas. |
+| | 2.7 Control de calidad y documentación de inconsistencias. |
+| **3. Manipulación y transformación de datos con dplyr y tidyr** | 3.1 Introducción al tidyverse y operadores de tubería. |
+| | 3.2 Selección, filtrado y ordenamiento de datos. |
+| | 3.3 Creación y modificación de variables. |
+| | 3.4 Eliminación de duplicados y manejo de valores faltantes. |
+| | 3.5 Agrupación y resumen de datos. |
+| | 3.6 Transformación entre formatos ancho y largo. |
+| | 3.7 Procesamiento de tablas de anotaciones génicas. |
+| **4. Integración de datos y automatización de análisis** | 4.1 Identificadores y claves en tablas biológicas. |
+| | 4.2 Integración de tablas mediante joins. |
+| | 4.3 Cardinalidad y validación de uniones. |
+| | 4.4 Identificación de registros sin correspondencia. |
+| | 4.5 Introducción a la familia apply de R. |
+| | 4.6 Iteración y automatización con purrr. |
+| | 4.7 Procesamiento de múltiples archivos biológicos. |
+| **5. Visualización científica de datos biológicos con ggplot2** | 5.1 Principios de visualización científica. |
+| | 5.2 Gramática de gráficos y mapeos estéticos. |
+| | 5.3 Gráficos de barras, puntos y distribuciones. |
+| | 5.4 Visualización de datos mediante facetas. |
+| | 5.5 Escalas, colores, etiquetas y temas. |
+| | 5.6 Diseño de figuras científicas claras y accesibles. |
+| | 5.7 Exportación de figuras y formatos gráficos. |
+| **6. Exploración visual e interpretación de datos biológicos** | 6.1 Exploración descriptiva de datos biológicos. |
+| | 6.2 Construcción e interpretación de mapas de calor. |
+| | 6.3 Ordenamiento y transformación de datos para visualización. |
+| | 6.4 Exploración de patrones mediante gráficos y facetas. |
+| | 6.5 Elaboración de figuras compuestas. |
+| | 6.6 Interpretación y comunicación de resultados biológicos. |
+| | 6.7 Limitaciones y errores comunes en la interpretación visual. |
+| **7. Documentación y reportes reproducibles con Quarto** | 7.1 Introducción a Quarto y R Markdown. |
+| | 7.2 Estructura de documentos Quarto y metadatos YAML. |
+| | 7.3 Escritura con Markdown y bloques de código ejecutable. |
+| | 7.4 Integración de tablas, figuras y resultados. |
+| | 7.5 Referencias cruzadas y leyendas. |
+| | 7.6 Opciones de ejecución y generación de documentos HTML. |
+| | 7.7 Organización y depuración de reportes reproducibles. |
+| **8. Integración y reproducibilidad de proyectos bioinformáticos** | 8.1 Estructura y componentes de un proyecto reproducible. |
+| | 8.2 Verificación de datos, código y resultados. |
+| | 8.3 Gestión de dependencias y entornos con renv. |
+| | 8.4 Documentación del proyecto mediante README. |
+| | 8.5 Ejecución de análisis desde sesiones limpias. |
+| | 8.6 Revisión por pares y evaluación de reproducibilidad. |
+| | 8.7 Presentación y comunicación del proyecto final. |
+

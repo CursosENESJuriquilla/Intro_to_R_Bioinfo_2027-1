@@ -1,0 +1,77 @@
+project:
+  type: book
+  output-dir: docs #docs _book
+  
+# Entorno de Python para ejecutar los capítulos
+#jupyter: quarto-env
+
+book:
+  title: "Introducción a R para Bioinformática I"
+  site-url: https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1
+  page-footer:  "Temas Selectos de ML, 7mo semestre: Haydeé Peruyero" 
+  sidebar: 
+    # background: "#ffcccc"
+    logo: "figures/LogoENES.png" # Logo ENES
+    search: true
+  author: 
+    - name: Haydeé Peruyero
+      degrees: PhD
+      url: https://haydeeperuyero.github.io/ 
+      email: haydeeperuyero@unam.cmx
+      affiliations:
+        - name: ENES, Juriquilla - UNAM
+          country: Mexico
+          url: https://www.enesjuriquilla.unam.mx/
+  
+  date: "08/17/2026"
+  page-navigation: true        # Provide next and previous article links in footer
+  back-to-top-navigation: true # Provide a ‘back to top’ navigation button
+  chapters:
+    - index.qmd
+    - temario.qmd
+    - part: "**De Bash a R: programación para bioinformática**"
+      chapters: 
+          - parte1.qmd
+    
+    
+  # Information
+  repo-url: https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1 # link de Github
+  sharing: [twitter, facebook, linkedin]
+  favicon: "figures/favicon.png" # icono de la pagina en pestana
+
+
+format:
+  html:
+    crossrefs-hover: true
+    footnotes-hover: true
+    toc-depth: 4
+    number-depth: 3
+    # css
+    css: styles.css
+    linkcolor: "#007f99"
+    
+  # Boton para cambiar tema de oscuro a claro
+    theme:
+      light: cosmo
+      # dark: darkly
+    code-fold: show # Ocultar codigo
+    code-copy: true # Copy button
+    code-line-numbers: false #Numero de lineas
+    code-annotations: hover #c(hover, below, select): posicion https://quarto.org/docs/authoring/code-annotation.html
+    code-block-bg: true # Bloque de código
+    code-block-border-left: "#007f99" # color del borde izquierdo del codigo
+    syntax-highlighting: arrow # Estilo de los codigos https://quarto.org/docs/output-formats/html-code.html#highlighting
+    #freeze: false  # Desactivar congelamiento
+
+editor: visual
+
+bibliography: references.bib
+
+lang: es
+
+execute:
+  error: true # Se aceptan errores
+  message: false # Silenciar mensajes de salida
+  echo: true
+  freeze: auto
+

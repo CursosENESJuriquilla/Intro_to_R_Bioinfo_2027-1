@@ -1,0 +1,143 @@
+# Información general {.unnumbered}
+
+:::: {.panel-tabset group="globalInfo"}
+
+## Contenido del curso 📌
+
+::: {style="text-align: center;"}
+**Datos generales**
+
+[**Introducción a R para el análisis reproducible de datos biológicos**]{.text-blue}
+
+*Curso de Bioinformática I — Licenciatura en Ciencias Genómicas*
+:::
+
+- **Periodo:** noviembre de 2026.
+- **Duración del contenido:** 16 horas, distribuidas en 8 sesiones de 2 horas efectivas.
+- **Horario asignado:** bloques de 2 horas y 30 minutos, según el calendario siguiente.
+- **Modalidad:** teórico-práctica, con énfasis en programación y trabajo con datos biológicos.
+- **Herramientas:** R, RStudio, tidyverse, ggplot2, purrr, Quarto y herramientas de reproducibilidad.
+
+### Calendario de sesiones
+
+| Sesión | Fecha | Horario asignado | Aula | Tema |
+|:--:|---|---|---|---|
+| 1 | Miércoles 4 de noviembre | 3:00–5:30 p. m. | VI-204 | Introducción a R y organización de proyectos bioinformáticos |
+| 2 | Jueves 5 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Importación, exploración y validación de datos biológicos |
+| 3 | Miércoles 11 de noviembre | 3:00–5:30 p. m. | VI-204 | Manipulación y transformación de datos con `dplyr` y `tidyr` |
+| 4 | Jueves 12 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Integración de datos y automatización de análisis |
+| 5 | Miércoles 18 de noviembre | 3:00–5:30 p. m. | VI-204 | Visualización científica con `ggplot2` |
+| 6 | Jueves 19 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Exploración visual e interpretación de datos biológicos |
+| 7 | Lunes 23 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Documentación y reportes reproducibles con Quarto |
+| 8 | Jueves 26 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Integración y reproducibilidad de proyectos bioinformáticos |
+
+::: {.callout-note}
+## Sobre la duración
+Los horarios asignados corresponden a bloques de 2 horas y 30 minutos. Los contenidos se han diseñado para 2 horas efectivas por sesión (16 horas en total). El tiempo adicional podrá utilizarse para instalación, resolución de dudas, prácticas y acompañamiento de proyectos, según las necesidades del grupo.
+:::
+
+### 🎯 Objetivo principal
+
+Desarrollar habilidades prácticas para organizar, procesar, validar, transformar y visualizar datos biológicos mediante R, así como documentar y comunicar resultados a través de proyectos computacionales reproducibles, siguiendo buenas prácticas de programación y bioinformática.
+
+#### Objetivos particulares
+
+- Organizar proyectos de análisis bioinformático mediante RStudio, scripts y rutas relativas.
+- Utilizar las estructuras de datos, funciones y herramientas fundamentales de R.
+- Importar archivos tabulares de uso frecuente en bioinformática e identificar inconsistencias en sus contenidos.
+- Manipular, transformar e integrar datos mediante `dplyr` y `tidyr`.
+- Automatizar tareas repetitivas y el procesamiento de múltiples archivos mediante funciones e iteración con `purrr`.
+- Diseñar visualizaciones científicas claras y reproducibles con `ggplot2`.
+- Interpretar descriptivamente los resultados, reconociendo los alcances y limitaciones de las visualizaciones.
+- Elaborar reportes reproducibles con Quarto.
+- Documentar y verificar la reproducibilidad de un proyecto de análisis de datos biológicos.
+
+### Metodología de trabajo
+
+El curso combinará explicaciones breves, demostraciones en R y ejercicios prácticos con datos biológicos. Las actividades se desarrollarán de manera progresiva, desde la importación y validación de archivos hasta la elaboración de un reporte reproducible. Se aprovecharán los conocimientos previos del grupo en bioinformática, Bash, Linux y Git. **No se requieren conocimientos previos de estadística inferencial.**
+
+### **Citar y reutilizar el material del curso**
+
+Los materiales podrán citarse conforme a la autoría y licencia que se indiquen en el repositorio del curso. Las licencias de los datos y de los recursos externos deberán respetarse por separado; no se presupone que todos se distribuyen bajo una misma licencia.
+
+## Forma de evaluación 💻
+
+### Evaluación
+
+La evaluación de **Bioinformática I** se realizará conforme a los criterios establecidos por el profesor responsable de la asignatura:
+
+| Componente | Peso |
+|---|---:|
+| Participación y asistencia | 10 % |
+| Prácticas y tareas (en el repositorio Git) | 50 % |
+| Proyecto | 20 % |
+| Exámenes | 20 % |
+| **Total** | **100 %** |
+
+::: {.callout-note}
+## Alcance de esta evaluación
+Los porcentajes corresponden a la **asignatura Bioinformática I**. Las actividades de las ocho sesiones de R se integrarán conforme a las indicaciones del profesor responsable; esta sección no establece exámenes independientes para cada sesión de R.
+:::
+
+### Criterios de evaluación
+
+1. Correcta importación, inspección y validación de datos biológicos.
+2. Uso adecuado de R y de las herramientas de manipulación, integración y visualización de datos.
+3. Claridad, organización y legibilidad del código.
+4. Justificación y documentación de las decisiones de procesamiento.
+5. Calidad de las visualizaciones e interpretación descriptiva de resultados, sin formular conclusiones no sustentadas.
+6. Reproducibilidad del análisis, organización de archivos y documentación del proyecto.
+
+### Prácticas y tareas
+
+Las prácticas y tareas se documentarán y entregarán en el **repositorio Git** correspondiente, de acuerdo con las instrucciones y fechas establecidas. En las sesiones de R se trabajará con scripts, procesamiento de archivos, validación de datos, visualizaciones y reportes reproducibles.
+
+### Proyecto final
+
+Como propuesta para el componente de R, el proyecto podrá consistir en un análisis reproducible de datos biológicos. El **proyecto de la asignatura** se realizará en equipos de **1 a 3 integrantes**, con presentaciones en **diciembre o en la fecha que se acuerde**. Para la parte desarrollada en R, se propone incluir:
+
+1. **Pregunta biológica u objetivo de análisis** claramente delimitado.
+2. **Descripción y procedencia de los datos** utilizados.
+3. **Importación y validación** de los archivos de entrada.
+4. **Procesamiento y transformación** mediante código documentado.
+5. **Resultados** presentados en al menos una tabla y dos visualizaciones pertinentes.
+6. **Interpretación descriptiva**, incluyendo las limitaciones de los datos y del análisis.
+7. **Reporte reproducible en Quarto** y archivos necesarios para volver a ejecutar el análisis.
+8. **README** con instrucciones de ejecución y dependencias utilizadas.
+
+No se exigirá el uso de pruebas de hipótesis ni de métodos estadísticos que no hayan sido estudiados en el curso.
+
+### Exámenes y oportunidades de recuperación
+
+- Se realizarán **exámenes parciales al finalizar cada unidad**, conforme a la organización general de Bioinformática I.
+- Se contempla **una oportunidad de reponer un parcial reprobado**.
+- Si se reprueban todos los parciales, corresponderá presentar la evaluación final, de acuerdo con las indicaciones del profesor responsable.
+- La calendarización y aplicación de los exámenes serán definidas por el profesor responsable de la asignatura.
+
+### Requisitos y consideraciones
+
+1. Las fechas de entrega y los criterios particulares de cada actividad se comunicarán con anticipación.
+2. Las entregas deberán contener código ejecutable y los archivos solicitados; no será suficiente presentar únicamente capturas de pantalla o figuras aisladas.
+3. Los datos originales deberán conservarse sin modificaciones. Las transformaciones y decisiones de limpieza deberán quedar documentadas.
+4. El código y los reportes deberán utilizar rutas relativas y evitar depender de objetos creados manualmente en la consola.
+5. Se respetarán los criterios institucionales aplicables sobre integridad académica, atribución de fuentes y uso de herramientas de inteligencia artificial.
+6. Los criterios de acreditación, las fechas específicas de evaluación y las políticas de entregas extemporáneas serán los comunicados por el profesor responsable de Bioinformática I.
+
+## Referencias 📎
+
+### Recursos básicos de consulta
+
+1. Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). *R for Data Science* (2.ª ed.). [Versión en línea](https://r4ds.hadley.nz/).
+2. R Core Team. *An Introduction to R*. [Manual oficial](https://cran.r-project.org/doc/manuals/r-release/R-intro.html).
+3. Wickham, H., Navarro, D. y Pedersen, T. L. *ggplot2: Elegant Graphics for Data Analysis*. [Libro en línea](https://ggplot2-book.org/).
+4. Posit. *Quarto Documentation*. [Documentación oficial](https://quarto.org/docs/).
+
+### Recursos complementarios
+
+- [Documentación de dplyr](https://dplyr.tidyverse.org/).
+- [Documentación de tidyr](https://tidyr.tidyverse.org/).
+- [Documentación de purrr](https://purrr.tidyverse.org/).
+- [Bioconductor](https://bioconductor.org/).
+- [Documentación de renv](https://rstudio.github.io/renv/).
+
+::::

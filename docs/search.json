@@ -1,0 +1,242 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Introducción a R para Bioinformática I",
+    "section": "",
+    "text": "Información general\n\nContenido del curso 📌Forma de evaluación 💻Referencias 📎\n\n\n\nDatos generales\nIntroducción a R para el análisis reproducible de datos biológicos\nCurso de Bioinformática I — Licenciatura en Ciencias Genómicas\n\n\nPeriodo: noviembre de 2026.\nDuración del contenido: 16 horas, distribuidas en 8 sesiones de 2 horas efectivas.\nHorario asignado: bloques de 2 horas y 30 minutos, según el calendario siguiente.\nModalidad: teórico-práctica, con énfasis en programación y trabajo con datos biológicos.\nHerramientas: R, RStudio, tidyverse, ggplot2, purrr, Quarto y herramientas de reproducibilidad.\n\n\nCalendario de sesiones\n\n\n\n\n\n\n\n\n\n\nSesión\nFecha\nHorario asignado\nAula\nTema\n\n\n\n\n1\nMiércoles 4 de noviembre\n3:00–5:30 p. m.\nVI-204\nIntroducción a R y organización de proyectos bioinformáticos\n\n\n2\nJueves 5 de noviembre\n3:30–6:00 p. m.\nVI-PB01\nImportación, exploración y validación de datos biológicos\n\n\n3\nMiércoles 11 de noviembre\n3:00–5:30 p. m.\nVI-204\nManipulación y transformación de datos con dplyr y tidyr\n\n\n4\nJueves 12 de noviembre\n3:30–6:00 p. m.\nVI-PB01\nIntegración de datos y automatización de análisis\n\n\n5\nMiércoles 18 de noviembre\n3:00–5:30 p. m.\nVI-204\nVisualización científica con ggplot2\n\n\n6\nJueves 19 de noviembre\n3:30–6:00 p. m.\nVI-PB01\nExploración visual e interpretación de datos biológicos\n\n\n7\nLunes 23 de noviembre\n3:30–6:00 p. m.\nVI-PB01\nDocumentación y reportes reproducibles con Quarto\n\n\n8\nJueves 26 de noviembre\n3:30–6:00 p. m.\nVI-PB01\nIntegración y reproducibilidad de proyectos bioinformáticos\n\n\n\n\n\n\n\n\n\nNotaSobre la duración\n\n\n\nLos horarios asignados corresponden a bloques de 2 horas y 30 minutos. Los contenidos se han diseñado para 2 horas efectivas por sesión (16 horas en total). El tiempo adicional podrá utilizarse para instalación, resolución de dudas, prácticas y acompañamiento de proyectos, según las necesidades del grupo.\n\n\n\n\n🎯 Objetivo principal\nDesarrollar habilidades prácticas para organizar, procesar, validar, transformar y visualizar datos biológicos mediante R, así como documentar y comunicar resultados a través de proyectos computacionales reproducibles, siguiendo buenas prácticas de programación y bioinformática.\n\nObjetivos particulares\n\nOrganizar proyectos de análisis bioinformático mediante RStudio, scripts y rutas relativas.\nUtilizar las estructuras de datos, funciones y herramientas fundamentales de R.\nImportar archivos tabulares de uso frecuente en bioinformática e identificar inconsistencias en sus contenidos.\nManipular, transformar e integrar datos mediante dplyr y tidyr.\nAutomatizar tareas repetitivas y el procesamiento de múltiples archivos mediante funciones e iteración con purrr.\nDiseñar visualizaciones científicas claras y reproducibles con ggplot2.\nInterpretar descriptivamente los resultados, reconociendo los alcances y limitaciones de las visualizaciones.\nElaborar reportes reproducibles con Quarto.\nDocumentar y verificar la reproducibilidad de un proyecto de análisis de datos biológicos.\n\n\n\n\nMetodología de trabajo\nEl curso combinará explicaciones breves, demostraciones en R y ejercicios prácticos con datos biológicos. Las actividades se desarrollarán de manera progresiva, desde la importación y validación de archivos hasta la elaboración de un reporte reproducible. Se aprovecharán los conocimientos previos del grupo en bioinformática, Bash, Linux y Git. No se requieren conocimientos previos de estadística inferencial.\n\n\nCitar y reutilizar el material del curso\nLos materiales podrán citarse conforme a la autoría y licencia que se indiquen en el repositorio del curso. Las licencias de los datos y de los recursos externos deberán respetarse por separado; no se presupone que todos se distribuyen bajo una misma licencia.\n\n\n\n\nEvaluación\nLa evaluación de Bioinformática I se realizará conforme a los criterios establecidos por el profesor responsable de la asignatura:\n\n\n\nComponente\nPeso\n\n\n\n\nParticipación y asistencia\n10 %\n\n\nPrácticas y tareas (en el repositorio Git)\n50 %\n\n\nProyecto\n20 %\n\n\nExámenes\n20 %\n\n\nTotal\n100 %\n\n\n\n\n\n\n\n\n\nNotaAlcance de esta evaluación\n\n\n\nLos porcentajes corresponden a la asignatura Bioinformática I. Las actividades de las ocho sesiones de R se integrarán conforme a las indicaciones del profesor responsable; esta sección no establece exámenes independientes para cada sesión de R.\n\n\n\n\nCriterios de evaluación\n\nCorrecta importación, inspección y validación de datos biológicos.\nUso adecuado de R y de las herramientas de manipulación, integración y visualización de datos.\nClaridad, organización y legibilidad del código.\nJustificación y documentación de las decisiones de procesamiento.\nCalidad de las visualizaciones e interpretación descriptiva de resultados, sin formular conclusiones no sustentadas.\nReproducibilidad del análisis, organización de archivos y documentación del proyecto.\n\n\n\nPrácticas y tareas\nLas prácticas y tareas se documentarán y entregarán en el repositorio Git correspondiente, de acuerdo con las instrucciones y fechas establecidas. En las sesiones de R se trabajará con scripts, procesamiento de archivos, validación de datos, visualizaciones y reportes reproducibles.\n\n\nProyecto final\nComo propuesta para el componente de R, el proyecto podrá consistir en un análisis reproducible de datos biológicos. El proyecto de la asignatura se realizará en equipos de 1 a 3 integrantes, con presentaciones en diciembre o en la fecha que se acuerde. Para la parte desarrollada en R, se propone incluir:\n\nPregunta biológica u objetivo de análisis claramente delimitado.\nDescripción y procedencia de los datos utilizados.\nImportación y validación de los archivos de entrada.\nProcesamiento y transformación mediante código documentado.\nResultados presentados en al menos una tabla y dos visualizaciones pertinentes.\nInterpretación descriptiva, incluyendo las limitaciones de los datos y del análisis.\nReporte reproducible en Quarto y archivos necesarios para volver a ejecutar el análisis.\nREADME con instrucciones de ejecución y dependencias utilizadas.\n\nNo se exigirá el uso de pruebas de hipótesis ni de métodos estadísticos que no hayan sido estudiados en el curso.\n\n\nExámenes y oportunidades de recuperación\n\nSe realizarán exámenes parciales al finalizar cada unidad, conforme a la organización general de Bioinformática I.\nSe contempla una oportunidad de reponer un parcial reprobado.\nSi se reprueban todos los parciales, corresponderá presentar la evaluación final, de acuerdo con las indicaciones del profesor responsable.\nLa calendarización y aplicación de los exámenes serán definidas por el profesor responsable de la asignatura.\n\n\n\nRequisitos y consideraciones\n\nLas fechas de entrega y los criterios particulares de cada actividad se comunicarán con anticipación.\nLas entregas deberán contener código ejecutable y los archivos solicitados; no será suficiente presentar únicamente capturas de pantalla o figuras aisladas.\nLos datos originales deberán conservarse sin modificaciones. Las transformaciones y decisiones de limpieza deberán quedar documentadas.\nEl código y los reportes deberán utilizar rutas relativas y evitar depender de objetos creados manualmente en la consola.\nSe respetarán los criterios institucionales aplicables sobre integridad académica, atribución de fuentes y uso de herramientas de inteligencia artificial.\nLos criterios de acreditación, las fechas específicas de evaluación y las políticas de entregas extemporáneas serán los comunicados por el profesor responsable de Bioinformática I.\n\n\n\n\n\nRecursos básicos de consulta\n\nWickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). R for Data Science (2.ª ed.). Versión en línea.\nR Core Team. An Introduction to R. Manual oficial.\nWickham, H., Navarro, D. y Pedersen, T. L. ggplot2: Elegant Graphics for Data Analysis. Libro en línea.\nPosit. Quarto Documentation. Documentación oficial.\n\n\n\nRecursos complementarios\n\nDocumentación de dplyr.\nDocumentación de tidyr.\nDocumentación de purrr.\nBioconductor.\nDocumentación de renv.",
+    "crumbs": [
+      "Información general"
+    ]
+  },
+  {
+    "objectID": "temario.html",
+    "href": "temario.html",
+    "title": "Temario",
+    "section": "",
+    "text": "Tema\nSubtema\n\n\n\n\n1. Introducción a R y organización de proyectos bioinformáticos\n1.1 Instalación y configuración de R, RStudio y paquetes.\n\n\n\n1.2 Planificación y organización de proyectos bioinformáticos.\n\n\n\n1.3 Proyectos de RStudio, scripts y rutas relativas.\n\n\n\n1.4 Objetos, tipos de datos y estructuras en R.\n\n\n\n1.5 Operaciones, indexación y funciones.\n\n\n\n1.6 Estructuras de control e iteración.\n\n\n\n1.7 Buenas prácticas de programación y reproducibilidad.\n\n\n2. Importación, exploración y validación de datos biológicos\n2.1 Tipos y formatos de datos biológicos.\n\n\n\n2.2 Importación de archivos CSV, TSV y archivos comprimidos.\n\n\n\n2.3 Data frames, tibbles y tipos de columnas.\n\n\n\n2.4 Exploración de la estructura y contenido de los datos.\n\n\n\n2.5 Identificación de valores faltantes y registros duplicados.\n\n\n\n2.6 Validación de identificadores y coordenadas genómicas.\n\n\n\n2.7 Control de calidad y documentación de inconsistencias.\n\n\n3. Manipulación y transformación de datos con dplyr y tidyr\n3.1 Introducción al tidyverse y operadores de tubería.\n\n\n\n3.2 Selección, filtrado y ordenamiento de datos.\n\n\n\n3.3 Creación y modificación de variables.\n\n\n\n3.4 Eliminación de duplicados y manejo de valores faltantes.\n\n\n\n3.5 Agrupación y resumen de datos.\n\n\n\n3.6 Transformación entre formatos ancho y largo.\n\n\n\n3.7 Procesamiento de tablas de anotaciones génicas.\n\n\n4. Integración de datos y automatización de análisis\n4.1 Identificadores y claves en tablas biológicas.\n\n\n\n4.2 Integración de tablas mediante joins.\n\n\n\n4.3 Cardinalidad y validación de uniones.\n\n\n\n4.4 Identificación de registros sin correspondencia.\n\n\n\n4.5 Introducción a la familia apply de R.\n\n\n\n4.6 Iteración y automatización con purrr.\n\n\n\n4.7 Procesamiento de múltiples archivos biológicos.\n\n\n5. Visualización científica de datos biológicos con ggplot2\n5.1 Principios de visualización científica.\n\n\n\n5.2 Gramática de gráficos y mapeos estéticos.\n\n\n\n5.3 Gráficos de barras, puntos y distribuciones.\n\n\n\n5.4 Visualización de datos mediante facetas.\n\n\n\n5.5 Escalas, colores, etiquetas y temas.\n\n\n\n5.6 Diseño de figuras científicas claras y accesibles.\n\n\n\n5.7 Exportación de figuras y formatos gráficos.\n\n\n6. Exploración visual e interpretación de datos biológicos\n6.1 Exploración descriptiva de datos biológicos.\n\n\n\n6.2 Construcción e interpretación de mapas de calor.\n\n\n\n6.3 Ordenamiento y transformación de datos para visualización.\n\n\n\n6.4 Exploración de patrones mediante gráficos y facetas.\n\n\n\n6.5 Elaboración de figuras compuestas.\n\n\n\n6.6 Interpretación y comunicación de resultados biológicos.\n\n\n\n6.7 Limitaciones y errores comunes en la interpretación visual.\n\n\n7. Documentación y reportes reproducibles con Quarto\n7.1 Introducción a Quarto y R Markdown.\n\n\n\n7.2 Estructura de documentos Quarto y metadatos YAML.\n\n\n\n7.3 Escritura con Markdown y bloques de código ejecutable.\n\n\n\n7.4 Integración de tablas, figuras y resultados.\n\n\n\n7.5 Referencias cruzadas y leyendas.\n\n\n\n7.6 Opciones de ejecución y generación de documentos HTML.\n\n\n\n7.7 Organización y depuración de reportes reproducibles.\n\n\n8. Integración y reproducibilidad de proyectos bioinformáticos\n8.1 Estructura y componentes de un proyecto reproducible.\n\n\n\n8.2 Verificación de datos, código y resultados.\n\n\n\n8.3 Gestión de dependencias y entornos con renv.\n\n\n\n8.4 Documentación del proyecto mediante README.\n\n\n\n8.5 Ejecución de análisis desde sesiones limpias.\n\n\n\n8.6 Revisión por pares y evaluación de reproducibilidad.\n\n\n\n8.7 Presentación y comunicación del proyecto final.",
+    "crumbs": [
+      "Temario"
+    ]
+  },
+  {
+    "objectID": "parte1.html",
+    "href": "parte1.html",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "",
+    "text": "2 Material previo opcional: instalación y preparación del entorno",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#qué-son-r-rstudio-y-las-herramientas-de-compilación",
+    "href": "parte1.html#qué-son-r-rstudio-y-las-herramientas-de-compilación",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.1 ¿Qué son R, RStudio y las herramientas de compilación?",
+    "text": "2.1 ¿Qué son R, RStudio y las herramientas de compilación?\n\nR es el lenguaje y el entorno que ejecuta los análisis.\nRStudio Desktop es un entorno de desarrollo (IDE) para editar scripts, trabajar con proyectos y ejecutar R; no sustituye la instalación de R.\nLas herramientas de compilación permiten instalar paquetes desde su código fuente cuando no existe un binario apropiado o cuando el paquete requiere compilación. No todos los paquetes las necesitan.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#windows-r-rstudio-y-rtools",
+    "href": "parte1.html#windows-r-rstudio-y-rtools",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.2 Windows: R, RStudio y Rtools",
+    "text": "2.2 Windows: R, RStudio y Rtools\n\nDescarga e instala R desde https://cran.r-project.org/bin/windows/base/.\nDescarga e instala RStudio Desktop desde https://posit.co/download/rstudio-desktop/.\nConsulta https://cran.r-project.org/bin/windows/Rtools/ e instala la versión de Rtools compatible con tu versión de R. No elijas una versión al azar: CRAN indica las correspondencias.\nReinicia RStudio después de instalar las herramientas, si ya estaba abierto.\n\nVerificación de Rtools (desde la consola de R):\n\n\nCódigo\ninstall.packages(\"pkgbuild\")  # Solo si aún no está instalado\npkgbuild::check_build_tools(debug = TRUE)\n\n\nSi la verificación falla, revisa las instrucciones de CRAN para la versión instalada de R y Rtools antes de modificar manualmente variables como PATH.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#macos-r-rstudio-y-herramientas-de-desarrollo",
+    "href": "parte1.html#macos-r-rstudio-y-herramientas-de-desarrollo",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.3 macOS: R, RStudio y herramientas de desarrollo",
+    "text": "2.3 macOS: R, RStudio y herramientas de desarrollo\n\nInstala la versión de R correspondiente a tu equipo desde https://cran.r-project.org/bin/macosx/ (verifica si es Apple Silicon o Intel).\nInstala RStudio Desktop desde https://posit.co/download/rstudio-desktop/.\nEn la terminal de macOS, instala las herramientas de línea de comandos de Xcode:\n\n\n\nCódigo\nxcode-select --install\n\n\n\nAlgunos paquetes que compilan código Fortran requieren GNU Fortran además de las herramientas anteriores. Consulta las versiones y las indicaciones oficiales en https://mac.r-project.org/tools/; deben ser compatibles con tu instalación de R.\n\nNo hace falta instalar Xcode completo para la mayoría de las tareas de compilación de paquetes de R.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#linux-r-y-compiladores-del-sistema",
+    "href": "parte1.html#linux-r-y-compiladores-del-sistema",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.4 Linux: R y compiladores del sistema",
+    "text": "2.4 Linux: R y compiladores del sistema\nEn Ubuntu o Debian, si tienes permisos de administración y todavía no están instalados, puedes ejecutar en la terminal:\n\n\nCódigo\nsudo apt update\nsudo apt install -y r-base r-base-dev build-essential gfortran\n\n\nDespués puedes instalar RStudio Desktop desde https://posit.co/download/rstudio-desktop/ si deseas utilizarlo.\nEn otras distribuciones (Fedora, Arch, etc.), los nombres de los paquetes y los comandos del gestor de paquetes son diferentes. Algunas bibliotecas adicionales (libcurl, libxml2, libssl, entre otras) pueden ser necesarias solo para determinados paquetes de R.\nEn un clúster o servidor compartido, no ejecutes sudo ni intentes instalar paquetes globales sin autorización. Comprueba si R está disponible:\n\n\nCódigo\nR --version\nRscript --version\n# En sistemas que usan módulos, consulta la documentación local:\nmodule avail R",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#comprobar-la-instalación-de-r",
+    "href": "parte1.html#comprobar-la-instalación-de-r",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.5 Comprobar la instalación de R",
+    "text": "2.5 Comprobar la instalación de R\nAbre RStudio (o una sesión interactiva de R) y ejecuta:\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\nSys.info()[[\"sysname\"]]\n\n\n[1] \"Windows\"\n\n\nCódigo\n2 + 2\n\n\n[1] 4",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#instalar-y-cargar-paquetes-de-r",
+    "href": "parte1.html#instalar-y-cargar-paquetes-de-r",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.6 Instalar y cargar paquetes de R",
+    "text": "2.6 Instalar y cargar paquetes de R\nUn paquete se instala una vez por entorno o biblioteca; se carga con library() en cada sesión en la que se necesita. No incluyas install.packages() en scripts de análisis que deban ejecutarse repetidamente.\n\n\nCódigo\n# Ejecutar en la consola, una vez por entorno:\ninstall.packages(c(\"readr\", \"dplyr\", \"tidyr\", \"ggplot2\", \"purrr\", \"here\"))\n\n# En los scripts, cargar los paquetes necesarios:\nlibrary(readr)\nlibrary(dplyr)\n\n# También se puede llamar una función con paquete::función:\n# readr::read_tsv(\"data_raw/anotaciones.tsv\")\n\n\nPara comprobar las herramientas de compilación de tu sistema, cuando corresponda:\n\n\nCódigo\nif (!requireNamespace(\"pkgbuild\", quietly = TRUE)) {\n  install.packages(\"pkgbuild\")\n}\npkgbuild::check_build_tools(debug = TRUE)\n\n\nPara revisar el entorno y consultar la ayuda:\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\n\"readr\" %in% rownames(installed.packages())\n\n\n[1] TRUE\n\n\nCódigo\nsessionInfo()\n\n\nR version 4.6.0 (2026-04-24 ucrt)\nPlatform: x86_64-w64-mingw32/x64\nRunning under: Windows 11 x64 (build 26200)\n\nMatrix products: default\n  LAPACK version 3.12.1\n\nlocale:\n[1] LC_COLLATE=Spanish_Mexico.utf8  LC_CTYPE=Spanish_Mexico.utf8   \n[3] LC_MONETARY=Spanish_Mexico.utf8 LC_NUMERIC=C                   \n[5] LC_TIME=Spanish_Mexico.utf8    \n\ntime zone: America/Mexico_City\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.4 compiler_4.6.0    fastmap_1.2.0     cli_3.6.6        \n [5] tools_4.6.0       htmltools_0.5.9   otel_0.2.0        rstudioapi_0.19.0\n [9] yaml_2.3.12       rmarkdown_2.32    knitr_1.52        jsonlite_2.0.0   \n[13] xfun_0.61         digest_0.6.39     rlang_1.2.0       evaluate_1.0.5   \n\n\nCódigo\n?read.table\n\n\nstarting httpd help server ... done\n\n\n\n\n\n\n\n\nNotaPaquetes de Bioconductor\n\n\n\nAdemás de CRAN, en bioinformática se utilizan paquetes de Bioconductor, cuyo instalador recomendado es BiocManager. No es necesario instalar paquetes especializados en esta primera sesión.\n\n\nCódigo\ninstall.packages(\"BiocManager\")\nBiocManager::install(\"Biostrings\")  # Ejemplo; solo cuando se necesite\n\n\n\n\n\n\n\n\n\n\nAdvertenciaSi falla una instalación\n\n\n\nLee el primer mensaje de error relevante: distingue entre problemas de red, permisos, versión de R, herramientas de compilación y bibliotecas externas. Un paquete que se instala desde un binario puede no necesitar compiladores, mientras que el mismo paquete instalado desde código fuente sí puede necesitarlos. En equipos institucionales o clústeres, consulta al personal administrador cuando falten dependencias del sistema.\n\n\n\n2.6.1 Lista de verificación antes de la clase\n\nPuedo abrir R y ejecutar 2 + 2.\nPuedo abrir RStudio, o sé cómo ejecutar Rscript en mi entorno.\nPuedo instalar y cargar un paquete de CRAN.\nConozco qué herramientas de compilación corresponden a mi sistema y cómo verificar si están disponibles.\nPuedo consultar sessionInfo() para documentar mi entorno.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#tipos-básicos-y-vectores",
+    "href": "parte1.html#tipos-básicos-y-vectores",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "4.1 Tipos básicos y vectores",
+    "text": "4.1 Tipos básicos y vectores\nEn R, un vector atómico contiene elementos del mismo tipo. Los índices comienzan en 1, no en 0.\n\n\nCódigo\nids &lt;- c(\"genA\", \"genB\", \"genC\", \"genD\")\nlongitudes &lt;- c(150, 320, 90, 210)\nanotado &lt;- c(TRUE, FALSE, TRUE, TRUE)\n\nclass(ids)\n\n\n[1] \"character\"\n\n\nCódigo\nlength(ids)\n\n\n[1] 4\n\n\nCódigo\nids[1]\n\n\n[1] \"genA\"\n\n\nCódigo\nids[c(2, 4)]\n\n\n[1] \"genB\" \"genD\"\n\n\nCódigo\nlongitudes[longitudes &gt;= 200]\n\n\n[1] 320 210\n\n\nLas comparaciones producen vectores lógicos que pueden utilizarse para seleccionar elementos. Los valores faltantes se representan con NA.\n\n\nCódigo\nlongitudes2 &lt;- c(150, NA, 90)\nis.na(longitudes2)\n\n\n[1] FALSE  TRUE FALSE\n\n\nCódigo\nlongitudes2[!is.na(longitudes2)]\n\n\n[1] 150  90\n\n\n\n\n\n\n\n\nNotaEjercicio 1. Selección de genes (5 min)\n\n\n\nCrea los vectores genes &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\") y tam &lt;- c(450, 120, 800, 300, 75).\n\nObtén el tercer identificador.\nSelecciona los genes con longitud mayor o igual a 300.\nCuenta cuántos genes cumplen esa condición, sin utilizar ciclos.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 1\n\n\n\n\n\n\n\nCódigo\ngenes &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\")\ntam &lt;- c(450, 120, 800, 300, 75)\ngenes[3]\n\n\n[1] \"g3\"\n\n\nCódigo\ngenes[tam &gt;= 300]\n\n\n[1] \"g1\" \"g3\" \"g4\"\n\n\nCódigo\nsum(tam &gt;= 300)\n\n\n[1] 3\n\n\nsum() cuenta los valores TRUE porque en operaciones aritméticas equivalen a 1.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#tablas-data-frames",
+    "href": "parte1.html#tablas-data-frames",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "4.2 Tablas: data frames",
+    "text": "4.2 Tablas: data frames\nUn data.frame representa una tabla cuyas columnas pueden tener tipos diferentes. Aquí cada fila corresponde a un gen.\n\n\nCódigo\nanotaciones &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\", \"g4\"),\n  longitud = c(450, 120, 800, 300),\n  producto = c(\"transportador\", \"hipotetica\", \"enzima\", \"enzima\"),\n  stringsAsFactors = FALSE\n)\nanotaciones\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n4  g4      300        enzima\n\n\nCódigo\nstr(anotaciones)\n\n\n'data.frame':   4 obs. of  3 variables:\n $ gen     : chr  \"g1\" \"g2\" \"g3\" \"g4\"\n $ longitud: num  450 120 800 300\n $ producto: chr  \"transportador\" \"hipotetica\" \"enzima\" \"enzima\"\n\n\nCódigo\nanotaciones$gen\n\n\n[1] \"g1\" \"g2\" \"g3\" \"g4\"\n\n\nCódigo\nanotaciones[anotaciones$producto == \"enzima\", ]\n\n\n  gen longitud producto\n3  g3      800   enzima\n4  g4      300   enzima\n\n\nRecuerda la diferencia entre seleccionar una columna (anotaciones$gen), una fila (anotaciones[2, ]) y una celda (anotaciones[2, 3]).",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#listas",
+    "href": "parte1.html#listas",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "4.3 Listas",
+    "text": "4.3 Listas\nUna lista puede almacenar objetos de tipos y tamaños diferentes, por ejemplo secuencias, metadatos y una tabla de resultados.\n\n\nCódigo\nmuestra &lt;- list(\n  id = \"M01\",\n  secuencias = c(\"ATGCGT\", \"ATTA\", \"GGCCATG\"),\n  anotaciones = anotaciones\n)\nmuestra$id\n\n\n[1] \"M01\"\n\n\nCódigo\nmuestra$secuencias\n\n\n[1] \"ATGCGT\"  \"ATTA\"    \"GGCCATG\"\n\n\nCódigo\nmuestra[[\"anotaciones\"]]\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n4  g4      300        enzima\n\n\n\n\n\n\n\n\nImportanteNo confundir\n\n\n\nUn vector atómico, una lista y un data.frame no son equivalentes. Elegir la estructura apropiada facilita el procesamiento y evita conversiones innecesarias.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#trabajar-con-secuencias-como-cadenas-de-caracteres",
+    "href": "parte1.html#trabajar-con-secuencias-como-cadenas-de-caracteres",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "5.1 Trabajar con secuencias como cadenas de caracteres",
+    "text": "5.1 Trabajar con secuencias como cadenas de caracteres\nUsaremos secuencias cortas para practicar funciones de R; esto no reemplaza herramientas especializadas para archivos FASTA grandes.\n\n\nCódigo\nsecuencias &lt;- c(\n  genA = \"ATGCCGTAA\",\n  genB = \"CCGTTAGG\",\n  genC = \"ATGATGCC\"\n)\n\nnchar(secuencias)                 # Longitud de cada cadena\n\n\ngenA genB genC \n   9    8    8 \n\n\nCódigo\ngrepl(\"ATG\", secuencias)        # ¿Contiene el patrón literal?\n\n\n[1]  TRUE FALSE  TRUE\n\n\nCódigo\nnames(secuencias)[grepl(\"ATG\", secuencias)]\n\n\n[1] \"genA\" \"genC\"\n\n\ngrepl() devuelve un vector lógico; grep() devuelve posiciones (o valores con argumentos adicionales). Encontrar ATG no basta para identificar genes funcionales ni validar un marco de lectura.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#definir-funciones",
+    "href": "parte1.html#definir-funciones",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "5.2 Definir funciones",
+    "text": "5.2 Definir funciones\n\n\nCódigo\ncontiene_motivo &lt;- function(secuencia, motivo = \"ATG\") {\n  grepl(motivo, secuencia, fixed = TRUE)\n}\n\ncontiene_motivo(\"CCATGTT\")\n\n\n[1] TRUE\n\n\nCódigo\ncontiene_motivo(\"CCATGTT\", \"TGA\")\n\n\n[1] FALSE\n\n\nUna función recibe argumentos, realiza operaciones y devuelve un resultado. Los nombres de los argumentos deben expresar qué información espera la función.\n\n\n\n\n\n\nNotaEjercicio 2. Una función reutilizable (7 min)\n\n\n\nEscribe una función es_adn_simple() que reciba una cadena y devuelva TRUE si contiene únicamente las letras A, C, G y T (en mayúsculas). Prueba con \"ACGT\", \"ACNT\" y \"ACGTX\". Para este ejercicio no consideres símbolos de ambigüedad IUPAC.\nPista: grepl() acepta expresiones regulares; ^[ACGT]+$ describe una o más letras válidas desde el principio hasta el final.\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 2\n\n\n\n\n\n\n\nCódigo\nes_adn_simple &lt;- function(secuencia) {\n  grepl(\"^[ACGT]+$\", secuencia)\n}\n\nes_adn_simple(\"ACGT\")\n\n\n[1] TRUE\n\n\nCódigo\nes_adn_simple(\"ACNT\")\n\n\n[1] FALSE\n\n\nCódigo\nes_adn_simple(\"ACGTX\")\n\n\n[1] FALSE\n\n\nEsta función comprueba un criterio deliberadamente restringido; secuencias reales pueden utilizar códigos de ambigüedad.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#condiciones",
+    "href": "parte1.html#condiciones",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "6.1 Condiciones",
+    "text": "6.1 Condiciones\n\n\nCódigo\nclasificar_longitud &lt;- function(n) {\n  if (is.na(n)) {\n    return(\"desconocida\")\n  }\n  if (n &gt;= 300) {\n    \"larga\"\n  } else {\n    \"corta\"\n  }\n}\n\nclasificar_longitud(450)\n\n\n[1] \"larga\"\n\n\nCódigo\nclasificar_longitud(120)\n\n\n[1] \"corta\"\n\n\nLos umbrales de este ejemplo son arbitrarios y didácticos; no representan categorías biológicas universales.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#ciclos-y-funciones-de-aplicación",
+    "href": "parte1.html#ciclos-y-funciones-de-aplicación",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "6.2 Ciclos y funciones de aplicación",
+    "text": "6.2 Ciclos y funciones de aplicación\n\n\nCódigo\nfor (id in names(secuencias)) {\n  cat(id, \": \", nchar(secuencias[[id]]), \" nt\\n\", sep = \"\")\n}\n\n\ngenA: 9 nt\ngenB: 8 nt\ngenC: 8 nt\n\n\nCódigo\n# Una alternativa vectorizada:\nnchar(secuencias)\n\n\ngenA genB genC \n   9    8    8 \n\n\nCódigo\n# Aplicar una función a los elementos de una lista:\nlapply(as.list(secuencias), contiene_motivo)\n\n\n$genA\n[1] TRUE\n\n$genB\n[1] FALSE\n\n$genC\n[1] TRUE\n\n\nCódigo\n# Simplificar a un vector lógico:\nsapply(as.list(secuencias), contiene_motivo)\n\n\n genA  genB  genC \n TRUE FALSE  TRUE \n\n\nEn R no siempre necesitamos escribir un ciclo explícito. Más adelante conoceremos purrr::map() para trabajar de manera consistente con colecciones de archivos y resultados.\n\n\n\n\n\n\nNotaEjercicio 3. Comparar estrategias (6 min)\n\n\n\nA partir de secuencias, construye un vector lógico que indique qué secuencias contienen ATG de dos formas: (a) mediante un ciclo for y (b) mediante vapply(). Verifica que los resultados sean iguales.\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 3\n\n\n\n\n\n\n\nCódigo\nresultado_for &lt;- setNames(logical(length(secuencias)), names(secuencias))\nfor (i in seq_along(secuencias)) {\n  resultado_for[i] &lt;- contiene_motivo(secuencias[[i]])\n}\n\nresultado_apply &lt;- vapply(secuencias, contiene_motivo, logical(1))\nidentical(resultado_for, resultado_apply)\n\n\n[1] TRUE\n\n\nvapply() exige que la función devuelva el tipo y tamaño indicados (logical(1)), lo que puede ayudar a detectar errores.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#de-la-terminal-a-la-consola-de-r",
+    "href": "parte1.html#de-la-terminal-a-la-consola-de-r",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.7 De la terminal a la consola de R",
+    "text": "2.7 De la terminal a la consola de R\nYa has utilizado herramientas de línea de comandos para transformar datos. R es otro entorno de programación: conserva ideas conocidas (variables, funciones, condiciones, ciclos), pero utiliza sintaxis y estructuras propias.\n\n\n\nTarea\nBash\nR\n\n\n\n\nAsignar valor\nn=5\nn &lt;- 5\n\n\nMostrar valor\necho \"$n\"\nprint(n)\n\n\nEjecutar archivo\nbash script.sh\nRscript script.R\n\n\nComentario\n# comentario\n# comentario\n\n\nConsultar ayuda\nman awk\n?read.table\n\n\n\n\n\nCódigo\nn &lt;- 5\nn * 2\n\n\n[1] 10\n\n\nCódigo\nmensaje &lt;- \"Hola, bioinformática\"\nprint(mensaje)\n\n\n[1] \"Hola, bioinformática\"\n\n\nPrueba en RStudio: escribe una instrucción en la consola y luego guárdala en un archivo .R. Ejecuta una línea del script. ¿Qué diferencia encuentras entre guardar instrucciones y ejecutarlas interactivamente?",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#objetos-y-estructuras-de-datos",
+    "href": "parte1.html#objetos-y-estructuras-de-datos",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.8 Objetos y estructuras de datos",
+    "text": "2.8 Objetos y estructuras de datos\n\n2.8.1 Tipos básicos y vectores\nEn R, un vector atómico contiene elementos del mismo tipo. Los índices comienzan en 1, no en 0.\n\n\nCódigo\nids &lt;- c(\"genA\", \"genB\", \"genC\", \"genD\")\nlongitudes &lt;- c(150, 320, 90, 210)\nanotado &lt;- c(TRUE, FALSE, TRUE, TRUE)\n\nclass(ids)\n\n\n[1] \"character\"\n\n\nCódigo\nlength(ids)\n\n\n[1] 4\n\n\nCódigo\nids[1]\n\n\n[1] \"genA\"\n\n\nCódigo\nids[c(2, 4)]\n\n\n[1] \"genB\" \"genD\"\n\n\nCódigo\nlongitudes[longitudes &gt;= 200]\n\n\n[1] 320 210\n\n\nLas comparaciones producen vectores lógicos que pueden utilizarse para seleccionar elementos. Los valores faltantes se representan con NA.\n\n\nCódigo\nlongitudes2 &lt;- c(150, NA, 90)\nis.na(longitudes2)\n\n\n[1] FALSE  TRUE FALSE\n\n\nCódigo\nlongitudes2[!is.na(longitudes2)]\n\n\n[1] 150  90\n\n\n\n\n\n\n\n\nNotaEjercicio 1. Selección de genes (5 min)\n\n\n\nCrea los vectores genes &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\") y tam &lt;- c(450, 120, 800, 300, 75).\n\nObtén el tercer identificador.\nSelecciona los genes con longitud mayor o igual a 300.\nCuenta cuántos genes cumplen esa condición, sin utilizar ciclos.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 1\n\n\n\n\n\n\n\nCódigo\ngenes &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\")\ntam &lt;- c(450, 120, 800, 300, 75)\ngenes[3]\n\n\n[1] \"g3\"\n\n\nCódigo\ngenes[tam &gt;= 300]\n\n\n[1] \"g1\" \"g3\" \"g4\"\n\n\nCódigo\nsum(tam &gt;= 300)\n\n\n[1] 3\n\n\nsum() cuenta los valores TRUE porque en operaciones aritméticas equivalen a 1.\n\n\n\n\n\n2.8.2 Tablas: data frames\nUn data.frame representa una tabla cuyas columnas pueden tener tipos diferentes. Aquí cada fila corresponde a un gen.\n\n\nCódigo\nanotaciones &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\", \"g4\"),\n  longitud = c(450, 120, 800, 300),\n  producto = c(\"transportador\", \"hipotetica\", \"enzima\", \"enzima\"),\n  stringsAsFactors = FALSE\n)\nanotaciones\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n4  g4      300        enzima\n\n\nCódigo\nstr(anotaciones)\n\n\n'data.frame':   4 obs. of  3 variables:\n $ gen     : chr  \"g1\" \"g2\" \"g3\" \"g4\"\n $ longitud: num  450 120 800 300\n $ producto: chr  \"transportador\" \"hipotetica\" \"enzima\" \"enzima\"\n\n\nCódigo\nanotaciones$gen\n\n\n[1] \"g1\" \"g2\" \"g3\" \"g4\"\n\n\nCódigo\nanotaciones[anotaciones$producto == \"enzima\", ]\n\n\n  gen longitud producto\n3  g3      800   enzima\n4  g4      300   enzima\n\n\nRecuerda la diferencia entre seleccionar una columna (anotaciones$gen), una fila (anotaciones[2, ]) y una celda (anotaciones[2, 3]).\n\n\n2.8.3 Listas\nUna lista puede almacenar objetos de tipos y tamaños diferentes, por ejemplo secuencias, metadatos y una tabla de resultados.\n\n\nCódigo\nmuestra &lt;- list(\n  id = \"M01\",\n  secuencias = c(\"ATGCGT\", \"ATTA\", \"GGCCATG\"),\n  anotaciones = anotaciones\n)\nmuestra$id\n\n\n[1] \"M01\"\n\n\nCódigo\nmuestra$secuencias\n\n\n[1] \"ATGCGT\"  \"ATTA\"    \"GGCCATG\"\n\n\nCódigo\nmuestra[[\"anotaciones\"]]\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n4  g4      300        enzima\n\n\n\n\n\n\n\n\nImportanteNo confundir\n\n\n\nUn vector atómico, una lista y un data.frame no son equivalentes. Elegir la estructura apropiada facilita el procesamiento y evita conversiones innecesarias.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#operaciones-indexación-y-funciones",
+    "href": "parte1.html#operaciones-indexación-y-funciones",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.9 Operaciones, indexación y funciones",
+    "text": "2.9 Operaciones, indexación y funciones\n\n2.9.1 Trabajar con secuencias como cadenas de caracteres\nUsaremos secuencias cortas para practicar funciones de R; esto no reemplaza herramientas especializadas para archivos FASTA grandes.\n\n\nCódigo\nsecuencias &lt;- c(\n  genA = \"ATGCCGTAA\",\n  genB = \"CCGTTAGG\",\n  genC = \"ATGATGCC\"\n)\n\nnchar(secuencias)                 # Longitud de cada cadena\n\n\ngenA genB genC \n   9    8    8 \n\n\nCódigo\ngrepl(\"ATG\", secuencias)        # ¿Contiene el patrón literal?\n\n\n[1]  TRUE FALSE  TRUE\n\n\nCódigo\nnames(secuencias)[grepl(\"ATG\", secuencias)]\n\n\n[1] \"genA\" \"genC\"\n\n\ngrepl() devuelve un vector lógico; grep() devuelve posiciones (o valores con argumentos adicionales). Encontrar ATG no basta para identificar genes funcionales ni validar un marco de lectura.\n\n\n2.9.2 Definir funciones\n\n\nCódigo\ncontiene_motivo &lt;- function(secuencia, motivo = \"ATG\") {\n  grepl(motivo, secuencia, fixed = TRUE)\n}\n\ncontiene_motivo(\"CCATGTT\")\n\n\n[1] TRUE\n\n\nCódigo\ncontiene_motivo(\"CCATGTT\", \"TGA\")\n\n\n[1] FALSE\n\n\nUna función recibe argumentos, realiza operaciones y devuelve un resultado. Los nombres de los argumentos deben expresar qué información espera la función.\n\n\n\n\n\n\nNotaEjercicio 2. Una función reutilizable (7 min)\n\n\n\nEscribe una función es_adn_simple() que reciba una cadena y devuelva TRUE si contiene únicamente las letras A, C, G y T (en mayúsculas). Prueba con \"ACGT\", \"ACNT\" y \"ACGTX\". Para este ejercicio no consideres símbolos de ambigüedad IUPAC.\nPista: grepl() acepta expresiones regulares; ^[ACGT]+$ describe una o más letras válidas desde el principio hasta el final.\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 2\n\n\n\n\n\n\n\nCódigo\nes_adn_simple &lt;- function(secuencia) {\n  grepl(\"^[ACGT]+$\", secuencia)\n}\n\nes_adn_simple(\"ACGT\")\n\n\n[1] TRUE\n\n\nCódigo\nes_adn_simple(\"ACNT\")\n\n\n[1] FALSE\n\n\nCódigo\nes_adn_simple(\"ACGTX\")\n\n\n[1] FALSE\n\n\nEsta función comprueba un criterio deliberadamente restringido; secuencias reales pueden utilizar códigos de ambigüedad.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#condiciones-e-iteración",
+    "href": "parte1.html#condiciones-e-iteración",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.10 Condiciones e iteración",
+    "text": "2.10 Condiciones e iteración\n\n2.10.1 Condiciones\n\n\nCódigo\nclasificar_longitud &lt;- function(n) {\n  if (is.na(n)) {\n    return(\"desconocida\")\n  }\n  if (n &gt;= 300) {\n    \"larga\"\n  } else {\n    \"corta\"\n  }\n}\n\nclasificar_longitud(450)\n\n\n[1] \"larga\"\n\n\nCódigo\nclasificar_longitud(120)\n\n\n[1] \"corta\"\n\n\nLos umbrales de este ejemplo son arbitrarios y didácticos; no representan categorías biológicas universales.\n\n\n2.10.2 Ciclos y funciones de aplicación\n\n\nCódigo\nfor (id in names(secuencias)) {\n  cat(id, \": \", nchar(secuencias[[id]]), \" nt\\n\", sep = \"\")\n}\n\n\ngenA: 9 nt\ngenB: 8 nt\ngenC: 8 nt\n\n\nCódigo\n# Una alternativa vectorizada:\nnchar(secuencias)\n\n\ngenA genB genC \n   9    8    8 \n\n\nCódigo\n# Aplicar una función a los elementos de una lista:\nlapply(as.list(secuencias), contiene_motivo)\n\n\n$genA\n[1] TRUE\n\n$genB\n[1] FALSE\n\n$genC\n[1] TRUE\n\n\nCódigo\n# Simplificar a un vector lógico:\nsapply(as.list(secuencias), contiene_motivo)\n\n\n genA  genB  genC \n TRUE FALSE  TRUE \n\n\nEn R no siempre necesitamos escribir un ciclo explícito. Más adelante conoceremos purrr::map() para trabajar de manera consistente con colecciones de archivos y resultados.\n\n\n\n\n\n\nNotaEjercicio 3. Comparar estrategias (6 min)\n\n\n\nA partir de secuencias, construye un vector lógico que indique qué secuencias contienen ATG de dos formas: (a) mediante un ciclo for y (b) mediante vapply(). Verifica que los resultados sean iguales.\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 3\n\n\n\n\n\n\n\nCódigo\nresultado_for &lt;- setNames(logical(length(secuencias)), names(secuencias))\nfor (i in seq_along(secuencias)) {\n  resultado_for[i] &lt;- contiene_motivo(secuencias[[i]])\n}\n\nresultado_apply &lt;- vapply(secuencias, contiene_motivo, logical(1))\nidentical(resultado_for, resultado_apply)\n\n\n[1] TRUE\n\n\nvapply() exige que la función devuelva el tipo y tamaño indicados (logical(1)), lo que puede ayudar a detectar errores.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#scripts-paquetes-y-proyectos-rstudio",
+    "href": "parte1.html#scripts-paquetes-y-proyectos-rstudio",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.11 Scripts, paquetes y proyectos RStudio",
+    "text": "2.11 Scripts, paquetes y proyectos RStudio\nYa conoces directorios, rutas relativas y Git. Ahora veamos cómo se integran con R:\nproyecto-bioinfo/\n├── proyecto-bioinfo.Rproj\n├── README.md\n├── .gitignore\n├── data_raw/\n├── R/\n│   └── funciones.R\n├── scripts/\n│   └── 01_resumen.R\n└── results/\nAbre un proyecto existente mediante File &gt; New Project o crea uno nuevo en una carpeta versionada. Un archivo .Rproj almacena opciones del proyecto; no reemplaza a Git.\n\n\nCódigo\n# Ejemplo dentro de scripts/01_resumen.R\nsource(\"R/funciones.R\")\n\ndatos &lt;- read.delim(\"data_raw/anotaciones.tsv\")\n# Validar columnas antes de procesar:\nstopifnot(all(c(\"gen\", \"longitud\") %in% names(datos)))\n\nwrite.table(datos, \"results/anotaciones_revisadas.tsv\",\n            sep = \"\\t\", row.names = FALSE, quote = FALSE)\n\n\nLas rutas del ejemplo se interpretan desde la raíz del proyecto. Si ejecutas Rscript scripts/01_resumen.R desde otra carpeta, el directorio de trabajo puede ser diferente. Para un flujo robusto, acuerda explícitamente desde dónde se ejecutan los scripts o utiliza herramientas de rutas basadas en la raíz del proyecto.\n\n\n\n\n\n\nNotaEjercicio 4. Auditoría rápida (5 min)\n\n\n\nIdentifica al menos cuatro problemas del siguiente fragmento y propón una versión mejorada:\n\n\nCódigo\nsetwd(\"C:/Users/ana/Escritorio/proyecto\")\ninstall.packages(\"readr\")\nx &lt;- readr::read_tsv(\"datos.tsv\")\nx &lt;- x[x$longitud &gt; 100, ]\nwrite.csv(x, \"datos.tsv\")\n\n\n\n\n\n\n\n\n\n\nTipSolución sugerida · Ejercicio 4\n\n\n\n\n\nProblemas: ruta absoluta personal, instalación repetida dentro del script, falta de separación entre datos originales y resultados, escritura de CSV con extensión TSV, ausencia de validaciones y nombres poco descriptivos.\n\n\nCódigo\n# Se ejecuta desde la raíz del proyecto.\nanotaciones &lt;- readr::read_tsv(\"data_raw/anotaciones.tsv\")\nstopifnot(\"longitud\" %in% names(anotaciones))\nseleccion &lt;- anotaciones[!is.na(anotaciones$longitud) &\n                           anotaciones$longitud &gt; 100, ]\ndir.create(\"results\", showWarnings = FALSE)\nreadr::write_tsv(seleccion, \"results/genes_seleccionados.tsv\")",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#actividad-integradora",
+    "href": "parte1.html#actividad-integradora",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.12 Actividad integradora",
+    "text": "2.12 Actividad integradora\n\n\n\n\n\n\nNotaReto. Un resumen de secuencias en R\n\n\n\nRecibes las siguientes secuencias, que ya se consideran extraídas de un archivo FASTA:\n\n\nCódigo\nsecuencias_reto &lt;- c(\n  seq01 = \"ATGCGTAA\",\n  seq02 = \"CCGTTAGC\",\n  seq03 = \"ATGATGCC\",\n  seq04 = \"TTTTGGCA\",\n  seq05 = \"GGATGCCC\"\n)\n\n\nConstruye un script que:\n\nGuarde los identificadores y secuencias en una tabla.\nAgregue una columna con la longitud de cada secuencia.\nAgregue una columna lógica que indique si contiene el motivo literal ATG.\nSeleccione las secuencias que contienen el motivo.\nMuestre cuántas secuencias cumplen la condición.\nOpcional: guarde la tabla completa en un archivo TSV dentro de results/.\n\nAntes de programar, escribe dos líneas que describan entrada → procesamiento → salida. Al finalizar, comprueba manualmente al menos una fila.\n\n\n\n\n\n\n\n\nTipSolución · Actividad integradora\n\n\n\n\n\n\n\nCódigo\nresumen &lt;- data.frame(\n  id = names(secuencias_reto),\n  secuencia = unname(secuencias_reto),\n  stringsAsFactors = FALSE\n)\nresumen$longitud &lt;- nchar(resumen$secuencia)\nresumen$tiene_ATG &lt;- grepl(\"ATG\", resumen$secuencia, fixed = TRUE)\n\nseleccion &lt;- resumen[resumen$tiene_ATG, ]\nprint(resumen)\n\n\n     id secuencia longitud tiene_ATG\n1 seq01  ATGCGTAA        8      TRUE\n2 seq02  CCGTTAGC        8     FALSE\n3 seq03  ATGATGCC        8      TRUE\n4 seq04  TTTTGGCA        8     FALSE\n5 seq05  GGATGCCC        8      TRUE\n\n\nCódigo\nprint(seleccion)\n\n\n     id secuencia longitud tiene_ATG\n1 seq01  ATGCGTAA        8      TRUE\n3 seq03  ATGATGCC        8      TRUE\n5 seq05  GGATGCCC        8      TRUE\n\n\nCódigo\ncat(\"Secuencias con ATG:\", sum(resumen$tiene_ATG), \"\\n\")\n\n\nSecuencias con ATG: 3 \n\n\nCódigo\n# Guardado opcional:\n# dir.create(\"results\", showWarnings = FALSE)\n# write.table(resumen, \"results/resumen_secuencias.tsv\",\n#             sep = \"\\t\", row.names = FALSE, quote = FALSE)\n\n\nEntrada: vector nombrado de secuencias. Procesamiento: obtener longitudes y buscar un patrón literal. Salida: tabla anotada y subconjunto de coincidencias.\nInterpretación: la coincidencia de un motivo corto no permite inferir por sí sola función biológica, ortología o expresión.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  }
+]

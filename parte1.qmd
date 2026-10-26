@@ -1,0 +1,488 @@
+# De Bash a R: programación para bioinformática
+
+
+::: {.callout-tip title="Objetivos de aprendizaje"}
+Al finalizar la sesión podrás:
+
+1. Trabajar con scripts y objetos en R y reconocer las diferencias esenciales con Bash.
+2. Utilizar vectores, listas y `data.frame` para representar datos biológicos.
+3. Seleccionar registros, construir funciones y recorrer colecciones de datos.
+4. Instalar, cargar y consultar paquetes de R.
+5. Integrar un script de R a un repositorio bioinformático que ya utiliza Git.
+:::
+
+::: {.callout-note title="Punto de partida"}
+**Ya conoces** terminal de Linux, Git/GitHub, Markdown, procedencia de datos, FASTA, BED, alineamientos y anotaciones. No repetiremos esos temas: los usaremos como contexto para aprender **la sintaxis y la forma de trabajo de R**. No se requieren conocimientos de estadística.
+:::
+
+# Material previo opcional: instalación y preparación del entorno
+
+::: {.callout-note title="Antes de la primera sesión · No cuenta dentro de las dos horas"}
+Realiza esta preparación **solo si todavía no tienes R y las herramientas necesarias**. No es necesario reinstalar programas que ya funcionan. Las instrucciones varían según el sistema operativo. Si utilizas un clúster compartido, sigue primero las indicaciones de sus administradores.
+:::
+
+## ¿Qué son R, RStudio y las herramientas de compilación?
+
+- **R** es el lenguaje y el entorno que ejecuta los análisis.
+- **RStudio Desktop** es un entorno de desarrollo (IDE) para editar scripts, trabajar con proyectos y ejecutar R; no sustituye la instalación de R.
+- **Las herramientas de compilación** permiten instalar paquetes desde su código fuente cuando no existe un binario apropiado o cuando el paquete requiere compilación. **No todos los paquetes las necesitan.**
+
+## Windows: R, RStudio y Rtools
+
+1. Descarga e instala R desde <https://cran.r-project.org/bin/windows/base/>.
+2. Descarga e instala RStudio Desktop desde <https://posit.co/download/rstudio-desktop/>.
+3. Consulta <https://cran.r-project.org/bin/windows/Rtools/> e instala **la versión de Rtools compatible con tu versión de R**. No elijas una versión al azar: CRAN indica las correspondencias.
+4. Reinicia RStudio después de instalar las herramientas, si ya estaba abierto.
+
+**Verificación de Rtools (desde la consola de R):**
+
+```{r}
+#| eval: false
+install.packages("pkgbuild")  # Solo si aún no está instalado
+pkgbuild::check_build_tools(debug = TRUE)
+```
+
+Si la verificación falla, revisa las instrucciones de CRAN para la versión instalada de R y Rtools antes de modificar manualmente variables como `PATH`.
+
+## macOS: R, RStudio y herramientas de desarrollo
+
+1. Instala la versión de R correspondiente a tu equipo desde <https://cran.r-project.org/bin/macosx/> (verifica si es Apple Silicon o Intel).
+2. Instala RStudio Desktop desde <https://posit.co/download/rstudio-desktop/>.
+3. En la **terminal de macOS**, instala las herramientas de línea de comandos de Xcode:
+
+```{bash}
+#| eval: false
+xcode-select --install
+```
+
+4. Algunos paquetes que compilan código Fortran requieren **GNU Fortran** además de las herramientas anteriores. Consulta las versiones y las indicaciones oficiales en <https://mac.r-project.org/tools/>; deben ser compatibles con tu instalación de R.
+
+No hace falta instalar Xcode completo para la mayoría de las tareas de compilación de paquetes de R.
+
+## Linux: R y compiladores del sistema
+
+En Ubuntu o Debian, si tienes permisos de administración y todavía no están instalados, puedes ejecutar **en la terminal**:
+
+```{bash}
+#| eval: false
+sudo apt update
+sudo apt install -y r-base r-base-dev build-essential gfortran
+```
+
+Después puedes instalar RStudio Desktop desde <https://posit.co/download/rstudio-desktop/> si deseas utilizarlo.
+
+En otras distribuciones (Fedora, Arch, etc.), los nombres de los paquetes y los comandos del gestor de paquetes son diferentes. Algunas bibliotecas adicionales (`libcurl`, `libxml2`, `libssl`, entre otras) pueden ser necesarias **solo para determinados paquetes de R**.
+
+**En un clúster o servidor compartido**, no ejecutes `sudo` ni intentes instalar paquetes globales sin autorización. Comprueba si R está disponible:
+
+```{bash}
+#| eval: false
+R --version
+Rscript --version
+# En sistemas que usan módulos, consulta la documentación local:
+module avail R
+```
+
+## Comprobar la instalación de R
+
+Abre RStudio (o una sesión interactiva de R) y ejecuta:
+
+```{r}
+R.version.string
+Sys.info()[["sysname"]]
+2 + 2
+```
+
+## Instalar y cargar paquetes de R
+
+Un paquete se **instala** una vez por entorno o biblioteca; se **carga** con `library()` en cada sesión en la que se necesita. No incluyas `install.packages()` en scripts de análisis que deban ejecutarse repetidamente.
+
+```{r}
+#| eval: false
+# Ejecutar en la consola, una vez por entorno:
+install.packages(c("readr", "dplyr", "tidyr", "ggplot2", "purrr", "here"))
+
+# En los scripts, cargar los paquetes necesarios:
+library(readr)
+library(dplyr)
+
+# También se puede llamar una función con paquete::función:
+# readr::read_tsv("data_raw/anotaciones.tsv")
+```
+
+Para comprobar las herramientas de compilación de tu sistema, cuando corresponda:
+
+```{r}
+#| eval: false
+if (!requireNamespace("pkgbuild", quietly = TRUE)) {
+  install.packages("pkgbuild")
+}
+pkgbuild::check_build_tools(debug = TRUE)
+```
+
+Para revisar el entorno y consultar la ayuda:
+
+```{r}
+R.version.string
+"readr" %in% rownames(installed.packages())
+sessionInfo()
+?read.table
+```
+
+::: {.callout-note title="Paquetes de Bioconductor"}
+Además de CRAN, en bioinformática se utilizan paquetes de **Bioconductor**, cuyo instalador recomendado es `BiocManager`. No es necesario instalar paquetes especializados en esta primera sesión.
+
+```{r}
+#| eval: false
+install.packages("BiocManager")
+BiocManager::install("Biostrings")  # Ejemplo; solo cuando se necesite
+```
+:::
+
+::: {.callout-warning title="Si falla una instalación"}
+Lee el **primer mensaje de error relevante**: distingue entre problemas de red, permisos, versión de R, herramientas de compilación y bibliotecas externas. Un paquete que se instala desde un binario puede no necesitar compiladores, mientras que el mismo paquete instalado desde código fuente sí puede necesitarlos. En equipos institucionales o clústeres, consulta al personal administrador cuando falten dependencias del sistema.
+:::
+
+### Lista de verificación antes de la clase
+
+- [ ] Puedo abrir R y ejecutar `2 + 2`.
+- [ ] Puedo abrir RStudio, o sé cómo ejecutar `Rscript` en mi entorno.
+- [ ] Puedo instalar y cargar un paquete de CRAN.
+- [ ] Conozco qué herramientas de compilación corresponden a mi sistema y cómo verificar si están disponibles.
+- [ ] Puedo consultar `sessionInfo()` para documentar mi entorno.
+
+---
+
+## De la terminal a la consola de R 
+
+Ya has utilizado herramientas de línea de comandos para transformar datos. R es otro entorno de programación: conserva ideas conocidas (variables, funciones, condiciones, ciclos), pero utiliza sintaxis y estructuras propias.
+
+| Tarea | Bash | R |
+|---|---|---|
+| Asignar valor | `n=5` | `n <- 5` |
+| Mostrar valor | `echo "$n"` | `print(n)` |
+| Ejecutar archivo | `bash script.sh` | `Rscript script.R` |
+| Comentario | `# comentario` | `# comentario` |
+| Consultar ayuda | `man awk` | `?read.table` |
+
+```{r}
+n <- 5
+n * 2
+mensaje <- "Hola, bioinformática"
+print(mensaje)
+```
+
+**Prueba en RStudio:** escribe una instrucción en la consola y luego guárdala en un archivo `.R`. Ejecuta una línea del script. ¿Qué diferencia encuentras entre guardar instrucciones y ejecutarlas interactivamente?
+
+## Objetos y estructuras de datos 
+
+### Tipos básicos y vectores
+
+En R, un vector atómico contiene elementos del mismo tipo. Los índices **comienzan en 1**, no en 0.
+
+```{r}
+ids <- c("genA", "genB", "genC", "genD")
+longitudes <- c(150, 320, 90, 210)
+anotado <- c(TRUE, FALSE, TRUE, TRUE)
+
+class(ids)
+length(ids)
+ids[1]
+ids[c(2, 4)]
+longitudes[longitudes >= 200]
+```
+
+Las comparaciones producen vectores lógicos que pueden utilizarse para seleccionar elementos. Los valores faltantes se representan con `NA`.
+
+```{r}
+longitudes2 <- c(150, NA, 90)
+is.na(longitudes2)
+longitudes2[!is.na(longitudes2)]
+```
+
+::: {.callout-note title="Ejercicio 1. Selección de genes (5 min)"}
+Crea los vectores `genes <- c("g1", "g2", "g3", "g4", "g5")` y `tam <- c(450, 120, 800, 300, 75)`.
+
+1. Obtén el tercer identificador.
+2. Selecciona los genes con longitud **mayor o igual a 300**.
+3. Cuenta cuántos genes cumplen esa condición, sin utilizar ciclos.
+:::
+
+::: {.callout-tip collapse="true" title="Solución · Ejercicio 1"}
+```{r}
+genes <- c("g1", "g2", "g3", "g4", "g5")
+tam <- c(450, 120, 800, 300, 75)
+genes[3]
+genes[tam >= 300]
+sum(tam >= 300)
+```
+`sum()` cuenta los valores `TRUE` porque en operaciones aritméticas equivalen a 1.
+:::
+
+### Tablas: data frames
+
+Un `data.frame` representa una tabla cuyas columnas pueden tener tipos diferentes. Aquí cada fila corresponde a un gen.
+
+```{r}
+anotaciones <- data.frame(
+  gen = c("g1", "g2", "g3", "g4"),
+  longitud = c(450, 120, 800, 300),
+  producto = c("transportador", "hipotetica", "enzima", "enzima"),
+  stringsAsFactors = FALSE
+)
+anotaciones
+str(anotaciones)
+anotaciones$gen
+anotaciones[anotaciones$producto == "enzima", ]
+```
+
+Recuerda la diferencia entre seleccionar una columna (`anotaciones$gen`), una fila (`anotaciones[2, ]`) y una celda (`anotaciones[2, 3]`).
+
+### Listas
+
+Una lista puede almacenar objetos de tipos y tamaños diferentes, por ejemplo secuencias, metadatos y una tabla de resultados.
+
+```{r}
+muestra <- list(
+  id = "M01",
+  secuencias = c("ATGCGT", "ATTA", "GGCCATG"),
+  anotaciones = anotaciones
+)
+muestra$id
+muestra$secuencias
+muestra[["anotaciones"]]
+```
+
+::: {.callout-important title="No confundir"}
+Un vector atómico, una lista y un `data.frame` **no son equivalentes**. Elegir la estructura apropiada facilita el procesamiento y evita conversiones innecesarias.
+:::
+
+## Operaciones, indexación y funciones 
+
+### Trabajar con secuencias como cadenas de caracteres
+
+Usaremos secuencias cortas para practicar funciones de R; esto **no reemplaza** herramientas especializadas para archivos FASTA grandes.
+
+```{r}
+secuencias <- c(
+  genA = "ATGCCGTAA",
+  genB = "CCGTTAGG",
+  genC = "ATGATGCC"
+)
+
+nchar(secuencias)                 # Longitud de cada cadena
+grepl("ATG", secuencias)        # ¿Contiene el patrón literal?
+names(secuencias)[grepl("ATG", secuencias)]
+```
+
+`grepl()` devuelve un vector lógico; `grep()` devuelve posiciones (o valores con argumentos adicionales). Encontrar `ATG` no basta para identificar genes funcionales ni validar un marco de lectura.
+
+### Definir funciones
+
+```{r}
+contiene_motivo <- function(secuencia, motivo = "ATG") {
+  grepl(motivo, secuencia, fixed = TRUE)
+}
+
+contiene_motivo("CCATGTT")
+contiene_motivo("CCATGTT", "TGA")
+```
+
+Una función recibe argumentos, realiza operaciones y devuelve un resultado. Los nombres de los argumentos deben expresar qué información espera la función.
+
+::: {.callout-note title="Ejercicio 2. Una función reutilizable (7 min)"}
+Escribe una función `es_adn_simple()` que reciba una cadena y devuelva `TRUE` si contiene únicamente las letras `A`, `C`, `G` y `T` (en mayúsculas). Prueba con `"ACGT"`, `"ACNT"` y `"ACGTX"`. Para este ejercicio no consideres símbolos de ambigüedad IUPAC.
+
+**Pista:** `grepl()` acepta expresiones regulares; `^[ACGT]+$` describe una o más letras válidas desde el principio hasta el final.
+:::
+
+::: {.callout-tip collapse="true" title="Solución · Ejercicio 2"}
+```{r}
+es_adn_simple <- function(secuencia) {
+  grepl("^[ACGT]+$", secuencia)
+}
+
+es_adn_simple("ACGT")
+es_adn_simple("ACNT")
+es_adn_simple("ACGTX")
+```
+Esta función comprueba un criterio deliberadamente restringido; secuencias reales pueden utilizar códigos de ambigüedad.
+:::
+
+## Condiciones e iteración 
+
+### Condiciones
+
+```{r}
+clasificar_longitud <- function(n) {
+  if (is.na(n)) {
+    return("desconocida")
+  }
+  if (n >= 300) {
+    "larga"
+  } else {
+    "corta"
+  }
+}
+
+clasificar_longitud(450)
+clasificar_longitud(120)
+```
+
+Los umbrales de este ejemplo son **arbitrarios y didácticos**; no representan categorías biológicas universales.
+
+### Ciclos y funciones de aplicación
+
+```{r}
+for (id in names(secuencias)) {
+  cat(id, ": ", nchar(secuencias[[id]]), " nt\n", sep = "")
+}
+
+# Una alternativa vectorizada:
+nchar(secuencias)
+
+# Aplicar una función a los elementos de una lista:
+lapply(as.list(secuencias), contiene_motivo)
+
+# Simplificar a un vector lógico:
+sapply(as.list(secuencias), contiene_motivo)
+```
+
+En R no siempre necesitamos escribir un ciclo explícito. Más adelante conoceremos `purrr::map()` para trabajar de manera consistente con colecciones de archivos y resultados.
+
+::: {.callout-note title="Ejercicio 3. Comparar estrategias (6 min)"}
+A partir de `secuencias`, construye un vector lógico que indique qué secuencias contienen `ATG` de dos formas: (a) mediante un ciclo `for` y (b) mediante `vapply()`. Verifica que los resultados sean iguales.
+:::
+
+::: {.callout-tip collapse="true" title="Solución · Ejercicio 3"}
+```{r}
+resultado_for <- setNames(logical(length(secuencias)), names(secuencias))
+for (i in seq_along(secuencias)) {
+  resultado_for[i] <- contiene_motivo(secuencias[[i]])
+}
+
+resultado_apply <- vapply(secuencias, contiene_motivo, logical(1))
+identical(resultado_for, resultado_apply)
+```
+`vapply()` exige que la función devuelva el tipo y tamaño indicados (`logical(1)`), lo que puede ayudar a detectar errores.
+:::
+
+## Scripts, paquetes y proyectos RStudio
+
+Ya conoces directorios, rutas relativas y Git. Ahora veamos cómo se integran con R:
+
+```text
+proyecto-bioinfo/
+├── proyecto-bioinfo.Rproj
+├── README.md
+├── .gitignore
+├── data_raw/
+├── R/
+│   └── funciones.R
+├── scripts/
+│   └── 01_resumen.R
+└── results/
+```
+
+Abre un proyecto existente mediante **File > New Project** o crea uno nuevo en una carpeta versionada. Un archivo `.Rproj` almacena opciones del proyecto; no reemplaza a Git.
+
+```{r}
+#| eval: false
+# Ejemplo dentro de scripts/01_resumen.R
+source("R/funciones.R")
+
+datos <- read.delim("data_raw/anotaciones.tsv")
+# Validar columnas antes de procesar:
+stopifnot(all(c("gen", "longitud") %in% names(datos)))
+
+write.table(datos, "results/anotaciones_revisadas.tsv",
+            sep = "\t", row.names = FALSE, quote = FALSE)
+```
+
+Las rutas del ejemplo se interpretan desde la **raíz del proyecto**. Si ejecutas `Rscript scripts/01_resumen.R` desde otra carpeta, el directorio de trabajo puede ser diferente. Para un flujo robusto, acuerda explícitamente desde dónde se ejecutan los scripts o utiliza herramientas de rutas basadas en la raíz del proyecto.
+
+::: {.callout-note title="Ejercicio 4. Auditoría rápida (5 min)"}
+Identifica **al menos cuatro problemas** del siguiente fragmento y propón una versión mejorada:
+
+```{r}
+#| eval: false
+setwd("C:/Users/ana/Escritorio/proyecto")
+install.packages("readr")
+x <- readr::read_tsv("datos.tsv")
+x <- x[x$longitud > 100, ]
+write.csv(x, "datos.tsv")
+```
+:::
+
+::: {.callout-tip collapse="true" title="Solución sugerida · Ejercicio 4"}
+Problemas: ruta absoluta personal, instalación repetida dentro del script, falta de separación entre datos originales y resultados, escritura de CSV con extensión TSV, ausencia de validaciones y nombres poco descriptivos.
+
+```{r}
+#| eval: false
+# Se ejecuta desde la raíz del proyecto.
+anotaciones <- readr::read_tsv("data_raw/anotaciones.tsv")
+stopifnot("longitud" %in% names(anotaciones))
+seleccion <- anotaciones[!is.na(anotaciones$longitud) &
+                           anotaciones$longitud > 100, ]
+dir.create("results", showWarnings = FALSE)
+readr::write_tsv(seleccion, "results/genes_seleccionados.tsv")
+```
+:::
+
+## Actividad integradora
+
+::: {.callout-note title="Reto. Un resumen de secuencias en R"}
+Recibes las siguientes secuencias, que ya se consideran extraídas de un archivo FASTA:
+
+```{r}
+secuencias_reto <- c(
+  seq01 = "ATGCGTAA",
+  seq02 = "CCGTTAGC",
+  seq03 = "ATGATGCC",
+  seq04 = "TTTTGGCA",
+  seq05 = "GGATGCCC"
+)
+```
+
+Construye un script que:
+
+1. Guarde los identificadores y secuencias en una tabla.
+2. Agregue una columna con la longitud de cada secuencia.
+3. Agregue una columna lógica que indique si contiene el motivo literal `ATG`.
+4. Seleccione las secuencias que contienen el motivo.
+5. Muestre cuántas secuencias cumplen la condición.
+6. **Opcional:** guarde la tabla completa en un archivo TSV dentro de `results/`.
+
+Antes de programar, escribe dos líneas que describan **entrada → procesamiento → salida**. Al finalizar, comprueba manualmente al menos una fila.
+:::
+
+::: {.callout-tip collapse="true" title="Solución · Actividad integradora"}
+```{r}
+resumen <- data.frame(
+  id = names(secuencias_reto),
+  secuencia = unname(secuencias_reto),
+  stringsAsFactors = FALSE
+)
+resumen$longitud <- nchar(resumen$secuencia)
+resumen$tiene_ATG <- grepl("ATG", resumen$secuencia, fixed = TRUE)
+
+seleccion <- resumen[resumen$tiene_ATG, ]
+print(resumen)
+print(seleccion)
+cat("Secuencias con ATG:", sum(resumen$tiene_ATG), "\n")
+
+# Guardado opcional:
+# dir.create("results", showWarnings = FALSE)
+# write.table(resumen, "results/resumen_secuencias.tsv",
+#             sep = "\t", row.names = FALSE, quote = FALSE)
+```
+**Entrada:** vector nombrado de secuencias. **Procesamiento:** obtener longitudes y buscar un patrón literal. **Salida:** tabla anotada y subconjunto de coincidencias.
+
+**Interpretación:** la coincidencia de un motivo corto no permite inferir por sí sola función biológica, ortología o expresión.
+:::
+
+# Cierre 
+
+Comprueba que puedes explicar la diferencia entre un vector, una lista y un `data.frame`; escribir una función; seleccionar registros mediante condiciones; y ejecutar un script desde un proyecto de RStudio.
+
+**Para la siguiente sesión:** trabajaremos con archivos TSV de anotaciones y metadatos que contienen inconsistencias deliberadas. Utilizaremos R para importarlos, inspeccionarlos y validar su estructura, sin recurrir a métodos estadísticos.
