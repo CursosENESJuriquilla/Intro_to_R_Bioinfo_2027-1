@@ -20,7 +20,7 @@
 ### Calendario de sesiones
 
 | Sesión | Fecha | Horario asignado | Aula | Tema |
-|:-------------:|---------------|---------------|---------------|---------------|
+|:--:|----|----|----|----|
 | 1 | Miércoles 4 de noviembre | 3:00–5:30 p. m. | VI-204 | Introducción a R y organización de proyectos bioinformáticos |
 | 2 | Jueves 5 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Importación, exploración y validación de datos biológicos |
 | 3 | Miércoles 11 de noviembre | 3:00–5:30 p. m. | VI-204 | Manipulación y transformación de datos con `dplyr` y `tidyr` |
@@ -92,7 +92,6 @@ Los porcentajes corresponden a la **asignatura Bioinformática I**. Las activida
 ### Prácticas y tareas
 
 Las prácticas y tareas se documentarán y entregarán en el **repositorio Git** correspondiente, de acuerdo con las instrucciones y fechas establecidas. En las sesiones de R se trabajará con scripts, procesamiento de archivos, validación de datos, visualizaciones y reportes reproducibles.
-
 
 ### Exámenes y oportunidades de recuperación
 
