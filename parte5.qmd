@@ -1,46 +1,331 @@
-# Funciones propias
+# Funciones en R
 
-Una función encapsula instrucciones que deseamos reutilizar. Se define con `function()`, recibe argumentos y devuelve un resultado. En R, la última expresión evaluada se devuelve de manera implícita; `return()` permite hacerlo explícitamente.
+En un análisis bioinformático es frecuente repetir una misma tarea: calcular la longitud de distintas secuencias, revisar que una secuencia contenga únicamente nucleótidos válidos o resumir los conteos de diferentes muestras. En lugar de copiar y pegar instrucciones, podemos **definir una función** y reutilizarla con distintos datos.
+
+Una función recibe **argumentos**, ejecuta instrucciones y devuelve un **resultado**. En R se construye con `function()` y se asigna a un nombre mediante `<-`.
 
 ```{r}
-longitud_secuencia <- function(secuencia) {
+#| eval: false
+nombre_funcion <- function(argumentos) {
+  # Instrucciones
+  resultado
+}
+```
+
+La última expresión evaluada se devuelve automáticamente. También podemos indicar explícitamente qué devolver mediante `return()`.
+
+## Crear y utilizar una función
+
+Supongamos que tenemos varias secuencias de ADN y queremos conocer cuántos nucleótidos contiene cada una. La función `nchar()` ya realiza ese cálculo, pero podemos incorporarla a una función propia para ilustrar su estructura.
+
+```{r}
+longitud_adn <- function(secuencia) {
+  longitud <- nchar(secuencia)
+  return(longitud)
+}
+
+longitud_adn("ATGCGTAA")
+longitud_adn("CCGTA")
+```
+
+Aquí, `secuencia` es el **parámetro** definido en la función; `"ATGCGTAA"` es el **argumento** que proporcionamos al llamarla. La variable `longitud` se crea dentro de la función.
+
+Podemos escribir la misma función sin `return()`:
+
+```{r}
+longitud_adn <- function(secuencia) {
   nchar(secuencia)
 }
 
-longitud_secuencia("ATGCC")
+longitud_adn("ATGCGTAA")
 ```
 
-Los argumentos pueden tener valores predeterminados y pueden verificarse antes de operar:
+::: {.callout-note icon="false"}
+Las funciones permiten organizar el código, pero no es necesario crear una función nueva para cada operación. Si una función existente, como `nchar()`, ya resuelve directamente nuestra tarea, podemos utilizarla. Conviene definir funciones propias cuando queremos **reutilizar varios pasos**, expresar claramente una tarea o incorporar validaciones.
+:::
+
+### Funciones con varios argumentos
+
+Una función puede recibir más de un argumento. Por ejemplo, podemos comprobar si una secuencia contiene un motivo específico de ADN mediante `grepl()`.
 
 ```{r}
-contiene_motivo <- function(secuencia, motivo = "ATG") {
-  stopifnot(is.character(secuencia), length(secuencia) == 1L,
-            !is.na(secuencia), is.character(motivo),
-            length(motivo) == 1L, !is.na(motivo), nzchar(motivo))
+contiene_motivo <- function(secuencia, motivo) {
   grepl(motivo, secuencia, fixed = TRUE)
 }
 
-contiene_motivo("CCATGAA")
-contiene_motivo("CCATGAA", motivo = "TAA")
+contiene_motivo("ATGCGTAA", "CGT")
+contiene_motivo("ATGCGTAA", "GGG")
 ```
 
-La función `grepl()` busca coincidencias; `fixed = TRUE` indica que el motivo debe interpretarse como texto literal, no como expresión regular. Para conjuntos de secuencias grandes o análisis especializados utilizaremos herramientas apropiadas en otras prácticas.
+El argumento `fixed = TRUE` indica que buscamos el motivo como texto literal, sin interpretarlo como una expresión regular. La función devuelve `TRUE` o `FALSE`.
 
-::: {.callout-note title="Ejercicio 4. Escribir una función"}
-Escribe una función `contar_gc()` que reciba **una secuencia de ADN no vacía** compuesta únicamente por A, C, G y T, y devuelva el número de nucleótidos G o C. Prueba tu función con `"ATGCGC"` y `"AAAA"`. Como reto adicional, valida la entrada.
-:::
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 1: Función 1
 
-::: {.callout-tip collapse="true" title="Solución · Ejercicio 4"}
+Escribe una función llamada `empieza_con` que reciba una secuencia y un prefijo, y determine si la secuencia comienza con ese prefijo. Pruébala con `"ATGCGT"` y los prefijos `"ATG"` y `"TGA"`.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
 ```{r}
-contar_gc <- function(secuencia) {
-  stopifnot(is.character(secuencia), length(secuencia) == 1L,
-            !is.na(secuencia), grepl("^[ACGT]+$", secuencia))
-  letras <- strsplit(secuencia, "", fixed = TRUE)[[1]]
-  sum(letras %in% c("G", "C"))
+empieza_con <- function(secuencia, prefijo) {
+  startsWith(secuencia, prefijo)
 }
-contar_gc("ATGCGC")
-contar_gc("AAAA")
+
+empieza_con("ATGCGT", "ATG")
+empieza_con("ATGCGT", "TGA")
 ```
-El primer resultado es 4 y el segundo es 0. La función exige letras mayúsculas y no contempla bases ambiguas; esa restricción forma parte de su contrato.
+
+`startsWith()` devuelve un valor lógico e identifica si el texto comienza con el prefijo indicado.
+:::
+::::
+
+## Argumentos con valores predeterminados
+
+Podemos asignar valores por defecto a algunos parámetros. Así, quien utilice la función solo necesita proporcionar los argumentos que quiera modificar.
+
+Por ejemplo, una función puede convertir secuencias a mayúsculas y, opcionalmente, sustituir las letras `T` por `U` para representar una secuencia de ARN.
+
+```{r}
+preparar_secuencia <- function(secuencia, tipo = "ADN", mayusculas = TRUE) {
+  if (mayusculas) {
+    secuencia <- toupper(secuencia)
+  }
+
+  if (tipo == "ARN") {
+    secuencia <- chartr("T", "U", secuencia)
+  }
+
+  secuencia
+}
+
+preparar_secuencia("atgcgt")
+preparar_secuencia("atgcgt", tipo = "ARN")
+preparar_secuencia("atgcgt", mayusculas = FALSE)
+```
+
+Observa que `tipo` tiene el valor predeterminado `"ADN"` y `mayusculas` tiene el valor `TRUE`. Es recomendable escribir el **nombre del argumento** cuando omitimos alguno de los anteriores o cuando queremos que la llamada sea más fácil de leer.
+
+```{r}
+preparar_secuencia("atgcgt", tipo = "ARN", mayusculas = TRUE)
+```
+
+::: {.callout-important icon="false"}
+La función anterior es un ejemplo didáctico de transformación de texto: **no valida** si la secuencia contiene caracteres biológicos válidos. Tampoco comprueba que el tipo indicado sea `"ADN"` o `"ARN"`. Más adelante veremos cómo incorporar esas verificaciones.
 :::
 
+## Devolver varios resultados mediante una lista
+
+En R, una función devuelve un solo objeto. Si necesitamos varios resultados, podemos reunirlos en una **lista**, que puede contener elementos de diferentes tipos.
+
+Supongamos que queremos resumir una secuencia de ADN mediante su identificador, longitud y número de nucleótidos `G` y `C`.
+
+```{r}
+resumir_adn <- function(id, secuencia) {
+  secuencia <- toupper(secuencia)
+  bases <- strsplit(secuencia, split = "", fixed = TRUE)[[1]]
+
+  list(
+    id = id,
+    longitud = nchar(secuencia),
+    conteo_gc = sum(bases %in% c("G", "C"))
+  )
+}
+
+resultado <- resumir_adn("GEN_01", "ATGCGTAA")
+resultado
+resultado$id
+resultado[["longitud"]]
+```
+
+La expresión `strsplit(...)[[1]]` separa los caracteres de la secuencia y extrae el vector resultante de la lista. El operador `%in%` comprueba cuáles caracteres pertenecen al conjunto `c("G", "C")`, y `sum()` cuenta los valores `TRUE`.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 2: Función 2
+
+Modifica `resumir_adn()` para que también devuelva la proporción de nucleótidos `G` y `C` respecto de la longitud total. Prueba la función con una secuencia no vacía.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+resumir_adn <- function(id, secuencia) {
+  secuencia <- toupper(secuencia)
+  bases <- strsplit(secuencia, "", fixed = TRUE)[[1]]
+  longitud <- nchar(secuencia)
+  conteo_gc <- sum(bases %in% c("G", "C"))
+
+  list(
+    id = id,
+    longitud = longitud,
+    conteo_gc = conteo_gc,
+    proporcion_gc = conteo_gc / longitud
+  )
+}
+
+resumir_adn("GEN_01", "ATGCGTAA")
+```
+
+En esta versión suponemos que la secuencia no está vacía y contiene únicamente bases válidas. La proporción es una descripción de la composición de la secuencia, no una prueba estadística.
+:::
+::::
+
+## Validar argumentos: `stop()` y `stopifnot()`
+
+Una función debe evitar producir resultados engañosos cuando recibe datos incorrectos. Podemos comprobar las entradas y detener su ejecución con `stop()`, que permite mostrar un mensaje personalizado.
+
+```{r}
+validar_adn <- function(secuencia) {
+  if (!is.character(secuencia) || length(secuencia) != 1 ||
+      is.na(secuencia) || !grepl("^[ACGT]+$", toupper(secuencia))) {
+    stop("Se requiere una secuencia no vacía con bases A, C, G o T.")
+  }
+
+  TRUE
+}
+
+validar_adn("ATGCGT")
+```
+
+En esta función, `^[ACGT]+$` es una **expresión regular**: exige que todos los caracteres sean `A`, `C`, `G` o `T`, y que exista al menos uno. El uso de `toupper()` permite aceptar letras minúsculas.
+
+```{r}
+#| eval: false
+validar_adn("ATNG")  # Error: contiene N
+validar_adn(1234)    # Error: no es texto
+```
+
+Para verificaciones breves también existe `stopifnot()`. Esta función detiene la ejecución si **alguna** de las condiciones que recibe no se cumple.
+
+```{r}
+longitud_validada <- function(secuencia) {
+  stopifnot(is.character(secuencia), length(secuencia) == 1,
+            !is.na(secuencia))
+  nchar(secuencia)
+}
+
+longitud_validada("ATGCGT")
+```
+
+::: {.callout-note icon="false"}
+`stop()` resulta útil cuando queremos explicar claramente el problema. `stopifnot()` es práctico para comprobaciones cortas, aunque sus mensajes de error suelen ser menos descriptivos. En ambos casos, la función deja de ejecutarse si falla la validación.
+:::
+
+## Combinar funciones y estructuras de control
+
+Las funciones pueden incorporar `if`, `for` y `while`. Por ejemplo, podemos revisar varias secuencias y registrar cuáles contienen únicamente las bases `A`, `C`, `G` y `T`.
+
+```{r}
+revisar_secuencias <- function(secuencias) {
+  resultado <- logical(length(secuencias))
+
+  for (i in seq_along(secuencias)) {
+    secuencia <- secuencias[i]
+
+    if (is.na(secuencia)) {
+      resultado[i] <- FALSE
+    } else {
+      resultado[i] <- grepl("^[ACGT]+$", toupper(secuencia))
+    }
+  }
+
+  resultado
+}
+
+secuencias <- c("ATGCGT", "ACNTGA", "ttacga", NA)
+revisar_secuencias(secuencias)
+```
+
+`logical(length(secuencias))` crea un vector lógico para almacenar los resultados, mientras que `seq_along(secuencias)` genera los índices necesarios para recorrer el vector.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 3: Función 3
+
+Crea una función llamada `clasificar_secuencias` que reciba un vector de secuencias y devuelva una lista con dos elementos:
+
+- `validas`: las secuencias formadas únicamente por `A`, `C`, `G` y `T`.
+- `invalidas`: las secuencias que contienen otros caracteres o valores faltantes.
+
+Utiliza la función `revisar_secuencias()` del ejemplo anterior.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+clasificar_secuencias <- function(secuencias) {
+  stopifnot(is.character(secuencias))
+
+  es_valida <- revisar_secuencias(secuencias)
+
+  list(
+    validas = secuencias[es_valida],
+    invalidas = secuencias[!es_valida]
+  )
+}
+
+clasificar_secuencias(c("ATGCGT", "ACNTGA", "ttacga", NA))
+```
+
+La función devuelve una lista con dos vectores de caracteres. Los valores faltantes se conservan dentro del grupo `invalidas`.
+:::
+::::
+
+## Actividad Final
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 4
+
+Un archivo de secuencias ha sido representado en R mediante dos vectores:
+
+```{r}
+ids <- c("seq_01", "seq_02", "seq_03", "seq_04")
+secuencias <- c("ATGCGT", "ACNTGA", "GGCCAA", "TTTAAA")
+```
+
+Escribe una función `crear_reporte_secuencias(ids, secuencias)` que:
+
+1. Compruebe que ambos argumentos son vectores de caracteres y tienen la misma longitud.
+2. Identifique las secuencias válidas mediante `revisar_secuencias()`.
+3. Devuelva un `data.frame` con las columnas `id`, `secuencia`, `longitud` y `valida`.
+4. Asigne `NA` a la longitud de las secuencias inválidas.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+crear_reporte_secuencias <- function(ids, secuencias) {
+  if (!is.character(ids) || !is.character(secuencias)) {
+    stop("Los identificadores y las secuencias deben ser texto.")
+  }
+  if (length(ids) != length(secuencias)) {
+    stop("Debe haber un identificador por cada secuencia.")
+  }
+
+  valida <- revisar_secuencias(secuencias)
+  longitud <- nchar(secuencias)
+  longitud[!valida] <- NA_integer_
+
+  data.frame(
+    id = ids,
+    secuencia = secuencias,
+    longitud = longitud,
+    valida = valida
+  )
+}
+
+crear_reporte_secuencias(ids, secuencias)
+```
+
+Este ejemplo integra **funciones, validaciones, condicionales, vectores y data frames**. En las próximas sesiones trabajaremos con tablas importadas desde archivos y aplicaremos transformaciones similares.
+:::
+::::
+
+## Resumen
+
+- Una función se define con `function()` y se guarda en un objeto mediante `<-`.
+- Los argumentos permiten reutilizar el mismo procedimiento con diferentes datos.
+- Los parámetros pueden tener valores predeterminados.
+- El resultado se devuelve con `return()` o mediante la última expresión evaluada.
+- Una lista permite reunir varios resultados en un único objeto.
+- `stop()` y `stopifnot()` ayudan a detectar entradas incorrectas.
+- Combinar funciones con estructuras de control permite automatizar tareas repetitivas en análisis bioinformáticos.

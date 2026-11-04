@@ -1,54 +1,40 @@
-## Objetos y estructuras de datos en R
-
-
-### Recordatorio
-
-Al abrir RStudio Desktop encontrarás normalmente cuatro áreas:
-
-- **Source (editor):** permite escribir y guardar scripts `.R` y documentos `.qmd`.
-- **Console:** ejecuta instrucciones de R y muestra sus resultados o errores.
-- **Environment/History:** muestra objetos creados durante la sesión y comandos anteriores.
-- **Files/Plots/Packages/Help:** permite navegar archivos, ver gráficos, gestionar paquetes y consultar documentación.
-
-Los paneles pueden cambiar de posición desde **Tools > Global Options > Pane Layout**. Para modificar el tema visual, utiliza **Tools > Global Options > Appearance**.
-
-Escribe estas instrucciones **una por una en la consola de RStudio**:
-
-```{r}
-2 + 3 * 4
-sqrt(81)
-R.version.string
-getwd()
-```
-
-`getwd()` muestra la carpeta de trabajo actual; al trabajar con un proyecto de RStudio podemos administrar mejor nuestras rutas.
-
-
-
-
+# Objetos y estructuras de datos en R
 
 ## Asignación, nombres y tipos básicos
 
 Un **objeto** almacena un valor o una estructura que podremos reutilizar. Usaremos `<-` para asignar valores. Los nombres distinguen mayúsculas de minúsculas: `gen` y `Gen` son objetos distintos.
+
+
+| Clases | Declaración de la variable | Conversión de formato | 
+|-----------------|-----------------|-----------------|
+| `numeric` | `numeric()` | `as.numeric()` | 
+| `integer` | `integer()` | `as.integer()` | 
+| `double` | `double()` | `as.double()` |  |
+| `character` | `character()` | `as.character()` | 
+| `logical` | `logical()` | `as.logical()` | 
+| `factor` | `factor()` | `as.factor()` |  |
+
+Si queremos saber la clase de la variable debemos usar `class()`, aunque tambien `str()` te dice esta información.
+
+> NOTA: `as.integer()` convierte los numeros a enteros. Ejemplo: as.integer(2.5) = 2. En cambio, `as.double()` permite que los numeros contengan decimales.
+
 
 ```{r}
 identificador <- "gene_001"
 longitud <- 450L
 proporcion_gc <- 0.53
 anotado <- TRUE
+```
+
+
+
+```{r}
 
 class(identificador)
 class(longitud)
 class(proporcion_gc)
 class(anotado)
 ```
-
-| Tipo | Ejemplo | Uso |
-|---|---|---|
-| `character` | `"ATGC"` | Secuencias, nombres e identificadores |
-| `integer` | `450L` | Conteos y posiciones enteras |
-| `double` | `0.53` | Mediciones numéricas |
-| `logical` | `TRUE` | Indicadores y condiciones |
 
 `numeric` se usa habitualmente para valores numéricos, aunque `class(1.5)` devuelve `"numeric"` y `typeof(1.5)` devuelve `"double"`. Usa `class()`, `typeof()` y `str()` para inspeccionar objetos.
 
@@ -58,18 +44,25 @@ typeof(1.5)
 str(identificador)
 ```
 
-::: {.callout-important title="Valores faltantes y conversiones"}
-`NA` representa un valor faltante. Una conversión puede introducir `NA` si el texto no se puede interpretar como número; nunca supongas que la conversión fue correcta sin revisarla.
-:::
 
-```{r}
-valores <- c("12", "18", "sin_dato")
-# La conversión produce una advertencia; no la ejecutamos automáticamente
-# as.numeric(valores)
-is.na(c(10, NA, 20))
-```
 
-## Vectores e indexación
+
+## Principales estructuras de datos en R
+
+Las estructuras de datos son objetos que contienen datos. Cuando trabajamos con R, lo que estamos haciendo es manipular estas estructuras.
+
+![](figures/DataStructure.png){fig-align="center"}
+
+| **Estructura** | **Dimensión** | **Homogeneidad** | **Ejemplo** | **Uso típico** |
+|---------------|---------------|---------------|---------------|---------------|
+| **Vector** | 1D | Homogénea (todos del mismo tipo) | `c(1,2,3)` | Secuencias simples de números, caracteres o lógicos |
+| **Lista** | 1D | Heterogénea (puede mezclar tipos) | `list(a=1:3, b="hola")` | Agrupar objetos distintos, resultados de modelos |
+| **Matriz** | 2D | Homogénea | `matrix(1:6, nrow=2)` | Cálculos numéricos, álgebra lineal |
+| **Array** | nD (más de 2 dimensiones) | Homogénea | `array(1:8, dim=c(2,2,2))` | Datos multidimensionales, imágenes, series temporales |
+| **Data frame** | 2D | Heterogénea (cada columna puede ser de distinto tipo) | `data.frame(x=1:3, y=c("a","b","c"))` | Datos tabulares, análisis estadístico |
+| **Tibble** | 2D | Heterogénea | `tibble(x=1:3, y=c("a","b","c"))` | Variante moderna de data frame, impresión más clara |
+
+### Vectores e indexación
 
 Un **vector atómico** contiene elementos del mismo tipo. Se construye con `c()` y se indexa mediante corchetes. **R comienza a contar posiciones desde 1**, no desde 0.
 
@@ -91,15 +84,19 @@ longitudes >= 300
 sum(longitudes >= 300)
 ```
 
-::: {.callout-note title="Ejercicio 1. Vectores y selección"}
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 1. Vectores y selecciónPregunta
+
 Crea los vectores `ids <- c("g1", "g2", "g3", "g4", "g5")` y `tam <- c(90, 450, 310, 120, 600)`.
 
-1. Selecciona el tercer identificador.
-2. Recupera los identificadores de genes con longitud de al menos 300.
-3. Cuenta cuántos cumplen esa condición sin usar un ciclo.
-:::
+1.  Selecciona el tercer identificador.
+2.  Recupera los identificadores de genes con longitud de al menos 300.
+3.  Cuenta cuántos cumplen esa condición sin usar un ciclo.
 
-::: {.callout-tip collapse="true" title="Solución · Ejercicio 1"}
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
 ```{r}
 ids <- c("g1", "g2", "g3", "g4", "g5")
 tam <- c(90, 450, 310, 120, 600)
@@ -107,10 +104,30 @@ ids[3]
 ids[tam >= 300]
 sum(tam >= 300)
 ```
+
 Los genes seleccionados son `g2`, `g3` y `g5`; el conteo es 3.
 :::
+::::
 
-## Matrices y arreglos
+
+::: {.callout-important title="Valores faltantes y conversiones"}
+`NA` representa un valor faltante. Una conversión puede introducir `NA` si el texto no se puede interpretar como número; nunca supongas que la conversión fue correcta sin revisarla.
+:::
+
+```{r}
+valores <- c("12", "18", "sin_dato")
+# La conversión produce una advertencia; no la ejecutamos automáticamente
+# as.numeric(valores)
+```
+
+O podemos preguntar directamente si hay valores faltantes en un vector.
+
+```{r}
+is.na(c(10, NA, 20))
+```
+
+
+### Matrices y arreglos
 
 Una **matriz** tiene dos dimensiones y almacena elementos del mismo tipo. Un **arreglo** (*array*) generaliza esta idea a más dimensiones.
 
@@ -131,9 +148,9 @@ arreglo <- array(1:8, dim = c(2, 2, 2))
 dim(arreglo)
 ```
 
-## Data frames y tibbles
+### Data frames y tibbles
 
-Un **data frame** es una tabla: cada columna puede tener un tipo diferente, pero todas deben tener la misma cantidad de filas. En la sesión 2 veremos importación y validación de tablas, y en la sesión 3 su transformación con `dplyr` y `tidyr`.
+Un **data frame** es una tabla: cada columna puede tener un tipo diferente, pero todas deben tener la misma cantidad de filas. 
 
 ```{r}
 anotaciones <- data.frame(
@@ -157,7 +174,7 @@ Un **tibble** es una variante moderna de `data.frame`, con una impresión más c
 # tibble::as_tibble(anotaciones)
 ```
 
-## Listas y factores
+### Listas y factores
 
 Las **listas** pueden almacenar objetos de distintos tipos y tamaños. Resultan útiles para reunir resultados de un análisis.
 
@@ -169,8 +186,8 @@ muestra <- list(
 )
 
 muestra$id
-muestra[["secuencias"]]
-muestra["secuencias"] # Conserva una lista
+muestra[["secuencias"]] #Extraer la lista, es un vector 
+muestra["secuencias"] # Conserva la estructura de una lista
 ```
 
 Un **factor** representa categorías con niveles definidos. Su orden puede importar al crear tablas o gráficos.
@@ -181,22 +198,42 @@ condicion <- factor(c("control", "tratamiento", "control"),
 levels(condicion)
 ```
 
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 2: Factores
+
+Crea una vector con las letras `A M A B M M B A B B`, donde `A` significa Alto, `B` bajo y `M` medio. Convierte las entradas del vector a factores y especifica que `A > M > B`.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+
+:::
+::::
+
+
+### Resumen de tipos de objetos
+
+
 | Estructura | Dimensiones | ¿Elementos del mismo tipo? | Ejemplo de uso |
-|---|---|---|---|
+|------------------|------------------|------------------|------------------|
 | Vector | 1 | Sí | Identificadores o longitudes |
 | Matriz | 2 | Sí | Conteos por gen y muestra |
 | Array | 2 o más | Sí | Datos multidimensionales |
 | Data frame / tibble | 2 | Por columna | Tabla de anotaciones |
 | Lista | Variable | No | Resultados heterogéneos |
 
-::: {.callout-note title="Ejercicio 2. Elegir estructuras"}
-1. Construye un `data.frame` con tres genes, sus longitudes y una etiqueta funcional.
-2. Recupera únicamente las filas con longitud mayor que 200.
-3. Crea una lista que contenga la tabla y el identificador de una muestra.
-4. Explica por qué una matriz de caracteres no sería una buena sustitución para la tabla cuando queremos conservar longitudes numéricas.
-:::
 
-::: {.callout-tip collapse="true" title="Solución · Ejercicio 2"}
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 3. Elegir estructuras
+
+1.  Construye un `data.frame` con tres genes, sus longitudes y una etiqueta funcional.
+2.  Recupera únicamente las filas con longitud mayor que 200.
+3.  Crea una lista que contenga la tabla y el identificador de una muestra.
+4.  Explica por qué una matriz de caracteres no sería una buena sustitución para la tabla cuando queremos conservar longitudes numéricas.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
 ```{r}
 tabla <- data.frame(
   gen = c("g1", "g2", "g3"),
@@ -207,6 +244,40 @@ tabla[tabla$longitud > 200, ]
 resultado <- list(muestra = "M01", genes = tabla)
 resultado$genes
 ```
+
 En una matriz todos los elementos comparten tipo; al combinar texto y números, las longitudes se convertirían en caracteres.
+
 :::
+::::
+
+
+## Operadores
+
+| Aritméticos | Comparación | Argumentos lógicos (Logical Operators) |
+|------------------------|------------------------|------------------------|
+| `+` Adición / suma | `<` Menor que | `!x` - Not x (logical NOT) |
+| `-` Sustracción / resta | `>` Mayor que | `x & y` OR `x AND y` - (logical AND) |
+| `*` Multiplicación | `<=` Menor o igual que | `x && y` - identico |
+| `/` OR %% División | `>=` Mayor o igual que | `xor(x,y)` Funcion OR |
+| `^` OR \*\* Exponencial | `==` Igual a | `%in%` pertenece a |
+| `%/%` División integral | `!=` Diferente de |  |
+
+Otra forma de escribir OR es `x | y` OR `x || y`.
+
+### Jerarquía de operaciones
+
+En R, al igual que en matemáticas, las operaciones tienen un orden de evaluación definido.
+
+Cuanto tenemos varias operaciones ocurriendo al mismo tiempo, en realidad, algunas de ellas son realizadas antes que otras y el resultado de ellas dependerá de este orden.
+
+| Orden | Operadores        |
+|-------|-------------------|
+| 1     | `^`               |
+| 2     | `* /`             |
+| 3     | `+ -`             |
+| 4     | `< > <= >= == !=` |
+| 5     | `!`               |
+| 6     | `&`               |
+| 7     | OR                |
+
 

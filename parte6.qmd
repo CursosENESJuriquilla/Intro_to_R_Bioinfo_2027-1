@@ -1,119 +1,161 @@
 # Scripts, paquetes y proyectos de RStudio
 
-## De la consola al script
+Hasta ahora hemos ejecutado instrucciones para crear objetos, utilizar estructuras de control y definir funciones. El siguiente paso es **organizar esas instrucciones en un programa que pueda ejecutarse completo**, en lugar de depender de comandos aislados en la consola.
 
-La consola es útil para experimentar, pero un **script `.R`** conserva las instrucciones y permite ejecutarlas de nuevo. En RStudio selecciona **File → New File → R Script**, escribe código y guarda el archivo. Para ejecutar la línea actual o la selección usa **Ctrl + Enter** (Windows/Linux) o **Cmd + Enter** (macOS).
+## ¿Qué es un script de R?
 
-Un script legible tiene un propósito claro, comentarios útiles, nombres descriptivos y no depende de objetos creados previamente en la consola.
+Un **script** es un archivo de texto con extensión `.R` que contiene una secuencia organizada de instrucciones. No basta con guardar comandos en un archivo: un script útil debe indicar **qué necesita para funcionar, qué operaciones realiza y qué resultados produce**.
+
+Ya aprendimos a crear archivos `.R` desde el editor de RStudio y a ejecutar líneas con **Run** o **Ctrl + Enter** (Windows/Linux) y **Cmd + Enter** (macOS). Ahora nos interesa aprender a **estructurar su contenido**.
+
+Un script de análisis suele tener las siguientes partes:
+
+1. **Descripción:** propósito del programa y, cuando sea pertinente, autoría y fecha.
+2. **Dependencias:** paquetes y funciones que se utilizarán.
+3. **Datos de entrada:** objetos o archivos necesarios.
+4. **Procesamiento:** operaciones, condiciones, ciclos o llamadas a funciones.
+5. **Resultados:** objetos, tablas o archivos que se obtienen.
+
+Estas partes no son reglas obligatorias del lenguaje, sino una forma de escribir código más claro y fácil de revisar.
+
+## Ejemplo: organizar un análisis de secuencias
+
+Supongamos que recibimos identificadores de muestras y secuencias de ADN. Queremos construir una tabla que indique cuáles secuencias contienen caracteres válidos y cuál es su longitud.
+
+Podríamos ejecutar los comandos uno por uno en la consola. Sin embargo, si guardamos el procedimiento en un script, podemos repetirlo sin reconstruir manualmente los objetos.
 
 ```{r}
-# Ejemplo de contenido para guardar en scripts/01_exploracion.R
-ids <- c("g1", "g2", "g3")
-secuencias <- c("ATGC", "GGCCAA", "ATAT")
+# --------------------------------------------------
+# Análisis básico de secuencias de ADN
+# Objetivo: revisar secuencias y resumir longitudes
+# --------------------------------------------------
+
+# 1. Datos de entrada
+muestras <- c("M01", "M02", "M03", "M04")
+secuencias <- c("ATGCCG", "ATNNGA", "GGCTTA", "ATG")
+
+# 2. Verificar que hay un identificador por secuencia
+stopifnot(length(muestras) == length(secuencias))
+
+# 3. Procesar los datos
 longitudes <- nchar(secuencias)
-resultado <- data.frame(gen = ids, longitud = longitudes)
-print(resultado)
+secuencia_valida <- grepl("^[ACGT]+$", secuencias)
+
+# 4. Organizar y mostrar los resultados
+resumen <- data.frame(
+  muestra = muestras,
+  secuencia = secuencias,
+  longitud = longitudes,
+  valida = secuencia_valida
+)
+
+print(resumen)
 ```
 
-## Organizar el trabajo con un proyecto `.Rproj`
+Observa que el script **define sus propios datos de entrada**, comprueba una condición importante y construye el resultado. No necesita que `muestras` o `secuencias` existan previamente en el panel *Environment*.
 
-Como ya conoces directorios y Git, nos concentraremos en la función del proyecto de RStudio: abrir el trabajo en un contexto consistente y facilitar el uso de **rutas relativas**.
+::: {.callout-note icon="false"}
+## ¿Qué cambia cuando trabajamos con archivos reales?
 
-1. En RStudio elige **File → New Project**.
-2. Selecciona **New Directory → New Project** (o abre un repositorio existente con **Existing Directory**).
-3. Elige un nombre y una carpeta en tu computadora.
-4. Guarda los scripts y archivos del análisis dentro del proyecto.
+En un análisis bioinformático, normalmente los datos no se escribirán directamente en el script. Se leerán desde archivos como `.csv` o `.tsv`. La estructura del programa será similar, pero sustituiremos la definición manual de los datos por instrucciones de importación. Esto lo veremos en la siguiente sesión.
+:::
 
-Una estructura inicial sencilla puede ser:
+## ¿Dónde entran los paquetes?
+
+Un script puede utilizar funciones incluidas en R o funciones proporcionadas por paquetes adicionales. Como ya vimos cómo **instalar** y **cargar** paquetes, aquí solo necesitamos distinguir su papel dentro de un programa:
+
+- `install.packages()` prepara un paquete en nuestra computadora; **no es una instrucción que debamos ejecutar cada vez que corremos el análisis**.
+- `library()` permite utilizar las funciones de un paquete durante la sesión actual.
+- `paquete::funcion()` permite llamar una función específica indicando de qué paquete proviene.
+
+Por ejemplo, más adelante leeremos archivos tabulares con `readr::read_csv()`. Para que un script sea fácil de reproducir, conviene que sus dependencias sean explícitas y que **no intente instalar paquetes automáticamente cada vez que se ejecuta**.
+
+```{r}
+#| eval: false
+# Ejemplo de uso de un paquete dentro de un script:
+# library(readr)
+# datos <- read_csv("data_raw/muestras.csv")
+
+# Alternativa sin cargar el paquete completo:
+# datos <- readr::read_csv("data_raw/muestras.csv")
+```
+
+## ¿Qué aporta un proyecto de RStudio?
+
+Ya creamos un proyecto `.Rproj` y comprobamos su directorio de trabajo con `getwd()`. Su utilidad práctica aparece cuando comenzamos a tener **varios scripts, archivos de entrada y resultados** que deben mantenerse juntos.
+
+Una organización sencilla podría ser:
 
 ```text
-intro_R/
-├── intro_R.Rproj
+analisis_secuencias/
+├── analisis_secuencias.Rproj
 ├── data_raw/
 ├── scripts/
-│   └── 01_exploracion.R
+│   └── 01_revision_secuencias.R
 ├── results/
 └── README.md
 ```
 
-`getwd()` muestra el directorio de trabajo actual. Evita rutas absolutas específicas de tu computadora. **No es necesario utilizar `setwd()` dentro de cada script** cuando trabajas desde un proyecto bien organizado.
+Dentro del proyecto podemos utilizar **rutas relativas**, como `data_raw/muestras.csv`, en lugar de rutas que solo funcionan en una computadora. No necesitamos volver a crear el proyecto ni cambiar el directorio con `setwd()` en cada script.
+
+Cuando comencemos a guardar resultados, la carpeta `results/` nos permitirá distinguir los archivos generados de los datos originales.
+
+## Ejecutar y revisar un script completo
+
+Una buena prueba consiste en **reiniciar la sesión de R y ejecutar el script desde la primera hasta la última línea**. Esto permite detectar si el código utiliza objetos que solo existían porque los creamos antes en la consola.
+
+Antes de considerar terminado un script, revisa que:
+
+- Las entradas estén definidas o se lean desde archivos identificables.
+- Las instrucciones estén en un orden lógico.
+- Los nombres de los objetos permitan reconocer su contenido.
+- Las funciones y paquetes necesarios estén identificados.
+- Los resultados se puedan obtener sin ejecutar comandos adicionales manualmente.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 1
+
+Considera el siguiente código, guardado en un archivo llamado `revision.R`:
 
 ```{r}
 #| eval: false
-getwd()
-# Ejemplo de ruta relativa dentro del proyecto:
-# readr::read_csv("data_raw/muestras.csv")
+longitudes <- nchar(secuencias)
+resultado <- data.frame(id = ids, longitud = longitudes)
+print(resultado)
 ```
 
-## Paquetes en los scripts
+Un estudiante afirma que el archivo funciona porque obtuvo una tabla al ejecutarlo en su computadora.
 
-Las dependencias deben quedar explícitas al inicio del script o utilizarse con `paquete::funcion()`. En las siguientes sesiones aprenderemos `readr`, `dplyr`, `tidyr`, `purrr` y `ggplot2`. No necesitamos cargarlos todos para resolver los ejercicios de hoy.
+1. ¿Por qué podría fallar si otra persona abre el archivo y lo ejecuta desde una sesión nueva de R?
+2. Modifica el script para que pueda ejecutarse completo sin depender de objetos creados previamente en la consola.
+3. ¿Qué cambiarías cuando los datos de entrada provengan de un archivo `.csv`?
 
-::: {.callout-warning title="Una regla para comprobar tu código"}
-Antes de entregar un script, reinicia la sesión de R y ejecútalo desde el inicio. Si solo funciona porque quedaron objetos en **Environment**, todavía no es reproducible.
-:::
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
 
-# Actividad integradora y cierre
+El código depende de que `secuencias` e `ids` existan previamente. Si esos objetos no están definidos, la ejecución fallará.
 
-::: {.callout-note title="Práctica final. De secuencias a una tabla"}
-Trabaja con estas secuencias sintéticas:
+Una versión independiente es:
 
 ```{r}
-ids_final <- c("genA", "genB", "genC", "genD")
-secuencias_final <- c("ATGCGC", "AAAA", "GGCTTA", "ATGATGCC")
+# Datos de entrada
+ids <- c("M01", "M02", "M03")
+secuencias <- c("ATGCCG", "GGAT", "TTACGA")
+
+# Verificación
+stopifnot(length(ids) == length(secuencias))
+
+# Procesamiento
+longitudes <- nchar(secuencias)
+
+# Resultado
+resultado <- data.frame(id = ids, longitud = longitudes)
+print(resultado)
 ```
 
-1. Construye una función que cuente las bases G y C de una secuencia.
-2. Obtén para cada gen su longitud y su número de bases G/C.
-3. Organiza los resultados en un `data.frame`.
-4. Añade una columna lógica que indique si la secuencia contiene el motivo `"ATG"`.
-5. Selecciona los genes con longitud de al menos seis nucleótidos.
-6. Guarda el código en un script dentro de un proyecto de RStudio. Comprueba que funciona al ejecutarlo desde una sesión limpia.
+Si los datos estuvieran en un archivo `.csv`, sustituiríamos la creación manual de los vectores por una instrucción para leer el archivo desde una ruta relativa dentro del proyecto. Aprenderemos a hacerlo en la siguiente sesión.
 
-**Entrega sugerida:** script `.R` y una breve descripción en el README de lo que produce. No es necesario aplicar técnicas estadísticas.
 :::
+::::
 
-::: {.callout-tip collapse="true" title="Solución sugerida · Actividad integradora"}
-```{r}
-ids_final <- c("genA", "genB", "genC", "genD")
-secuencias_final <- c("ATGCGC", "AAAA", "GGCTTA", "ATGATGCC")
 
-contar_gc_final <- function(secuencia) {
-  stopifnot(is.character(secuencia), length(secuencia) == 1L,
-            !is.na(secuencia), grepl("^[ACGT]+$", secuencia))
-  letras <- strsplit(secuencia, "", fixed = TRUE)[[1]]
-  sum(letras %in% c("G", "C"))
-}
-
-resultado_final <- data.frame(
-  gen = ids_final,
-  secuencia = secuencias_final,
-  longitud = nchar(secuencias_final),
-  gc = vapply(secuencias_final, contar_gc_final, integer(1)),
-  contiene_atg = grepl("ATG", secuencias_final, fixed = TRUE)
-)
-
-resultado_final
-resultado_final[resultado_final$longitud >= 6, ]
-```
-
-`vapply()` aplica la función a cada elemento y exige un resultado entero por secuencia. En la sesión 4 compararemos este enfoque con `lapply()` y `purrr::map()`.
-:::
-
-## Ideas para recordar
-
-- **R** ejecuta el código; **RStudio** facilita escribirlo y organizarlo.
-- Un paquete se **instala** y se **carga**: son acciones distintas.
-- Vectores, matrices, data frames y listas resuelven necesidades diferentes.
-- R indexa desde **1** y permite operaciones vectorizadas.
-- Las funciones permiten reutilizar código y definir reglas claras de entrada.
-- Un script debe ejecutarse desde el principio dentro de su proyecto, sin depender del estado previo de la consola.
-
-**En la siguiente sesión:** importaremos archivos tabulares de bioinformática, inspeccionaremos sus columnas y verificaremos su consistencia antes de transformarlos.
-
-## Material de consulta
-
-- [Code & Data Bootcamp: Introducción a R](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte26.html).
-- [Code & Data Bootcamp: Estructuras de datos en R](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte27.html).
-- [Seminario de Estadística: Introducción a R y RStudio](https://haydeeperuyero.github.io/Seminario_Estadistica/introducci%C3%B3n-a-r-y-rstudio.html).
-- [Manual oficial de introducción a R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html).

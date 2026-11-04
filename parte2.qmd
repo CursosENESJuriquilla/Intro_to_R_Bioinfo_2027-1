@@ -10,7 +10,7 @@ R es un entorno de desarrollo de software libre y lenguaje de programación.
 
 Es ampliamente utilizado para la *computación estadística, gráfica, y de machine learning*. Ofrece una amplia variedad de **funciones estadísticas** (modelos lineales y no lineales, pruebas estadísticas clásicas, análisis de series de tiempo, clasificación, agrupamiento, etc.), y para realizar gráficas.
 
-Además, existen numerosas librerías que nos pemiten realizar análisis y más gráficas, incluyendo para análisis de datos genómicos.
+Además, existen numerosas librerías que nos permiten realizar análisis y gráficas, incluyendo para análisis de datos genómicos.
 :::
 
 ::: {.column width="40%"}
@@ -20,7 +20,7 @@ Además, existen numerosas librerías que nos pemiten realizar análisis y más 
 
 ## ¿Cómo instalamos R?
 
-Para installar R, debemos de entrar a la página de [CRAN](https://cran.r-project.org/) "The Comprehensive R Archive Network". Al installar R, descargamos también \~ 25 paqueterías/librerías.
+Para instalar R, debemos de entrar a la página de [CRAN](https://cran.r-project.org/) "The Comprehensive R Archive Network". Al instalar R, descargamos también \~ 25 paqueterías/librerías.
 
 **CRAN** es una red en la que se archivan todas las versiones de R base, así como todos los paquetes para R que han pasado por un proceso de revisión riguroso, realizado por el CRAN Team.
 
@@ -44,6 +44,15 @@ En el paso 2: Install R studio, nos debería detectar el sistema operativo, desc
 
 ## Las partes de RStudio
 
+Al abrir RStudio Desktop encontrarás normalmente cuatro áreas:
+
+- **Source (editor):** permite escribir y guardar scripts `.R` y documentos `.qmd`.
+- **Console:** ejecuta instrucciones de R y muestra sus resultados o errores.
+- **Environment/History:** muestra objetos creados durante la sesión y comandos anteriores.
+- **Files/Plots/Packages/Help:** permite navegar archivos, ver gráficos, gestionar paquetes y consultar documentación.
+
+Los paneles pueden cambiar de posición desde **Tools \> Global Options \> Pane Layout**. Para modificar el tema visual, utiliza **Tools \> Global Options \> Appearance**.
+
 ![](figures/partes-rstudio.png)
 
 ## Cambiando el aspecto de RStudio
@@ -52,11 +61,9 @@ Podemos cambiar la forma en que se ve la aplicación desde **Editar \> Preferenc
 
 ![](figures/apariencia-rstudio.png)
 
-
-
 ## Crear un R Project
 
-Al comenzar a trabajar con R y RStudio, ya sea para crear un programa para un proyecto, crear una aplicación, presentación, blog, paquete, etc, es recomendado crear un **R project**.
+Al comenzar a trabajar con R y RStudio, ya sea para crear un programa para un proyecto, crear una aplicación, presentación, blog, paquete, etc, es recomendable crear un **R project**.
 
 ### **¿Qué es un R Project y por qué usarlo?**
 
@@ -72,23 +79,21 @@ Al comenzar a trabajar con R y RStudio, ya sea para crear un programa para un pr
 
 1.  Vayamos en la parte superior al menú **Archivos \> Nuevo Proyecto**.
 
-![](figures/rproject_paso1.png)
+![](figures/proyecto0.png)
 
 2.  Seleccionamos la opción de **Nuevo directorio**.
 
-![](figures/rproject_paso2.png)
+![](figures/proyecto1.png)
 
 3.  Seleccionamos el tipo de projecto que vamos a iniciar, en nuestro caso **Nuevo proyecto**.
 
-![](figures/rproject_paso3.png)
+![](figures/proyecto2.png)
 
 4.  Nombramos el folder que crearemos y seleccionamos en dónde queremos que se almacene.
 
-![](figures/rproject_paso4.png)
+![](figures/proyecto3.png)
 
-**¡Felicidades, acabas de crear un R project!** Si vamos al folder en donde creamos nuestro proyecto, podemos observar que se creó un archivo con terminación **Rproj**, este es un archivo que contiene la configuración específica para nuestro proyecto.
-
-
+Si vamos al folder en donde creamos nuestro proyecto, podemos observar que se creó un archivo con terminación **Rproj**, este es un archivo que contiene la configuración específica para nuestro proyecto.
 
 ### Directorio de trabajo
 
@@ -117,7 +122,7 @@ Intenta escribir tu primer Rscript en el **editor**, copiando el siguiente algor
 ```{r}
 a <- 2
 b <- 3
-suma = a + b
+suma <- a + b
 suma
 ```
 
@@ -165,19 +170,19 @@ install.packages("BiocManager") # Esto es necesario solo 1 vez
 
 ### ¿Cómo podemos verificar que paquetes tenemos?
 
-En la ventana inferior derecha, existe una pestaña que se llama "Packages" que contendra la lista de paquetes instalados en tu computadora, su descripción corta y su versión.
+En la ventana inferior derecha, existe una pestaña que se llama "Packages" que contendrá la lista de paquetes instalados en tu computadora, su descripción corta y su versión.
 
-Tambien en esta pestaña podemos instalar paquetes dandado click en INSTALL.
+También en esta pestaña podemos instalar paquetes dando click en INSTALL.
 
 ![](figures/rlibrerias_paso4.png){fig-align="center"}
 
 ### Eliminación de paquetes
 
-En algunas ocasiones vamos a tener que actualizar las versiones de los paquetes, pero primero dedes eliminar la versión anterior. Dando click en el botón que contiene una `X` que esta al final de la fila en cada programa.
+En algunas ocasiones vamos a tener que actualizar las versiones de los paquetes, pero primero debes eliminar la versión anterior. Dando click en el botón que contiene una `X` que esta al final de la fila en cada programa.
 
 ![](figures/paquetes_eliminar.png){fig-align="center"}
 
-También puedes usar codigo para eliminar el paquete:
+También puedes usar código para eliminar el paquete:
 
 ```{r, eval=FALSE}
 remove.packages("package-to-remove")
@@ -212,7 +217,6 @@ Debes poder ver algo como esto:
 
 ![](figures/rlibrerias_output.png)
 
-
 ### Verificar paquetes instalados y sus versiones
 
 ```{r}
@@ -232,11 +236,6 @@ La pestaña **Packages** de RStudio también muestra los paquetes instalados y s
 #| eval: false
 update.packages(ask = TRUE)
 ```
-
-
-
-
-
 
 ## Evitar conflictos para la instalación de paquetes en R
 
@@ -262,12 +261,10 @@ Esto significa que, si trabajan en Mac, deben asegurarse de tener instaladas est
 sudo xcode-select --install
 ```
 
-
-
 ## Solución de problemas frecuentes
 
 | Problema | Posible causa | Qué revisar |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | RStudio no encuentra R | R no está instalado o no fue detectado | Instala R primero; revisa la versión de R en las opciones de RStudio. |
 | `there is no package called ...` | El paquete no está instalado en la biblioteca activa | Ejecuta `install.packages()` o el instalador de Bioconductor correspondiente. |
 | `could not find function ...` | No se cargó el paquete o el nombre está mal escrito | Usa `library(paquete)` o `paquete::funcion()`. |
@@ -281,15 +278,18 @@ sudo xcode-select --install
 Lee el **primer mensaje de error relevante** y anota: sistema operativo, versión de R, nombre del paquete y mensaje completo. No intentes resolverlo instalando herramientas al azar. Muchos errores de compilación se deben a una dependencia específica, no a RStudio.
 :::
 
+:::: {.callout-warning icon="false"}
+## 🧠 Actividad: comprobar que el entorno está listo
+
+1.  Abre RStudio Desktop.
+2.  Ejecuta `R.version.string` y `Sys.info()[["sysname"]]`.
+3.  Comprueba que `ggplot2` y `dplyr` están instalados; si no lo están, instálalos desde CRAN.
+4.  Carga ambos paquetes y consulta sus versiones.
+5.  Identifica las herramientas de compilación correspondientes a tu sistema operativo. En **Windows**, comprueba especialmente la compatibilidad de **Rtools**.
 
 
-## Actividad: comprobar que el entorno está listo
-
-1. Abre RStudio Desktop.
-2. Ejecuta `R.version.string` y `Sys.info()[["sysname"]]`.
-3. Comprueba que `ggplot2` y `dplyr` están instalados; si no lo están, instálalos desde CRAN.
-4. Carga ambos paquetes y consulta sus versiones.
-5. Identifica las herramientas de compilación correspondientes a tu sistema operativo. En **Windows**, comprueba especialmente la compatibilidad de **Rtools**.
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
 
 ```{r}
 #| eval: false
@@ -302,6 +302,15 @@ library(dplyr)
 packageVersion("ggplot2")
 packageVersion("dplyr")
 ```
+
+:::
+::::
+
+
+
+
+
+
 
 ::: {.callout-note collapse="true" title="Solución y comentarios de la actividad"}
 `R.version.string` indica la versión de R; `Sys.info()[["sysname"]]` identifica el sistema operativo. `packageVersion()` devuelve la versión instalada del paquete. Si `library()` funciona sin errores, el paquete está disponible en la sesión. La instalación de compiladores se comprueba de manera diferente según el sistema; en Windows se puede utilizar `pkgbuild::has_build_tools(debug = TRUE)`.

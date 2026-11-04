@@ -1,93 +1,414 @@
-# Operadores y estructuras de control
+# Estructuras de control
 
-## Operadores aritméticos, relacionales y lógicos
+Hasta ahora hemos ejecutado instrucciones de R de manera secuencial. Sin embargo, con frecuencia necesitamos **tomar decisiones** según las características de nuestros datos o **repetir operaciones** sin escribir el mismo código varias veces. Para ello utilizamos las *estructuras de control*.
 
-| Operación | Operadores |
-|---|---|
-| Aritmética | `+`, `-`, `*`, `/`, `^`, `%%`, `%/%` |
-| Comparación | `==`, `!=`, `<`, `<=`, `>`, `>=` |
-| Lógica vectorizada | `&`, `|`, `!` |
-| Pertenencia | `%in%` |
+En esta sección estudiaremos dos grupos:
 
-Los paréntesis permiten hacer explícita la precedencia de las operaciones. En condiciones de `if`, utiliza una expresión lógica de longitud uno; para combinar condiciones escalares puedes usar `&&` y `||`.
-
-```{r}
-longitudes <- c(100, 250, 700, 90)
-(longitudes >= 200) & (longitudes <= 600)
-"g2" %in% c("g1", "g2", "g3")
-(2 + 3) * 4
-```
+- **Condicionales:** `if`, `else if` y `else`, que permiten ejecutar instrucciones dependiendo de una condición lógica.
+- **Ciclos:** `for` y `while`, que permiten repetir instrucciones. En `for` recorremos los elementos de una secuencia o colección; en `while` repetimos mientras una condición siga siendo verdadera.
 
 ## Condicionales: `if`, `else if` y `else`
 
-Un condicional permite ejecutar instrucciones diferentes según una condición.
+La instrucción `if` evalúa una condición cuyo resultado debe ser un único valor lógico: `TRUE` o `FALSE`. Si la condición es verdadera, ejecuta el bloque entre llaves; si es falsa, lo omite.
 
 ```{r}
-longitud_gen <- 350
-
-if (longitud_gen >= 300) {
-  mensaje <- "Gen de longitud al menos 300"
-} else {
-  mensaje <- "Gen de longitud menor que 300"
+#| eval: false
+if (condicion) {
+  # Instrucciones cuando la condición es TRUE
 }
-mensaje
+
+if (condicion) {
+  # Instrucciones cuando la condición es TRUE
+} else {
+  # Instrucciones cuando la condición es FALSE
+}
+
+if (condicion_1) {
+  # Primera alternativa
+} else if (condicion_2) {
+  # Segunda alternativa
+} else {
+  # Si ninguna condición anterior se cumple
+}
 ```
 
-Cuando se necesita clasificar un vector completo, `ifelse()` puede ser más apropiado que escribir un `if` por cada elemento:
+Por ejemplo, podemos decidir si una secuencia de ADN cumple con una longitud mínima:
 
 ```{r}
-tamanos <- c(120, 350, 700)
-ifelse(tamanos >= 300, "largo", "corto")
+secuencia <- "ATGCGT"
+longitud <- nchar(secuencia)
+
+if (longitud >= 10) {
+  print("La secuencia tiene al menos 10 nucleótidos")
+}
 ```
 
-## Ciclos `for` y `while`
-
-Los ciclos permiten repetir una operación. Ya conoces esta idea de Bash; aquí cambia la sintaxis.
+Como `longitud` vale 6, no se imprime ningún mensaje. Si queremos contemplar ambos casos, utilizamos `else`:
 
 ```{r}
-secuencias <- c("ATGC", "GGTAAC", "CCG")
+if (longitud >= 10) {
+  print("La secuencia tiene al menos 10 nucleótidos")
+} else {
+  print("La secuencia tiene menos de 10 nucleótidos")
+}
+```
+
+Para distinguir más de dos situaciones, podemos incorporar `else if`:
+
+```{r}
+if (longitud >= 20) {
+  print("Secuencia larga")
+} else if (longitud >= 10) {
+  print("Secuencia mediana")
+} else {
+  print("Secuencia corta")
+}
+```
+
+R revisa las condiciones **en orden** y ejecuta únicamente el primer bloque cuya condición sea verdadera. Por ello, el orden de las comparaciones importa.
+
+::: {.callout-important title="Condiciones lógicas en R"}
+La condición de `if` debe producir **un solo** `TRUE` o `FALSE`, y no debe ser `NA`. Para combinar condiciones escalares podemos utilizar `&&` (y) y `||` (o). Si necesitamos evaluar una condición sobre cada elemento de un vector, veremos más adelante `ifelse()`.
+:::
+
+### Validación de valores y condicionales anidados
+
+En ocasiones necesitamos comprobar primero si un dato es válido y después clasificarlo. Por ejemplo:
+
+```{r}
+valor <- -3
+
+if (is.na(valor)) {
+  print("El valor está ausente")
+} else {
+  if (valor < 0) {
+    print("Es negativo")
+  } else if (valor > 0) {
+    print("Es positivo")
+  } else {
+    print("Es cero")
+  }
+}
+```
+
+Este es un **condicional anidado**, porque contiene un `if` dentro de otro. En este caso también podemos escribir una versión sin anidamiento:
+
+```{r}
+if (is.na(valor)) {
+  print("El valor está ausente")
+} else if (valor < 0) {
+  print("Es negativo")
+} else if (valor > 0) {
+  print("Es positivo")
+} else {
+  print("Es cero")
+}
+```
+
+Ambas versiones producen el mismo resultado. La segunda suele ser más fácil de leer.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 1. Clasificación de un valor
+
+Define una variable `conteo` que represente el número de lecturas asignadas a un gen. Escribe un condicional que imprima:
+
+- `"Dato faltante"` si el valor es `NA`.
+- `"Conteo inválido"` si es negativo.
+- `"Sin lecturas"` si es cero.
+- `"Con lecturas"` si es positivo.
+
+Prueba tu código con `NA`, `-2`, `0` y `15`.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+conteo <- 15
+
+if (is.na(conteo)) {
+  print("Dato faltante")
+} else if (conteo < 0) {
+  print("Conteo inválido")
+} else if (conteo == 0) {
+  print("Sin lecturas")
+} else {
+  print("Con lecturas")
+}
+```
+:::
+::::
+
+
+### Condiciones sobre vectores: `ifelse()`, `all()`, `any()` y `which()`
+
+La función `ifelse()` evalúa una condición **elemento por elemento** y devuelve un resultado de acuerdo con si cada elemento satisface la condición.
+
+```{r}
+conteos <- c(0, 12, 4, 0, 25)
+
+estado <- ifelse(conteos > 0, "Detectado", "No detectado")
+estado
+```
+
+En cambio, `all()`, `any()` y `which()` resumen o localizan los resultados de comparaciones lógicas:
+
+```{r}
+conteos <- c(0, 12, 4, 0, 25)
+
+all(conteos >= 0)  # ¿Todos los conteos son no negativos?
+any(conteos == 0)  # ¿Existe al menos un cero?
+which(conteos == 0) # ¿En qué posiciones hay ceros?
+```
+
+Observa que `all()` y `any()` devuelven un único valor lógico, mientras que `which()` devuelve las **posiciones** de los elementos que cumplen la condición, no sus valores.
+
+::: {.callout-note title="¿Qué sucede con los valores faltantes?"}
+Si el vector contiene `NA`, `all()` y `any()` pueden devolver `NA` cuando no sea posible determinar el resultado. En algunos casos se puede usar `na.rm = TRUE`, pero primero hay que decidir si tiene sentido ignorar los datos faltantes. `which()` no incluye posiciones cuyo resultado lógico sea `NA`.
+:::
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 2. Verificación de conteos
+
+Considera el vector `conteos <- c(8, 0, 13, 5, 0, 21)`. Utiliza las funciones anteriores para:
+
+1. Verificar si todos los valores son no negativos.
+2. Determinar si existe al menos un conteo mayor que 20.
+3. Obtener las posiciones de los conteos iguales a cero.
+4. Crear un vector que indique `"Presente"` o `"Ausente"` según si el conteo es mayor que cero.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+conteos <- c(8, 0, 13, 5, 0, 21)
+
+all(conteos >= 0)
+any(conteos > 20)
+which(conteos == 0)
+ifelse(conteos > 0, "Presente", "Ausente")
+```
+:::
+::::
+
+
+
+## Ciclo `for`
+
+Un ciclo `for` ejecuta un bloque de instrucciones **una vez por cada elemento** de una secuencia o colección. Es útil cuando conocemos qué elementos queremos recorrer, por ejemplo, los identificadores de varias muestras o las secuencias almacenadas en un vector.
+
+```{r}
+#| eval: false
+for (elemento in coleccion) {
+  # Instrucciones que se ejecutan para cada elemento
+}
+```
+
+Un ejemplo sencillo consiste en recorrer los números del 1 al 5:
+
+```{r}
+for (i in 1:5) {
+  print(i)
+}
+```
+
+La variable `i` toma sucesivamente los valores de la secuencia. Al terminar el ciclo, conserva el último valor asignado en el entorno actual, aunque no es recomendable depender de ese efecto para escribir otros cálculos.
+
+### Recorrer secuencias biológicas
+
+Supongamos que tenemos varias secuencias y queremos conocer su longitud:
+
+```{r}
+secuencias <- c("ATGC", "ATGCGT", "CCATGAA")
 
 for (secuencia in secuencias) {
   print(nchar(secuencia))
 }
 ```
 
-`while` repite mientras una condición siga siendo verdadera. Es necesario que el estado cambie para evitar un ciclo infinito.
+Si queremos **guardar** las longitudes para utilizarlas posteriormente, conviene crear primero un vector con el tamaño adecuado:
 
 ```{r}
-contador <- 1
-while (contador <= 3) {
-  print(contador)
-  contador <- contador + 1
+longitudes <- numeric(length(secuencias))
+
+for (i in seq_along(secuencias)) {
+  longitudes[i] <- nchar(secuencias[i])
 }
+
+longitudes
 ```
 
-Cuando existe una función vectorizada, suele ser más sencilla:
+Aquí `seq_along(secuencias)` genera las posiciones del vector. Es preferible a `1:length(secuencias)` porque también funciona correctamente si el vector está vacío.
 
-```{r}
-nchar(secuencias)
-```
-
-::: {.callout-note title="Ejercicio 3. Control de flujo"}
-Con `secuencias <- c("ATG", "ATGCGC", "TTAACGTA", "GG")`:
-
-1. Escribe un ciclo `for` que muestre la longitud de cada secuencia.
-2. Usa `if` para indicar si la primera secuencia tiene al menos cinco nucleótidos.
-3. Obtén todas las longitudes con una sola instrucción, sin ciclo.
+::: {.callout-tip title="Buenas prácticas al usar ciclos"}
+Cuando sabemos cuántos resultados vamos a guardar, es recomendable **reservar el espacio antes de iniciar el ciclo**, por ejemplo con `numeric()`, `character()` o `vector("list", n)`. Así evitamos ampliar el objeto en cada iteración.
 :::
 
-::: {.callout-tip collapse="true" title="Solución · Ejercicio 3"}
+### Combinar `for` e `if`
+
+Podemos usar un condicional dentro de un ciclo para clasificar cada elemento:
+
 ```{r}
-secuencias <- c("ATG", "ATGCGC", "TTAACGTA", "GG")
-for (s in secuencias) {
-  print(nchar(s))
+secuencias <- c("ATGC", "ATGCGT", "CCATGAA")
+
+for (secuencia in secuencias) {
+  if (nchar(secuencia) >= 6) {
+    print("Longitud de al menos 6 nucleótidos")
+  } else {
+    print("Longitud menor que 6 nucleótidos")
+  }
 }
-if (nchar(secuencias[1]) >= 5) {
-  print("Al menos cinco")
-} else {
-  print("Menos de cinco")
+```
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 3. Longitudes de secuencias
+
+A partir del vector:
+
+```{r}
+secuencias <- c("ATG", "ATGCGT", "AATTCCGG", "CG")
+```
+
+1. Utiliza un ciclo `for` para guardar las longitudes en un vector llamado `longitudes`.
+2. Crea otro vector llamado `clasificacion` que contenga `"Corta"` para longitudes menores que 5 y `"Larga"` para longitudes de al menos 5.
+3. Muestra ambos vectores.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+secuencias <- c("ATG", "ATGCGT", "AATTCCGG", "CG")
+longitudes <- numeric(length(secuencias))
+clasificacion <- character(length(secuencias))
+
+for (i in seq_along(secuencias)) {
+  longitudes[i] <- nchar(secuencias[i])
+
+  if (longitudes[i] < 5) {
+    clasificacion[i] <- "Corta"
+  } else {
+    clasificacion[i] <- "Larga"
+  }
 }
-nchar(secuencias)
+
+longitudes
+clasificacion
+```
+
+:::
+::::
+
+
+## Ciclo `while`
+
+A diferencia de `for`, un ciclo `while` repite un bloque de instrucciones **mientras una condición sea verdadera**. La condición se comprueba antes de cada iteración: si desde el inicio es `FALSE`, el bloque no se ejecuta ninguna vez.
+
+```{r}
+#| eval: false
+while (condicion) {
+  # Instrucciones que se repiten mientras la condición sea TRUE
+}
+```
+
+Por ejemplo, podemos incrementar un contador hasta que alcance un valor determinado:
+
+```{r}
+i <- 0
+
+while (i < 5) {
+  print(i)
+  i <- i + 1
+}
+
+i
+```
+
+Se imprimen los valores de 0 a 4. Cuando `i` alcanza el valor 5, la condición `i < 5` deja de cumplirse y termina el ciclo.
+
+::: {.callout-warning title="Evitar ciclos infinitos"}
+En un `while` debemos asegurarnos de que alguna instrucción pueda modificar la condición de salida. De lo contrario, el ciclo podría continuar indefinidamente. Por ejemplo, el siguiente código **no debe ejecutarse**:
+
+```{r}
+#| eval: false
+i <- 0
+while (i < 5) {
+  print(i)
+  # Falta incrementar i
+}
 ```
 :::
+
+### Ejemplo: encontrar un umbral
+
+Queremos encontrar el primer entero positivo cuyo cuadrado sea mayor que 50:
+
+```{r}
+limite <- 50
+numero <- 0
+
+while (numero^2 <= limite) {
+  numero <- numero + 1
+}
+
+numero
+numero^2
+```
+
+El resultado es `8`, porque `7^2 = 49` no supera el límite, pero `8^2 = 64` sí.
+
+### Ejemplo: recorrer progresivamente una secuencia
+
+También podemos construir fragmentos crecientes de una secuencia:
+
+```{r}
+secuencia <- "ATGCGT"
+posicion <- 1
+fragmentos <- character(nchar(secuencia))
+
+while (posicion <= nchar(secuencia)) {
+  fragmentos[posicion] <- substr(secuencia, 1, posicion)
+  posicion <- posicion + 1
+}
+
+fragmentos
+```
+
+La función `substr(secuencia, 1, posicion)` extrae los caracteres comprendidos entre las posiciones indicadas.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 4. Alcanzar una longitud
+
+Imagina que estamos construyendo una secuencia mediante la adición de un nucleótido `"A"` en cada iteración. Escribe un ciclo `while` que comience con una cadena vacía y se detenga cuando la secuencia alcance **8 nucleótidos**. Muestra el resultado final.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+secuencia <- ""
+
+while (nchar(secuencia) < 8) {
+  secuencia <- paste0(secuencia, "A")
+}
+
+secuencia
+nchar(secuencia)
+```
+
+:::
+::::
+
+
+
+## ¿Cuándo utilizar cada estructura?
+
+| Estructura | ¿Para qué sirve? | Ejemplo de aplicación |
+|---|---|---|
+| `if` / `else` | Elegir entre alternativas a partir de una condición única. | Verificar si un conteo es válido. |
+| `ifelse()` | Clasificar elementos de un vector. | Etiquetar conteos positivos y ceros. |
+| `for` | Recorrer una colección de elementos. | Calcular la longitud de varias secuencias. |
+| `while` | Repetir hasta que deje de cumplirse una condición. | Construir una secuencia hasta alcanzar una longitud. |
+
+::: {.callout-note title="Para recordar"}
+En R muchas operaciones sobre vectores pueden realizarse **sin escribir ciclos explícitos**. Por ejemplo, `nchar(secuencias)` calcula directamente la longitud de todas las secuencias de un vector. Aprender `for` y `while` sigue siendo importante para comprender el flujo de ejecución y resolver tareas más complejas; posteriormente veremos alternativas para trabajar con colecciones de datos.
+:::
+
 

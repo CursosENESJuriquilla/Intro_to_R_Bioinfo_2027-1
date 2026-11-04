@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -13,10 +13,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -42,10 +45,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-256100c28b4d1a71ce469740e6db3c8e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -166,7 +169,37 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./parte1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">De Bash a R: programación para bioinformática</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Buenas prácticas en bioinformática</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objetos y estructuras de datos en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estructuras de control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funciones en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scripts, paquetes y proyectos de RStudio</span></span></a>
   </div>
 </li>
       </ul>
@@ -250,11 +283,11 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="calendario-de-sesiones">Calendario de sesiones</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 25%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -427,21 +460,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="prácticas-y-tareas" class="level3">
 <h3 class="anchored" data-anchor-id="prácticas-y-tareas">Prácticas y tareas</h3>
 <p>Las prácticas y tareas se documentarán y entregarán en el <strong>repositorio Git</strong> correspondiente, de acuerdo con las instrucciones y fechas establecidas. En las sesiones de R se trabajará con scripts, procesamiento de archivos, validación de datos, visualizaciones y reportes reproducibles.</p>
-</section>
-<section id="proyecto-final" class="level3">
-<h3 class="anchored" data-anchor-id="proyecto-final">Proyecto final</h3>
-<p>Como propuesta para el componente de R, el proyecto podrá consistir en un análisis reproducible de datos biológicos. El <strong>proyecto de la asignatura</strong> se realizará en equipos de <strong>1 a 3 integrantes</strong>, con presentaciones en <strong>diciembre o en la fecha que se acuerde</strong>. Para la parte desarrollada en R, se propone incluir:</p>
-<ol type="1">
-<li><strong>Pregunta biológica u objetivo de análisis</strong> claramente delimitado.</li>
-<li><strong>Descripción y procedencia de los datos</strong> utilizados.</li>
-<li><strong>Importación y validación</strong> de los archivos de entrada.</li>
-<li><strong>Procesamiento y transformación</strong> mediante código documentado.</li>
-<li><strong>Resultados</strong> presentados en al menos una tabla y dos visualizaciones pertinentes.</li>
-<li><strong>Interpretación descriptiva</strong>, incluyendo las limitaciones de los datos y del análisis.</li>
-<li><strong>Reporte reproducible en Quarto</strong> y archivos necesarios para volver a ejecutar el análisis.</li>
-<li><strong>README</strong> con instrucciones de ejecución y dependencias utilizadas.</li>
-</ol>
-<p>No se exigirá el uso de pruebas de hipótesis ni de métodos estadísticos que no hayan sido estudiados en el curso.</p>
 </section>
 <section id="exámenes-y-oportunidades-de-recuperación" class="level3">
 <h3 class="anchored" data-anchor-id="exámenes-y-oportunidades-de-recuperación">Exámenes y oportunidades de recuperación</h3>

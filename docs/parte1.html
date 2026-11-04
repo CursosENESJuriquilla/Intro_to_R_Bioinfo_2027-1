@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -42,10 +45,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-256100c28b4d1a71ce469740e6db3c8e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -178,7 +181,25 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./parte3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">1.5 Primer inicio de RStudio</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objetos y estructuras de datos en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estructuras de control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funciones en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scripts, paquetes y proyectos de RStudio</span></span></a>
   </div>
 </li>
       </ul>
@@ -196,7 +217,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#un-algoritmo-nos-permite-resolver-un-problema" id="toc-un-algoritmo-nos-permite-resolver-un-problema" class="nav-link active" data-scroll-target="#un-algoritmo-nos-permite-resolver-un-problema"><span class="header-section-number">1.1</span> <strong>Un algoritmo nos permite resolver un problema ⭐</strong></a></li>
   <li><a href="#para-escribir-un-buen-software-necesitas" id="toc-para-escribir-un-buen-software-necesitas" class="nav-link" data-scroll-target="#para-escribir-un-buen-software-necesitas"><span class="header-section-number">1.2</span> <strong>Para escribir un buen software necesitas:</strong></a></li>
   <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">1.3</span> <strong>Documentación</strong></a></li>
-  <li><a href="#puntos-claves-para-buenas-prácticas-en-bioinfo" id="toc-puntos-claves-para-buenas-prácticas-en-bioinfo" class="nav-link" data-scroll-target="#puntos-claves-para-buenas-prácticas-en-bioinfo"><span class="header-section-number">1.4</span> Puntos claves para buenas prácticas en bioinfo ⭐</a></li>
+  <li><a href="#puntos-claves-para-buenas-prácticas-en-bioinfo" id="toc-puntos-claves-para-buenas-prácticas-en-bioinfo" class="nav-link" data-scroll-target="#puntos-claves-para-buenas-prácticas-en-bioinfo"><span class="header-section-number">1.4</span> Puntos claves para buenas prácticas en bioinfo</a></li>
   <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">1.5</span> Referencias</a></li>
   </ul>
 </nav>
@@ -303,17 +324,6 @@ Nota
 </ul>
 </div>
 </div>
-</section>
-<section id="puntos-claves-para-buenas-prácticas-en-bioinfo" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="puntos-claves-para-buenas-prácticas-en-bioinfo"><span class="header-section-number">1.4</span> Puntos claves para buenas prácticas en bioinfo ⭐</h2>
-<ol type="1">
-<li><p>Escriba <strong>programas para personas, no para computadoras</strong> (Documenta qué hace y por qué). - Se coherente en la nomenclatura, indentación y otros aspectos del estilo.</p></li>
-<li><p>Modularidad: Divide los programas en <em>funciones cortas de un solo propósito.</em> 💻 📚</p></li>
-<li><p><strong>No repitas tu código</strong>. Crea pasos reproducibles o que se repitan por si solas. ➰</p></li>
-<li><p>Planifique los errores (<strong>Programacion defensiva</strong>) 🚩</p></li>
-<li><p>Optimice el software sólo después de que funcione correctamente. - Si funciona no lo modifiques, simplificalo.</p></li>
-<li><p>Colaborar - Buscar siempre bibliotecas de software bien mantenidas que hagan lo que necesita. 👥</p></li>
-</ol>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -327,6 +337,17 @@ Nota
 <p>Aqui un script bien documentado <a href="https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia3/scripts/VisualizacionDatos.R">VisualizacionDatos.R</a>. Tomado del curso de <a href="https://github.com/EveliaCoss/RNAseq_classFEB2024">Análisis de datos de RNA-Seq</a>.</p>
 </div>
 </div>
+</section>
+<section id="puntos-claves-para-buenas-prácticas-en-bioinfo" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="puntos-claves-para-buenas-prácticas-en-bioinfo"><span class="header-section-number">1.4</span> Puntos claves para buenas prácticas en bioinfo</h2>
+<ol type="1">
+<li><p>Escribir <strong>programas para personas, no para computadoras</strong> (Documentar qué hace y por qué). Ser coherente en la nomenclatura, indentación y otros aspectos del estilo.</p></li>
+<li><p>Modularidad: Dividir los programas en <em>funciones cortas de un solo propósito.</em></p></li>
+<li><p><strong>No repiter código</strong>. Crear pasos reproducibles o que se repitan por si solos.</p></li>
+<li><p>Planificar los errores (<strong>Programacion defensiva</strong>) 🚩</p></li>
+<li><p>Optimizar el software sólo después de que funcione correctamente. Si funciona no lo modifiques, simplifícalo.</p></li>
+<li><p>Colaborar: Buscar siempre bibliotecas de software bien mantenidas que hagan lo que necesita. 👥</p></li>
+</ol>
 <div class="callout callout-style-default callout-note callout-titled" title="Nota sobre el material">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -337,7 +358,7 @@ Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Parte del contenido de estas notas fue tomado y adaptado del curso <a href="https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte1.html"><strong>Bootcamp de Git, Bash y R (2026)</strong></a>, impartido con la Dra. Evelia Coss. El material fue reorganizado, complementado y adaptado a los objetivos del presente curso de Bioinformática I.</p>
+<p>Parte del contenido de estas notas fue tomado y adaptado del curso <a href="https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte1.html"><strong>Bootcamp de Git, Bash y R (2026)</strong></a>, impartido en conjunto con la Dra. Evelia Coss. El material fue reorganizado, complementado y adaptado a los objetivos del presente curso de Bioinformática I.</p>
 </div>
 </div>
 </section>

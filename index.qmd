@@ -1,7 +1,6 @@
 # Información general {.unnumbered}
 
-:::: {.panel-tabset group="globalInfo"}
-
+:::::: {.panel-tabset group="globalInfo"}
 ## Contenido del curso 📌
 
 ::: {style="text-align: center;"}
@@ -21,7 +20,7 @@
 ### Calendario de sesiones
 
 | Sesión | Fecha | Horario asignado | Aula | Tema |
-|:--:|---|---|---|---|
+|:-------------:|---------------|---------------|---------------|---------------|
 | 1 | Miércoles 4 de noviembre | 3:00–5:30 p. m. | VI-204 | Introducción a R y organización de proyectos bioinformáticos |
 | 2 | Jueves 5 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Importación, exploración y validación de datos biológicos |
 | 3 | Miércoles 11 de noviembre | 3:00–5:30 p. m. | VI-204 | Manipulación y transformación de datos con `dplyr` y `tidyr` |
@@ -31,8 +30,9 @@
 | 7 | Lunes 23 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Documentación y reportes reproducibles con Quarto |
 | 8 | Jueves 26 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Integración y reproducibilidad de proyectos bioinformáticos |
 
-::: {.callout-note}
+::: callout-note
 ## Sobre la duración
+
 Los horarios asignados corresponden a bloques de 2 horas y 30 minutos. Los contenidos se han diseñado para 2 horas efectivas por sesión (16 horas en total). El tiempo adicional podrá utilizarse para instalación, resolución de dudas, prácticas y acompañamiento de proyectos, según las necesidades del grupo.
 :::
 
@@ -66,46 +66,33 @@ Los materiales podrán citarse conforme a la autoría y licencia que se indiquen
 
 La evaluación de **Bioinformática I** se realizará conforme a los criterios establecidos por el profesor responsable de la asignatura:
 
-| Componente | Peso |
-|---|---:|
-| Participación y asistencia | 10 % |
-| Prácticas y tareas (en el repositorio Git) | 50 % |
-| Proyecto | 20 % |
-| Exámenes | 20 % |
-| **Total** | **100 %** |
+| Componente                                 |      Peso |
+|--------------------------------------------|----------:|
+| Participación y asistencia                 |      10 % |
+| Prácticas y tareas (en el repositorio Git) |      50 % |
+| Proyecto                                   |      20 % |
+| Exámenes                                   |      20 % |
+| **Total**                                  | **100 %** |
 
-::: {.callout-note}
+::: callout-note
 ## Alcance de esta evaluación
+
 Los porcentajes corresponden a la **asignatura Bioinformática I**. Las actividades de las ocho sesiones de R se integrarán conforme a las indicaciones del profesor responsable; esta sección no establece exámenes independientes para cada sesión de R.
 :::
 
 ### Criterios de evaluación
 
-1. Correcta importación, inspección y validación de datos biológicos.
-2. Uso adecuado de R y de las herramientas de manipulación, integración y visualización de datos.
-3. Claridad, organización y legibilidad del código.
-4. Justificación y documentación de las decisiones de procesamiento.
-5. Calidad de las visualizaciones e interpretación descriptiva de resultados, sin formular conclusiones no sustentadas.
-6. Reproducibilidad del análisis, organización de archivos y documentación del proyecto.
+1.  Correcta importación, inspección y validación de datos biológicos.
+2.  Uso adecuado de R y de las herramientas de manipulación, integración y visualización de datos.
+3.  Claridad, organización y legibilidad del código.
+4.  Justificación y documentación de las decisiones de procesamiento.
+5.  Calidad de las visualizaciones e interpretación descriptiva de resultados, sin formular conclusiones no sustentadas.
+6.  Reproducibilidad del análisis, organización de archivos y documentación del proyecto.
 
 ### Prácticas y tareas
 
 Las prácticas y tareas se documentarán y entregarán en el **repositorio Git** correspondiente, de acuerdo con las instrucciones y fechas establecidas. En las sesiones de R se trabajará con scripts, procesamiento de archivos, validación de datos, visualizaciones y reportes reproducibles.
 
-### Proyecto final
-
-Como propuesta para el componente de R, el proyecto podrá consistir en un análisis reproducible de datos biológicos. El **proyecto de la asignatura** se realizará en equipos de **1 a 3 integrantes**, con presentaciones en **diciembre o en la fecha que se acuerde**. Para la parte desarrollada en R, se propone incluir:
-
-1. **Pregunta biológica u objetivo de análisis** claramente delimitado.
-2. **Descripción y procedencia de los datos** utilizados.
-3. **Importación y validación** de los archivos de entrada.
-4. **Procesamiento y transformación** mediante código documentado.
-5. **Resultados** presentados en al menos una tabla y dos visualizaciones pertinentes.
-6. **Interpretación descriptiva**, incluyendo las limitaciones de los datos y del análisis.
-7. **Reporte reproducible en Quarto** y archivos necesarios para volver a ejecutar el análisis.
-8. **README** con instrucciones de ejecución y dependencias utilizadas.
-
-No se exigirá el uso de pruebas de hipótesis ni de métodos estadísticos que no hayan sido estudiados en el curso.
 
 ### Exámenes y oportunidades de recuperación
 
@@ -116,21 +103,21 @@ No se exigirá el uso de pruebas de hipótesis ni de métodos estadísticos que 
 
 ### Requisitos y consideraciones
 
-1. Las fechas de entrega y los criterios particulares de cada actividad se comunicarán con anticipación.
-2. Las entregas deberán contener código ejecutable y los archivos solicitados; no será suficiente presentar únicamente capturas de pantalla o figuras aisladas.
-3. Los datos originales deberán conservarse sin modificaciones. Las transformaciones y decisiones de limpieza deberán quedar documentadas.
-4. El código y los reportes deberán utilizar rutas relativas y evitar depender de objetos creados manualmente en la consola.
-5. Se respetarán los criterios institucionales aplicables sobre integridad académica, atribución de fuentes y uso de herramientas de inteligencia artificial.
-6. Los criterios de acreditación, las fechas específicas de evaluación y las políticas de entregas extemporáneas serán los comunicados por el profesor responsable de Bioinformática I.
+1.  Las fechas de entrega y los criterios particulares de cada actividad se comunicarán con anticipación.
+2.  Las entregas deberán contener código ejecutable y los archivos solicitados; no será suficiente presentar únicamente capturas de pantalla o figuras aisladas.
+3.  Los datos originales deberán conservarse sin modificaciones. Las transformaciones y decisiones de limpieza deberán quedar documentadas.
+4.  El código y los reportes deberán utilizar rutas relativas y evitar depender de objetos creados manualmente en la consola.
+5.  Se respetarán los criterios institucionales aplicables sobre integridad académica, atribución de fuentes y uso de herramientas de inteligencia artificial.
+6.  Los criterios de acreditación, las fechas específicas de evaluación y las políticas de entregas extemporáneas serán los comunicados por el profesor responsable de Bioinformática I.
 
 ## Referencias 📎
 
 ### Recursos básicos de consulta
 
-1. Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). *R for Data Science* (2.ª ed.). [Versión en línea](https://r4ds.hadley.nz/).
-2. R Core Team. *An Introduction to R*. [Manual oficial](https://cran.r-project.org/doc/manuals/r-release/R-intro.html).
-3. Wickham, H., Navarro, D. y Pedersen, T. L. *ggplot2: Elegant Graphics for Data Analysis*. [Libro en línea](https://ggplot2-book.org/).
-4. Posit. *Quarto Documentation*. [Documentación oficial](https://quarto.org/docs/).
+1.  Wickham, H., Çetinkaya-Rundel, M. y Grolemund, G. (2023). *R for Data Science* (2.ª ed.). [Versión en línea](https://r4ds.hadley.nz/).
+2.  R Core Team. *An Introduction to R*. [Manual oficial](https://cran.r-project.org/doc/manuals/r-release/R-intro.html).
+3.  Wickham, H., Navarro, D. y Pedersen, T. L. *ggplot2: Elegant Graphics for Data Analysis*. [Libro en línea](https://ggplot2-book.org/).
+4.  Posit. *Quarto Documentation*. [Documentación oficial](https://quarto.org/docs/).
 
 ### Recursos complementarios
 
@@ -139,5 +126,4 @@ No se exigirá el uso de pruebas de hipótesis ni de métodos estadísticos que 
 - [Documentación de purrr](https://purrr.tidyverse.org/).
 - [Bioconductor](https://bioconductor.org/).
 - [Documentación de renv](https://rstudio.github.io/renv/).
-
-::::
+::::::

@@ -42,7 +42,6 @@ En bioinformática, es fundamental garantizar el uso **ético y responsable de d
 7.  Documentación
 :::
 
-
 ## **Documentación**
 
 ::: callout-note
@@ -73,33 +72,23 @@ En bioinformática, es fundamental garantizar el uso **ético y responsable de d
 Aqui un script bien documentado [VisualizacionDatos.R](https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia3/scripts/VisualizacionDatos.R). Tomado del curso de [Análisis de datos de RNA-Seq](https://github.com/EveliaCoss/RNAseq_classFEB2024).
 :::
 
+## Puntos claves para buenas prácticas en bioinfo
 
+1.  Escribir **programas para personas, no para computadoras** (Documentar qué hace y por qué). Ser coherente en la nomenclatura, indentación y otros aspectos del estilo.
 
-## Puntos claves para buenas prácticas en bioinfo 
+2.  Modularidad: Dividir los programas en *funciones cortas de un solo propósito.* 
 
-1.  Escriba **programas para personas, no para computadoras** (Documenta qué hace y por qué). - Se coherente en la nomenclatura, indentación y otros aspectos del estilo.
+3.  **No repiter código**. Crear pasos reproducibles o que se repitan por si solos.
 
-2.  Modularidad: Divide los programas en *funciones cortas de un solo propósito.* 💻 📚
+4.  Planificar los errores (**Programacion defensiva**) 🚩
 
-3.  **No repitas tu código**. Crea pasos reproducibles o que se repitan por si solas.
+5.  Optimizar el software sólo después de que funcione correctamente. Si funciona no lo modifiques, simplifícalo.
 
-4.  Planifique los errores (**Programacion defensiva**) 🚩
-
-5.  Optimice el software sólo después de que funcione correctamente. - Si funciona no lo modifiques, simplificalo.
-
-6.  Colaborar - Buscar siempre bibliotecas de software bien mantenidas que hagan lo que necesita. 👥
-
-
-
+6.  Colaborar: Buscar siempre bibliotecas de software bien mantenidas que hagan lo que necesita. 👥
 
 ::: {.callout-note title="Nota sobre el material"}
-Parte del contenido de estas notas fue tomado y adaptado del curso
-[**Bootcamp de Git, Bash y R (2026)**](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte1.html),
-impartido con la Dra. Evelia Coss. El material fue reorganizado,
-complementado y adaptado a los objetivos del presente curso de
-Bioinformática I.
+Parte del contenido de estas notas fue tomado y adaptado del curso [**Bootcamp de Git, Bash y R (2026)**](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte1.html), impartido en conjunto con la Dra. Evelia Coss. El material fue reorganizado, complementado y adaptado a los objetivos del presente curso de Bioinformática I.
 :::
-
 
 ## Referencias
 

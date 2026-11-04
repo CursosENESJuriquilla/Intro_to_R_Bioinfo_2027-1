@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -77,10 +80,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-256100c28b4d1a71ce469740e6db3c8e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -213,7 +216,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./parte3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Primer inicio de RStudio</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objetos y estructuras de datos en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estructuras de control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funciones en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scripts, paquetes y proyectos de RStudio</span></span></a>
   </div>
 </li>
       </ul>
@@ -261,10 +282,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#si-usamos-windows-debemos-instalar-rtools" id="toc-si-usamos-windows-debemos-instalar-rtools" class="nav-link" data-scroll-target="#si-usamos-windows-debemos-instalar-rtools"><span class="header-section-number">2.10.1</span> Si usamos Windows debemos instalar Rtools</a></li>
   <li><a href="#si-usamos-macios-debemos-instalar-xcode" id="toc-si-usamos-macios-debemos-instalar-xcode" class="nav-link" data-scroll-target="#si-usamos-macios-debemos-instalar-xcode"><span class="header-section-number">2.10.2</span> Si usamos Mac/iOs debemos instalar Xcode</a></li>
   </ul></li>
-  <li><a href="#solución-de-problemas-frecuentes" id="toc-solución-de-problemas-frecuentes" class="nav-link" data-scroll-target="#solución-de-problemas-frecuentes"><span class="header-section-number">2.11</span> Solución de problemas frecuentes</a></li>
-  <li><a href="#actividad-comprobar-que-el-entorno-está-listo" id="toc-actividad-comprobar-que-el-entorno-está-listo" class="nav-link" data-scroll-target="#actividad-comprobar-que-el-entorno-está-listo"><span class="header-section-number">2.12</span> Actividad: comprobar que el entorno está listo</a>
+  <li><a href="#solución-de-problemas-frecuentes" id="toc-solución-de-problemas-frecuentes" class="nav-link" data-scroll-target="#solución-de-problemas-frecuentes"><span class="header-section-number">2.11</span> Solución de problemas frecuentes</a>
   <ul>
-  <li><a href="#lista-de-verificación-de-instalación" id="toc-lista-de-verificación-de-instalación" class="nav-link" data-scroll-target="#lista-de-verificación-de-instalación"><span class="header-section-number">2.12.1</span> Lista de verificación de instalación</a></li>
+  <li><a href="#lista-de-verificación-de-instalación" id="toc-lista-de-verificación-de-instalación" class="nav-link" data-scroll-target="#lista-de-verificación-de-instalación"><span class="header-section-number">2.11.1</span> Lista de verificación de instalación</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -298,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="column" style="width:60%;">
 <p><strong>¿Por qué utilizar R?</strong></p>
 <p>Es ampliamente utilizado para la <em>computación estadística, gráfica, y de machine learning</em>. Ofrece una amplia variedad de <strong>funciones estadísticas</strong> (modelos lineales y no lineales, pruebas estadísticas clásicas, análisis de series de tiempo, clasificación, agrupamiento, etc.), y para realizar gráficas.</p>
-<p>Además, existen numerosas librerías que nos pemiten realizar análisis y más gráficas, incluyendo para análisis de datos genómicos.</p>
+<p>Además, existen numerosas librerías que nos permiten realizar análisis y gráficas, incluyendo para análisis de datos genómicos.</p>
 </div><div class="column" style="width:40%;">
 <div class="quarto-figure quarto-figure-right">
 <figure class="figure">
@@ -310,7 +330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="cómo-instalamos-r" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="cómo-instalamos-r"><span class="header-section-number">2.2</span> ¿Cómo instalamos R?</h2>
-<p>Para installar R, debemos de entrar a la página de <a href="https://cran.r-project.org/">CRAN</a> “The Comprehensive R Archive Network”. Al installar R, descargamos también ~ 25 paqueterías/librerías.</p>
+<p>Para instalar R, debemos de entrar a la página de <a href="https://cran.r-project.org/">CRAN</a> “The Comprehensive R Archive Network”. Al instalar R, descargamos también ~ 25 paqueterías/librerías.</p>
 <p><strong>CRAN</strong> es una red en la que se archivan todas las versiones de R base, así como todos los paquetes para R que han pasado por un proceso de revisión riguroso, realizado por el CRAN Team.</p>
 <p><img src="figures/download-r.png" class="img-fluid"></p>
 </section>
@@ -328,6 +348,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="las-partes-de-rstudio" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="las-partes-de-rstudio"><span class="header-section-number">2.5</span> Las partes de RStudio</h2>
+<p>Al abrir RStudio Desktop encontrarás normalmente cuatro áreas:</p>
+<ul>
+<li><strong>Source (editor):</strong> permite escribir y guardar scripts <code>.R</code> y documentos <code>.qmd</code>.</li>
+<li><strong>Console:</strong> ejecuta instrucciones de R y muestra sus resultados o errores.</li>
+<li><strong>Environment/History:</strong> muestra objetos creados durante la sesión y comandos anteriores.</li>
+<li><strong>Files/Plots/Packages/Help:</strong> permite navegar archivos, ver gráficos, gestionar paquetes y consultar documentación.</li>
+</ul>
+<p>Los paneles pueden cambiar de posición desde <strong>Tools &gt; Global Options &gt; Pane Layout</strong>. Para modificar el tema visual, utiliza <strong>Tools &gt; Global Options &gt; Appearance</strong>.</p>
 <p><img src="figures/partes-rstudio.png" class="img-fluid"></p>
 </section>
 <section id="cambiando-el-aspecto-de-rstudio" class="level2" data-number="2.6">
@@ -337,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="crear-un-r-project" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="crear-un-r-project"><span class="header-section-number">2.7</span> Crear un R Project</h2>
-<p>Al comenzar a trabajar con R y RStudio, ya sea para crear un programa para un proyecto, crear una aplicación, presentación, blog, paquete, etc, es recomendado crear un <strong>R project</strong>.</p>
+<p>Al comenzar a trabajar con R y RStudio, ya sea para crear un programa para un proyecto, crear una aplicación, presentación, blog, paquete, etc, es recomendable crear un <strong>R project</strong>.</p>
 <section id="qué-es-un-r-project-y-por-qué-usarlo" class="level3" data-number="2.7.1">
 <h3 data-number="2.7.1" class="anchored" data-anchor-id="qué-es-un-r-project-y-por-qué-usarlo"><span class="header-section-number">2.7.1</span> <strong>¿Qué es un R Project y por qué usarlo?</strong></h3>
 <ul>
@@ -352,20 +380,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li>Vayamos en la parte superior al menú <strong>Archivos &gt; Nuevo Proyecto</strong>.</li>
 </ol>
-<p><img src="figures/rproject_paso1.png" class="img-fluid"></p>
+<p><img src="figures/proyecto0.png" class="img-fluid"></p>
 <ol start="2" type="1">
 <li>Seleccionamos la opción de <strong>Nuevo directorio</strong>.</li>
 </ol>
-<p><img src="figures/rproject_paso2.png" class="img-fluid"></p>
+<p><img src="figures/proyecto1.png" class="img-fluid"></p>
 <ol start="3" type="1">
 <li>Seleccionamos el tipo de projecto que vamos a iniciar, en nuestro caso <strong>Nuevo proyecto</strong>.</li>
 </ol>
-<p><img src="figures/rproject_paso3.png" class="img-fluid"></p>
+<p><img src="figures/proyecto2.png" class="img-fluid"></p>
 <ol start="4" type="1">
 <li>Nombramos el folder que crearemos y seleccionamos en dónde queremos que se almacene.</li>
 </ol>
-<p><img src="figures/rproject_paso4.png" class="img-fluid"></p>
-<p><strong>¡Felicidades, acabas de crear un R project!</strong> Si vamos al folder en donde creamos nuestro proyecto, podemos observar que se creó un archivo con terminación <strong>Rproj</strong>, este es un archivo que contiene la configuración específica para nuestro proyecto.</p>
+<p><img src="figures/proyecto3.png" class="img-fluid"></p>
+<p>Si vamos al folder en donde creamos nuestro proyecto, podemos observar que se creó un archivo con terminación <strong>Rproj</strong>, este es un archivo que contiene la configuración específica para nuestro proyecto.</p>
 </section>
 <section id="directorio-de-trabajo" class="level3" data-number="2.7.3">
 <h3 data-number="2.7.3" class="anchored" data-anchor-id="directorio-de-trabajo"><span class="header-section-number">2.7.3</span> Directorio de trabajo</h3>
@@ -377,7 +405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/Users/HaydeePeruyero/Documents/RSites/Intro_to_R_Bioinfo_2027-1"</code></pre>
+<pre><code>[1] "C:/Users/hayde/Documents/RSites/Intro_to_R_Bioinfo_2027-1"</code></pre>
 </div>
 </div>
 </section>
@@ -396,7 +424,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="dv">2</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">3</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>suma <span class="ot">=</span> a <span class="sc">+</span> b</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>suma <span class="ot">&lt;-</span> a <span class="sc">+</span> b</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>suma</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
@@ -451,8 +479,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="cómo-podemos-verificar-que-paquetes-tenemos" class="level3" data-number="2.9.4">
 <h3 data-number="2.9.4" class="anchored" data-anchor-id="cómo-podemos-verificar-que-paquetes-tenemos"><span class="header-section-number">2.9.4</span> ¿Cómo podemos verificar que paquetes tenemos?</h3>
-<p>En la ventana inferior derecha, existe una pestaña que se llama “Packages” que contendra la lista de paquetes instalados en tu computadora, su descripción corta y su versión.</p>
-<p>Tambien en esta pestaña podemos instalar paquetes dandado click en INSTALL.</p>
+<p>En la ventana inferior derecha, existe una pestaña que se llama “Packages” que contendrá la lista de paquetes instalados en tu computadora, su descripción corta y su versión.</p>
+<p>También en esta pestaña podemos instalar paquetes dando click en INSTALL.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figures/rlibrerias_paso4.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
@@ -461,13 +489,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="eliminación-de-paquetes" class="level3" data-number="2.9.5">
 <h3 data-number="2.9.5" class="anchored" data-anchor-id="eliminación-de-paquetes"><span class="header-section-number">2.9.5</span> Eliminación de paquetes</h3>
-<p>En algunas ocasiones vamos a tener que actualizar las versiones de los paquetes, pero primero dedes eliminar la versión anterior. Dando click en el botón que contiene una <code>X</code> que esta al final de la fila en cada programa.</p>
+<p>En algunas ocasiones vamos a tener que actualizar las versiones de los paquetes, pero primero debes eliminar la versión anterior. Dando click en el botón que contiene una <code>X</code> que esta al final de la fila en cada programa.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="figures/paquetes_eliminar.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
 </figure>
 </div>
-<p>También puedes usar codigo para eliminar el paquete:</p>
+<p>También puedes usar código para eliminar el paquete:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
@@ -640,9 +668,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Lee el <strong>primer mensaje de error relevante</strong> y anota: sistema operativo, versión de R, nombre del paquete y mensaje completo. No intentes resolverlo instalando herramientas al azar. Muchos errores de compilación se deben a una dependencia específica, no a RStudio.</p>
 </div>
 </div>
-</section>
-<section id="actividad-comprobar-que-el-entorno-está-listo" class="level2" data-number="2.12">
-<h2 data-number="2.12" class="anchored" data-anchor-id="actividad-comprobar-que-el-entorno-está-listo"><span class="header-section-number">2.12</span> Actividad: comprobar que el entorno está listo</h2>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Actividad: comprobar que el entorno está listo
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
 <li>Abre RStudio Desktop.</li>
 <li>Ejecuta <code>R.version.string</code> y <code>Sys.info()[["sysname"]]</code>.</li>
@@ -650,6 +685,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Carga ambos paquetes y consulta sus versiones.</li>
 <li>Identifica las herramientas de compilación correspondientes a tu sistema operativo. En <strong>Windows</strong>, comprueba especialmente la compatibilidad de <strong>Rtools</strong>.</li>
 </ol>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
@@ -663,8 +710,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"dplyr"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled" title="Solución y comentarios de la actividad">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -673,14 +725,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><code>R.version.string</code> indica la versión de R; <code>Sys.info()[["sysname"]]</code> identifica el sistema operativo. <code>packageVersion()</code> devuelve la versión instalada del paquete. Si <code>library()</code> funciona sin errores, el paquete está disponible en la sesión. La instalación de compiladores se comprueba de manera diferente según el sistema; en Windows se puede utilizar <code>pkgbuild::has_build_tools(debug = TRUE)</code>.</p>
 </div>
 </div>
 </div>
-<section id="lista-de-verificación-de-instalación" class="level3" data-number="2.12.1">
-<h3 data-number="2.12.1" class="anchored" data-anchor-id="lista-de-verificación-de-instalación"><span class="header-section-number">2.12.1</span> Lista de verificación de instalación</h3>
+<section id="lista-de-verificación-de-instalación" class="level3" data-number="2.11.1">
+<h3 data-number="2.11.1" class="anchored" data-anchor-id="lista-de-verificación-de-instalación"><span class="header-section-number">2.11.1</span> Lista de verificación de instalación</h3>
 <ul class="task-list">
 <li><label><input type="checkbox">Instalé <strong>R</strong> desde CRAN y conozco mi versión.</label></li>
 <li><label><input type="checkbox">Instalé <strong>RStudio Desktop</strong> y puedo abrir su consola.</label></li>
@@ -1146,8 +1198,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./parte3.html" class="pagination-link" aria-label="Primer inicio de RStudio">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Primer inicio de RStudio</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./parte3.html" class="pagination-link" aria-label="Objetos y estructuras de datos en R">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objetos y estructuras de datos en R</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
