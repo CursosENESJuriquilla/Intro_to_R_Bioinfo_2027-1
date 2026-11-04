@@ -23,7 +23,7 @@ book:
           country: Mexico
           url: https://www.enesjuriquilla.unam.mx/
   
-  date: "08/17/2026"
+  date: "04/11/2026"
   page-navigation: true        # Provide next and previous article links in footer
   back-to-top-navigation: true # Provide a ‘back to top’ navigation button
   chapters:
@@ -40,6 +40,12 @@ book:
     - part: "**Importación y exploración de datos bioinformáticos en R**"
       chapters: 
         - parte7.qmd # 
+    - part: "**Manipulación y transformación de datos bioinformáticos con dplyr y tidyr**"
+      chapters:
+        - parte8.qmd # dplyr
+    - part: "**Integración de datos y automatización de análisis en R**"
+      chapters:
+        - parte9.qmd # auto
     
   # Information
   repo-url: https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1 # link de Github

@@ -1,0 +1,7 @@
+muestra	query_id	subject_id	pident	length	evalue	bitscore	organismo	origen	codigo_muestra
+muestra_A	seq01	ref_003	93.5	168	9.999999999999999e-36	386.1	Bacteria_A	suelo	001
+muestra_A	seq03	ref_008	93.6	319	1e-36	96.6	Bacteria_C	suelo	003
+muestra_B	seq03	ref_010	99	229	1e-8	335.9	Bacteria_C	suelo	003
+muestra_B	seq03	ref_009	97.8	191	1.0000000000000001e-71	97.9	Bacteria_C	suelo	003
+muestra_C	seq09	ref_099	91.4	178	1.9999999999999997e-35	192.5	NA	NA	NA
+muestra_C	seq07	ref_019	95.7	106	1e-70	138.5	Bacteria_A	suelo	007

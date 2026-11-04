@@ -1,0 +1,11 @@
+query_id,subject_id,bitscore,identidad_decimal,grupo
+seq01,ref_003,386.1,0.935,90 o más
+seq01,ref_001,118.7,0.879,Menos de 90
+seq03,ref_007,361.9,0.882,Menos de 90
+seq03,ref_010,335.9,0.99,90 o más
+seq03,ref_009,97.9,0.978,90 o más
+seq03,ref_008,96.6,0.9359999999999999,90 o más
+seq04,ref_010,310.3,0.8390000000000001,Menos de 90
+seq05,ref_014,174.9,0.88,Menos de 90
+seq05,ref_015,160.5,0.8540000000000001,Menos de 90
+seq06,ref_016,49.8,0.8079999999999999,Menos de 90

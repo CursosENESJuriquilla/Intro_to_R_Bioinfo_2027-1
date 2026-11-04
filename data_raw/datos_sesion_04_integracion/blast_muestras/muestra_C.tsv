@@ -1,0 +1,8 @@
+query_id	subject_id	pident	length	evalue	bitscore
+seq06	ref_017	71.3	210	1.00e-26	226.1
+seq07	ref_019	95.7	106	1.00e-70	138.5
+seq07	ref_020	73.0	325	1.00e-75	79.3
+seq07	ref_021	77.4	104	1.00e-54	173.9
+seq08	ref_022	69.9	205	1.00e-75	305.8
+seq08	ref_023	68.8	308	1.00e-63	151.8
+seq09	ref_099	91.4	178	2.00e-35	192.5

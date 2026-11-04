@@ -1,0 +1,557 @@
+# Manipulación y transformación de datos bioinformáticos con dplyr y tidyr
+
+## Introducción
+
+En la sesión 2 aprendimos a reconocer archivos, importar tablas y explorar su contenido. Ahora vamos a **transformar** esas tablas para responder preguntas concretas: ¿qué alineamientos cumplen ciertos criterios?, ¿cuántos resultados hay por secuencia de consulta?, ¿cómo crear nuevas columnas? y ¿cómo reorganizar una tabla para facilitar su análisis?
+
+Trabajaremos con **resultados sintéticos con la estructura de una salida tabular de BLAST**, así como con una tabla pequeña de conteos de genes. No necesitamos ejecutar BLAST ni interpretar los resultados como hallazgos biológicos: los archivos son materiales didácticos.
+
+Al finalizar podrás:
+
+1. Utilizar `%>%` para encadenar operaciones sobre tablas.
+2. Seleccionar, filtrar, ordenar, renombrar y eliminar registros repetidos con `dplyr`.
+3. Crear variables nuevas y resumir registros por grupos.
+4. Reconocer la diferencia entre formatos ancho y largo, y convertirlos con `tidyr`.
+5. Guardar tablas transformadas sin sobrescribir los datos originales.
+
+
+## Archivos y preparación
+
+Descarga los datos nuevos y descomprímelos [datos_sesion_03_dplyr.zip](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_sesion_03_dplyr.zip).
+
+Utilizaremos `resultados_blast.tsv` de la sesión 2 y un archivo adicional `conteos_genes.csv`. Organiza las carpetas así:
+
+```text
+mi_proyecto/
+├── mi_proyecto.Rproj
+├── data_raw/
+│   ├── datos_sesion_02_blast/
+│   │   └── resultados_blast.tsv
+│   └── datos_sesion_03/
+│       └── conteos_genes.csv
+└── results/
+```
+
+La instalación de paquetes se realiza una sola vez en cada equipo; `library()` se utiliza en las sesiones en que los necesitemos.
+
+```{r}
+#| eval: false
+install.packages(c("readr", "dplyr", "tidyr", "tibble"))
+```
+
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(tibble)
+
+getwd()
+ruta_blast <- "data_raw/datos_sesion_02_blast/resultados_blast.tsv"
+ruta_conteos <- "data_raw/datos_sesion_03_dplyr/conteos_genes.csv"
+stopifnot(file.exists(ruta_blast), file.exists(ruta_conteos))
+
+blast <- read_tsv(ruta_blast, show_col_types = FALSE)
+conteos <- read_csv(ruta_conteos, show_col_types = FALSE)
+
+glimpse(blast)
+glimpse(conteos)
+```
+
+
+::: {.callout-note}
+## Inspección de la estructura de los datos
+
+La función `glimpse()` permite inspeccionar rápidamente la estructura de un conjunto de datos. Muestra el número de filas y columnas, los nombres de las variables, sus tipos de datos y algunos de sus valores.
+
+A diferencia de `head()`, que presenta las primeras filas en forma de tabla, `glimpse()` organiza la información por columnas, lo que facilita revisar conjuntos de datos con muchas variables.
+
+| Función | ¿Qué muestra? |
+|---|---|
+| `head()` | Las primeras 6 filas del conjunto de datos, en forma de tabla. |
+| `glimpse()` | El número de filas y columnas, los nombres de las variables, sus tipos de datos y algunos valores. |
+| `str()` | La estructura interna del objeto en R, incluyendo tipos de datos y una vista de su contenido. |
+
+Estas funciones son útiles después de importar archivos bioinformáticos para comprobar que R haya interpretado correctamente la estructura y los tipos de datos, antes de comenzar su manipulación o análisis.
+:::
+
+
+::: {.callout-note}
+**Convención:** en los ejemplos se utiliza `%>%` (del paquete `magrittr`, reexportado por `dplyr`). No utilizaremos el operador nativo `|>` en estas notas. Los criterios numéricos de filtrado son **ejemplos para practicar R**, no umbrales universales para determinar homología o significancia biológica.
+:::
+
+## Introducción a `tibble`, `dplyr`
+
+### ¿Qué es un `tibble`?
+
+Un `tibble` es una variante moderna de `data.frame`. Conserva la estructura de filas y columnas, pero suele mostrar los datos de manera más compacta, indicando el tipo de cada columna. `readr` importa archivos como tibbles.
+
+```{r}
+class(blast)
+class(as.data.frame(blast))
+```
+
+Podemos construir tablas pequeñas para experimentar sin tener que crear un archivo externo:
+
+```{r}
+ejemplo <- tibble(
+  secuencia = c("seq01", "seq02", "seq03"),
+  longitud = c(150, 230, 180),
+  grupo = c("A", "B", "A")
+)
+ejemplo
+```
+
+`tribble()` resulta práctico cuando queremos escribir la tabla por filas:
+
+```{r}
+ejemplo2 <- tribble(
+  ~secuencia, ~longitud, ~grupo,
+  "seq01",    150,       "A",
+  "seq02",    230,       "B",
+  "seq03",    180,       "A"
+)
+ejemplo2
+```
+
+El símbolo `~` señala los nombres de las columnas en `tribble()`. No es necesario utilizar esta función para tablas grandes; es especialmente útil para ejemplos y pruebas.
+
+### El operador `%>%`
+
+Sin pipes, una operación puede requerir objetos intermedios:
+
+```{r}
+filtrados <- filter(blast, pident >= 90)
+seleccionados <- select(filtrados, query_id, subject_id, pident, bitscore)
+ordenados <- arrange(seleccionados, desc(bitscore))
+head(ordenados)
+```
+
+Con `%>%`, la misma secuencia se lee de arriba hacia abajo:
+
+```{r}
+blast %>%
+  filter(pident >= 90) %>%
+  select(query_id, subject_id, pident, bitscore) %>%
+  arrange(desc(bitscore))
+```
+
+El resultado a la izquierda de `%>%` se envía como primer argumento de la función siguiente. En Bash, `|` conecta flujos de texto entre procesos; aquí encadenamos **objetos y funciones de R**. La semejanza ayuda a leer la sintaxis, aunque los mecanismos son diferentes.
+
+En RStudio, el atajo para insertar el pipe configurado suele ser **Ctrl + Shift + M** (Windows/Linux) o **Cmd + Shift + M** (macOS). Si inserta `|>`, puedes escribir `%>%` directamente o cambiar la preferencia del editor.
+
+
+
+::: {.callout-tip}
+Puedes llamar una función indicando explícitamente su paquete: `dplyr::filter()` o `readr::read_tsv()`. Es útil cuando dos paquetes tienen funciones con el mismo nombre.
+:::
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 1: Construir una tabla con un pipe
+
+A partir de `blast`, conserva únicamente los registros con `length >= 150`, muestra las columnas `query_id`, `subject_id`, `length` y `bitscore`, y ordénalos de mayor a menor `bitscore`. Hazlo en **una sola secuencia** con `%>%`.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+blast %>%
+  filter(length >= 150) %>%
+  select(query_id, subject_id, length, bitscore) %>%
+  arrange(desc(bitscore))
+```
+
+Primero reducimos las filas, después elegimos columnas y finalmente cambiamos el orden de presentación. El objeto original `blast` no se modifica.
+
+:::
+::::
+
+## Seleccionar, filtrar, ordenar y renombrar
+
+### `select()`: elegir columnas
+
+```{r}
+blast %>%
+  select(query_id, subject_id, pident)
+
+blast %>%
+  select(-evalue)  # Todas las columnas excepto evalue
+```
+
+También podemos seleccionar columnas por patrones en su nombre, mediante ayudantes como `starts_with()`; esto será especialmente útil cuando tengamos muchas columnas:
+
+```{r}
+blast %>% select(starts_with("query"), pident, bitscore)
+```
+
+### `filter()`: elegir filas
+
+Las condiciones se evalúan para cada fila. Podemos combinar criterios con `&` (y), `|` (o), o escribir condiciones separadas por comas, que equivale a combinarlas con «y».
+
+```{r}
+blast %>% filter(pident >= 90)
+blast %>% filter(pident >= 90, length >= 150)
+blast %>% filter(query_id == "seq01" | query_id == "seq02")
+blast %>% filter(query_id %in% c("seq01", "seq03", "seq05"))
+```
+
+`==` compara igualdad; `=` se utiliza para asignar argumentos en funciones. El operador `%in%` comprueba si un valor pertenece a un conjunto.
+
+### `arrange()`: ordenar registros
+
+```{r}
+blast %>% arrange(bitscore)         # Menor a mayor
+blast %>% arrange(desc(bitscore))   # Mayor a menor
+blast %>% arrange(query_id, desc(bitscore))
+```
+
+En la última instrucción, los registros se ordenan primero por `query_id` y, dentro de cada identificador, por `bitscore` descendente.
+
+### `rename()`: cambiar nombres de columnas
+
+```{r}
+blast %>%
+  rename(
+    identidad_porcentaje = pident,
+    longitud_alineamiento = length
+  ) %>%
+  select(query_id, identidad_porcentaje, longitud_alineamiento)
+```
+
+La sintaxis es `nombre_nuevo = nombre_actual`. Esta operación no cambia los valores almacenados.
+
+### `distinct()`: identificar combinaciones únicas
+
+```{r}
+blast %>% distinct(query_id)
+blast %>% distinct(query_id, subject_id)
+```
+
+`distinct()` conserva una fila por cada combinación única de las columnas indicadas. **No es lo mismo que escoger el mejor alineamiento**: si varias filas corresponden a la misma consulta, hay que definir explícitamente el criterio para elegir una.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 2: Seleccionar resultados de dos consultas
+
+Obtén los registros de `seq01` y `seq02` con `pident >= 80`. Conserva únicamente `query_id`, `subject_id`, `pident` y `evalue`; renombra `pident` como `identidad` y ordena primero por `query_id` y después por `identidad` descendente.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+blast %>%
+  filter(query_id %in% c("seq01", "seq02"), pident >= 80) %>%
+  select(query_id, subject_id, pident, evalue) %>%
+  rename(identidad = pident) %>%
+  arrange(query_id, desc(identidad))
+```
+
+El orden importa: después de `rename()`, la columna se llama `identidad`, por eso utilizamos ese nombre en `arrange()`.
+
+:::
+::::
+
+## Crear y modificar columnas con `mutate()`
+
+Hasta ahora hemos cambiado qué filas o columnas aparecen, pero no hemos generado nueva información. `mutate()` agrega columnas calculadas y normalmente **mantiene el número de filas**.
+
+```{r}
+blast %>%
+  mutate(
+    identidad_proporcion = pident / 100,
+    longitud_kb = length / 1000
+  ) %>%
+  select(query_id, pident, identidad_proporcion, length, longitud_kb)
+```
+
+`pident` ya representa un porcentaje; dividirlo entre 100 produce una proporción entre 0 y 1. `length` es la longitud del alineamiento en las unidades de la salida utilizada; dividir entre 1000 es solo un cambio de escala.
+
+### Columnas lógicas e `if_else()`
+
+Una condición produce valores `TRUE` y `FALSE`. Podemos conservarlos como variables lógicas o convertirlos en etiquetas:
+
+```{r}
+blast %>%
+  mutate(
+    supera_90 = pident >= 90,
+    etiqueta = if_else(pident >= 90, "90 o más", "Menos de 90")
+  ) %>%
+  select(query_id, pident, supera_90, etiqueta)
+```
+
+### Más de dos categorías con `case_when()`
+
+```{r}
+blast %>%
+  mutate(
+    grupo_didactico = case_when(
+      pident >= 95 ~ "Grupo A",
+      pident >= 80 ~ "Grupo B",
+      TRUE ~ "Grupo C"
+    )
+  ) %>%
+  count(grupo_didactico)
+```
+
+Las condiciones se revisan **de arriba hacia abajo**. El primer criterio verdadero determina la etiqueta. Por eso conviene colocar primero la condición más restrictiva. Estas etiquetas son únicamente para practicar reglas condicionales: no establecen categorías de similitud biológica válidas para cualquier estudio.
+
+### Valores faltantes
+
+Si una columna contiene `NA`, una comparación puede producir `NA` en vez de `TRUE` o `FALSE`. Podemos detectarlos con `is.na()`:
+
+```{r}
+tibble(valor = c(92, NA, 76)) %>%
+  mutate(
+    falta = is.na(valor),
+    etiqueta = case_when(
+      is.na(valor) ~ "Sin dato",
+      valor >= 90 ~ "90 o más",
+      TRUE ~ "Menos de 90"
+    )
+  )
+```
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 3: Crear variables a partir de columnas existentes
+
+Agrega a `blast` una columna `identidad_decimal` con `pident / 100` y una columna `categoria` que diga `"Alta"` si `pident >= 90`, `"Media"` si `pident >= 75` y `"Baja"` en los demás casos. Muestra `query_id`, `pident`, `identidad_decimal` y `categoria`.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+blast %>%
+  mutate(
+    identidad_decimal = pident / 100,
+    categoria = case_when(
+      pident >= 90 ~ "Alta",
+      pident >= 75 ~ "Media",
+      TRUE ~ "Baja"
+    )
+  ) %>%
+  select(query_id, pident, identidad_decimal, categoria)
+```
+
+Las etiquetas se definen mediante umbrales arbitrarios para practicar `case_when()`.
+
+:::
+::::
+
+## Agrupar y resumir información
+
+### Contar registros con `count()`
+
+¿Cuántos alineamientos aparecen para cada secuencia de consulta?
+
+```{r}
+blast %>% count(query_id)
+blast %>% count(query_id, sort = TRUE)
+```
+
+`count(query_id)` es una forma abreviada de `group_by(query_id) %>% summarise(n = n())`.
+
+### `group_by()` y `summarise()`
+
+`group_by()` establece los grupos sobre los que operarán las funciones posteriores. `summarise()` crea **una fila por grupo** cuando cada resumen devuelve un valor.
+
+```{r}
+resumen <- blast %>%
+  group_by(query_id) %>%
+  summarise(
+    numero_alineamientos = n(),
+    referencias_distintas = n_distinct(subject_id),
+    bitscore_maximo = max(bitscore),
+    identidad_promedio = mean(pident),
+    .groups = "drop"
+  )
+resumen
+```
+
+En este ejemplo `mean()` se utiliza solo como operación descriptiva sobre los números de la tabla, no como una prueba estadística ni como una medida de significancia biológica. `.groups = "drop"` elimina la agrupación al terminar el resumen.
+
+### Diferencia entre `mutate()` y `summarise()`
+
+Con `mutate()` podemos agregar a **cada fila** información calculada para su grupo:
+
+```{r}
+blast %>%
+  group_by(query_id) %>%
+  mutate(alineamientos_por_consulta = n()) %>%
+  ungroup() %>%
+  select(query_id, subject_id, alineamientos_por_consulta)
+```
+
+Con `summarise()`, en cambio, obtenemos una fila por consulta:
+
+```{r}
+blast %>%
+  group_by(query_id) %>%
+  summarise(alineamientos_por_consulta = n(), .groups = "drop")
+```
+
+`ungroup()` es útil después de `mutate()` cuando ya no necesitamos conservar el agrupamiento para operaciones posteriores.
+
+### Elegir una fila por grupo: un criterio explícito
+
+Si queremos conservar el registro con el mayor `bitscore` para cada consulta, primero ordenamos y después seleccionamos una fila por grupo:
+
+```{r}
+blast %>%
+  group_by(query_id) %>%
+  slice_max(order_by = bitscore, n = 1, with_ties = FALSE) %>%
+  ungroup()
+```
+
+`with_ties = FALSE` garantiza una sola fila por grupo si existen empates; en ese caso la elección entre registros empatados no expresa una preferencia biológica. Para datos reales sería necesario definir cómo resolverlos.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 4: Resumir resultados por secuencia
+
+Construye una tabla con una fila por `query_id`, el número de alineamientos (`n_alineamientos`), el mayor porcentaje de identidad (`identidad_maxima`) y el mayor `bitscore` (`bitscore_maximo`). Ordénala de mayor a menor `n_alineamientos`.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+blast %>%
+  group_by(query_id) %>%
+  summarise(
+    n_alineamientos = n(),
+    identidad_maxima = max(pident),
+    bitscore_maximo = max(bitscore),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(n_alineamientos))
+```
+
+Los dos máximos se calculan de manera independiente: podrían corresponder a **filas distintas**. No debemos interpretarlos como si describieran necesariamente el mismo alineamiento.
+
+:::
+::::
+
+## Reorganizar tablas con `tidyr`
+
+En muchos experimentos, una tabla contiene varias muestras en columnas diferentes. En otros casos, cada observación ocupa una fila. Ambos formatos son útiles según la tarea.
+
+### Formato ancho
+
+El archivo `conteos_genes.csv` contiene una fila por gen y una columna por muestra. Los valores son **conteos sintéticos**; no se interpretarán como expresión diferencial ni como resultados de un experimento real.
+
+```{r}
+conteos
+```
+
+### `pivot_longer()`: de ancho a largo
+
+```{r}
+conteos_largos <- conteos %>%
+  pivot_longer(
+    cols = starts_with("muestra_"),
+    names_to = "muestra",
+    values_to = "conteo"
+  )
+conteos_largos
+```
+
+Observa que ahora cada combinación gen–muestra ocupa una fila. La columna `muestra` contiene los nombres que antes eran encabezados, mientras que `conteo` reúne los valores numéricos.
+
+Esta organización facilita agrupar por muestra:
+
+```{r}
+conteos_largos %>%
+  group_by(muestra) %>%
+  summarise(
+    total_conteos = sum(conteo),
+    genes_registrados = n(),
+    .groups = "drop"
+  )
+```
+
+### `pivot_wider()`: de largo a ancho
+
+```{r}
+conteos_recuperados <- conteos_largos %>%
+  pivot_wider(
+    names_from = muestra,
+    values_from = conteo
+  )
+conteos_recuperados
+```
+
+Para que esta conversión sea directa, cada combinación de `gen` y `muestra` debe identificar un único valor. Si hay varias filas para la misma combinación, necesitaremos decidir cómo agregarlas o resolverlas.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 5: Transformar y resumir conteos
+
+Convierte `conteos` a formato largo, conserva únicamente las filas con `conteo >= 100` y muestra cuántos registros cumplen el criterio en cada muestra. Ordena las muestras alfabéticamente.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+conteos %>%
+  pivot_longer(
+    cols = starts_with("muestra_"),
+    names_to = "muestra",
+    values_to = "conteo"
+  ) %>%
+  filter(conteo >= 100) %>%
+  group_by(muestra) %>%
+  summarise(registros = n(), .groups = "drop") %>%
+  arrange(muestra)
+```
+
+El resultado cuenta **filas gen–muestra** que cumplen el criterio; no cuenta genes únicos de todo el conjunto.
+
+:::
+::::
+
+## Exportación y práctica integradora
+
+### Guardar resultados sin sobrescribir los datos originales
+
+La idea es separar los datos originales (`data_raw/`) de las tablas generadas durante el análisis (`results/`).
+
+```{r}
+if (!dir.exists("results")) dir.create("results")
+
+readr::write_csv(resumen, "results/03_resumen_blast.csv")
+readr::write_tsv(conteos_largos, "results/03_conteos_largos.tsv")
+```
+
+Podemos comprobar que los archivos se crearon:
+
+```{r}
+file.exists("results/03_resumen_blast.csv")
+file.exists("results/03_conteos_largos.tsv")
+```
+
+`write_csv()` y `write_tsv()` guardan tablas de texto; no conservan automáticamente todas las propiedades de objetos especializados de R. En la sesión 4 aprenderemos a integrar tablas de distintas fuentes.
+
+## Práctica Final: Preparar una tabla de resultados de BLAST
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 6: Preparar una tabla de resultados de BLAST
+
+Crea un objeto llamado `blast_preparado` mediante **una sola secuencia de transformaciones con `%>%`** que:
+
+1. Conserve registros con `length >= 150` y `pident >= 80`.
+2. Agregue una columna `identidad_decimal` igual a `pident / 100`.
+3. Cree una columna `grupo` con `"90 o más"` si `pident >= 90` y `"Menos de 90"` en otro caso.
+4. Conserve únicamente `query_id`, `subject_id`, `bitscore`, `identidad_decimal` y `grupo`.
+5. Ordene por `query_id` y `bitscore` descendente.
+
+Después construye `resumen_preparado` con el número de registros por `query_id` y el máximo `bitscore` de cada consulta. Guarda ambas tablas en `results/` como archivos CSV. **No modifiques ni sobrescribas** `resultados_blast.tsv`.
+
+
+::::
+
+## Observaciones
+
+Hoy utilizamos `dplyr` para transformar **una tabla** y `tidyr` para cambiar su organización. Antes de continuar, verifica que puedes responder estas preguntas:
+
+- ¿Cuál es la diferencia entre `select()` y `filter()`?
+- ¿Qué información pasa de una función a la siguiente cuando utilizamos `%>%`?
+- ¿Por qué `mutate()` y `summarise()` producen tablas de distinto tamaño?
+- ¿Qué representan las columnas `muestra` y `conteo` después de `pivot_longer()`?
+- ¿Por qué conviene guardar resultados en una carpeta distinta de los datos originales?
+
+En la **sesión 4** integraremos información de varias tablas mediante identificadores y aprenderemos a repetir procesos sobre múltiples archivos.

@@ -1,0 +1,2235 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; Manipulación y transformación de datos bioinformáticos con dplyr y tidyr – Introducción a R para Bioinformática I</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./parte9.html" rel="next">
+<link href="./parte7.html" rel="prev">
+<link href="./figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte8.html"><strong>Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</strong></a></li><li class="breadcrumb-item"><a href="./parte8.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/LogoENES.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./figures/LogoENES.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introducción a R para Bioinformática I</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1" title="Ejecutar el código" class="quarto-navigation-tool px-1" aria-label="Ejecutar el código"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Compartir" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Compartir"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Información general</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./temario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temario</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Introducción a R y organización de proyectos bioinformáticos</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Buenas prácticas en bioinformática</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objetos y estructuras de datos en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estructuras de control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funciones en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scripts, paquetes y proyectos de RStudio</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Importación y exploración de datos bioinformáticos en R</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte8.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Integración de datos y automatización de análisis en R</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">parte9</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">8.1</span> Introducción</a></li>
+  <li><a href="#archivos-y-preparación" id="toc-archivos-y-preparación" class="nav-link" data-scroll-target="#archivos-y-preparación"><span class="header-section-number">8.2</span> Archivos y preparación</a></li>
+  <li><a href="#introducción-a-tibble-dplyr" id="toc-introducción-a-tibble-dplyr" class="nav-link" data-scroll-target="#introducción-a-tibble-dplyr"><span class="header-section-number">8.3</span> Introducción a <code>tibble</code>, <code>dplyr</code></a>
+  <ul>
+  <li><a href="#qué-es-un-tibble" id="toc-qué-es-un-tibble" class="nav-link" data-scroll-target="#qué-es-un-tibble"><span class="header-section-number">8.3.1</span> ¿Qué es un <code>tibble</code>?</a></li>
+  <li><a href="#el-operador" id="toc-el-operador" class="nav-link" data-scroll-target="#el-operador"><span class="header-section-number">8.3.2</span> El operador <code>%&gt;%</code></a></li>
+  </ul></li>
+  <li><a href="#seleccionar-filtrar-ordenar-y-renombrar" id="toc-seleccionar-filtrar-ordenar-y-renombrar" class="nav-link" data-scroll-target="#seleccionar-filtrar-ordenar-y-renombrar"><span class="header-section-number">8.4</span> Seleccionar, filtrar, ordenar y renombrar</a>
+  <ul>
+  <li><a href="#select-elegir-columnas" id="toc-select-elegir-columnas" class="nav-link" data-scroll-target="#select-elegir-columnas"><span class="header-section-number">8.4.1</span> <code>select()</code>: elegir columnas</a></li>
+  <li><a href="#filter-elegir-filas" id="toc-filter-elegir-filas" class="nav-link" data-scroll-target="#filter-elegir-filas"><span class="header-section-number">8.4.2</span> <code>filter()</code>: elegir filas</a></li>
+  <li><a href="#arrange-ordenar-registros" id="toc-arrange-ordenar-registros" class="nav-link" data-scroll-target="#arrange-ordenar-registros"><span class="header-section-number">8.4.3</span> <code>arrange()</code>: ordenar registros</a></li>
+  <li><a href="#rename-cambiar-nombres-de-columnas" id="toc-rename-cambiar-nombres-de-columnas" class="nav-link" data-scroll-target="#rename-cambiar-nombres-de-columnas"><span class="header-section-number">8.4.4</span> <code>rename()</code>: cambiar nombres de columnas</a></li>
+  <li><a href="#distinct-identificar-combinaciones-únicas" id="toc-distinct-identificar-combinaciones-únicas" class="nav-link" data-scroll-target="#distinct-identificar-combinaciones-únicas"><span class="header-section-number">8.4.5</span> <code>distinct()</code>: identificar combinaciones únicas</a></li>
+  </ul></li>
+  <li><a href="#crear-y-modificar-columnas-con-mutate" id="toc-crear-y-modificar-columnas-con-mutate" class="nav-link" data-scroll-target="#crear-y-modificar-columnas-con-mutate"><span class="header-section-number">8.5</span> Crear y modificar columnas con <code>mutate()</code></a>
+  <ul>
+  <li><a href="#columnas-lógicas-e-if_else" id="toc-columnas-lógicas-e-if_else" class="nav-link" data-scroll-target="#columnas-lógicas-e-if_else"><span class="header-section-number">8.5.1</span> Columnas lógicas e <code>if_else()</code></a></li>
+  <li><a href="#más-de-dos-categorías-con-case_when" id="toc-más-de-dos-categorías-con-case_when" class="nav-link" data-scroll-target="#más-de-dos-categorías-con-case_when"><span class="header-section-number">8.5.2</span> Más de dos categorías con <code>case_when()</code></a></li>
+  <li><a href="#valores-faltantes" id="toc-valores-faltantes" class="nav-link" data-scroll-target="#valores-faltantes"><span class="header-section-number">8.5.3</span> Valores faltantes</a></li>
+  </ul></li>
+  <li><a href="#agrupar-y-resumir-información" id="toc-agrupar-y-resumir-información" class="nav-link" data-scroll-target="#agrupar-y-resumir-información"><span class="header-section-number">8.6</span> Agrupar y resumir información</a>
+  <ul>
+  <li><a href="#contar-registros-con-count" id="toc-contar-registros-con-count" class="nav-link" data-scroll-target="#contar-registros-con-count"><span class="header-section-number">8.6.1</span> Contar registros con <code>count()</code></a></li>
+  <li><a href="#group_by-y-summarise" id="toc-group_by-y-summarise" class="nav-link" data-scroll-target="#group_by-y-summarise"><span class="header-section-number">8.6.2</span> <code>group_by()</code> y <code>summarise()</code></a></li>
+  <li><a href="#diferencia-entre-mutate-y-summarise" id="toc-diferencia-entre-mutate-y-summarise" class="nav-link" data-scroll-target="#diferencia-entre-mutate-y-summarise"><span class="header-section-number">8.6.3</span> Diferencia entre <code>mutate()</code> y <code>summarise()</code></a></li>
+  <li><a href="#elegir-una-fila-por-grupo-un-criterio-explícito" id="toc-elegir-una-fila-por-grupo-un-criterio-explícito" class="nav-link" data-scroll-target="#elegir-una-fila-por-grupo-un-criterio-explícito"><span class="header-section-number">8.6.4</span> Elegir una fila por grupo: un criterio explícito</a></li>
+  </ul></li>
+  <li><a href="#reorganizar-tablas-con-tidyr" id="toc-reorganizar-tablas-con-tidyr" class="nav-link" data-scroll-target="#reorganizar-tablas-con-tidyr"><span class="header-section-number">8.7</span> Reorganizar tablas con <code>tidyr</code></a>
+  <ul>
+  <li><a href="#formato-ancho" id="toc-formato-ancho" class="nav-link" data-scroll-target="#formato-ancho"><span class="header-section-number">8.7.1</span> Formato ancho</a></li>
+  <li><a href="#pivot_longer-de-ancho-a-largo" id="toc-pivot_longer-de-ancho-a-largo" class="nav-link" data-scroll-target="#pivot_longer-de-ancho-a-largo"><span class="header-section-number">8.7.2</span> <code>pivot_longer()</code>: de ancho a largo</a></li>
+  <li><a href="#pivot_wider-de-largo-a-ancho" id="toc-pivot_wider-de-largo-a-ancho" class="nav-link" data-scroll-target="#pivot_wider-de-largo-a-ancho"><span class="header-section-number">8.7.3</span> <code>pivot_wider()</code>: de largo a ancho</a></li>
+  </ul></li>
+  <li><a href="#exportación-y-práctica-integradora" id="toc-exportación-y-práctica-integradora" class="nav-link" data-scroll-target="#exportación-y-práctica-integradora"><span class="header-section-number">8.8</span> Exportación y práctica integradora</a>
+  <ul>
+  <li><a href="#guardar-resultados-sin-sobrescribir-los-datos-originales" id="toc-guardar-resultados-sin-sobrescribir-los-datos-originales" class="nav-link" data-scroll-target="#guardar-resultados-sin-sobrescribir-los-datos-originales"><span class="header-section-number">8.8.1</span> Guardar resultados sin sobrescribir los datos originales</a></li>
+  </ul></li>
+  <li><a href="#práctica-final-preparar-una-tabla-de-resultados-de-blast" id="toc-práctica-final-preparar-una-tabla-de-resultados-de-blast" class="nav-link" data-scroll-target="#práctica-final-preparar-una-tabla-de-resultados-de-blast"><span class="header-section-number">8.9</span> Práctica Final: Preparar una tabla de resultados de BLAST</a></li>
+  <li><a href="#observaciones" id="toc-observaciones" class="nav-link" data-scroll-target="#observaciones"><span class="header-section-number">8.10</span> Observaciones</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte8.html"><strong>Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</strong></a></li><li class="breadcrumb-item"><a href="./parte8.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">8.1</span> Introducción</h2>
+<p>En la sesión 2 aprendimos a reconocer archivos, importar tablas y explorar su contenido. Ahora vamos a <strong>transformar</strong> esas tablas para responder preguntas concretas: ¿qué alineamientos cumplen ciertos criterios?, ¿cuántos resultados hay por secuencia de consulta?, ¿cómo crear nuevas columnas? y ¿cómo reorganizar una tabla para facilitar su análisis?</p>
+<p>Trabajaremos con <strong>resultados sintéticos con la estructura de una salida tabular de BLAST</strong>, así como con una tabla pequeña de conteos de genes. No necesitamos ejecutar BLAST ni interpretar los resultados como hallazgos biológicos: los archivos son materiales didácticos.</p>
+<p>Al finalizar podrás:</p>
+<ol type="1">
+<li>Utilizar <code>%&gt;%</code> para encadenar operaciones sobre tablas.</li>
+<li>Seleccionar, filtrar, ordenar, renombrar y eliminar registros repetidos con <code>dplyr</code>.</li>
+<li>Crear variables nuevas y resumir registros por grupos.</li>
+<li>Reconocer la diferencia entre formatos ancho y largo, y convertirlos con <code>tidyr</code>.</li>
+<li>Guardar tablas transformadas sin sobrescribir los datos originales.</li>
+</ol>
+</section>
+<section id="archivos-y-preparación" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="archivos-y-preparación"><span class="header-section-number">8.2</span> Archivos y preparación</h2>
+<p>Descarga los datos nuevos y descomprímelos <a href="https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_sesion_03_dplyr.zip">datos_sesion_03_dplyr.zip</a>.</p>
+<p>Utilizaremos <code>resultados_blast.tsv</code> de la sesión 2 y un archivo adicional <code>conteos_genes.csv</code>. Organiza las carpetas así:</p>
+<pre class="text"><code>mi_proyecto/
+├── mi_proyecto.Rproj
+├── data_raw/
+│   ├── datos_sesion_02_blast/
+│   │   └── resultados_blast.tsv
+│   └── datos_sesion_03/
+│       └── conteos_genes.csv
+└── results/</code></pre>
+<p>La instalación de paquetes se realiza una sola vez en cada equipo; <code>library()</code> se utiliza en las sesiones en que los necesitemos.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"tidyr"</span>, <span class="st">"tibble"</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Adjuntando el paquete: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/hayde/Documents/RSites/Intro_to_R_Bioinfo_2027-1"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ruta_blast <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ruta_conteos <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_03_dplyr/conteos_genes.csv"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">file.exists</span>(ruta_blast), <span class="fu">file.exists</span>(ruta_conteos))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(ruta_blast, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>conteos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(ruta_conteos, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 20
+Columns: 6
+$ query_id   &lt;chr&gt; "seq01", "seq01", "seq01", "seq02", "seq02", "seq03", "seq0…
+$ subject_id &lt;chr&gt; "ref_001", "ref_002", "ref_003", "ref_004", "ref_005", "ref…
+$ pident     &lt;dbl&gt; 87.9, 68.2, 93.5, 82.6, 68.7, 88.2, 93.6, 97.8, 99.0, 83.9,…
+$ length     &lt;dbl&gt; 216, 245, 168, 111, 292, 254, 319, 191, 229, 162, 101, 306,…
+$ evalue     &lt;dbl&gt; 1e-40, 1e-36, 1e-35, 1e-85, 1e-57, 1e-05, 1e-36, 1e-71, 1e-…
+$ bitscore   &lt;dbl&gt; 118.7, 184.6, 386.1, 259.9, 322.6, 361.9, 96.6, 97.9, 335.9…</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(conteos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 10
+Columns: 5
+$ gen       &lt;chr&gt; "gen01", "gen02", "gen03", "gen04", "gen05", "gen06", "gen07…
+$ muestra_A &lt;dbl&gt; 120, 45, 200, 0, 98, 310, 65, 160, 20, 250
+$ muestra_B &lt;dbl&gt; 90, 70, 180, 15, 135, 295, 75, 140, 30, 270
+$ muestra_C &lt;dbl&gt; 150, 38, 210, 8, 110, 340, 95, 125, 25, 230
+$ muestra_D &lt;dbl&gt; 210, 62, 175, 22, 80, 300, 105, 155, 40, 290</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Inspección de la estructura de los datos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La función <code>glimpse()</code> permite inspeccionar rápidamente la estructura de un conjunto de datos. Muestra el número de filas y columnas, los nombres de las variables, sus tipos de datos y algunos de sus valores.</p>
+<p>A diferencia de <code>head()</code>, que presenta las primeras filas en forma de tabla, <code>glimpse()</code> organiza la información por columnas, lo que facilita revisar conjuntos de datos con muchas variables.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Función</th>
+<th>¿Qué muestra?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>head()</code></td>
+<td>Las primeras 6 filas del conjunto de datos, en forma de tabla.</td>
+</tr>
+<tr class="even">
+<td><code>glimpse()</code></td>
+<td>El número de filas y columnas, los nombres de las variables, sus tipos de datos y algunos valores.</td>
+</tr>
+<tr class="odd">
+<td><code>str()</code></td>
+<td>La estructura interna del objeto en R, incluyendo tipos de datos y una vista de su contenido.</td>
+</tr>
+</tbody>
+</table>
+<p>Estas funciones son útiles después de importar archivos bioinformáticos para comprobar que R haya interpretado correctamente la estructura y los tipos de datos, antes de comenzar su manipulación o análisis.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Convención:</strong> en los ejemplos se utiliza <code>%&gt;%</code> (del paquete <code>magrittr</code>, reexportado por <code>dplyr</code>). No utilizaremos el operador nativo <code>|&gt;</code> en estas notas. Los criterios numéricos de filtrado son <strong>ejemplos para practicar R</strong>, no umbrales universales para determinar homología o significancia biológica.</p>
+</div>
+</div>
+</section>
+<section id="introducción-a-tibble-dplyr" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="introducción-a-tibble-dplyr"><span class="header-section-number">8.3</span> Introducción a <code>tibble</code>, <code>dplyr</code></h2>
+<section id="qué-es-un-tibble" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="qué-es-un-tibble"><span class="header-section-number">8.3.1</span> ¿Qué es un <code>tibble</code>?</h3>
+<p>Un <code>tibble</code> es una variante moderna de <code>data.frame</code>. Conserva la estructura de filas y columnas, pero suele mostrar los datos de manera más compacta, indicando el tipo de cada columna. <code>readr</code> importa archivos como tibbles.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">as.data.frame</span>(blast))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+</div>
+<p>Podemos construir tablas pequeñas para experimentar sin tener que crear un archivo externo:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ejemplo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">secuencia =</span> <span class="fu">c</span>(<span class="st">"seq01"</span>, <span class="st">"seq02"</span>, <span class="st">"seq03"</span>),</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">230</span>, <span class="dv">180</span>),</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grupo =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ejemplo</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  secuencia longitud grupo
+  &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;
+1 seq01          150 A    
+2 seq02          230 B    
+3 seq03          180 A    </code></pre>
+</div>
+</div>
+<p><code>tribble()</code> resulta práctico cuando queremos escribir la tabla por filas:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ejemplo2 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>secuencia, <span class="sc">~</span>longitud, <span class="sc">~</span>grupo,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq01"</span>,    <span class="dv">150</span>,       <span class="st">"A"</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq02"</span>,    <span class="dv">230</span>,       <span class="st">"B"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq03"</span>,    <span class="dv">180</span>,       <span class="st">"A"</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>ejemplo2</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  secuencia longitud grupo
+  &lt;chr&gt;        &lt;dbl&gt; &lt;chr&gt;
+1 seq01          150 A    
+2 seq02          230 B    
+3 seq03          180 A    </code></pre>
+</div>
+</div>
+<p>El símbolo <code>~</code> señala los nombres de las columnas en <code>tribble()</code>. No es necesario utilizar esta función para tablas grandes; es especialmente útil para ejemplos y pruebas.</p>
+</section>
+<section id="el-operador" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="el-operador"><span class="header-section-number">8.3.2</span> El operador <code>%&gt;%</code></h3>
+<p>Sin pipes, una operación puede requerir objetos intermedios:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>filtrados <span class="ot">&lt;-</span> <span class="fu">filter</span>(blast, pident <span class="sc">&gt;=</span> <span class="dv">90</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>seleccionados <span class="ot">&lt;-</span> <span class="fu">select</span>(filtrados, query_id, subject_id, pident, bitscore)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ordenados <span class="ot">&lt;-</span> <span class="fu">arrange</span>(seleccionados, <span class="fu">desc</span>(bitscore))</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ordenados)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  query_id subject_id pident bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_003      93.5    386. 
+2 seq03    ref_010      99      336. 
+3 seq07    ref_019      95.7    138. 
+4 seq03    ref_009      97.8     97.9
+5 seq03    ref_008      93.6     96.6</code></pre>
+</div>
+</div>
+<p>Con <code>%&gt;%</code>, la misma secuencia se lee de arriba hacia abajo:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident, bitscore) <span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 4
+  query_id subject_id pident bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_003      93.5    386. 
+2 seq03    ref_010      99      336. 
+3 seq07    ref_019      95.7    138. 
+4 seq03    ref_009      97.8     97.9
+5 seq03    ref_008      93.6     96.6</code></pre>
+</div>
+</div>
+<p>El resultado a la izquierda de <code>%&gt;%</code> se envía como primer argumento de la función siguiente. En Bash, <code>|</code> conecta flujos de texto entre procesos; aquí encadenamos <strong>objetos y funciones de R</strong>. La semejanza ayuda a leer la sintaxis, aunque los mecanismos son diferentes.</p>
+<p>En RStudio, el atajo para insertar el pipe configurado suele ser <strong>Ctrl + Shift + M</strong> (Windows/Linux) o <strong>Cmd + Shift + M</strong> (macOS). Si inserta <code>|&gt;</code>, puedes escribir <code>%&gt;%</code> directamente o cambiar la preferencia del editor.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Puedes llamar una función indicando explícitamente su paquete: <code>dplyr::filter()</code> o <code>readr::read_tsv()</code>. Es útil cuando dos paquetes tienen funciones con el mismo nombre.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 1: Construir una tabla con un pipe
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A partir de <code>blast</code>, conserva únicamente los registros con <code>length &gt;= 150</code>, muestra las columnas <code>query_id</code>, <code>subject_id</code>, <code>length</code> y <code>bitscore</code>, y ordénalos de mayor a menor <code>bitscore</code>. Hazlo en <strong>una sola secuencia</strong> con <code>%&gt;%</code>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(length <span class="sc">&gt;=</span> <span class="dv">150</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, length, bitscore) <span class="sc">%&gt;%</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 16 × 4
+   query_id subject_id length bitscore
+   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;
+ 1 seq01    ref_003       168    386. 
+ 2 seq03    ref_007       254    362. 
+ 3 seq03    ref_010       229    336. 
+ 4 seq02    ref_005       292    323. 
+ 5 seq04    ref_010       162    310. 
+ 6 seq08    ref_022       205    306. 
+ 7 seq06    ref_017       210    226. 
+ 8 seq01    ref_002       245    185. 
+ 9 seq05    ref_014       306    175. 
+10 seq05    ref_015       287    160. 
+11 seq08    ref_023       308    152. 
+12 seq01    ref_001       216    119. 
+13 seq03    ref_009       191     97.9
+14 seq03    ref_008       319     96.6
+15 seq07    ref_020       325     79.3
+16 seq06    ref_016       314     49.8</code></pre>
+</div>
+</div>
+<p>Primero reducimos las filas, después elegimos columnas y finalmente cambiamos el orden de presentación. El objeto original <code>blast</code> no se modifica.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="seleccionar-filtrar-ordenar-y-renombrar" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="seleccionar-filtrar-ordenar-y-renombrar"><span class="header-section-number">8.4</span> Seleccionar, filtrar, ordenar y renombrar</h2>
+<section id="select-elegir-columnas" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="select-elegir-columnas"><span class="header-section-number">8.4.1</span> <code>select()</code>: elegir columnas</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+   query_id subject_id pident
+   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;
+ 1 seq01    ref_001      87.9
+ 2 seq01    ref_002      68.2
+ 3 seq01    ref_003      93.5
+ 4 seq02    ref_004      82.6
+ 5 seq02    ref_005      68.7
+ 6 seq03    ref_007      88.2
+ 7 seq03    ref_008      93.6
+ 8 seq03    ref_009      97.8
+ 9 seq03    ref_010      99  
+10 seq04    ref_010      83.9
+11 seq05    ref_013      75  
+12 seq05    ref_014      88  
+13 seq05    ref_015      85.4
+14 seq06    ref_016      80.8
+15 seq06    ref_017      71.3
+16 seq07    ref_019      95.7
+17 seq07    ref_020      73  
+18 seq07    ref_021      77.4
+19 seq08    ref_022      69.9
+20 seq08    ref_023      68.8</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>evalue)  <span class="co"># Todas las columnas excepto evalue</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 5
+   query_id subject_id pident length bitscore
+   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+ 1 seq01    ref_001      87.9    216    119. 
+ 2 seq01    ref_002      68.2    245    185. 
+ 3 seq01    ref_003      93.5    168    386. 
+ 4 seq02    ref_004      82.6    111    260. 
+ 5 seq02    ref_005      68.7    292    323. 
+ 6 seq03    ref_007      88.2    254    362. 
+ 7 seq03    ref_008      93.6    319     96.6
+ 8 seq03    ref_009      97.8    191     97.9
+ 9 seq03    ref_010      99      229    336. 
+10 seq04    ref_010      83.9    162    310. 
+11 seq05    ref_013      75      101    411. 
+12 seq05    ref_014      88      306    175. 
+13 seq05    ref_015      85.4    287    160. 
+14 seq06    ref_016      80.8    314     49.8
+15 seq06    ref_017      71.3    210    226. 
+16 seq07    ref_019      95.7    106    138. 
+17 seq07    ref_020      73      325     79.3
+18 seq07    ref_021      77.4    104    174. 
+19 seq08    ref_022      69.9    205    306. 
+20 seq08    ref_023      68.8    308    152. </code></pre>
+</div>
+</div>
+<p>También podemos seleccionar columnas por patrones en su nombre, mediante ayudantes como <code>starts_with()</code>; esto será especialmente útil cuando tengamos muchas columnas:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"query"</span>), pident, bitscore)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+   query_id pident bitscore
+   &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+ 1 seq01      87.9    119. 
+ 2 seq01      68.2    185. 
+ 3 seq01      93.5    386. 
+ 4 seq02      82.6    260. 
+ 5 seq02      68.7    323. 
+ 6 seq03      88.2    362. 
+ 7 seq03      93.6     96.6
+ 8 seq03      97.8     97.9
+ 9 seq03      99      336. 
+10 seq04      83.9    310. 
+11 seq05      75      411. 
+12 seq05      88      175. 
+13 seq05      85.4    160. 
+14 seq06      80.8     49.8
+15 seq06      71.3    226. 
+16 seq07      95.7    138. 
+17 seq07      73       79.3
+18 seq07      77.4    174. 
+19 seq08      69.9    306. 
+20 seq08      68.8    152. </code></pre>
+</div>
+</div>
+</section>
+<section id="filter-elegir-filas" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="filter-elegir-filas"><span class="header-section-number">8.4.2</span> <code>filter()</code>: elegir filas</h3>
+<p>Las condiciones se evalúan para cada fila. Podemos combinar criterios con <code>&amp;</code> (y), <code>|</code> (o), o escribir condiciones separadas por comas, que equivale a combinarlas con «y».</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_003      93.5    168  1e-35    386. 
+2 seq03    ref_008      93.6    319  1e-36     96.6
+3 seq03    ref_009      97.8    191  1e-71     97.9
+4 seq03    ref_010      99      229  1e- 8    336. 
+5 seq07    ref_019      95.7    106  1e-70    138. </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>, length <span class="sc">&gt;=</span> <span class="dv">150</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_003      93.5    168  1e-35    386. 
+2 seq03    ref_008      93.6    319  1e-36     96.6
+3 seq03    ref_009      97.8    191  1e-71     97.9
+4 seq03    ref_010      99      229  1e- 8    336. </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(query_id <span class="sc">==</span> <span class="st">"seq01"</span> <span class="sc">|</span> query_id <span class="sc">==</span> <span class="st">"seq02"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_001      87.9    216  1e-40     119.
+2 seq01    ref_002      68.2    245  1e-36     185.
+3 seq01    ref_003      93.5    168  1e-35     386.
+4 seq02    ref_004      82.6    111  1e-85     260.
+5 seq02    ref_005      68.7    292  1e-57     323.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(query_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"seq01"</span>, <span class="st">"seq03"</span>, <span class="st">"seq05"</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 6
+   query_id subject_id pident length evalue bitscore
+   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+ 1 seq01    ref_001      87.9    216  1e-40    119. 
+ 2 seq01    ref_002      68.2    245  1e-36    185. 
+ 3 seq01    ref_003      93.5    168  1e-35    386. 
+ 4 seq03    ref_007      88.2    254  1e- 5    362. 
+ 5 seq03    ref_008      93.6    319  1e-36     96.6
+ 6 seq03    ref_009      97.8    191  1e-71     97.9
+ 7 seq03    ref_010      99      229  1e- 8    336. 
+ 8 seq05    ref_013      75      101  1e-26    411. 
+ 9 seq05    ref_014      88      306  1e-23    175. 
+10 seq05    ref_015      85.4    287  1e-12    160. </code></pre>
+</div>
+</div>
+<p><code>==</code> compara igualdad; <code>=</code> se utiliza para asignar argumentos en funciones. El operador <code>%in%</code> comprueba si un valor pertenece a un conjunto.</p>
+</section>
+<section id="arrange-ordenar-registros" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="arrange-ordenar-registros"><span class="header-section-number">8.4.3</span> <code>arrange()</code>: ordenar registros</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(bitscore)         <span class="co"># Menor a mayor</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 6
+   query_id subject_id pident length evalue bitscore
+   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+ 1 seq06    ref_016      80.8    314  1e-49     49.8
+ 2 seq07    ref_020      73      325  1e-75     79.3
+ 3 seq03    ref_008      93.6    319  1e-36     96.6
+ 4 seq03    ref_009      97.8    191  1e-71     97.9
+ 5 seq01    ref_001      87.9    216  1e-40    119. 
+ 6 seq07    ref_019      95.7    106  1e-70    138. 
+ 7 seq08    ref_023      68.8    308  1e-63    152. 
+ 8 seq05    ref_015      85.4    287  1e-12    160. 
+ 9 seq07    ref_021      77.4    104  1e-54    174. 
+10 seq05    ref_014      88      306  1e-23    175. 
+11 seq01    ref_002      68.2    245  1e-36    185. 
+12 seq06    ref_017      71.3    210  1e-26    226. 
+13 seq02    ref_004      82.6    111  1e-85    260. 
+14 seq08    ref_022      69.9    205  1e-75    306. 
+15 seq04    ref_010      83.9    162  1e-62    310. 
+16 seq02    ref_005      68.7    292  1e-57    323. 
+17 seq03    ref_010      99      229  1e- 8    336. 
+18 seq03    ref_007      88.2    254  1e- 5    362. 
+19 seq01    ref_003      93.5    168  1e-35    386. 
+20 seq05    ref_013      75      101  1e-26    411. </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))   <span class="co"># Mayor a menor</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 6
+   query_id subject_id pident length evalue bitscore
+   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+ 1 seq05    ref_013      75      101  1e-26    411. 
+ 2 seq01    ref_003      93.5    168  1e-35    386. 
+ 3 seq03    ref_007      88.2    254  1e- 5    362. 
+ 4 seq03    ref_010      99      229  1e- 8    336. 
+ 5 seq02    ref_005      68.7    292  1e-57    323. 
+ 6 seq04    ref_010      83.9    162  1e-62    310. 
+ 7 seq08    ref_022      69.9    205  1e-75    306. 
+ 8 seq02    ref_004      82.6    111  1e-85    260. 
+ 9 seq06    ref_017      71.3    210  1e-26    226. 
+10 seq01    ref_002      68.2    245  1e-36    185. 
+11 seq05    ref_014      88      306  1e-23    175. 
+12 seq07    ref_021      77.4    104  1e-54    174. 
+13 seq05    ref_015      85.4    287  1e-12    160. 
+14 seq08    ref_023      68.8    308  1e-63    152. 
+15 seq07    ref_019      95.7    106  1e-70    138. 
+16 seq01    ref_001      87.9    216  1e-40    119. 
+17 seq03    ref_009      97.8    191  1e-71     97.9
+18 seq03    ref_008      93.6    319  1e-36     96.6
+19 seq07    ref_020      73      325  1e-75     79.3
+20 seq06    ref_016      80.8    314  1e-49     49.8</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(query_id, <span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 6
+   query_id subject_id pident length evalue bitscore
+   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+ 1 seq01    ref_003      93.5    168  1e-35    386. 
+ 2 seq01    ref_002      68.2    245  1e-36    185. 
+ 3 seq01    ref_001      87.9    216  1e-40    119. 
+ 4 seq02    ref_005      68.7    292  1e-57    323. 
+ 5 seq02    ref_004      82.6    111  1e-85    260. 
+ 6 seq03    ref_007      88.2    254  1e- 5    362. 
+ 7 seq03    ref_010      99      229  1e- 8    336. 
+ 8 seq03    ref_009      97.8    191  1e-71     97.9
+ 9 seq03    ref_008      93.6    319  1e-36     96.6
+10 seq04    ref_010      83.9    162  1e-62    310. 
+11 seq05    ref_013      75      101  1e-26    411. 
+12 seq05    ref_014      88      306  1e-23    175. 
+13 seq05    ref_015      85.4    287  1e-12    160. 
+14 seq06    ref_017      71.3    210  1e-26    226. 
+15 seq06    ref_016      80.8    314  1e-49     49.8
+16 seq07    ref_021      77.4    104  1e-54    174. 
+17 seq07    ref_019      95.7    106  1e-70    138. 
+18 seq07    ref_020      73      325  1e-75     79.3
+19 seq08    ref_022      69.9    205  1e-75    306. 
+20 seq08    ref_023      68.8    308  1e-63    152. </code></pre>
+</div>
+</div>
+<p>En la última instrucción, los registros se ordenan primero por <code>query_id</code> y, dentro de cada identificador, por <code>bitscore</code> descendente.</p>
+</section>
+<section id="rename-cambiar-nombres-de-columnas" class="level3" data-number="8.4.4">
+<h3 data-number="8.4.4" class="anchored" data-anchor-id="rename-cambiar-nombres-de-columnas"><span class="header-section-number">8.4.4</span> <code>rename()</code>: cambiar nombres de columnas</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_porcentaje =</span> pident,</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">longitud_alineamiento =</span> length</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, identidad_porcentaje, longitud_alineamiento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+   query_id identidad_porcentaje longitud_alineamiento
+   &lt;chr&gt;                   &lt;dbl&gt;                 &lt;dbl&gt;
+ 1 seq01                    87.9                   216
+ 2 seq01                    68.2                   245
+ 3 seq01                    93.5                   168
+ 4 seq02                    82.6                   111
+ 5 seq02                    68.7                   292
+ 6 seq03                    88.2                   254
+ 7 seq03                    93.6                   319
+ 8 seq03                    97.8                   191
+ 9 seq03                    99                     229
+10 seq04                    83.9                   162
+11 seq05                    75                     101
+12 seq05                    88                     306
+13 seq05                    85.4                   287
+14 seq06                    80.8                   314
+15 seq06                    71.3                   210
+16 seq07                    95.7                   106
+17 seq07                    73                     325
+18 seq07                    77.4                   104
+19 seq08                    69.9                   205
+20 seq08                    68.8                   308</code></pre>
+</div>
+</div>
+<p>La sintaxis es <code>nombre_nuevo = nombre_actual</code>. Esta operación no cambia los valores almacenados.</p>
+</section>
+<section id="distinct-identificar-combinaciones-únicas" class="level3" data-number="8.4.5">
+<h3 data-number="8.4.5" class="anchored" data-anchor-id="distinct-identificar-combinaciones-únicas"><span class="header-section-number">8.4.5</span> <code>distinct()</code>: identificar combinaciones únicas</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 1
+  query_id
+  &lt;chr&gt;   
+1 seq01   
+2 seq02   
+3 seq03   
+4 seq04   
+5 seq05   
+6 seq06   
+7 seq07   
+8 seq08   </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(query_id, subject_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 2
+   query_id subject_id
+   &lt;chr&gt;    &lt;chr&gt;     
+ 1 seq01    ref_001   
+ 2 seq01    ref_002   
+ 3 seq01    ref_003   
+ 4 seq02    ref_004   
+ 5 seq02    ref_005   
+ 6 seq03    ref_007   
+ 7 seq03    ref_008   
+ 8 seq03    ref_009   
+ 9 seq03    ref_010   
+10 seq04    ref_010   
+11 seq05    ref_013   
+12 seq05    ref_014   
+13 seq05    ref_015   
+14 seq06    ref_016   
+15 seq06    ref_017   
+16 seq07    ref_019   
+17 seq07    ref_020   
+18 seq07    ref_021   
+19 seq08    ref_022   
+20 seq08    ref_023   </code></pre>
+</div>
+</div>
+<p><code>distinct()</code> conserva una fila por cada combinación única de las columnas indicadas. <strong>No es lo mismo que escoger el mejor alineamiento</strong>: si varias filas corresponden a la misma consulta, hay que definir explícitamente el criterio para elegir una.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 2: Seleccionar resultados de dos consultas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Obtén los registros de <code>seq01</code> y <code>seq02</code> con <code>pident &gt;= 80</code>. Conserva únicamente <code>query_id</code>, <code>subject_id</code>, <code>pident</code> y <code>evalue</code>; renombra <code>pident</code> como <code>identidad</code> y ordena primero por <code>query_id</code> y después por <code>identidad</code> descendente.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(query_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"seq01"</span>, <span class="st">"seq02"</span>), pident <span class="sc">&gt;=</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident, evalue) <span class="sc">%&gt;%</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">identidad =</span> pident) <span class="sc">%&gt;%</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(query_id, <span class="fu">desc</span>(identidad))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  query_id subject_id identidad evalue
+  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
+1 seq01    ref_003         93.5  1e-35
+2 seq01    ref_001         87.9  1e-40
+3 seq02    ref_004         82.6  1e-85</code></pre>
+</div>
+</div>
+<p>El orden importa: después de <code>rename()</code>, la columna se llama <code>identidad</code>, por eso utilizamos ese nombre en <code>arrange()</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="crear-y-modificar-columnas-con-mutate" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="crear-y-modificar-columnas-con-mutate"><span class="header-section-number">8.5</span> Crear y modificar columnas con <code>mutate()</code></h2>
+<p>Hasta ahora hemos cambiado qué filas o columnas aparecen, pero no hemos generado nueva información. <code>mutate()</code> agrega columnas calculadas y normalmente <strong>mantiene el número de filas</strong>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_proporcion =</span> pident <span class="sc">/</span> <span class="dv">100</span>,</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">longitud_kb =</span> length <span class="sc">/</span> <span class="dv">1000</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, pident, identidad_proporcion, length, longitud_kb)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 5
+   query_id pident identidad_proporcion length longitud_kb
+   &lt;chr&gt;     &lt;dbl&gt;                &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;
+ 1 seq01      87.9                0.879    216       0.216
+ 2 seq01      68.2                0.682    245       0.245
+ 3 seq01      93.5                0.935    168       0.168
+ 4 seq02      82.6                0.826    111       0.111
+ 5 seq02      68.7                0.687    292       0.292
+ 6 seq03      88.2                0.882    254       0.254
+ 7 seq03      93.6                0.936    319       0.319
+ 8 seq03      97.8                0.978    191       0.191
+ 9 seq03      99                  0.99     229       0.229
+10 seq04      83.9                0.839    162       0.162
+11 seq05      75                  0.75     101       0.101
+12 seq05      88                  0.88     306       0.306
+13 seq05      85.4                0.854    287       0.287
+14 seq06      80.8                0.808    314       0.314
+15 seq06      71.3                0.713    210       0.21 
+16 seq07      95.7                0.957    106       0.106
+17 seq07      73                  0.73     325       0.325
+18 seq07      77.4                0.774    104       0.104
+19 seq08      69.9                0.699    205       0.205
+20 seq08      68.8                0.688    308       0.308</code></pre>
+</div>
+</div>
+<p><code>pident</code> ya representa un porcentaje; dividirlo entre 100 produce una proporción entre 0 y 1. <code>length</code> es la longitud del alineamiento en las unidades de la salida utilizada; dividir entre 1000 es solo un cambio de escala.</p>
+<section id="columnas-lógicas-e-if_else" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="columnas-lógicas-e-if_else"><span class="header-section-number">8.5.1</span> Columnas lógicas e <code>if_else()</code></h3>
+<p>Una condición produce valores <code>TRUE</code> y <code>FALSE</code>. Podemos conservarlos como variables lógicas o convertirlos en etiquetas:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">supera_90 =</span> pident <span class="sc">&gt;=</span> <span class="dv">90</span>,</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiqueta =</span> <span class="fu">if_else</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>, <span class="st">"90 o más"</span>, <span class="st">"Menos de 90"</span>)</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, pident, supera_90, etiqueta)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 4
+   query_id pident supera_90 etiqueta   
+   &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;     &lt;chr&gt;      
+ 1 seq01      87.9 FALSE     Menos de 90
+ 2 seq01      68.2 FALSE     Menos de 90
+ 3 seq01      93.5 TRUE      90 o más   
+ 4 seq02      82.6 FALSE     Menos de 90
+ 5 seq02      68.7 FALSE     Menos de 90
+ 6 seq03      88.2 FALSE     Menos de 90
+ 7 seq03      93.6 TRUE      90 o más   
+ 8 seq03      97.8 TRUE      90 o más   
+ 9 seq03      99   TRUE      90 o más   
+10 seq04      83.9 FALSE     Menos de 90
+11 seq05      75   FALSE     Menos de 90
+12 seq05      88   FALSE     Menos de 90
+13 seq05      85.4 FALSE     Menos de 90
+14 seq06      80.8 FALSE     Menos de 90
+15 seq06      71.3 FALSE     Menos de 90
+16 seq07      95.7 TRUE      90 o más   
+17 seq07      73   FALSE     Menos de 90
+18 seq07      77.4 FALSE     Menos de 90
+19 seq08      69.9 FALSE     Menos de 90
+20 seq08      68.8 FALSE     Menos de 90</code></pre>
+</div>
+</div>
+</section>
+<section id="más-de-dos-categorías-con-case_when" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="más-de-dos-categorías-con-case_when"><span class="header-section-number">8.5.2</span> Más de dos categorías con <code>case_when()</code></h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">grupo_didactico =</span> <span class="fu">case_when</span>(</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">95</span> <span class="sc">~</span> <span class="st">"Grupo A"</span>,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">80</span> <span class="sc">~</span> <span class="st">"Grupo B"</span>,</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Grupo C"</span></span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(grupo_didactico)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  grupo_didactico     n
+  &lt;chr&gt;           &lt;int&gt;
+1 Grupo A             3
+2 Grupo B             9
+3 Grupo C             8</code></pre>
+</div>
+</div>
+<p>Las condiciones se revisan <strong>de arriba hacia abajo</strong>. El primer criterio verdadero determina la etiqueta. Por eso conviene colocar primero la condición más restrictiva. Estas etiquetas son únicamente para practicar reglas condicionales: no establecen categorías de similitud biológica válidas para cualquier estudio.</p>
+</section>
+<section id="valores-faltantes" class="level3" data-number="8.5.3">
+<h3 data-number="8.5.3" class="anchored" data-anchor-id="valores-faltantes"><span class="header-section-number">8.5.3</span> Valores faltantes</h3>
+<p>Si una columna contiene <code>NA</code>, una comparación puede producir <code>NA</code> en vez de <code>TRUE</code> o <code>FALSE</code>. Podemos detectarlos con <code>is.na()</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">valor =</span> <span class="fu">c</span>(<span class="dv">92</span>, <span class="cn">NA</span>, <span class="dv">76</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">falta =</span> <span class="fu">is.na</span>(valor),</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiqueta =</span> <span class="fu">case_when</span>(</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">is.na</span>(valor) <span class="sc">~</span> <span class="st">"Sin dato"</span>,</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>      valor <span class="sc">&gt;=</span> <span class="dv">90</span> <span class="sc">~</span> <span class="st">"90 o más"</span>,</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Menos de 90"</span></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  valor falta etiqueta   
+  &lt;dbl&gt; &lt;lgl&gt; &lt;chr&gt;      
+1    92 FALSE 90 o más   
+2    NA TRUE  Sin dato   
+3    76 FALSE Menos de 90</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 3: Crear variables a partir de columnas existentes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Agrega a <code>blast</code> una columna <code>identidad_decimal</code> con <code>pident / 100</code> y una columna <code>categoria</code> que diga <code>"Alta"</code> si <code>pident &gt;= 90</code>, <code>"Media"</code> si <code>pident &gt;= 75</code> y <code>"Baja"</code> en los demás casos. Muestra <code>query_id</code>, <code>pident</code>, <code>identidad_decimal</code> y <code>categoria</code>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_decimal =</span> pident <span class="sc">/</span> <span class="dv">100</span>,</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">categoria =</span> <span class="fu">case_when</span>(</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">90</span> <span class="sc">~</span> <span class="st">"Alta"</span>,</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">75</span> <span class="sc">~</span> <span class="st">"Media"</span>,</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Baja"</span></span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, pident, identidad_decimal, categoria)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 4
+   query_id pident identidad_decimal categoria
+   &lt;chr&gt;     &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;    
+ 1 seq01      87.9             0.879 Media    
+ 2 seq01      68.2             0.682 Baja     
+ 3 seq01      93.5             0.935 Alta     
+ 4 seq02      82.6             0.826 Media    
+ 5 seq02      68.7             0.687 Baja     
+ 6 seq03      88.2             0.882 Media    
+ 7 seq03      93.6             0.936 Alta     
+ 8 seq03      97.8             0.978 Alta     
+ 9 seq03      99               0.99  Alta     
+10 seq04      83.9             0.839 Media    
+11 seq05      75               0.75  Media    
+12 seq05      88               0.88  Media    
+13 seq05      85.4             0.854 Media    
+14 seq06      80.8             0.808 Media    
+15 seq06      71.3             0.713 Baja     
+16 seq07      95.7             0.957 Alta     
+17 seq07      73               0.73  Baja     
+18 seq07      77.4             0.774 Media    
+19 seq08      69.9             0.699 Baja     
+20 seq08      68.8             0.688 Baja     </code></pre>
+</div>
+</div>
+<p>Las etiquetas se definen mediante umbrales arbitrarios para practicar <code>case_when()</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="agrupar-y-resumir-información" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="agrupar-y-resumir-información"><span class="header-section-number">8.6</span> Agrupar y resumir información</h2>
+<section id="contar-registros-con-count" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="contar-registros-con-count"><span class="header-section-number">8.6.1</span> Contar registros con <code>count()</code></h3>
+<p>¿Cuántos alineamientos aparecen para cada secuencia de consulta?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">count</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  query_id     n
+  &lt;chr&gt;    &lt;int&gt;
+1 seq01        3
+2 seq02        2
+3 seq03        4
+4 seq04        1
+5 seq05        3
+6 seq06        2
+7 seq07        3
+8 seq08        2</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">count</span>(query_id, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  query_id     n
+  &lt;chr&gt;    &lt;int&gt;
+1 seq03        4
+2 seq01        3
+3 seq05        3
+4 seq07        3
+5 seq02        2
+6 seq06        2
+7 seq08        2
+8 seq04        1</code></pre>
+</div>
+</div>
+<p><code>count(query_id)</code> es una forma abreviada de <code>group_by(query_id) %&gt;% summarise(n = n())</code>.</p>
+</section>
+<section id="group_by-y-summarise" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="group_by-y-summarise"><span class="header-section-number">8.6.2</span> <code>group_by()</code> y <code>summarise()</code></h3>
+<p><code>group_by()</code> establece los grupos sobre los que operarán las funciones posteriores. <code>summarise()</code> crea <strong>una fila por grupo</strong> cuando cada resumen devuelve un valor.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> blast <span class="sc">%&gt;%</span></span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">numero_alineamientos =</span> <span class="fu">n</span>(),</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">referencias_distintas =</span> <span class="fu">n_distinct</span>(subject_id),</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">bitscore_maximo =</span> <span class="fu">max</span>(bitscore),</span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_promedio =</span> <span class="fu">mean</span>(pident),</span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>resumen</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 5
+  query_id numero_alineamientos referencias_distintas bitscore_maximo
+  &lt;chr&gt;                   &lt;int&gt;                 &lt;int&gt;           &lt;dbl&gt;
+1 seq01                       3                     3            386.
+2 seq02                       2                     2            323.
+3 seq03                       4                     4            362.
+4 seq04                       1                     1            310.
+5 seq05                       3                     3            411.
+6 seq06                       2                     2            226.
+7 seq07                       3                     3            174.
+8 seq08                       2                     2            306.
+# ℹ 1 more variable: identidad_promedio &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>En este ejemplo <code>mean()</code> se utiliza solo como operación descriptiva sobre los números de la tabla, no como una prueba estadística ni como una medida de significancia biológica. <code>.groups = "drop"</code> elimina la agrupación al terminar el resumen.</p>
+</section>
+<section id="diferencia-entre-mutate-y-summarise" class="level3" data-number="8.6.3">
+<h3 data-number="8.6.3" class="anchored" data-anchor-id="diferencia-entre-mutate-y-summarise"><span class="header-section-number">8.6.3</span> Diferencia entre <code>mutate()</code> y <code>summarise()</code></h3>
+<p>Con <code>mutate()</code> podemos agregar a <strong>cada fila</strong> información calculada para su grupo:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alineamientos_por_consulta =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, alineamientos_por_consulta)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 3
+   query_id subject_id alineamientos_por_consulta
+   &lt;chr&gt;    &lt;chr&gt;                           &lt;int&gt;
+ 1 seq01    ref_001                             3
+ 2 seq01    ref_002                             3
+ 3 seq01    ref_003                             3
+ 4 seq02    ref_004                             2
+ 5 seq02    ref_005                             2
+ 6 seq03    ref_007                             4
+ 7 seq03    ref_008                             4
+ 8 seq03    ref_009                             4
+ 9 seq03    ref_010                             4
+10 seq04    ref_010                             1
+11 seq05    ref_013                             3
+12 seq05    ref_014                             3
+13 seq05    ref_015                             3
+14 seq06    ref_016                             2
+15 seq06    ref_017                             2
+16 seq07    ref_019                             3
+17 seq07    ref_020                             3
+18 seq07    ref_021                             3
+19 seq08    ref_022                             2
+20 seq08    ref_023                             2</code></pre>
+</div>
+</div>
+<p>Con <code>summarise()</code>, en cambio, obtenemos una fila por consulta:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">alineamientos_por_consulta =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 2
+  query_id alineamientos_por_consulta
+  &lt;chr&gt;                         &lt;int&gt;
+1 seq01                             3
+2 seq02                             2
+3 seq03                             4
+4 seq04                             1
+5 seq05                             3
+6 seq06                             2
+7 seq07                             3
+8 seq08                             2</code></pre>
+</div>
+</div>
+<p><code>ungroup()</code> es útil después de <code>mutate()</code> cuando ya no necesitamos conservar el agrupamiento para operaciones posteriores.</p>
+</section>
+<section id="elegir-una-fila-por-grupo-un-criterio-explícito" class="level3" data-number="8.6.4">
+<h3 data-number="8.6.4" class="anchored" data-anchor-id="elegir-una-fila-por-grupo-un-criterio-explícito"><span class="header-section-number">8.6.4</span> Elegir una fila por grupo: un criterio explícito</h3>
+<p>Si queremos conservar el registro con el mayor <code>bitscore</code> para cada consulta, primero ordenamos y después seleccionamos una fila por grupo:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> bitscore, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_003      93.5    168  1e-35     386.
+2 seq02    ref_005      68.7    292  1e-57     323.
+3 seq03    ref_007      88.2    254  1e- 5     362.
+4 seq04    ref_010      83.9    162  1e-62     310.
+5 seq05    ref_013      75      101  1e-26     411.
+6 seq06    ref_017      71.3    210  1e-26     226.
+7 seq07    ref_021      77.4    104  1e-54     174.
+8 seq08    ref_022      69.9    205  1e-75     306.</code></pre>
+</div>
+</div>
+<p><code>with_ties = FALSE</code> garantiza una sola fila por grupo si existen empates; en ese caso la elección entre registros empatados no expresa una preferencia biológica. Para datos reales sería necesario definir cómo resolverlos.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 4: Resumir resultados por secuencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Construye una tabla con una fila por <code>query_id</code>, el número de alineamientos (<code>n_alineamientos</code>), el mayor porcentaje de identidad (<code>identidad_maxima</code>) y el mayor <code>bitscore</code> (<code>bitscore_maximo</code>). Ordénala de mayor a menor <code>n_alineamientos</code>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_alineamientos =</span> <span class="fu">n</span>(),</span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_maxima =</span> <span class="fu">max</span>(pident),</span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">bitscore_maximo =</span> <span class="fu">max</span>(bitscore),</span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_alineamientos))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 4
+  query_id n_alineamientos identidad_maxima bitscore_maximo
+  &lt;chr&gt;              &lt;int&gt;            &lt;dbl&gt;           &lt;dbl&gt;
+1 seq03                  4             99              362.
+2 seq01                  3             93.5            386.
+3 seq05                  3             88              411.
+4 seq07                  3             95.7            174.
+5 seq02                  2             82.6            323.
+6 seq06                  2             80.8            226.
+7 seq08                  2             69.9            306.
+8 seq04                  1             83.9            310.</code></pre>
+</div>
+</div>
+<p>Los dos máximos se calculan de manera independiente: podrían corresponder a <strong>filas distintas</strong>. No debemos interpretarlos como si describieran necesariamente el mismo alineamiento.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="reorganizar-tablas-con-tidyr" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="reorganizar-tablas-con-tidyr"><span class="header-section-number">8.7</span> Reorganizar tablas con <code>tidyr</code></h2>
+<p>En muchos experimentos, una tabla contiene varias muestras en columnas diferentes. En otros casos, cada observación ocupa una fila. Ambos formatos son útiles según la tarea.</p>
+<section id="formato-ancho" class="level3" data-number="8.7.1">
+<h3 data-number="8.7.1" class="anchored" data-anchor-id="formato-ancho"><span class="header-section-number">8.7.1</span> Formato ancho</h3>
+<p>El archivo <code>conteos_genes.csv</code> contiene una fila por gen y una columna por muestra. Los valores son <strong>conteos sintéticos</strong>; no se interpretarán como expresión diferencial ni como resultados de un experimento real.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>conteos</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   gen   muestra_A muestra_B muestra_C muestra_D
+   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 gen01       120        90       150       210
+ 2 gen02        45        70        38        62
+ 3 gen03       200       180       210       175
+ 4 gen04         0        15         8        22
+ 5 gen05        98       135       110        80
+ 6 gen06       310       295       340       300
+ 7 gen07        65        75        95       105
+ 8 gen08       160       140       125       155
+ 9 gen09        20        30        25        40
+10 gen10       250       270       230       290</code></pre>
+</div>
+</div>
+</section>
+<section id="pivot_longer-de-ancho-a-largo" class="level3" data-number="8.7.2">
+<h3 data-number="8.7.2" class="anchored" data-anchor-id="pivot_longer-de-ancho-a-largo"><span class="header-section-number">8.7.2</span> <code>pivot_longer()</code>: de ancho a largo</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>conteos_largos <span class="ot">&lt;-</span> conteos <span class="sc">%&gt;%</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"muestra_"</span>),</span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"muestra"</span>,</span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"conteo"</span></span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>conteos_largos</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 40 × 3
+   gen   muestra   conteo
+   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;
+ 1 gen01 muestra_A    120
+ 2 gen01 muestra_B     90
+ 3 gen01 muestra_C    150
+ 4 gen01 muestra_D    210
+ 5 gen02 muestra_A     45
+ 6 gen02 muestra_B     70
+ 7 gen02 muestra_C     38
+ 8 gen02 muestra_D     62
+ 9 gen03 muestra_A    200
+10 gen03 muestra_B    180
+# ℹ 30 more rows</code></pre>
+</div>
+</div>
+<p>Observa que ahora cada combinación gen–muestra ocupa una fila. La columna <code>muestra</code> contiene los nombres que antes eran encabezados, mientras que <code>conteo</code> reúne los valores numéricos.</p>
+<p>Esta organización facilita agrupar por muestra:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>conteos_largos <span class="sc">%&gt;%</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(muestra) <span class="sc">%&gt;%</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_conteos =</span> <span class="fu">sum</span>(conteo),</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">genes_registrados =</span> <span class="fu">n</span>(),</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  muestra   total_conteos genes_registrados
+  &lt;chr&gt;             &lt;dbl&gt;             &lt;int&gt;
+1 muestra_A          1268                10
+2 muestra_B          1300                10
+3 muestra_C          1331                10
+4 muestra_D          1439                10</code></pre>
+</div>
+</div>
+</section>
+<section id="pivot_wider-de-largo-a-ancho" class="level3" data-number="8.7.3">
+<h3 data-number="8.7.3" class="anchored" data-anchor-id="pivot_wider-de-largo-a-ancho"><span class="header-section-number">8.7.3</span> <code>pivot_wider()</code>: de largo a ancho</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>conteos_recuperados <span class="ot">&lt;-</span> conteos_largos <span class="sc">%&gt;%</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> muestra,</span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> conteo</span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>conteos_recuperados</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 5
+   gen   muestra_A muestra_B muestra_C muestra_D
+   &lt;chr&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+ 1 gen01       120        90       150       210
+ 2 gen02        45        70        38        62
+ 3 gen03       200       180       210       175
+ 4 gen04         0        15         8        22
+ 5 gen05        98       135       110        80
+ 6 gen06       310       295       340       300
+ 7 gen07        65        75        95       105
+ 8 gen08       160       140       125       155
+ 9 gen09        20        30        25        40
+10 gen10       250       270       230       290</code></pre>
+</div>
+</div>
+<p>Para que esta conversión sea directa, cada combinación de <code>gen</code> y <code>muestra</code> debe identificar un único valor. Si hay varias filas para la misma combinación, necesitaremos decidir cómo agregarlas o resolverlas.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 5: Transformar y resumir conteos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Convierte <code>conteos</code> a formato largo, conserva únicamente las filas con <code>conteo &gt;= 100</code> y muestra cuántos registros cumplen el criterio en cada muestra. Ordena las muestras alfabéticamente.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>conteos <span class="sc">%&gt;%</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"muestra_"</span>),</span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"muestra"</span>,</span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"conteo"</span></span>
+<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(conteo <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(muestra) <span class="sc">%&gt;%</span></span>
+<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">registros =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(muestra)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  muestra   registros
+  &lt;chr&gt;         &lt;int&gt;
+1 muestra_A         5
+2 muestra_B         5
+3 muestra_C         6
+4 muestra_D         6</code></pre>
+</div>
+</div>
+<p>El resultado cuenta <strong>filas gen–muestra</strong> que cumplen el criterio; no cuenta genes únicos de todo el conjunto.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exportación-y-práctica-integradora" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="exportación-y-práctica-integradora"><span class="header-section-number">8.8</span> Exportación y práctica integradora</h2>
+<section id="guardar-resultados-sin-sobrescribir-los-datos-originales" class="level3" data-number="8.8.1">
+<h3 data-number="8.8.1" class="anchored" data-anchor-id="guardar-resultados-sin-sobrescribir-los-datos-originales"><span class="header-section-number">8.8.1</span> Guardar resultados sin sobrescribir los datos originales</h3>
+<p>La idea es separar los datos originales (<code>data_raw/</code>) de las tablas generadas durante el análisis (<code>results/</code>).</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"results"</span>)) <span class="fu">dir.create</span>(<span class="st">"results"</span>)</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(resumen, <span class="st">"results/03_resumen_blast.csv"</span>)</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(conteos_largos, <span class="st">"results/03_conteos_largos.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Podemos comprobar que los archivos se crearon:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"results/03_resumen_blast.csv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"results/03_conteos_largos.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p><code>write_csv()</code> y <code>write_tsv()</code> guardan tablas de texto; no conservan automáticamente todas las propiedades de objetos especializados de R. En la sesión 4 aprenderemos a integrar tablas de distintas fuentes.</p>
+</section>
+</section>
+<section id="práctica-final-preparar-una-tabla-de-resultados-de-blast" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="práctica-final-preparar-una-tabla-de-resultados-de-blast"><span class="header-section-number">8.9</span> Práctica Final: Preparar una tabla de resultados de BLAST</h2>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 6: Preparar una tabla de resultados de BLAST
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Crea un objeto llamado <code>blast_preparado</code> mediante <strong>una sola secuencia de transformaciones con <code>%&gt;%</code></strong> que:</p>
+<ol type="1">
+<li>Conserve registros con <code>length &gt;= 150</code> y <code>pident &gt;= 80</code>.</li>
+<li>Agregue una columna <code>identidad_decimal</code> igual a <code>pident / 100</code>.</li>
+<li>Cree una columna <code>grupo</code> con <code>"90 o más"</code> si <code>pident &gt;= 90</code> y <code>"Menos de 90"</code> en otro caso.</li>
+<li>Conserve únicamente <code>query_id</code>, <code>subject_id</code>, <code>bitscore</code>, <code>identidad_decimal</code> y <code>grupo</code>.</li>
+<li>Ordene por <code>query_id</code> y <code>bitscore</code> descendente.</li>
+</ol>
+<p>Después construye <code>resumen_preparado</code> con el número de registros por <code>query_id</code> y el máximo <code>bitscore</code> de cada consulta. Guarda ambas tablas en <code>results/</code> como archivos CSV. <strong>No modifiques ni sobrescribas</strong> <code>resultados_blast.tsv</code>.</p>
+</div>
+</div>
+</section>
+<section id="observaciones" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="observaciones"><span class="header-section-number">8.10</span> Observaciones</h2>
+<p>Hoy utilizamos <code>dplyr</code> para transformar <strong>una tabla</strong> y <code>tidyr</code> para cambiar su organización. Antes de continuar, verifica que puedes responder estas preguntas:</p>
+<ul>
+<li>¿Cuál es la diferencia entre <code>select()</code> y <code>filter()</code>?</li>
+<li>¿Qué información pasa de una función a la siguiente cuando utilizamos <code>%&gt;%</code>?</li>
+<li>¿Por qué <code>mutate()</code> y <code>summarise()</code> producen tablas de distinto tamaño?</li>
+<li>¿Qué representan las columnas <code>muestra</code> y <code>conteo</code> después de <code>pivot_longer()</code>?</li>
+<li>¿Por qué conviene guardar resultados en una carpeta distinta de los datos originales?</li>
+</ul>
+<p>En la <strong>sesión 4</strong> integraremos información de varias tablas mediante identificadores y aprenderemos a repetir procesos sobre múltiples archivos.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/github\.com\/CursosENESJuriquilla\/Intro_to_R_Bioinfo_2027-1");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./parte7.html" class="pagination-link" aria-label="Importación y exploración de datos bioinformáticos en R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./parte9.html" class="pagination-link" aria-label="parte9">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">parte9</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Introducción a R para Bioinformática I, 3er semestre: Haydeé Peruyero</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

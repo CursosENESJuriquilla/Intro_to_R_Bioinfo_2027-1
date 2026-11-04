@@ -6,8 +6,8 @@
 |---------------------------------------------------------------------|
 | **1. Introducción a R y organización de proyectos bioinformáticos** |
 | **2. Importación y exploración de datos bioinformáticos en R **    |
-| **3. Manipulación y transformación de datos con dplyr y tidyr**     |
-| **4. Integración de datos y automatización de análisis**            |
+| **3. Manipulación y transformación de datos bioinformáticos con dplyr y tidyr**     |
+| **4. Integración de datos y automatización de análisis en R**            |
 | **5. Visualización científica de datos biológicos con ggplot2**     |
 | **6. Exploración visual e interpretación de datos biológicos**      |
 | **7. Documentación y reportes reproducibles con Quarto**            |

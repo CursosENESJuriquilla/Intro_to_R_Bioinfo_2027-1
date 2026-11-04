@@ -1,0 +1,9 @@
+query_id,numero_alineamientos,referencias_distintas,bitscore_maximo,identidad_promedio
+seq01,3,3,386.1,83.2
+seq02,2,2,322.6,75.65
+seq03,4,4,361.9,94.65
+seq04,1,1,310.3,83.9
+seq05,3,3,410.8,82.8
+seq06,2,2,226.1,76.05
+seq07,3,3,173.9,82.03333333333333
+seq08,2,2,305.8,69.35

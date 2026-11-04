@@ -1,0 +1,4 @@
+query_id,organismo,origen,codigo_muestra
+seq01,Bacteria_A,suelo,001
+seq01,Bacteria_A,agua,001b
+seq02,Bacteria_B,agua,002

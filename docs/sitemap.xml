@@ -2,11 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/index.html</loc>
-    <lastmod>2026-11-04T17:46:24.442Z</lastmod>
+    <lastmod>2026-11-04T18:56:46.340Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/temario.html</loc>
-    <lastmod>2026-11-04T17:49:47.350Z</lastmod>
+    <lastmod>2026-11-04T18:56:56.545Z</lastmod>
   </url>
   <url>
     <loc>https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/parte1.html</loc>
@@ -35,5 +35,13 @@
   <url>
     <loc>https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/parte7.html</loc>
     <lastmod>2026-11-04T17:57:10.819Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/parte8.html</loc>
+    <lastmod>2026-11-04T18:42:24.938Z</lastmod>
+  </url>
+  <url>
+    <loc>https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/parte9.html</loc>
+    <lastmod>2026-11-04T18:58:34.559Z</lastmod>
   </url>
 </urlset>

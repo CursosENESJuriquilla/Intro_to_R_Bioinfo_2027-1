@@ -1,0 +1,2140 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Integración de datos y automatización de análisis en R – Introducción a R para Bioinformática I</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./parte8.html" rel="prev">
+<link href="./figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte9.html"><strong>Integración de datos y automatización de análisis en R</strong></a></li><li class="breadcrumb-item"><a href="./parte9.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/LogoENES.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./figures/LogoENES.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introducción a R para Bioinformática I</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1" title="Ejecutar el código" class="quarto-navigation-tool px-1" aria-label="Ejecutar el código"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Compartir" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Compartir"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Información general</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./temario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temario</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Introducción a R y organización de proyectos bioinformáticos</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Buenas prácticas en bioinformática</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objetos y estructuras de datos en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estructuras de control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funciones en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scripts, paquetes y proyectos de RStudio</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Importación y exploración de datos bioinformáticos en R</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Integración de datos y automatización de análisis en R</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte9.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">9.1</span> Introducción</a>
+  <ul>
+  <li><a href="#objetivos-de-aprendizaje" id="toc-objetivos-de-aprendizaje" class="nav-link" data-scroll-target="#objetivos-de-aprendizaje"><span class="header-section-number">9.1.1</span> Objetivos de aprendizaje</a></li>
+  </ul></li>
+  <li><a href="#archivos-de-trabajo" id="toc-archivos-de-trabajo" class="nav-link" data-scroll-target="#archivos-de-trabajo"><span class="header-section-number">9.2</span> Archivos de trabajo</a></li>
+  <li><a href="#relaciones-entre-tablas-identificadores-y-correspondencias" id="toc-relaciones-entre-tablas-identificadores-y-correspondencias" class="nav-link" data-scroll-target="#relaciones-entre-tablas-identificadores-y-correspondencias"><span class="header-section-number">9.3</span> Relaciones entre tablas: identificadores y correspondencias</a>
+  <ul>
+  <li><a href="#relaciones-de-uno-a-uno-y-uno-a-muchos" id="toc-relaciones-de-uno-a-uno-y-uno-a-muchos" class="nav-link" data-scroll-target="#relaciones-de-uno-a-uno-y-uno-a-muchos"><span class="header-section-number">9.3.1</span> Relaciones de uno a uno y uno a muchos</a></li>
+  <li><a href="#qué-ocurre-cuando-no-hay-correspondencia" id="toc-qué-ocurre-cuando-no-hay-correspondencia" class="nav-link" data-scroll-target="#qué-ocurre-cuando-no-hay-correspondencia"><span class="header-section-number">9.3.2</span> ¿Qué ocurre cuando no hay correspondencia?</a></li>
+  </ul></li>
+  <li><a href="#combinar-tablas-mediante-dplyr" id="toc-combinar-tablas-mediante-dplyr" class="nav-link" data-scroll-target="#combinar-tablas-mediante-dplyr"><span class="header-section-number">9.4</span> Combinar tablas mediante <code>dplyr</code></a>
+  <ul>
+  <li><a href="#left_join-conservar-la-tabla-de-la-izquierda" id="toc-left_join-conservar-la-tabla-de-la-izquierda" class="nav-link" data-scroll-target="#left_join-conservar-la-tabla-de-la-izquierda"><span class="header-section-number">9.4.1</span> <code>left_join()</code>: conservar la tabla de la izquierda</a></li>
+  <li><a href="#inner_join-conservar-solo-las-correspondencias" id="toc-inner_join-conservar-solo-las-correspondencias" class="nav-link" data-scroll-target="#inner_join-conservar-solo-las-correspondencias"><span class="header-section-number">9.4.2</span> <code>inner_join()</code>: conservar solo las correspondencias</a></li>
+  <li><a href="#anti_join-encontrar-identificadores-sin-correspondencia" id="toc-anti_join-encontrar-identificadores-sin-correspondencia" class="nav-link" data-scroll-target="#anti_join-encontrar-identificadores-sin-correspondencia"><span class="header-section-number">9.4.3</span> <code>anti_join()</code>: encontrar identificadores sin correspondencia</a></li>
+  <li><a href="#full_join-conservar-las-filas-de-ambas-tablas" id="toc-full_join-conservar-las-filas-de-ambas-tablas" class="nav-link" data-scroll-target="#full_join-conservar-las-filas-de-ambas-tablas"><span class="header-section-number">9.4.4</span> <code>full_join()</code>: conservar las filas de ambas tablas</a></li>
+  <li><a href="#un-detalle-importante-claves-repetidas" id="toc-un-detalle-importante-claves-repetidas" class="nav-link" data-scroll-target="#un-detalle-importante-claves-repetidas"><span class="header-section-number">9.4.5</span> Un detalle importante: claves repetidas</a></li>
+  </ul></li>
+  <li><a href="#apilar-resultados-de-distintas-muestras" id="toc-apilar-resultados-de-distintas-muestras" class="nav-link" data-scroll-target="#apilar-resultados-de-distintas-muestras"><span class="header-section-number">9.5</span> Apilar resultados de distintas muestras</a>
+  <ul>
+  <li><a href="#bind_rows" id="toc-bind_rows" class="nav-link" data-scroll-target="#bind_rows"><span class="header-section-number">9.5.1</span> <code>bind_rows()</code></a></li>
+  <li><a href="#diferencia-entre-bind_rows-y-un-join" id="toc-diferencia-entre-bind_rows-y-un-join" class="nav-link" data-scroll-target="#diferencia-entre-bind_rows-y-un-join"><span class="header-section-number">9.5.2</span> Diferencia entre <code>bind_rows()</code> y un <code>join</code></a></li>
+  </ul></li>
+  <li><a href="#funciones-para-automatizar-transformaciones" id="toc-funciones-para-automatizar-transformaciones" class="nav-link" data-scroll-target="#funciones-para-automatizar-transformaciones"><span class="header-section-number">9.6</span> Funciones para automatizar transformaciones</a></li>
+  <li><a href="#procesar-múltiples-archivos" id="toc-procesar-múltiples-archivos" class="nav-link" data-scroll-target="#procesar-múltiples-archivos"><span class="header-section-number">9.7</span> Procesar múltiples archivos</a>
+  <ul>
+  <li><a href="#localizar-archivos-con-list.files" id="toc-localizar-archivos-con-list.files" class="nav-link" data-scroll-target="#localizar-archivos-con-list.files"><span class="header-section-number">9.7.1</span> Localizar archivos con <code>list.files()</code></a></li>
+  <li><a href="#leer-todos-los-archivos-con-lapply" id="toc-leer-todos-los-archivos-con-lapply" class="nav-link" data-scroll-target="#leer-todos-los-archivos-con-lapply"><span class="header-section-number">9.7.2</span> Leer todos los archivos con <code>lapply()</code></a></li>
+  <li><a href="#combinar-las-tablas-de-la-lista" id="toc-combinar-las-tablas-de-la-lista" class="nav-link" data-scroll-target="#combinar-las-tablas-de-la-lista"><span class="header-section-number">9.7.3</span> Combinar las tablas de la lista</a></li>
+  <li><a href="#aplicar-nuestra-función-a-todos-los-archivos" id="toc-aplicar-nuestra-función-a-todos-los-archivos" class="nav-link" data-scroll-target="#aplicar-nuestra-función-a-todos-los-archivos"><span class="header-section-number">9.7.4</span> Aplicar nuestra función a todos los archivos</a></li>
+  <li><a href="#una-alternativa-con-purrrmap" id="toc-una-alternativa-con-purrrmap" class="nav-link" data-scroll-target="#una-alternativa-con-purrrmap"><span class="header-section-number">9.7.5</span> Una alternativa con <code>purrr::map()</code></a></li>
+  </ul></li>
+  <li><a href="#práctica-final-de-varios-archivos-a-una-tabla-final" id="toc-práctica-final-de-varios-archivos-a-una-tabla-final" class="nav-link" data-scroll-target="#práctica-final-de-varios-archivos-a-una-tabla-final"><span class="header-section-number">9.8</span> Práctica Final: de varios archivos a una tabla final</a>
+  <ul>
+  <li><a href="#una-primera-versión-del-flujo-de-trabajo" id="toc-una-primera-versión-del-flujo-de-trabajo" class="nav-link" data-scroll-target="#una-primera-versión-del-flujo-de-trabajo"><span class="header-section-number">9.8.1</span> Una primera versión del flujo de trabajo</a></li>
+  </ul></li>
+  <li><a href="#observaciones" id="toc-observaciones" class="nav-link" data-scroll-target="#observaciones"><span class="header-section-number">9.9</span> Observaciones</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte9.html"><strong>Integración de datos y automatización de análisis en R</strong></a></li><li class="breadcrumb-item"><a href="./parte9.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introducción" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">9.1</span> Introducción</h2>
+<p>En la sesión 2 aprendimos a <strong>importar y explorar archivos</strong>, y en la sesión 3 a <strong>transformar una tabla</strong> con <code>dplyr</code> y <code>tidyr</code>. Ahora resolveremos dos situaciones habituales al trabajar con datos:</p>
+<ol type="1">
+<li>Tenemos una tabla con resultados y otra con información adicional. ¿Cómo relacionarlas sin perder registros?</li>
+<li>Tenemos varios archivos con la misma estructura. ¿Cómo procesarlos sin repetir el mismo código para cada archivo?</li>
+</ol>
+<p>Seguiremos utilizando <strong>resultados sintéticos con estructura de salida tabular de BLAST</strong>. No ejecutaremos BLAST ni interpretaremos estos datos como resultados biológicos reales. Los umbrales utilizados serán ejemplos para practicar programación.</p>
+<section id="objetivos-de-aprendizaje" class="level3" data-number="9.1.1">
+<h3 data-number="9.1.1" class="anchored" data-anchor-id="objetivos-de-aprendizaje"><span class="header-section-number">9.1.1</span> Objetivos de aprendizaje</h3>
+<p>Al terminar podrás:</p>
+<ul>
+<li>Identificar las columnas que permiten relacionar dos tablas y distinguir relaciones de uno a uno y uno a muchos.</li>
+<li>Combinar información mediante <code>left_join()</code>, <code>inner_join()</code>, <code>full_join()</code> y <code>anti_join()</code>.</li>
+<li>Distinguir entre <strong>relacionar tablas por identificadores</strong> y <strong>apilar tablas con las mismas columnas</strong>.</li>
+<li>Construir funciones sencillas que reciban tablas como argumentos.</li>
+<li>Localizar, leer y procesar varios archivos con <code>list.files()</code>, <code>lapply()</code> y <code>purrr::map()</code>.</li>
+<li>Generar y guardar una tabla integrada a partir de varios archivos de entrada.</li>
+</ul>
+</section>
+</section>
+<section id="archivos-de-trabajo" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="archivos-de-trabajo"><span class="header-section-number">9.2</span> Archivos de trabajo</h2>
+<p>Descarga y descomprime <a href="https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_sesion_04_integracion.zip"><code>datos_sesion_04_integracion.zip</code></a> dentro de la carpeta <code>data_raw/</code> de tu proyecto de RStudio. La estructura esperada es:</p>
+<pre class="text"><code>mi_proyecto/
+├── mi_proyecto.Rproj
+├── data_raw/
+│   └── datos_sesion_04_integracion/
+│       ├── metadata_secuencias.csv
+│       ├── metadata_duplicada.csv
+│       ├── blast_muestras/
+│       │   ├── muestra_A.tsv
+│       │   ├── muestra_B.tsv
+│       │   └── muestra_C.tsv
+│       └── README.md
+└── results/</code></pre>
+<p>La carpeta <code>results/</code> se utilizará para guardar los archivos que produzca nuestro código. <strong>No sobrescribiremos los datos originales.</strong></p>
+<p>Usaremos los paquetes <code>dplyr</code>, <code>readr</code> y, brevemente, <code>purrr</code>. Si no están instalados, se instalan una sola vez:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"dplyr"</span>, <span class="st">"readr"</span>, <span class="st">"purrr"</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Cargamos los paquetes que utilizaremos y definimos las rutas:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Adjuntando el paquete: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/hayde/Documents/RSites/Intro_to_R_Bioinfo_2027-1"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>carpeta_datos <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_04_integracion"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>carpeta_blast <span class="ot">&lt;-</span> <span class="fu">file.path</span>(carpeta_datos, <span class="st">"blast_muestras"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"results"</span>)) {</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">dir.create</span>(<span class="st">"results"</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Sobre <code>%&gt;%</code> y las rutas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En esta sesión utilizaremos <code>%&gt;%</code> para encadenar transformaciones. La función <code>file.path()</code> construye rutas sin que tengamos que escribir manualmente el separador de carpetas. Recuerda ejecutar los ejemplos desde el proyecto de RStudio para que las rutas relativas funcionen.</p>
+</div>
+</div>
+</section>
+<section id="relaciones-entre-tablas-identificadores-y-correspondencias" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="relaciones-entre-tablas-identificadores-y-correspondencias"><span class="header-section-number">9.3</span> Relaciones entre tablas: identificadores y correspondencias</h2>
+<p>Imaginemos que tenemos dos tablas. La primera contiene alineamientos; la segunda describe las secuencias de consulta.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>blast_A <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(carpeta_blast, <span class="st">"muestra_A.tsv"</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(carpeta_datos, <span class="st">"metadata_secuencias.csv"</span>),</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">codigo_muestra =</span> <span class="fu">col_character</span>(), <span class="at">.default =</span> <span class="fu">col_guess</span>())</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(blast_A)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_001      87.9    216  1e-40     119.
+2 seq01    ref_002      68.2    245  1e-36     185.
+3 seq01    ref_003      93.5    168  1e-35     386.
+4 seq02    ref_004      82.6    111  1e-85     260.
+5 seq02    ref_005      68.7    292  1e-57     323.
+6 seq03    ref_007      88.2    254  1e- 5     362.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(metadata)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  query_id organismo  origen codigo_muestra
+  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;         
+1 seq01    Bacteria_A suelo  001           
+2 seq02    Bacteria_B agua   002           
+3 seq03    Bacteria_C suelo  003           
+4 seq04    Bacteria_A agua   004           
+5 seq05    Bacteria_B suelo  005           
+6 seq06    Bacteria_C agua   006           </code></pre>
+</div>
+</div>
+<p>La columna <code>query_id</code> aparece en ambas tablas. Por eso podemos utilizarla como <strong>clave de unión</strong>.</p>
+<p>Una clave no necesariamente tiene que llamarse igual en las dos tablas, pero debe representar el mismo tipo de identificador. Por ejemplo, no sería correcto unir <code>query_id</code> con <code>subject_id</code> solamente porque ambos contienen texto.</p>
+<section id="relaciones-de-uno-a-uno-y-uno-a-muchos" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="relaciones-de-uno-a-uno-y-uno-a-muchos"><span class="header-section-number">9.3.1</span> Relaciones de uno a uno y uno a muchos</h3>
+<p>En <code>metadata</code>, cada <code>query_id</code> identifica una sola fila. En los resultados de BLAST, una misma consulta puede aparecer varias veces porque tiene varios alineamientos.</p>
+<p>Por tanto, al relacionar resultados de BLAST con metadatos tenemos, en principio, una relación de <strong>muchos a uno</strong>: varios alineamientos pueden corresponder a una sola secuencia de consulta.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+  query_id     n
+  &lt;chr&gt;    &lt;int&gt;
+1 seq01        1
+2 seq02        1
+3 seq03        1
+4 seq04        1
+5 seq05        1
+6 seq06        1
+7 seq07        1
+8 seq08        1
+9 seq10        1</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>blast_A <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  query_id     n
+  &lt;chr&gt;    &lt;int&gt;
+1 seq01        3
+2 seq02        2
+3 seq03        2</code></pre>
+</div>
+</div>
+<p>La función <code>count()</code> cuenta filas para cada valor de la columna indicada. En la sesión 3 vimos que es equivalente a una combinación de <code>group_by()</code> y <code>summarise(n = n())</code>.</p>
+</section>
+<section id="qué-ocurre-cuando-no-hay-correspondencia" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="qué-ocurre-cuando-no-hay-correspondencia"><span class="header-section-number">9.3.2</span> ¿Qué ocurre cuando no hay correspondencia?</h3>
+<p>En los datos de práctica:</p>
+<ul>
+<li><code>seq09</code> aparece en los resultados de la muestra C, pero no en los metadatos.</li>
+<li><code>seq10</code> aparece en los metadatos, pero no tiene resultados de BLAST en las muestras.</li>
+</ul>
+<p>Esto nos permitirá observar cómo se comportan las distintas uniones.</p>
+</section>
+</section>
+<section id="combinar-tablas-mediante-dplyr" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="combinar-tablas-mediante-dplyr"><span class="header-section-number">9.4</span> Combinar tablas mediante <code>dplyr</code></h2>
+<p>Una <strong>unión</strong> (<em>join</em>) combina columnas de dos tablas a partir de los valores de una o varias claves.</p>
+<section id="left_join-conservar-la-tabla-de-la-izquierda" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="left_join-conservar-la-tabla-de-la-izquierda"><span class="header-section-number">9.4.1</span> <code>left_join()</code>: conservar la tabla de la izquierda</h3>
+<p><code>left_join(x, y, by = "query_id")</code> conserva todas las filas de <code>x</code> y añade la información coincidente de <code>y</code>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>blast_A_con_metadata <span class="ot">&lt;-</span> blast_A <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>blast_A_con_metadata <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident, organismo, origen) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+  query_id subject_id pident organismo  origen
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; 
+1 seq01    ref_001      87.9 Bacteria_A suelo 
+2 seq01    ref_002      68.2 Bacteria_A suelo 
+3 seq01    ref_003      93.5 Bacteria_A suelo 
+4 seq02    ref_004      82.6 Bacteria_B agua  
+5 seq02    ref_005      68.7 Bacteria_B agua  
+6 seq03    ref_007      88.2 Bacteria_C suelo </code></pre>
+</div>
+</div>
+<p>Observa que una secuencia con varios alineamientos recibe la misma información de metadatos en cada fila correspondiente. Esto es esperado: <strong>no significa que se hayan duplicado accidentalmente los alineamientos</strong>.</p>
+</section>
+<section id="inner_join-conservar-solo-las-correspondencias" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="inner_join-conservar-solo-las-correspondencias"><span class="header-section-number">9.4.2</span> <code>inner_join()</code>: conservar solo las correspondencias</h3>
+<p><code>inner_join()</code> conserva únicamente las filas que tienen una clave coincidente en ambas tablas.</p>
+<p>Para comparar mejor las funciones, leeremos también la muestra C, que contiene <code>seq09</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>blast_C <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(carpeta_blast, <span class="st">"muestra_C.tsv"</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(blast_C)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>blast_C <span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">inner_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+</div>
+<p>El resultado puede tener menos filas que la tabla original: las filas sin correspondencia quedan fuera.</p>
+</section>
+<section id="anti_join-encontrar-identificadores-sin-correspondencia" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="anti_join-encontrar-identificadores-sin-correspondencia"><span class="header-section-number">9.4.3</span> <code>anti_join()</code>: encontrar identificadores sin correspondencia</h3>
+<p><code>anti_join(x, y, by = "query_id")</code> devuelve las filas de <code>x</code> que <strong>no encuentran una coincidencia</strong> en <code>y</code>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>blast_C <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq09    ref_099      91.4    178  2e-35     192.</code></pre>
+</div>
+</div>
+<p>También podemos invertir el orden para identificar metadatos sin resultados en esta muestra:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(blast_C, <span class="at">by =</span> <span class="st">"query_id"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  query_id organismo  origen    codigo_muestra
+  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;         
+1 seq01    Bacteria_A suelo     001           
+2 seq02    Bacteria_B agua      002           
+3 seq03    Bacteria_C suelo     003           
+4 seq04    Bacteria_A agua      004           
+5 seq05    Bacteria_B suelo     005           
+6 seq10    Bacteria_D sedimento 010           </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>El orden de las tablas importa
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En <code>left_join()</code> y <code>anti_join()</code>, intercambiar <code>x</code> e <code>y</code> cambia la pregunta. No es lo mismo preguntar «¿qué resultados carecen de metadatos?» que «¿qué secuencias de los metadatos no tienen resultados?».</p>
+</div>
+</div>
+</section>
+<section id="full_join-conservar-las-filas-de-ambas-tablas" class="level3" data-number="9.4.4">
+<h3 data-number="9.4.4" class="anchored" data-anchor-id="full_join-conservar-las-filas-de-ambas-tablas"><span class="header-section-number">9.4.4</span> <code>full_join()</code>: conservar las filas de ambas tablas</h3>
+<p><code>full_join()</code> incluye tanto las coincidencias como las filas sin correspondencia de cualquiera de las tablas.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>blast_C <span class="sc">%&gt;%</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">full_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, organismo) <span class="sc">%&gt;%</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   query_id subject_id organismo 
+   &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;     
+ 1 seq01    &lt;NA&gt;       Bacteria_A
+ 2 seq02    &lt;NA&gt;       Bacteria_B
+ 3 seq03    &lt;NA&gt;       Bacteria_C
+ 4 seq04    &lt;NA&gt;       Bacteria_A
+ 5 seq05    &lt;NA&gt;       Bacteria_B
+ 6 seq06    ref_017    Bacteria_C
+ 7 seq07    ref_019    Bacteria_A
+ 8 seq07    ref_020    Bacteria_A
+ 9 seq07    ref_021    Bacteria_A
+10 seq08    ref_022    Bacteria_B
+11 seq08    ref_023    Bacteria_B
+12 seq09    ref_099    &lt;NA&gt;      
+13 seq10    &lt;NA&gt;       Bacteria_D</code></pre>
+</div>
+</div>
+<p>Cuando una fila no tiene información de la otra tabla, las columnas correspondientes contienen <code>NA</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Función</th>
+<th>¿Qué filas conserva?</th>
+<th>Uso típico</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>left_join(x, y)</code></td>
+<td>Todas las de <code>x</code> y sus coincidencias en <code>y</code></td>
+<td>Agregar metadatos a resultados</td>
+</tr>
+<tr class="even">
+<td><code>inner_join(x, y)</code></td>
+<td>Solo las que coinciden en ambas</td>
+<td>Trabajar con registros compartidos</td>
+</tr>
+<tr class="odd">
+<td><code>anti_join(x, y)</code></td>
+<td>Las de <code>x</code> sin coincidencia en <code>y</code></td>
+<td>Encontrar identificadores sin información asociada</td>
+</tr>
+<tr class="even">
+<td><code>full_join(x, y)</code></td>
+<td>Todas las de <code>x</code> y de <code>y</code></td>
+<td>Explorar el conjunto completo de identificadores</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="un-detalle-importante-claves-repetidas" class="level3" data-number="9.4.5">
+<h3 data-number="9.4.5" class="anchored" data-anchor-id="un-detalle-importante-claves-repetidas"><span class="header-section-number">9.4.5</span> Un detalle importante: claves repetidas</h3>
+<p>¿Qué sucede si la tabla de metadatos contiene más de una fila para un mismo <code>query_id</code>?</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>metadata_duplicada <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(carpeta_datos, <span class="st">"metadata_duplicada.csv"</span>),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(<span class="at">codigo_muestra =</span> <span class="fu">col_character</span>(), <span class="at">.default =</span> <span class="fu">col_guess</span>())</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>metadata_duplicada <span class="sc">%&gt;%</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  query_id     n
+  &lt;chr&gt;    &lt;int&gt;
+1 seq01        2
+2 seq02        1</code></pre>
+</div>
+</div>
+<p>En esta tabla, <code>seq01</code> aparece dos veces. Al unirla con <code>blast_A</code>, cada alineamiento de <code>seq01</code> encontrará <strong>dos coincidencias</strong>, y por ello producirá dos filas en el resultado:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(blast_A)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>blast_A <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(metadata_duplicada, <span class="at">by =</span> <span class="st">"query_id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nrow</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in left_join(., metadata_duplicada, by = "query_id"): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 1 of `x` matches multiple rows in `y`.
+ℹ Row 1 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+</div>
+<p>No debemos resolver esto eliminando duplicados automáticamente: primero necesitamos comprender por qué existen. Quizá la clave elegida no identifica de forma única los registros, o quizá se requiere una clave compuesta.</p>
+<p>Antes de una unión en la que esperamos <strong>una fila por identificador</strong> en los metadatos, podemos comprobarlo:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="sc">%&gt;%</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 2
+# ℹ 2 variables: query_id &lt;chr&gt;, n &lt;int&gt;</code></pre>
+</div>
+</div>
+<p>Una tabla vacía indica que no se encontraron identificadores repetidos.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 1: ¿Qué información se conserva en cada unión?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Utiliza <code>blast_C</code> y <code>metadata</code> para:</p>
+<ol type="1">
+<li>Construir una tabla con <code>left_join()</code>.</li>
+<li>Identificar los registros de BLAST sin metadatos.</li>
+<li>Identificar los registros de metadatos sin resultados en <code>blast_C</code>.</li>
+<li>Comparar el número de filas de <code>blast_C</code>, de la unión izquierda y de la unión interna.</li>
+</ol>
+<p>Antes de ejecutar el código, predice en qué operación aparecerá <code>seq09</code>.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>resultado_izquierdo <span class="ot">&lt;-</span> blast_C <span class="sc">%&gt;%</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>sin_metadata <span class="ot">&lt;-</span> blast_C <span class="sc">%&gt;%</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>sin_blast_C <span class="ot">&lt;-</span> metadata <span class="sc">%&gt;%</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(blast_C, <span class="at">by =</span> <span class="st">"query_id"</span>)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>sin_metadata</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq09    ref_099      91.4    178  2e-35     192.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>sin_blast_C</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  query_id organismo  origen    codigo_muestra
+  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;         
+1 seq01    Bacteria_A suelo     001           
+2 seq02    Bacteria_B agua      002           
+3 seq03    Bacteria_C suelo     003           
+4 seq04    Bacteria_A agua      004           
+5 seq05    Bacteria_B suelo     005           
+6 seq10    Bacteria_D sedimento 010           </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">tabla =</span> <span class="fu">c</span>(<span class="st">"blast_C"</span>, <span class="st">"left_join"</span>, <span class="st">"inner_join"</span>),</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">filas =</span> <span class="fu">c</span>(</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(blast_C),</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(resultado_izquierdo),</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nrow</span>(blast_C <span class="sc">%&gt;%</span> <span class="fu">inner_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>))</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>       tabla filas
+1    blast_C     7
+2  left_join     7
+3 inner_join     6</code></pre>
+</div>
+</div>
+<p><code>seq09</code> aparece en <code>sin_metadata</code> y se conserva en <code>left_join()</code>, con <code>NA</code> en las columnas de metadatos. En <code>inner_join()</code> se excluye porque no tiene correspondencia.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 2: ¿Por qué aumentó el número de filas?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Une <code>blast_A</code> con <code>metadata_duplicada</code>. Compara el número de filas antes y después. Identifica qué <code>query_id</code> provoca el aumento y explica por qué sucede.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>union_duplicada <span class="ot">&lt;-</span> blast_A <span class="sc">%&gt;%</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(metadata_duplicada, <span class="at">by =</span> <span class="st">"query_id"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in left_join(., metadata_duplicada, by = "query_id"): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 1 of `x` matches multiple rows in `y`.
+ℹ Row 1 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  "many-to-many"` to silence this warning.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(blast_A)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(union_duplicada)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>metadata_duplicada <span class="sc">%&gt;%</span></span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  query_id     n
+  &lt;chr&gt;    &lt;int&gt;
+1 seq01        2</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>union_duplicada <span class="sc">%&gt;%</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(query_id <span class="sc">==</span> <span class="st">"seq01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, organismo, origen)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  query_id subject_id organismo  origen
+  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt; 
+1 seq01    ref_001    Bacteria_A suelo 
+2 seq01    ref_001    Bacteria_A agua  
+3 seq01    ref_002    Bacteria_A suelo 
+4 seq01    ref_002    Bacteria_A agua  
+5 seq01    ref_003    Bacteria_A suelo 
+6 seq01    ref_003    Bacteria_A agua  </code></pre>
+</div>
+</div>
+<p><code>seq01</code> tiene dos filas en <code>metadata_duplicada</code>. Cada alineamiento de esa consulta se combina con ambas filas, de modo que el resultado crece. Esto no se debe a <code>dplyr</code>: es una consecuencia de las correspondencias entre claves.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="apilar-resultados-de-distintas-muestras" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="apilar-resultados-de-distintas-muestras"><span class="header-section-number">9.5</span> Apilar resultados de distintas muestras</h2>
+<p>Hasta ahora hemos relacionado tablas que contienen <strong>información diferente</strong> sobre los mismos identificadores. Ahora tenemos otro problema: varios archivos con <strong>las mismas columnas</strong>, pero con registros diferentes.</p>
+<p>En este caso no queremos añadir columnas mediante una clave; queremos <strong>apilar filas</strong>.</p>
+<section id="bind_rows" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="bind_rows"><span class="header-section-number">9.5.1</span> <code>bind_rows()</code></h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>blast_B <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(carpeta_blast, <span class="st">"muestra_B.tsv"</span>),</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>blast_total <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">muestra_A =</span> blast_A,</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">muestra_B =</span> blast_B,</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">muestra_C =</span> blast_C,</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"muestra"</span></span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>blast_total <span class="sc">%&gt;%</span></span>
+<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(muestra)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  muestra       n
+  &lt;chr&gt;     &lt;int&gt;
+1 muestra_A     7
+2 muestra_B     7
+3 muestra_C     7</code></pre>
+</div>
+</div>
+<p>El argumento <code>.id = "muestra"</code> crea una columna que indica de qué archivo proviene cada registro. Esto es importante: si perdemos la procedencia de los registros, después podría resultar difícil interpretar los resultados.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>blast_total <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(muestra, query_id, subject_id, pident) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  muestra   query_id subject_id pident
+  &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;
+1 muestra_A seq01    ref_001      87.9
+2 muestra_A seq01    ref_002      68.2
+3 muestra_A seq01    ref_003      93.5
+4 muestra_A seq02    ref_004      82.6
+5 muestra_A seq02    ref_005      68.7
+6 muestra_A seq03    ref_007      88.2</code></pre>
+</div>
+</div>
+</section>
+<section id="diferencia-entre-bind_rows-y-un-join" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="diferencia-entre-bind_rows-y-un-join"><span class="header-section-number">9.5.2</span> Diferencia entre <code>bind_rows()</code> y un <code>join</code></h3>
+<ul>
+<li><code>bind_rows()</code> coloca una tabla debajo de otra. Se usa cuando las columnas representan la misma información.</li>
+<li><code>left_join()</code> y otras uniones relacionan tablas mediante claves y agregan columnas.</li>
+</ul>
+<p>En esta sesión no necesitaremos <code>bind_cols()</code>: unir columnas por posición puede producir correspondencias equivocadas si las filas no están perfectamente alineadas.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 3: Reunir resultados y conservar su procedencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Combina <code>blast_A</code>, <code>blast_B</code> y <code>blast_C</code> en una sola tabla llamada <code>todos_los_blast</code>, con una columna <code>muestra</code>. Después:</p>
+<ol type="1">
+<li>Cuenta cuántos alineamientos hay por muestra.</li>
+<li>Cuenta cuántos identificadores de consulta diferentes aparecen en cada muestra.</li>
+<li>Ordena la tabla por muestra y, dentro de cada muestra, por <code>bitscore</code> descendente.</li>
+</ol>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>todos_los_blast <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">muestra_A =</span> blast_A,</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">muestra_B =</span> blast_B,</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">muestra_C =</span> blast_C,</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"muestra"</span></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>todos_los_blast <span class="sc">%&gt;%</span></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(muestra) <span class="sc">%&gt;%</span></span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">alineamientos =</span> <span class="fu">n</span>(),</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">consultas_distintas =</span> <span class="fu">n_distinct</span>(query_id),</span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  muestra   alineamientos consultas_distintas
+  &lt;chr&gt;             &lt;int&gt;               &lt;int&gt;
+1 muestra_A             7                   3
+2 muestra_B             7                   4
+3 muestra_C             7                   4</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>todos_los_blast <span class="sc">%&gt;%</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(muestra, <span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 21 × 7
+   muestra   query_id subject_id pident length evalue bitscore
+   &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+ 1 muestra_A seq01    ref_003      93.5    168  1e-35    386. 
+ 2 muestra_A seq03    ref_007      88.2    254  1e- 5    362. 
+ 3 muestra_A seq02    ref_005      68.7    292  1e-57    323. 
+ 4 muestra_A seq02    ref_004      82.6    111  1e-85    260. 
+ 5 muestra_A seq01    ref_002      68.2    245  1e-36    185. 
+ 6 muestra_A seq01    ref_001      87.9    216  1e-40    119. 
+ 7 muestra_A seq03    ref_008      93.6    319  1e-36     96.6
+ 8 muestra_B seq05    ref_013      75      101  1e-26    411. 
+ 9 muestra_B seq03    ref_010      99      229  1e- 8    336. 
+10 muestra_B seq04    ref_010      83.9    162  1e-62    310. 
+# ℹ 11 more rows</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="funciones-para-automatizar-transformaciones" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="funciones-para-automatizar-transformaciones"><span class="header-section-number">9.6</span> Funciones para automatizar transformaciones</h2>
+<p>En la sesión 1 aprendimos a escribir funciones. Ahora las utilizaremos para aplicar el mismo conjunto de operaciones a distintas tablas.</p>
+<p>Supongamos que queremos conservar alineamientos con una identidad mínima y ordenarlos por puntuación.</p>
+<p>Sin una función tendríamos que repetir el mismo bloque de instrucciones para cada muestra. En su lugar, definimos una función que reciba la tabla y el umbral:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>filtrar_alineamientos <span class="ot">&lt;-</span> <span class="cf">function</span>(datos, <span class="at">identidad_minima =</span> <span class="dv">90</span>) {</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> identidad_minima) <span class="sc">%&gt;%</span></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<ul>
+<li><code>datos</code> es el argumento que recibe una tabla.</li>
+<li><code>identidad_minima = 90</code> define un valor predeterminado.</li>
+<li>La última expresión de la función es la tabla que se devuelve.</li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filtrar_alineamientos</span>(blast_A)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_003      93.5    168  1e-35    386. 
+2 seq03    ref_008      93.6    319  1e-36     96.6</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filtrar_alineamientos</span>(blast_B, <span class="at">identidad_minima =</span> <span class="dv">95</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq03    ref_010      99      229  1e- 8    336. 
+2 seq03    ref_009      97.8    191  1e-71     97.9</code></pre>
+</div>
+</div>
+<p>Podemos crear funciones que produzcan resúmenes:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>resumir_alineamientos <span class="ot">&lt;-</span> <span class="cf">function</span>(datos) {</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">%&gt;%</span></span>
+<span id="cb68-3"><a href="#cb68-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb68-4"><a href="#cb68-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
+<span id="cb68-5"><a href="#cb68-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">numero_alineamientos =</span> <span class="fu">n</span>(),</span>
+<span id="cb68-6"><a href="#cb68-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">bitscore_maximo =</span> <span class="fu">max</span>(bitscore, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb68-7"><a href="#cb68-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb68-8"><a href="#cb68-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb68-9"><a href="#cb68-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb68-10"><a href="#cb68-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb68-11"><a href="#cb68-11" aria-hidden="true" tabindex="-1"></a><span class="fu">resumir_alineamientos</span>(blast_A)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  query_id numero_alineamientos bitscore_maximo
+  &lt;chr&gt;                   &lt;int&gt;           &lt;dbl&gt;
+1 seq01                       3            386.
+2 seq02                       2            323.
+3 seq03                       2            362.</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Qué significa automatizar aquí?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No significa necesariamente construir un programa complicado. Automatizar consiste en <strong>escribir una operación una sola vez</strong> para poder aplicarla de manera consistente a diferentes entradas.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 4: Una función con dos criterios
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Modifica <code>filtrar_alineamientos()</code> para que reciba también una longitud mínima del alineamiento, con valor predeterminado de 100. La función debe conservar registros que cumplan ambos criterios y ordenarlos por <code>bitscore</code> descendente.</p>
+<p>Prueba la función con <code>blast_A</code> y con <code>blast_C</code> usando diferentes umbrales.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>filtrar_alineamientos <span class="ot">&lt;-</span> <span class="cf">function</span>(datos,</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">identidad_minima =</span> <span class="dv">90</span>,</span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">longitud_minima =</span> <span class="dv">100</span>) {</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>  datos <span class="sc">%&gt;%</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> identidad_minima,</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>      length <span class="sc">&gt;=</span> longitud_minima</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))</span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb70-11"><a href="#cb70-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb70-12"><a href="#cb70-12" aria-hidden="true" tabindex="-1"></a><span class="fu">filtrar_alineamientos</span>(blast_A)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_003      93.5    168  1e-35    386. 
+2 seq03    ref_008      93.6    319  1e-36     96.6</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">filtrar_alineamientos</span>(</span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  blast_C,</span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">identidad_minima =</span> <span class="dv">95</span>,</span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud_minima =</span> <span class="dv">150</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 6
+# ℹ 6 variables: query_id &lt;chr&gt;, subject_id &lt;chr&gt;, pident &lt;dbl&gt;, length &lt;dbl&gt;,
+#   evalue &lt;dbl&gt;, bitscore &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Los umbrales se utilizan para practicar argumentos y condiciones; no representan una regla universal para determinar la relevancia biológica de un alineamiento.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="procesar-múltiples-archivos" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="procesar-múltiples-archivos"><span class="header-section-number">9.7</span> Procesar múltiples archivos</h2>
+<p>Imagina que en lugar de tres muestras tenemos treinta. Importarlas una por una sería tedioso y aumentaría la probabilidad de cometer errores.</p>
+<p>Podemos construir un procedimiento que descubra los archivos, los lea y combine los resultados.</p>
+<section id="localizar-archivos-con-list.files" class="level3" data-number="9.7.1">
+<h3 data-number="9.7.1" class="anchored" data-anchor-id="localizar-archivos-con-list.files"><span class="header-section-number">9.7.1</span> Localizar archivos con <code>list.files()</code></h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>archivos_blast <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">path =</span> carpeta_blast,</span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.tsv$"</span>,</span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>archivos_blast</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data_raw/datos_sesion_04_integracion/blast_muestras/muestra_A.tsv"
+[2] "data_raw/datos_sesion_04_integracion/blast_muestras/muestra_B.tsv"
+[3] "data_raw/datos_sesion_04_integracion/blast_muestras/muestra_C.tsv"</code></pre>
+</div>
+</div>
+<p>El argumento <code>pattern</code> selecciona nombres que terminan en <code>.tsv</code>. La expresión <code>\\.tsv$</code> utiliza una expresión regular sencilla:</p>
+<ul>
+<li><code>\\.</code> representa un punto literal.</li>
+<li><code>tsv</code> son las letras que buscamos.</li>
+<li><code>$</code> indica el final del nombre.</li>
+</ul>
+<p>Con <code>full.names = TRUE</code>, obtenemos rutas que podemos pasar directamente a las funciones de lectura.</p>
+</section>
+<section id="leer-todos-los-archivos-con-lapply" class="level3" data-number="9.7.2">
+<h3 data-number="9.7.2" class="anchored" data-anchor-id="leer-todos-los-archivos-con-lapply"><span class="header-section-number">9.7.2</span> Leer todos los archivos con <code>lapply()</code></h3>
+<p><code>lapply()</code> recibe una lista o vector y una función. Aplica la función a cada elemento y devuelve una <strong>lista</strong>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>lista_blast <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  archivos_blast,</span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(archivo) {</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">read_tsv</span>(archivo, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(lista_blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lista_blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>NULL</code></pre>
+</div>
+</div>
+<p>En este momento <code>lista_blast</code> contiene tres tablas, pero sus elementos todavía no tienen nombres descriptivos.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>nombres_muestras <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">basename</span>(archivos_blast)</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lista_blast) <span class="ot">&lt;-</span> nombres_muestras</span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lista_blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "muestra_A" "muestra_B" "muestra_C"</code></pre>
+</div>
+</div>
+<ul>
+<li><code>basename()</code> extrae el nombre del archivo sin su ruta.</li>
+<li><code>tools::file_path_sans_ext()</code> elimina la extensión.</li>
+<li><code>names()</code> asigna esos nombres a los elementos de la lista.</li>
+</ul>
+<p>Podemos acceder a una tabla por su nombre:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lista_blast[[<span class="st">"muestra_A"</span>]])</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_001      87.9    216  1e-40     119.
+2 seq01    ref_002      68.2    245  1e-36     185.
+3 seq01    ref_003      93.5    168  1e-35     386.
+4 seq02    ref_004      82.6    111  1e-85     260.
+5 seq02    ref_005      68.7    292  1e-57     323.
+6 seq03    ref_007      88.2    254  1e- 5     362.</code></pre>
+</div>
+</div>
+</section>
+<section id="combinar-las-tablas-de-la-lista" class="level3" data-number="9.7.3">
+<h3 data-number="9.7.3" class="anchored" data-anchor-id="combinar-las-tablas-de-la-lista"><span class="header-section-number">9.7.3</span> Combinar las tablas de la lista</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>blast_todos_archivos <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  lista_blast,</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"muestra"</span></span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>blast_todos_archivos <span class="sc">%&gt;%</span></span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(muestra)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  muestra       n
+  &lt;chr&gt;     &lt;int&gt;
+1 muestra_A     7
+2 muestra_B     7
+3 muestra_C     7</code></pre>
+</div>
+</div>
+<p>Esta solución funciona aunque agreguemos más archivos TSV con las mismas columnas a la carpeta. <strong>La condición es que todos tengan una estructura compatible</strong>.</p>
+</section>
+<section id="aplicar-nuestra-función-a-todos-los-archivos" class="level3" data-number="9.7.4">
+<h3 data-number="9.7.4" class="anchored" data-anchor-id="aplicar-nuestra-función-a-todos-los-archivos"><span class="header-section-number">9.7.4</span> Aplicar nuestra función a todos los archivos</h3>
+<p>Podemos utilizar <code>lapply()</code> para aplicar <code>filtrar_alineamientos()</code> a cada tabla:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>lista_filtrada <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>  lista_blast,</span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>  filtrar_alineamientos,</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">identidad_minima =</span> <span class="dv">90</span>,</span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud_minima =</span> <span class="dv">100</span></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>blast_filtrado <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>  lista_filtrada,</span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"muestra"</span></span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-13"><a href="#cb86-13" aria-hidden="true" tabindex="-1"></a>blast_filtrado <span class="sc">%&gt;%</span></span>
+<span id="cb86-14"><a href="#cb86-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(muestra)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  muestra       n
+  &lt;chr&gt;     &lt;int&gt;
+1 muestra_A     2
+2 muestra_B     2
+3 muestra_C     2</code></pre>
+</div>
+</div>
+<p>Observa que no escribimos tres llamadas distintas a nuestra función: <code>lapply()</code> se encarga de repetirla para cada elemento.</p>
+</section>
+<section id="una-alternativa-con-purrrmap" class="level3" data-number="9.7.5">
+<h3 data-number="9.7.5" class="anchored" data-anchor-id="una-alternativa-con-purrrmap"><span class="header-section-number">9.7.5</span> Una alternativa con <code>purrr::map()</code></h3>
+<p>El paquete <code>purrr</code> ofrece herramientas para trabajar con listas. Su función <code>map()</code> cumple un propósito parecido al de <code>lapply()</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>lista_filtrada_map <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>  lista_blast,</span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>  filtrar_alineamientos,</span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">identidad_minima =</span> <span class="dv">90</span>,</span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud_minima =</span> <span class="dv">100</span></span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a>blast_filtrado_map <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb88-11"><a href="#cb88-11" aria-hidden="true" tabindex="-1"></a>  lista_filtrada_map,</span>
+<span id="cb88-12"><a href="#cb88-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"muestra"</span></span>
+<span id="cb88-13"><a href="#cb88-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>No necesitamos aprender todas las variantes de <code>map()</code> en esta sesión. Lo importante es reconocer la idea: <strong>aplicar una misma función a una colección de objetos</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿<code>for</code>, <code>lapply()</code> o <code>map()</code>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las tres alternativas pueden servir para repetir operaciones. Un ciclo <code>for</code> es útil cuando queremos controlar cada paso. <code>lapply()</code> es una opción de R base para obtener una lista de resultados; <code>map()</code> ofrece una interfaz consistente dentro de <code>purrr</code>. No es necesario utilizar <code>map()</code> para que un análisis sea reproducible.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 5: Procesar todos los archivos sin escribir sus nombres
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Escribe un bloque de código que:</p>
+<ol type="1">
+<li>Localice automáticamente todos los archivos <code>.tsv</code> de <code>blast_muestras/</code>.</li>
+<li>Importe cada archivo en una lista.</li>
+<li>Asigne a cada elemento el nombre de su muestra.</li>
+<li>Aplique <code>filtrar_alineamientos()</code> con identidad mínima de 85 y longitud mínima de 150.</li>
+<li>Combine los resultados en una sola tabla con una columna <code>muestra</code>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a>archivos <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a>  carpeta_blast,</span>
+<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.tsv$"</span>,</span>
+<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb89-5"><a href="#cb89-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb89-6"><a href="#cb89-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-7"><a href="#cb89-7" aria-hidden="true" tabindex="-1"></a>tablas <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb89-8"><a href="#cb89-8" aria-hidden="true" tabindex="-1"></a>  archivos,</span>
+<span id="cb89-9"><a href="#cb89-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) <span class="fu">read_tsv</span>(x, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb89-10"><a href="#cb89-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb89-11"><a href="#cb89-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-12"><a href="#cb89-12" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tablas) <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(<span class="fu">basename</span>(archivos))</span>
+<span id="cb89-13"><a href="#cb89-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-14"><a href="#cb89-14" aria-hidden="true" tabindex="-1"></a>tablas_filtradas <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb89-15"><a href="#cb89-15" aria-hidden="true" tabindex="-1"></a>  tablas,</span>
+<span id="cb89-16"><a href="#cb89-16" aria-hidden="true" tabindex="-1"></a>  filtrar_alineamientos,</span>
+<span id="cb89-17"><a href="#cb89-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">identidad_minima =</span> <span class="dv">85</span>,</span>
+<span id="cb89-18"><a href="#cb89-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud_minima =</span> <span class="dv">150</span></span>
+<span id="cb89-19"><a href="#cb89-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb89-20"><a href="#cb89-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-21"><a href="#cb89-21" aria-hidden="true" tabindex="-1"></a>resultado <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(tablas_filtradas, <span class="at">.id =</span> <span class="st">"muestra"</span>)</span>
+<span id="cb89-22"><a href="#cb89-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb89-23"><a href="#cb89-23" aria-hidden="true" tabindex="-1"></a>resultado <span class="sc">%&gt;%</span></span>
+<span id="cb89-24"><a href="#cb89-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(muestra)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  muestra       n
+  &lt;chr&gt;     &lt;int&gt;
+1 muestra_A     4
+2 muestra_B     4
+3 muestra_C     1</code></pre>
+</div>
+</div>
+<p>La columna <code>muestra</code> conserva la procedencia de cada alineamiento, aunque los datos se encuentren ahora en una sola tabla.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="práctica-final-de-varios-archivos-a-una-tabla-final" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="práctica-final-de-varios-archivos-a-una-tabla-final"><span class="header-section-number">9.8</span> Práctica Final: de varios archivos a una tabla final</h2>
+<p>Nuestro objetivo será construir un flujo de trabajo completo que pueda ejecutarse nuevamente cuando cambien los archivos de entrada.</p>
+<p>El procedimiento tendrá seis pasos:</p>
+<ol type="1">
+<li>Encontrar los archivos de resultados.</li>
+<li>Leerlos y conservar el nombre de la muestra.</li>
+<li>Apilar los resultados.</li>
+<li>Agregar los metadatos mediante <code>left_join()</code>.</li>
+<li>Aplicar criterios de filtrado.</li>
+<li>Exportar la tabla final.</li>
+</ol>
+<section id="una-primera-versión-del-flujo-de-trabajo" class="level3" data-number="9.8.1">
+<h3 data-number="9.8.1" class="anchored" data-anchor-id="una-primera-versión-del-flujo-de-trabajo"><span class="header-section-number">9.8.1</span> Una primera versión del flujo de trabajo</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 1: encontrar los archivos</span></span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>archivos <span class="ot">&lt;-</span> <span class="fu">list.files</span>(</span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  carpeta_blast,</span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">pattern =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">.tsv$"</span>,</span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">full.names =</span> <span class="cn">TRUE</span></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 2: importar las tablas</span></span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a>tablas <span class="ot">&lt;-</span> <span class="fu">lapply</span>(</span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a>  archivos,</span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">function</span>(x) <span class="fu">read_tsv</span>(x, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb91-12"><a href="#cb91-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb91-13"><a href="#cb91-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-14"><a href="#cb91-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(tablas) <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(<span class="fu">basename</span>(archivos))</span>
+<span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 3: combinar los resultados</span></span>
+<span id="cb91-17"><a href="#cb91-17" aria-hidden="true" tabindex="-1"></a>resultados_combinados <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb91-18"><a href="#cb91-18" aria-hidden="true" tabindex="-1"></a>  tablas,</span>
+<span id="cb91-19"><a href="#cb91-19" aria-hidden="true" tabindex="-1"></a>  <span class="at">.id =</span> <span class="st">"muestra"</span></span>
+<span id="cb91-20"><a href="#cb91-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb91-21"><a href="#cb91-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-22"><a href="#cb91-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 4: agregar metadatos</span></span>
+<span id="cb91-23"><a href="#cb91-23" aria-hidden="true" tabindex="-1"></a>resultados_integrados <span class="ot">&lt;-</span> resultados_combinados <span class="sc">%&gt;%</span></span>
+<span id="cb91-24"><a href="#cb91-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>)</span>
+<span id="cb91-25"><a href="#cb91-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-26"><a href="#cb91-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 5: seleccionar y ordenar</span></span>
+<span id="cb91-27"><a href="#cb91-27" aria-hidden="true" tabindex="-1"></a>resultados_finales <span class="ot">&lt;-</span> resultados_integrados <span class="sc">%&gt;%</span></span>
+<span id="cb91-28"><a href="#cb91-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>, length <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb91-29"><a href="#cb91-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(</span>
+<span id="cb91-30"><a href="#cb91-30" aria-hidden="true" tabindex="-1"></a>    muestra, query_id, subject_id,</span>
+<span id="cb91-31"><a href="#cb91-31" aria-hidden="true" tabindex="-1"></a>    pident, length, evalue, bitscore,</span>
+<span id="cb91-32"><a href="#cb91-32" aria-hidden="true" tabindex="-1"></a>    organismo, origen, codigo_muestra</span>
+<span id="cb91-33"><a href="#cb91-33" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb91-34"><a href="#cb91-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(muestra, <span class="fu">desc</span>(bitscore))</span>
+<span id="cb91-35"><a href="#cb91-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-36"><a href="#cb91-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Paso 6: guardar sin modificar los archivos originales</span></span>
+<span id="cb91-37"><a href="#cb91-37" aria-hidden="true" tabindex="-1"></a><span class="fu">write_tsv</span>(</span>
+<span id="cb91-38"><a href="#cb91-38" aria-hidden="true" tabindex="-1"></a>  resultados_finales,</span>
+<span id="cb91-39"><a href="#cb91-39" aria-hidden="true" tabindex="-1"></a>  <span class="st">"results/04_resultados_blast_integrados.tsv"</span></span>
+<span id="cb91-40"><a href="#cb91-40" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb91-41"><a href="#cb91-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb91-42"><a href="#cb91-42" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(resultados_finales)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 10
+  muestra   query_id subject_id pident length evalue bitscore organismo  origen
+  &lt;chr&gt;     &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt; 
+1 muestra_A seq01    ref_003      93.5    168  1e-35    386.  Bacteria_A suelo 
+2 muestra_A seq03    ref_008      93.6    319  1e-36     96.6 Bacteria_C suelo 
+3 muestra_B seq03    ref_010      99      229  1e- 8    336.  Bacteria_C suelo 
+4 muestra_B seq03    ref_009      97.8    191  1e-71     97.9 Bacteria_C suelo 
+5 muestra_C seq09    ref_099      91.4    178  2e-35    192.  &lt;NA&gt;       &lt;NA&gt;  
+6 muestra_C seq07    ref_019      95.7    106  1e-70    138.  Bacteria_A suelo 
+# ℹ 1 more variable: codigo_muestra &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p>Antes de interpretar la tabla, revisamos si algunas filas no encontraron metadatos:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a>resultados_combinados <span class="sc">%&gt;%</span></span>
+<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">anti_join</span>(metadata, <span class="at">by =</span> <span class="st">"query_id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  query_id
+  &lt;chr&gt;   
+1 seq09   </code></pre>
+</div>
+</div>
+<p>Que existan identificadores sin correspondencia no significa necesariamente que el archivo esté mal: puede indicar que las dos fuentes cubren conjuntos diferentes de secuencias.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 6: Construir un resumen por muestra
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A partir de <code>resultados_finales</code>, construye una tabla que contenga, para cada muestra:</p>
+<ol type="1">
+<li>El número de alineamientos que cumplieron los criterios.</li>
+<li>El número de identificadores <code>query_id</code> diferentes.</li>
+<li>El mayor <code>bitscore</code>.</li>
+</ol>
+<p>Guarda la tabla en <code>results/04_resumen_por_muestra.csv</code>. Después, explica por qué este archivo se puede volver a generar sin modificar los datos originales.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="observaciones" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="observaciones"><span class="header-section-number">9.9</span> Observaciones</h2>
+<p>En las sesiones 2, 3 y 4 construimos progresivamente un flujo de trabajo:</p>
+<pre class="text"><code>Archivos de entrada
+       |
+       v
+Importar y explorar                  (Sesión 2)
+       |
+       v
+Seleccionar, filtrar y resumir       (Sesión 3)
+       |
+       v
+Integrar tablas y procesar archivos  (Sesión 4)
+       |
+       v
+Guardar resultados</code></pre>
+<ul>
+<li><strong><code>left_join()</code></strong> agrega información a partir de una clave, pero debemos conocer la relación entre los identificadores.</li>
+<li><strong><code>anti_join()</code></strong> permite localizar filas sin correspondencia.</li>
+<li><strong><code>bind_rows()</code></strong> reúne tablas con la misma estructura, apilando registros.</li>
+<li><strong>Las funciones</strong> evitan escribir varias veces el mismo procedimiento.</li>
+<li><strong><code>lapply()</code> y <code>map()</code></strong> permiten aplicar funciones a varios objetos.</li>
+<li><strong>Conservar una columna de procedencia</strong> ayuda a saber de qué muestra viene cada resultado.</li>
+<li><strong>Guardar resultados en una carpeta separada</strong> permite conservar intactos los archivos de entrada.</li>
+</ul>
+<p>En la sesión 5 utilizaremos estas tablas organizadas para aprender a construir visualizaciones con <code>ggplot2</code>.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/github\.com\/CursosENESJuriquilla\/Intro_to_R_Bioinfo_2027-1");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./parte8.html" class="pagination-link" aria-label="Manipulación y transformación de datos bioinformáticos con dplyr y tidyr">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Introducción a R para Bioinformática I, 3er semestre: Haydeé Peruyero</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
