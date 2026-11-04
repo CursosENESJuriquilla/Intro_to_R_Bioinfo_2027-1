@@ -138,7 +138,6 @@ if (is.na(conteo)) {
 :::
 ::::
 
-
 ### Condiciones sobre vectores: `ifelse()`, `all()`, `any()` y `which()`
 
 La función `ifelse()` evalúa una condición **elemento por elemento** y devuelve un resultado de acuerdo con si cada elemento satisface la condición.
@@ -171,10 +170,10 @@ Si el vector contiene `NA`, `all()` y `any()` pueden devolver `NA` cuando no sea
 
 Considera el vector `conteos <- c(8, 0, 13, 5, 0, 21)`. Utiliza las funciones anteriores para:
 
-1. Verificar si todos los valores son no negativos.
-2. Determinar si existe al menos un conteo mayor que 20.
-3. Obtener las posiciones de los conteos iguales a cero.
-4. Crear un vector que indique `"Presente"` o `"Ausente"` según si el conteo es mayor que cero.
+1.  Verificar si todos los valores son no negativos.
+2.  Determinar si existe al menos un conteo mayor que 20.
+3.  Obtener las posiciones de los conteos iguales a cero.
+4.  Crear un vector que indique `"Presente"` o `"Ausente"` según si el conteo es mayor que cero.
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
@@ -189,8 +188,6 @@ ifelse(conteos > 0, "Presente", "Ausente")
 ```
 :::
 ::::
-
-
 
 ## Ciclo `for`
 
@@ -268,9 +265,9 @@ A partir del vector:
 secuencias <- c("ATG", "ATGCGT", "AATTCCGG", "CG")
 ```
 
-1. Utiliza un ciclo `for` para guardar las longitudes en un vector llamado `longitudes`.
-2. Crea otro vector llamado `clasificacion` que contenga `"Corta"` para longitudes menores que 5 y `"Larga"` para longitudes de al menos 5.
-3. Muestra ambos vectores.
+1.  Utiliza un ciclo `for` para guardar las longitudes en un vector llamado `longitudes`.
+2.  Crea otro vector llamado `clasificacion` que contenga `"Corta"` para longitudes menores que 5 y `"Larga"` para longitudes de al menos 5.
+3.  Muestra ambos vectores.
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
@@ -293,10 +290,8 @@ for (i in seq_along(secuencias)) {
 longitudes
 clasificacion
 ```
-
 :::
 ::::
-
 
 ## Ciclo `while`
 
@@ -392,16 +387,13 @@ while (nchar(secuencia) < 8) {
 secuencia
 nchar(secuencia)
 ```
-
 :::
 ::::
-
-
 
 ## ¿Cuándo utilizar cada estructura?
 
 | Estructura | ¿Para qué sirve? | Ejemplo de aplicación |
-|---|---|---|
+|----|----|----|
 | `if` / `else` | Elegir entre alternativas a partir de una condición única. | Verificar si un conteo es válido. |
 | `ifelse()` | Clasificar elementos de un vector. | Etiquetar conteos positivos y ceros. |
 | `for` | Recorrer una colección de elementos. | Calcular la longitud de varias secuencias. |
@@ -410,5 +402,3 @@ nchar(secuencia)
 ::: {.callout-note title="Para recordar"}
 En R muchas operaciones sobre vectores pueden realizarse **sin escribir ciclos explícitos**. Por ejemplo, `nchar(secuencias)` calcula directamente la longitud de todas las secuencias de un vector. Aprender `for` y `while` sigue siendo importante para comprender el flujo de ejecución y resolver tareas más complejas; posteriormente veremos alternativas para trabajar con colecciones de datos.
 :::
-
-

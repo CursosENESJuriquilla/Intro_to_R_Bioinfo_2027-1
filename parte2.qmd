@@ -264,7 +264,7 @@ sudo xcode-select --install
 ## Solución de problemas frecuentes
 
 | Problema | Posible causa | Qué revisar |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | RStudio no encuentra R | R no está instalado o no fue detectado | Instala R primero; revisa la versión de R en las opciones de RStudio. |
 | `there is no package called ...` | El paquete no está instalado en la biblioteca activa | Ejecuta `install.packages()` o el instalador de Bioconductor correspondiente. |
 | `could not find function ...` | No se cargó el paquete o el nombre está mal escrito | Usa `library(paquete)` o `paquete::funcion()`. |
@@ -287,7 +287,6 @@ Lee el **primer mensaje de error relevante** y anota: sistema operativo, versió
 4.  Carga ambos paquetes y consulta sus versiones.
 5.  Identifica las herramientas de compilación correspondientes a tu sistema operativo. En **Windows**, comprueba especialmente la compatibilidad de **Rtools**.
 
-
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
 
@@ -302,15 +301,8 @@ library(dplyr)
 packageVersion("ggplot2")
 packageVersion("dplyr")
 ```
-
 :::
 ::::
-
-
-
-
-
-
 
 ::: {.callout-note collapse="true" title="Solución y comentarios de la actividad"}
 `R.version.string` indica la versión de R; `Sys.info()[["sysname"]]` identifica el sistema operativo. `packageVersion()` devuelve la versión instalada del paquete. Si `library()` funciona sin errores, el paquete está disponible en la sesión. La instalación de compiladores se comprueba de manera diferente según el sistema; en Windows se puede utilizar `pkgbuild::has_build_tools(debug = TRUE)`.

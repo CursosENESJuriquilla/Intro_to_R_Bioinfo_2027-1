@@ -76,7 +76,7 @@ Aqui un script bien documentado [VisualizacionDatos.R](https://github.com/Evelia
 
 1.  Escribir **programas para personas, no para computadoras** (Documentar qué hace y por qué). Ser coherente en la nomenclatura, indentación y otros aspectos del estilo.
 
-2.  Modularidad: Dividir los programas en *funciones cortas de un solo propósito.* 
+2.  Modularidad: Dividir los programas en *funciones cortas de un solo propósito.*
 
 3.  **No repiter código**. Crear pasos reproducibles o que se repitan por si solos.
 

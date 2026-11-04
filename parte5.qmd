@@ -284,10 +284,10 @@ secuencias <- c("ATGCGT", "ACNTGA", "GGCCAA", "TTTAAA")
 
 Escribe una función `crear_reporte_secuencias(ids, secuencias)` que:
 
-1. Compruebe que ambos argumentos son vectores de caracteres y tienen la misma longitud.
-2. Identifique las secuencias válidas mediante `revisar_secuencias()`.
-3. Devuelva un `data.frame` con las columnas `id`, `secuencia`, `longitud` y `valida`.
-4. Asigne `NA` a la longitud de las secuencias inválidas.
+1.  Compruebe que ambos argumentos son vectores de caracteres y tienen la misma longitud.
+2.  Identifique las secuencias válidas mediante `revisar_secuencias()`.
+3.  Devuelva un `data.frame` con las columnas `id`, `secuencia`, `longitud` y `valida`.
+4.  Asigne `NA` a la longitud de las secuencias inválidas.
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
