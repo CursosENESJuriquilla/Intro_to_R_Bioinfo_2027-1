@@ -8,7 +8,7 @@ project:
 book:
   title: "Introducción a R para Bioinformática I"
   site-url: https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1
-  page-footer:  "Temas Selectos de ML, 7mo semestre: Haydeé Peruyero" 
+  page-footer:  "Introducción a R para Bioinformática I, 3er semestre: Haydeé Peruyero" 
   sidebar: 
     # background: "#ffcccc"
     logo: "figures/LogoENES.png" # Logo ENES
