@@ -12,7 +12,7 @@ Los datos de esta sesión son **sintéticos**. Los valores de identidad, E-value
 
 ## Archivos de trabajo
 
-Descarga y descomprime [`datos_sesion_02_blast.zip`](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/data/datos_sesion_02_blast.zip). Dentro de tu proyecto de RStudio crea `data_raw/` y coloca ahí la carpeta descomprimida. Tendrás, entre otros, los archivos:
+Descarga y descomprime [`datos_sesion_02_blast.zip`](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_sesion_02_blast.zip). Dentro de tu proyecto de RStudio crea `data_raw/` y coloca ahí la carpeta descomprimida. Tendrás, entre otros, los archivos:
 
 ```text
 mi_proyecto/
