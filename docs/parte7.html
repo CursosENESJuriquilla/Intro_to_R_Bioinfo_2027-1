@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>7&nbsp; Pendiente – Introducción a R para Bioinformática I</title>
+<title>7&nbsp; Importación y exploración de datos bioinformáticos en R – Introducción a R para Bioinformática I</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -25,6 +25,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -89,7 +124,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte7.html"><strong>Importación, exploración y validación de datos biológicos</strong></a></li><li class="breadcrumb-item"><a href="./parte7.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pendiente</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte7.html"><strong>Importación y exploración de datos bioinformáticos en R</strong></a></li><li class="breadcrumb-item"><a href="./parte7.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -206,7 +241,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>Importación, exploración y validación de datos biológicos</strong></span></a>
+ <span class="menu-text"><strong>Importación y exploración de datos bioinformáticos en R</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -215,7 +250,7 @@ ul.task-list li input[type="checkbox"] {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./parte7.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pendiente</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></span></a>
   </div>
 </li>
       </ul>
@@ -225,15 +260,50 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">7.1</span> Introducción</a></li>
+  <li><a href="#archivos-de-trabajo" id="toc-archivos-de-trabajo" class="nav-link" data-scroll-target="#archivos-de-trabajo"><span class="header-section-number">7.2</span> Archivos de trabajo</a></li>
+  <li><a href="#reconocer-archivos-desde-r" id="toc-reconocer-archivos-desde-r" class="nav-link" data-scroll-target="#reconocer-archivos-desde-r"><span class="header-section-number">7.3</span> Reconocer archivos desde R</a>
+  <ul>
+  <li><a href="#directorios-y-archivos" id="toc-directorios-y-archivos" class="nav-link" data-scroll-target="#directorios-y-archivos"><span class="header-section-number">7.3.1</span> Directorios y archivos</a></li>
+  <li><a href="#mirar-el-contenido-sin-importarlo-todavía" id="toc-mirar-el-contenido-sin-importarlo-todavía" class="nav-link" data-scroll-target="#mirar-el-contenido-sin-importarlo-todavía"><span class="header-section-number">7.3.2</span> Mirar el contenido sin importarlo todavía</a></li>
+  </ul></li>
+  <li><a href="#importación-de-archivos-tabulares" id="toc-importación-de-archivos-tabulares" class="nav-link" data-scroll-target="#importación-de-archivos-tabulares"><span class="header-section-number">7.4</span> Importación de archivos tabulares</a>
+  <ul>
+  <li><a href="#csv-y-tsv-con-r-base" id="toc-csv-y-tsv-con-r-base" class="nav-link" data-scroll-target="#csv-y-tsv-con-r-base"><span class="header-section-number">7.4.1</span> CSV y TSV con R base</a></li>
+  <li><a href="#importación-con-readr" id="toc-importación-con-readr" class="nav-link" data-scroll-target="#importación-con-readr"><span class="header-section-number">7.4.2</span> Importación con <code>readr</code></a></li>
+  <li><a href="#encabezados-comentarios-y-valores-faltantes" id="toc-encabezados-comentarios-y-valores-faltantes" class="nav-link" data-scroll-target="#encabezados-comentarios-y-valores-faltantes"><span class="header-section-number">7.4.3</span> Encabezados, comentarios y valores faltantes</a></li>
+  <li><a href="#problemas-al-interpretar-columnas" id="toc-problemas-al-interpretar-columnas" class="nav-link" data-scroll-target="#problemas-al-interpretar-columnas"><span class="header-section-number">7.4.4</span> Problemas al interpretar columnas</a></li>
+  </ul></li>
+  <li><a href="#explorar-el-contenido-de-una-tabla" id="toc-explorar-el-contenido-de-una-tabla" class="nav-link" data-scroll-target="#explorar-el-contenido-de-una-tabla"><span class="header-section-number">7.5</span> Explorar el contenido de una tabla</a>
+  <ul>
+  <li><a href="#dimensiones-nombres-y-tipos" id="toc-dimensiones-nombres-y-tipos" class="nav-link" data-scroll-target="#dimensiones-nombres-y-tipos"><span class="header-section-number">7.5.1</span> Dimensiones, nombres y tipos</a></li>
+  <li><a href="#seleccionar-columnas-y-filas" id="toc-seleccionar-columnas-y-filas" class="nav-link" data-scroll-target="#seleccionar-columnas-y-filas"><span class="header-section-number">7.5.2</span> Seleccionar columnas y filas</a></li>
+  <li><a href="#valores-únicos-y-frecuencias" id="toc-valores-únicos-y-frecuencias" class="nav-link" data-scroll-target="#valores-únicos-y-frecuencias"><span class="header-section-number">7.5.3</span> Valores únicos y frecuencias</a></li>
+  <li><a href="#preguntas-que-podemos-responder" id="toc-preguntas-que-podemos-responder" class="nav-link" data-scroll-target="#preguntas-que-podemos-responder"><span class="header-section-number">7.5.4</span> Preguntas que podemos responder</a></li>
+  </ul></li>
+  <li><a href="#cuando-una-importación-no-sale-como-esperamos" id="toc-cuando-una-importación-no-sale-como-esperamos" class="nav-link" data-scroll-target="#cuando-una-importación-no-sale-como-esperamos"><span class="header-section-number">7.6</span> Cuando una importación no sale como esperamos</a>
+  <ul>
+  <li><a href="#separador-equivocado" id="toc-separador-equivocado" class="nav-link" data-scroll-target="#separador-equivocado"><span class="header-section-number">7.6.1</span> Separador equivocado</a></li>
+  <li><a href="#identificadores-que-parecen-números" id="toc-identificadores-que-parecen-números" class="nav-link" data-scroll-target="#identificadores-que-parecen-números"><span class="header-section-number">7.6.2</span> Identificadores que parecen números</a></li>
+  <li><a href="#ausencias-y-registros-repetidos" id="toc-ausencias-y-registros-repetidos" class="nav-link" data-scroll-target="#ausencias-y-registros-repetidos"><span class="header-section-number">7.6.3</span> Ausencias y registros repetidos</a></li>
+  </ul></li>
+  <li><a href="#una-mirada-breve-a-fasta-desde-r" id="toc-una-mirada-breve-a-fasta-desde-r" class="nav-link" data-scroll-target="#una-mirada-breve-a-fasta-desde-r"><span class="header-section-number">7.7</span> Una mirada breve a FASTA desde R</a></li>
+  <li><a href="#práctica-final-explorar-un-conjunto-de-resultados" id="toc-práctica-final-explorar-un-conjunto-de-resultados" class="nav-link" data-scroll-target="#práctica-final-explorar-un-conjunto-de-resultados"><span class="header-section-number">7.8</span> Práctica Final: explorar un conjunto de resultados</a></li>
+  <li><a href="#observaciones" id="toc-observaciones" class="nav-link" data-scroll-target="#observaciones"><span class="header-section-number">7.9</span> Observaciones</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte7.html"><strong>Importación, exploración y validación de datos biológicos</strong></a></li><li class="breadcrumb-item"><a href="./parte7.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pendiente</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte7.html"><strong>Importación y exploración de datos bioinformáticos en R</strong></a></li><li class="breadcrumb-item"><a href="./parte7.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pendiente</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></h1>
 </div>
 
 
@@ -250,8 +320,1157 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<section id="introducción" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="introducción"><span class="header-section-number">7.1</span> Introducción</h2>
+<p>En la sesión anterior aprendimos a crear objetos, utilizar estructuras de control y escribir funciones. Ahora trabajaremos con información que <strong>ya está guardada en archivos</strong>. El objetivo no es volver a estudiar BLAST ni aprender a ejecutar herramientas bioinformáticas: utilizaremos archivos con una estructura parecida a sus resultados para aprender a leerlos, reconocer sus columnas y explorar su contenido desde R.</p>
+<p>Al finalizar podrás identificar la estructura de un archivo, importar tablas con R base y con <code>readr</code>, explorar su contenido, reconocer problemas frecuentes de lectura y extraer información sencilla sin modificar los archivos originales.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Antes de comenzar">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Antes de comenzar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los datos de esta sesión son <strong>sintéticos</strong>. Los valores de identidad, E-value y puntuación son ilustrativos; no representan resultados reales de una búsqueda BLAST ni deben utilizarse para inferencias biológicas.</p>
+</div>
+</div>
+</section>
+<section id="archivos-de-trabajo" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="archivos-de-trabajo"><span class="header-section-number">7.2</span> Archivos de trabajo</h2>
+<p>Descarga y descomprime <a href="https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/data/datos_sesion_02_blast.zip"><code>datos_sesion_02_blast.zip</code></a>. Dentro de tu proyecto de RStudio crea <code>data_raw/</code> y coloca ahí la carpeta descomprimida. Tendrás, entre otros, los archivos:</p>
+<pre class="text"><code>mi_proyecto/
+├── mi_proyecto.Rproj
+├── data_raw/
+│   └── datos_sesion_02_blast/
+│       ├── resultados_blast.tsv
+│       ├── metadata_secuencias.csv
+│       ├── secuencias.fasta
+│       ├── blast_comentarios.tsv
+│       ├── blast_separador_incorrecto.csv
+│       └── blast_valores_faltantes.tsv
+└── scripts/</code></pre>
+<p>Los ejemplos utilizan rutas relativas a la raíz del proyecto. Si guardas los archivos en otra carpeta, modifica las rutas.</p>
+</section>
+<section id="reconocer-archivos-desde-r" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="reconocer-archivos-desde-r"><span class="header-section-number">7.3</span> Reconocer archivos desde R</h2>
+<p>Antes de importar un archivo conviene responder tres preguntas: <strong>¿dónde está?, ¿cómo está organizado? y ¿qué información contiene?</strong>. La extensión es una pista, pero no garantiza su contenido.</p>
+<section id="directorios-y-archivos" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="directorios-y-archivos"><span class="header-section-number">7.3.1</span> Directorios y archivos</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()  <span class="co"># Directorio de trabajo actual</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/hayde/Documents/RSites/Intro_to_R_Bioinfo_2027-1"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list.files</span>(<span class="st">"data_raw/datos_sesion_02_blast"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "blast_comentarios.tsv"          "blast_separador_incorrecto.csv"
+[3] "blast_valores_faltantes.tsv"    "metadata_secuencias.csv"       
+[5] "README.md"                      "resultados_blast.tsv"          
+[7] "secuencias.fasta"              </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.info</span>(<span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                    size isdir mode
+data_raw/datos_sesion_02_blast/resultados_blast.tsv  806 FALSE  666
+                                                                  mtime
+data_raw/datos_sesion_02_blast/resultados_blast.tsv 2026-11-04 11:20:38
+                                                                  ctime
+data_raw/datos_sesion_02_blast/resultados_blast.tsv 2026-11-04 04:51:20
+                                                                  atime exe
+data_raw/datos_sesion_02_blast/resultados_blast.tsv 2026-11-04 11:45:54  no
+                                                    uname udomain
+data_raw/datos_sesion_02_blast/resultados_blast.tsv hayde  HAYDEE</code></pre>
+</div>
+</div>
+<p><code>list.files()</code> muestra los nombres disponibles; <code>file.exists()</code> comprueba una ruta y <code>file.info()</code> ofrece información como tamaño y fecha de modificación. <code>getwd()</code> permite verificar dónde está trabajando R; cuando abres tu proyecto, normalmente coincide con su carpeta raíz.</p>
+<p>Podemos guardar una ruta en un objeto para no repetirla:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>archivo_blast <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(archivo_blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="mirar-el-contenido-sin-importarlo-todavía" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="mirar-el-contenido-sin-importarlo-todavía"><span class="header-section-number">7.3.2</span> Mirar el contenido sin importarlo todavía</h3>
+<p><code>readLines()</code> lee líneas de texto. Es útil para inspeccionar un archivo desconocido, comprobar si tiene encabezados o reconocer su separador.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(archivo_blast, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "query_id\tsubject_id\tpident\tlength\tevalue\tbitscore"
+[2] "seq01\tref_001\t87.9\t216\t1.00e-40\t118.7"            
+[3] "seq01\tref_002\t68.2\t245\t1.00e-36\t184.6"            
+[4] "seq01\tref_003\t93.5\t168\t1.00e-35\t386.1"            
+[5] "seq02\tref_004\t82.6\t111\t1.00e-85\t259.9"            </code></pre>
+</div>
+</div>
+<p>En el archivo de práctica verás una primera línea con nombres de columnas y, después, registros. Los campos están separados por <strong>tabulaciones</strong> (<code>\t</code>), no por comas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Extensión habitual</th>
+<th>Contenido frecuente</th>
+<th>Separador o estructura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>.csv</code></td>
+<td>Tabla</td>
+<td>Comas, aunque depende de cómo se exportó</td>
+</tr>
+<tr class="even">
+<td><code>.tsv</code></td>
+<td>Tabla</td>
+<td>Tabulaciones</td>
+</tr>
+<tr class="odd">
+<td><code>.txt</code></td>
+<td>Texto o tabla</td>
+<td>Depende del archivo</td>
+</tr>
+<tr class="even">
+<td><code>.fasta</code> / <code>.fa</code></td>
+<td>Secuencias</td>
+<td>Encabezados <code>&gt;</code> y líneas de secuencia</td>
+</tr>
+<tr class="odd">
+<td><code>.gz</code></td>
+<td>Archivo comprimido</td>
+<td>Depende del formato interno</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled" title="Una precaución útil">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Una precaución útil
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No basta con mirar la extensión. Un archivo llamado <code>.csv</code> podría estar separado por tabulaciones. Conviene inspeccionar sus primeras líneas si no conoces su procedencia.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 1: Reconocer un archivo antes de importarlo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sin abrirlo en una hoja de cálculo, utiliza R para comprobar que existe <code>blast_separador_incorrecto.csv</code>, mostrar sus tres primeras líneas y determinar qué separador utiliza realmente.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ruta <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_02_blast/blast_separador_incorrecto.csv"</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(ruta)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(ruta, <span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "query_id\tsubject_id\tpident\tlength\tevalue\tbitscore"
+[2] "seq01\tref_001\t87.9\t216\t1.00e-40\t118.7"            
+[3] "seq01\tref_002\t68.2\t245\t1.00e-36\t184.6"            </code></pre>
+</div>
+</div>
+<p>Aunque termina en <code>.csv</code>, sus columnas están separadas por tabulaciones. Por tanto, se debe importar como una tabla delimitada por tabulaciones.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="importación-de-archivos-tabulares" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="importación-de-archivos-tabulares"><span class="header-section-number">7.4</span> Importación de archivos tabulares</h2>
+<p>Una tabla tiene filas (registros) y columnas (variables o atributos). En nuestro ejemplo, cada fila representa un resultado de alineamiento y contiene identificadores y valores asociados. <strong>Importar</strong> significa interpretar correctamente esa estructura y convertirla en un objeto de R.</p>
+<section id="csv-y-tsv-con-r-base" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="csv-y-tsv-con-r-base"><span class="header-section-number">7.4.1</span> CSV y TSV con R base</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data_raw/datos_sesion_02_blast/metadata_secuencias.csv"</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">colClasses =</span> <span class="fu">c</span>(<span class="at">codigo_muestra =</span> <span class="st">"character"</span>))</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  query_id subject_id pident length evalue bitscore
+1    seq01    ref_001   87.9    216  1e-40    118.7
+2    seq01    ref_002   68.2    245  1e-36    184.6
+3    seq01    ref_003   93.5    168  1e-35    386.1
+4    seq02    ref_004   82.6    111  1e-85    259.9
+5    seq02    ref_005   68.7    292  1e-57    322.6
+6    seq03    ref_007   88.2    254  1e-05    361.9</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(metadata)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  query_id  organismo origen codigo_muestra
+1    seq01 Bacteria_A  suelo            001
+2    seq02 Bacteria_B   agua            002
+3    seq03 Bacteria_C  suelo            003
+4    seq04 Bacteria_A   agua            004
+5    seq05 Bacteria_B  suelo            005
+6    seq06 Bacteria_C   agua            006</code></pre>
+</div>
+</div>
+<p><code>read.csv()</code> asume comas y <code>read.delim()</code> asume tabulaciones. Ambas devuelven un <code>data.frame</code>. La opción <code>colClasses</code> permite indicar que <code>codigo_muestra</code> es texto, de modo que los ceros iniciales de identificadores como <code>001</code> no desaparezcan.</p>
+</section>
+<section id="importación-con-readr" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="importación-con-readr"><span class="header-section-number">7.4.2</span> Importación con <code>readr</code></h3>
+<p><code>readr</code> ofrece funciones equivalentes, mensajes sobre los tipos de columnas y herramientas para detectar problemas de lectura. Instálalo una sola vez si aún no lo tienes; después cárgalo en cada sesión donde lo utilices.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("readr")  # Solo si no está instalado</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span>,</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/metadata_secuencias.csv"</span>,</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">codigo_muestra =</span> readr<span class="sc">::</span><span class="fu">col_character</span>()),</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>En este caso, <code>read_tsv()</code> devuelve un <strong>tibble</strong>, una versión moderna del <code>data.frame</code>. La diferencia no es el contenido biológico, sino ciertas características de impresión y comportamiento en R.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(metadata)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>R base</th>
+<th><code>readr</code></th>
+<th>Uso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>read.csv()</code></td>
+<td><code>read_csv()</code></td>
+<td>Archivos separados por comas</td>
+</tr>
+<tr class="even">
+<td><code>read.delim()</code></td>
+<td><code>read_tsv()</code></td>
+<td>Archivos separados por tabulaciones</td>
+</tr>
+<tr class="odd">
+<td><code>read.table()</code></td>
+<td><code>read_delim()</code></td>
+<td>Archivos con separador configurable</td>
+</tr>
+</tbody>
+</table>
+<p>No es necesario utilizar ambos sistemas simultáneamente. Los comparamos para que puedas leer código escrito por otras personas; en las siguientes prácticas usaremos principalmente <code>readr</code>.</p>
+</section>
+<section id="encabezados-comentarios-y-valores-faltantes" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="encabezados-comentarios-y-valores-faltantes"><span class="header-section-number">7.4.3</span> Encabezados, comentarios y valores faltantes</h3>
+<p>Algunos archivos tienen líneas explicativas antes de la tabla. Por ejemplo, <code>blast_comentarios.tsv</code> comienza con dos líneas que llevan <code>#</code>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(<span class="st">"data_raw/datos_sesion_02_blast/blast_comentarios.tsv"</span>, <span class="at">n =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "# Resultado ilustrativo, no generado por BLAST"                    
+[2] "# Columnas: query_id, subject_id, pident, length, evalue, bitscore"
+[3] "query_id\tsubject_id\tpident\tlength\tevalue\tbitscore"            
+[4] "seq01\tref_001\t87.9\t216\t1.00e-40\t118.7"                        </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>blast_con_comentarios <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/blast_comentarios.tsv"</span>,</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#"</span>,</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(blast_con_comentarios)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_001      87.9    216  1e-40     119.
+2 seq01    ref_002      68.2    245  1e-36     185.
+3 seq01    ref_003      93.5    168  1e-35     386.
+4 seq02    ref_004      82.6    111  1e-85     260.
+5 seq02    ref_005      68.7    292  1e-57     323.
+6 seq03    ref_007      88.2    254  1e- 5     362.</code></pre>
+</div>
+</div>
+<p><code>comment = "#"</code> indica que esas líneas no son registros de la tabla. No elimina los comentarios del archivo original. Simplemente los ignora durante la importación.</p>
+<p>Por otra parte, un campo vacío o la cadena <code>NA</code> pueden representar información faltante:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>blast_na <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/blast_valores_faltantes.tsv"</span>,</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">na =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"NA"</span>),</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">anyNA</span>(blast_na)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+</section>
+<section id="problemas-al-interpretar-columnas" class="level3" data-number="7.4.4">
+<h3 data-number="7.4.4" class="anchored" data-anchor-id="problemas-al-interpretar-columnas"><span class="header-section-number">7.4.4</span> Problemas al interpretar columnas</h3>
+<p>Una columna que debería contener números puede importarse como texto si incluye valores inesperados. No siempre es un error del programa: a veces es una característica del archivo. Antes de convertir tipos, revisa qué contiene realmente la columna.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [20 × 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ query_id  : chr [1:20] "seq01" "seq01" "seq01" "seq02" ...
+ $ subject_id: chr [1:20] "ref_001" "ref_002" "ref_003" "ref_004" ...
+ $ pident    : num [1:20] 87.9 68.2 93.5 82.6 68.7 88.2 93.6 97.8 99 83.9 ...
+ $ length    : num [1:20] 216 245 168 111 292 254 319 191 229 162 ...
+ $ evalue    : num [1:20] 1e-40 1e-36 1e-35 1e-85 1e-57 ...
+ $ bitscore  : num [1:20] 119 185 386 260 323 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   query_id = col_character(),
+  ..   subject_id = col_character(),
+  ..   pident = col_double(),
+  ..   length = col_double(),
+  ..   evalue = col_double(),
+  ..   bitscore = col_double()
+  .. )
+ - attr(*, "problems")=&lt;pointer: 0x000002339a1fee60&gt; </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">spec</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>cols(
+  query_id = col_character(),
+  subject_id = col_character(),
+  pident = col_double(),
+  length = col_double(),
+  evalue = col_double(),
+  bitscore = col_double()
+)</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">problems</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 0 × 5
+# ℹ 5 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;, file &lt;chr&gt;</code></pre>
+</div>
+</div>
+<p><code>spec()</code> muestra la especificación de tipos de columnas y <code>problems()</code> informa de problemas detectados durante la importación con <code>readr</code>.</p>
+<p>Para observar cómo funciona <code>problems()</code> cuando se detectan errores de importación, construiremos un pequeño conjunto de datos directamente en R. En este ejemplo, la columna identidad debería contener únicamente valores numéricos, pero introduciremos intencionalmente un texto (“error”). Indicaremos a R que esa columna debe ser numérica y revisaremos qué ocurre al importar los datos y cómo podemos identificar el problema.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulamos el contenido de un archivo TSV</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>blast_error <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">I</span>(<span class="st">"secuencia</span><span class="sc">\t</span><span class="st">identidad</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="st">seq1</span><span class="sc">\t</span><span class="st">98.5</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="st">seq2</span><span class="sc">\t</span><span class="st">95.2</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="st">seq3</span><span class="sc">\t</span><span class="st">error</span></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="st">seq4</span><span class="sc">\t</span><span class="st">99.1"</span>),</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">secuencia =</span> <span class="fu">col_character</span>(),</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad =</span> <span class="fu">col_double</span>()</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: One or more parsing issues, call `problems()` on your data frame for details,
+e.g.:
+  dat &lt;- vroom(...)
+  problems(dat)</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Revisamos los datos importados</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>blast_error</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  secuencia identidad
+  &lt;chr&gt;         &lt;dbl&gt;
+1 seq1           98.5
+2 seq2           95.2
+3 seq3           NA  
+4 seq4           99.1</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Consultamos los problemas de importación</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">problems</span>(blast_error)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+    row   col expected actual file                                              
+  &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;                                             
+1     4     2 a double error  C:/Users/hayde/AppData/Local/Temp/RtmpMFhBu9/vroo…</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 2: Elegir la función adecuada
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Importa <code>metadata_secuencias.csv</code> y <code>blast_comentarios.tsv</code> utilizando <code>readr</code>. Conserva <code>codigo_muestra</code> como texto. Comprueba la clase de cada objeto y muestra sus primeras filas.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/metadata_secuencias.csv"</span>,</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">codigo_muestra =</span> readr<span class="sc">::</span><span class="fu">col_character</span>()),</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>blast_com <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/blast_comentarios.tsv"</span>,</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">comment =</span> <span class="st">"#"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(metadata)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(blast_com)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(metadata)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 4
+  query_id organismo  origen codigo_muestra
+  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;         
+1 seq01    Bacteria_A suelo  001           
+2 seq02    Bacteria_B agua   002           
+3 seq03    Bacteria_C suelo  003           
+4 seq04    Bacteria_A agua   004           
+5 seq05    Bacteria_B suelo  005           
+6 seq06    Bacteria_C agua   006           </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(blast_com)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_001      87.9    216  1e-40     119.
+2 seq01    ref_002      68.2    245  1e-36     185.
+3 seq01    ref_003      93.5    168  1e-35     386.
+4 seq02    ref_004      82.6    111  1e-85     260.
+5 seq02    ref_005      68.7    292  1e-57     323.
+6 seq03    ref_007      88.2    254  1e- 5     362.</code></pre>
+</div>
+</div>
+<p>Ambos objetos son tibbles. Los identificadores de muestra conservan sus ceros iniciales.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="explorar-el-contenido-de-una-tabla" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="explorar-el-contenido-de-una-tabla"><span class="header-section-number">7.5</span> Explorar el contenido de una tabla</h2>
+<p>Importar no significa comprender. Antes de analizar una tabla, debemos identificar qué representa cada fila, qué contiene cada columna y cuántos registros tenemos.</p>
+<section id="dimensiones-nombres-y-tipos" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="dimensiones-nombres-y-tipos"><span class="header-section-number">7.5.1</span> Dimensiones, nombres y tipos</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(blast)       <span class="co"># Filas y columnas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20  6</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nrow</span>(blast)      <span class="co"># Número de filas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ncol</span>(blast)      <span class="co"># Número de columnas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(blast)     <span class="co"># Nombres de columnas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "query_id"   "subject_id" "pident"     "length"     "evalue"    
+[6] "bitscore"  </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(blast, <span class="dv">4</span>)   <span class="co"># Primeras cuatro filas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_001      87.9    216  1e-40     119.
+2 seq01    ref_002      68.2    245  1e-36     185.
+3 seq01    ref_003      93.5    168  1e-35     386.
+4 seq02    ref_004      82.6    111  1e-85     260.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(blast, <span class="dv">3</span>)   <span class="co"># Últimas tres filas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq07    ref_021      77.4    104  1e-54     174.
+2 seq08    ref_022      69.9    205  1e-75     306.
+3 seq08    ref_023      68.8    308  1e-63     152.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(blast)       <span class="co"># Estructura y tipos</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>spc_tbl_ [20 × 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ query_id  : chr [1:20] "seq01" "seq01" "seq01" "seq02" ...
+ $ subject_id: chr [1:20] "ref_001" "ref_002" "ref_003" "ref_004" ...
+ $ pident    : num [1:20] 87.9 68.2 93.5 82.6 68.7 88.2 93.6 97.8 99 83.9 ...
+ $ length    : num [1:20] 216 245 168 111 292 254 319 191 229 162 ...
+ $ evalue    : num [1:20] 1e-40 1e-36 1e-35 1e-85 1e-57 ...
+ $ bitscore  : num [1:20] 119 185 386 260 323 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   query_id = col_character(),
+  ..   subject_id = col_character(),
+  ..   pident = col_double(),
+  ..   length = col_double(),
+  ..   evalue = col_double(),
+  ..   bitscore = col_double()
+  .. )
+ - attr(*, "problems")=&lt;pointer: 0x000002339a1fee60&gt; </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(blast)   <span class="co"># Resumen por columna</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>      query_id      subject_id     pident          length     
+ Length   :20   Length   :20   Min.   :68.20   Min.   :101.0  
+ N.unique : 8   N.unique :19   1st Qu.:72.58   1st Qu.:166.5  
+ N.blank  : 0   N.blank  : 0   Median :83.25   Median :222.5  
+ Min.nchar: 5   Min.nchar: 7   Mean   :82.44   Mean   :222.7  
+ Max.nchar: 5   Max.nchar: 7   3rd Qu.:89.53   3rd Qu.:295.5  
+                               Max.   :99.00   Max.   :325.0  
+     evalue             bitscore    
+ Min.   :0.000e+00   Min.   : 49.8  
+ 1st Qu.:0.000e+00   1st Qu.:133.6  
+ Median :0.000e+00   Median :179.8  
+ Mean   :5.005e-07   Mean   :217.3  
+ 3rd Qu.:0.000e+00   3rd Qu.:313.4  
+ Max.   :1.000e-05   Max.   :410.8  </code></pre>
+</div>
+</div>
+<p><code>summary()</code> produce un resumen que depende del tipo de columna; <strong>no constituye por sí solo un análisis estadístico</strong>. Aquí lo usamos para reconocer rangos de valores y detectar posibles lecturas incorrectas.</p>
+</section>
+<section id="seleccionar-columnas-y-filas" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="seleccionar-columnas-y-filas"><span class="header-section-number">7.5.2</span> Seleccionar columnas y filas</h3>
+<p>R base permite seleccionar información con corchetes.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>blast<span class="sc">$</span>query_id<span class="co"># Una columna  </span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "seq01" "seq01" "seq01" "seq02" "seq02" "seq03" "seq03" "seq03" "seq03"
+[10] "seq04" "seq05" "seq05" "seq05" "seq06" "seq06" "seq07" "seq07" "seq07"
+[19] "seq08" "seq08"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>blast[, <span class="fu">c</span>(<span class="st">"query_id"</span>, <span class="st">"pident"</span>)]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 2
+   query_id pident
+   &lt;chr&gt;     &lt;dbl&gt;
+ 1 seq01      87.9
+ 2 seq01      68.2
+ 3 seq01      93.5
+ 4 seq02      82.6
+ 5 seq02      68.7
+ 6 seq03      88.2
+ 7 seq03      93.6
+ 8 seq03      97.8
+ 9 seq03      99  
+10 seq04      83.9
+11 seq05      75  
+12 seq05      88  
+13 seq05      85.4
+14 seq06      80.8
+15 seq06      71.3
+16 seq07      95.7
+17 seq07      73  
+18 seq07      77.4
+19 seq08      69.9
+20 seq08      68.8</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>blast[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, ] <span class="co"># Primeras cinco filas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_001      87.9    216  1e-40     119.
+2 seq01    ref_002      68.2    245  1e-36     185.
+3 seq01    ref_003      93.5    168  1e-35     386.
+4 seq02    ref_004      82.6    111  1e-85     260.
+5 seq02    ref_005      68.7    292  1e-57     323.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>blast[blast<span class="sc">$</span>query_id <span class="sc">==</span> <span class="st">"seq01"</span>, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_001      87.9    216  1e-40     119.
+2 seq01    ref_002      68.2    245  1e-36     185.
+3 seq01    ref_003      93.5    168  1e-35     386.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>blast[blast<span class="sc">$</span>pident <span class="sc">&gt;=</span> <span class="dv">90</span>, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  query_id subject_id pident length evalue bitscore
+  &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+1 seq01    ref_003      93.5    168  1e-35    386. 
+2 seq03    ref_008      93.6    319  1e-36     96.6
+3 seq03    ref_009      97.8    191  1e-71     97.9
+4 seq03    ref_010      99      229  1e- 8    336. 
+5 seq07    ref_019      95.7    106  1e-70    138. </code></pre>
+</div>
+</div>
+<p>La última instrucción selecciona filas cuyo porcentaje de identidad es al menos 90. <strong>Es un filtro descriptivo para practicar R</strong>, no una regla universal para determinar homología o significancia biológica.</p>
+</section>
+<section id="valores-únicos-y-frecuencias" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="valores-únicos-y-frecuencias"><span class="header-section-number">7.5.3</span> Valores únicos y frecuencias</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(blast<span class="sc">$</span>query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "seq01" "seq02" "seq03" "seq04" "seq05" "seq06" "seq07" "seq08"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(blast<span class="sc">$</span>query_id))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(blast<span class="sc">$</span>query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+seq01 seq02 seq03 seq04 seq05 seq06 seq07 seq08 
+    3     2     4     1     3     2     3     2 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">table</span>(blast<span class="sc">$</span>query_id), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+seq03 seq01 seq05 seq07 seq02 seq06 seq08 seq04 
+    4     3     3     3     2     2     2     1 </code></pre>
+</div>
+</div>
+<p><code>unique()</code> devuelve los identificadores distintos; <code>table()</code> cuenta cuántas veces aparece cada uno. Si un <code>query_id</code> aparece en varias filas, puede corresponder a varios resultados de alineamiento; eso <strong>no implica automáticamente que sea un duplicado erróneo</strong>.</p>
+</section>
+<section id="preguntas-que-podemos-responder" class="level3" data-number="7.5.4">
+<h3 data-number="7.5.4" class="anchored" data-anchor-id="preguntas-que-podemos-responder"><span class="header-section-number">7.5.4</span> Preguntas que podemos responder</h3>
+<p>Con estas funciones podemos averiguar cuántas consultas tienen resultados, cuántos registros corresponden a cada consulta y qué filas cumplen una condición. También podemos observar si hay valores faltantes:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(blast))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  query_id subject_id     pident     length     evalue   bitscore 
+         0          0          0          0          0          0 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anyNA</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<p>No vamos a eliminar registros ni corregir valores automáticamente: primero debemos entender qué representan.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 3: Explorar resultados tipo BLAST
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Con <code>resultados_blast.tsv</code>, responde mediante código:</p>
+<ol type="1">
+<li>¿Cuántos registros y columnas tiene la tabla?</li>
+<li>¿Cuántos <code>query_id</code> diferentes aparecen?</li>
+<li>¿Cuántos resultados tiene cada consulta?</li>
+<li>¿Qué filas tienen <code>pident</code> mayor o igual a 95?</li>
+<li>¿Hay valores faltantes?</li>
+</ol>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span>,</span>
+<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(blast)</span>
+<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">unique</span>(blast<span class="sc">$</span>query_id))</span>
+<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(blast<span class="sc">$</span>query_id)</span>
+<span id="cb94-8"><a href="#cb94-8" aria-hidden="true" tabindex="-1"></a>blast[blast<span class="sc">$</span>pident <span class="sc">&gt;=</span> <span class="dv">95</span>, ]</span>
+<span id="cb94-9"><a href="#cb94-9" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(blast))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Las respuestas numéricas dependen del archivo de práctica; lo importante es identificar qué función resuelve cada pregunta.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="cuando-una-importación-no-sale-como-esperamos" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="cuando-una-importación-no-sale-como-esperamos"><span class="header-section-number">7.6</span> Cuando una importación no sale como esperamos</h2>
+<p>Los problemas más comunes suelen ser de <strong>formato</strong>, no de biología. Veamos cómo reconocerlos antes de seguir trabajando.</p>
+<section id="separador-equivocado" class="level3" data-number="7.6.1">
+<h3 data-number="7.6.1" class="anchored" data-anchor-id="separador-equivocado"><span class="header-section-number">7.6.1</span> Separador equivocado</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>ruta <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_02_blast/blast_separador_incorrecto.csv"</span></span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>mal <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(ruta, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(mal)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "query_id\tsubject_id\tpident\tlength\tevalue\tbitscore"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>bien <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(ruta, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bien)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "query_id"   "subject_id" "pident"     "length"     "evalue"    
+[6] "bitscore"  </code></pre>
+</div>
+</div>
+<p>Si la primera lectura genera una sola columna que contiene tabulaciones, el separador es incorrecto. La solución no es renombrar el archivo, sino elegir la función de lectura adecuada.</p>
+</section>
+<section id="identificadores-que-parecen-números" class="level3" data-number="7.6.2">
+<h3 data-number="7.6.2" class="anchored" data-anchor-id="identificadores-que-parecen-números"><span class="header-section-number">7.6.2</span> Identificadores que parecen números</h3>
+<p>Un identificador como <code>001</code> no necesariamente representa el número 1. Si se convierte a número, pierde los ceros iniciales. Por eso conviene declarar su tipo como carácter cuando sea necesario.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a>metadata <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/metadata_secuencias.csv"</span>,</span>
+<span id="cb99-3"><a href="#cb99-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> readr<span class="sc">::</span><span class="fu">cols</span>(<span class="at">codigo_muestra =</span> readr<span class="sc">::</span><span class="fu">col_character</span>()),</span>
+<span id="cb99-4"><a href="#cb99-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb99-5"><a href="#cb99-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb99-6"><a href="#cb99-6" aria-hidden="true" tabindex="-1"></a>metadata<span class="sc">$</span>codigo_muestra</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "001" "002" "003" "004" "005" "006" "007" "008"</code></pre>
+</div>
+</div>
+</section>
+<section id="ausencias-y-registros-repetidos" class="level3" data-number="7.6.3">
+<h3 data-number="7.6.3" class="anchored" data-anchor-id="ausencias-y-registros-repetidos"><span class="header-section-number">7.6.3</span> Ausencias y registros repetidos</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a>blast_na <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(</span>
+<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/datos_sesion_02_blast/blast_valores_faltantes.tsv"</span>,</span>
+<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb101-5"><a href="#cb101-5" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(blast_na))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  query_id subject_id     pident     length     evalue   bitscore 
+         0          0          1          0          0          0 </code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb103"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anyDuplicated</span>(blast_na)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anyDuplicated</span>(blast_na<span class="sc">$</span>query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
+<p><code>anyDuplicated(blast_na$query_id)</code> puede devolver un índice distinto de cero, porque varias filas comparten la misma consulta. <strong>No debemos confundir identificadores repetidos con filas duplicadas</strong>: cada fila puede describir un alineamiento diferente.</p>
+<div class="callout callout-style-default callout-caution callout-titled" title="No corrijas datos sin conocer su significado">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Precaución</span>No corrijas datos sin conocer su significado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Evita borrar filas, reemplazar <code>NA</code> por cero o convertir columnas indiscriminadamente. Primero revisa la documentación del archivo y qué representa cada valor.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 4: Detectar un problema de lectura
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una compañera importa <code>blast_separador_incorrecto.csv</code> con <code>read_csv()</code> y obtiene una sola columna. ¿Significa que el archivo contiene una única variable? Explica cómo comprobarlo y corrige la importación.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>No necesariamente. La extensión <code>.csv</code> no garantiza que el separador sea una coma.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb107"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>ruta <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_02_blast/blast_separador_incorrecto.csv"</span></span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">readLines</span>(ruta, <span class="at">n =</span> <span class="dv">2</span>)</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>blast_corregido <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(ruta, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(blast_corregido)</span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(blast_corregido)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>La inspección revela tabulaciones y la segunda importación recupera las columnas esperadas.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="una-mirada-breve-a-fasta-desde-r" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="una-mirada-breve-a-fasta-desde-r"><span class="header-section-number">7.7</span> Una mirada breve a FASTA desde R</h2>
+<p>FASTA es un formato de texto utilizado para almacenar secuencias. Aquí <strong>no construiremos un analizador completo de FASTA</strong> ni utilizaremos paquetes especializados: solo aprovecharemos funciones de texto para reconocer su estructura.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>lineas <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"data_raw/datos_sesion_02_blast/secuencias.fasta"</span>)</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(lineas, <span class="dv">6</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "&gt;seq01 secuencia_sintetica"                                   
+[2] "AACTCGTAGCAGTACGGATCAACTGTTATAAAATGCACCGAGATTGGTGCGAACG"      
+[3] "&gt;seq02 secuencia_sintetica"                                   
+[4] "GACAATCATGTACAGTCACGAGTCCGCAAAACTCCAATTGGAGCAAGCGCTCGGTGTC"   
+[5] "&gt;seq03 secuencia_sintetica"                                   
+[6] "CCCCGGTGGAGAGGTCCAAGGTCACAAAGGTTTCAAACGAATTGAGAATCCAGGCGATTAA"</code></pre>
+</div>
+</div>
+<p>Las líneas que comienzan con <code>&gt;</code> contienen encabezados. Podemos localizarlas con <code>grep()</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>encabezados <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"^&gt;"</span>, lineas, <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>encabezados</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "&gt;seq01 secuencia_sintetica" "&gt;seq02 secuencia_sintetica"
+[3] "&gt;seq03 secuencia_sintetica" "&gt;seq04 secuencia_sintetica"
+[5] "&gt;seq05 secuencia_sintetica" "&gt;seq06 secuencia_sintetica"
+[7] "&gt;seq07 secuencia_sintetica" "&gt;seq08 secuencia_sintetica"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(encabezados)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8</code></pre>
+</div>
+</div>
+<p>El símbolo <code>^</code> indica el inicio de la línea y <code>&gt;</code> es el carácter que buscamos. Este ejemplo funciona incluso si un archivo FASTA contiene secuencias repartidas en varias líneas, porque <strong>solo estamos contando encabezados</strong>, no intentando reconstruir las secuencias.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 5: Reconocer secuencias en FASTA
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Utiliza <code>readLines()</code> y <code>grep()</code> para identificar los encabezados de <code>secuencias.fasta</code>. ¿Cuántas entradas FASTA contiene el archivo? Muestra únicamente sus encabezados.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>lineas <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="st">"data_raw/datos_sesion_02_blast/secuencias.fasta"</span>)</span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>encabezados <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"^&gt;"</span>, lineas, <span class="at">value =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(encabezados)</span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>encabezados</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>El número de encabezados indica cuántas entradas FASTA aparecen en el archivo.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="práctica-final-explorar-un-conjunto-de-resultados" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="práctica-final-explorar-un-conjunto-de-resultados"><span class="header-section-number">7.8</span> Práctica Final: explorar un conjunto de resultados</h2>
+<p>En esta actividad reunirás las herramientas de la sesión sin utilizar aún <code>dplyr</code>, uniones entre tablas ni métodos estadísticos.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 6: De los archivos a una descripción de los datos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Crea un script llamado <code>02_exploracion.R</code> dentro de tu proyecto. El script debe:</p>
+<ol type="1">
+<li>Comprobar que existen <code>resultados_blast.tsv</code>, <code>metadata_secuencias.csv</code> y <code>secuencias.fasta</code>.</li>
+<li>Importar las dos tablas con <code>readr</code> y conservar <code>codigo_muestra</code> como texto.</li>
+<li>Mostrar dimensiones, nombres y tipos de columnas.</li>
+<li>Identificar los <code>query_id</code> distintos y contar los resultados por consulta.</li>
+<li>Mostrar las filas con <code>pident &gt;= 90</code> y explicar qué representa este filtro.</li>
+<li>Leer el FASTA e indicar cuántos encabezados contiene.</li>
+<li>Mostrar si alguna de las tablas tiene valores faltantes.</li>
+</ol>
+<p>Escribe al final del script, como comentarios, <strong>tres observaciones sobre la estructura de los datos</strong>, sin extraer conclusiones biológicas.</p>
+</div>
+</div>
+</section>
+<section id="observaciones" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="observaciones"><span class="header-section-number">7.9</span> Observaciones</h2>
+<p>Hoy practicamos una secuencia de trabajo sencilla:</p>
+<ol type="1">
+<li><strong>Localizar</strong> archivos y reconocer su formato.</li>
+<li><strong>Importar</strong> tablas con el separador y los tipos adecuados.</li>
+<li><strong>Explorar</strong> dimensiones, columnas, identificadores y registros.</li>
+<li><strong>Reconocer</strong> problemas de lectura antes de modificar datos.</li>
+<li><strong>Documentar</strong> qué contiene cada objeto.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled" title="Lista de verificación">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Lista de verificación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul class="task-list">
+<li><label><input type="checkbox">Puedo identificar si un archivo está separado por comas o tabulaciones.</label></li>
+<li><label><input type="checkbox">Sé importar CSV y TSV con R base y con <code>readr</code>.</label></li>
+<li><label><input type="checkbox">Puedo revisar dimensiones, columnas y tipos de datos.</label></li>
+<li><label><input type="checkbox">Sé seleccionar filas y columnas y contar valores distintos.</label></li>
+<li><label><input type="checkbox">Reconozco cuándo una columna debe conservarse como texto.</label></li>
+<li><label><input type="checkbox">Puedo inspeccionar un FASTA como archivo de texto.</label></li>
+<li><label><input type="checkbox">Sé distinguir un problema de importación de una interpretación biológica.</label></li>
+</ul>
+</div>
+</div>
+<p><strong>En la siguiente sesión:</strong> aprenderemos a transformar y reorganizar estas tablas con <code>dplyr</code> y <code>tidyr</code>, evitando repetir instrucciones manuales para cada archivo.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -1,1 +1,484 @@
-# Pendiente
+# Importación y exploración de datos bioinformáticos en R
+
+## Introducción
+
+En la sesión anterior aprendimos a crear objetos, utilizar estructuras de control y escribir funciones. Ahora trabajaremos con información que **ya está guardada en archivos**. El objetivo no es volver a estudiar BLAST ni aprender a ejecutar herramientas bioinformáticas: utilizaremos archivos con una estructura parecida a sus resultados para aprender a leerlos, reconocer sus columnas y explorar su contenido desde R.
+
+Al finalizar podrás identificar la estructura de un archivo, importar tablas con R base y con `readr`, explorar su contenido, reconocer problemas frecuentes de lectura y extraer información sencilla sin modificar los archivos originales.
+
+::: {.callout-important title="Antes de comenzar"}
+Los datos de esta sesión son **sintéticos**. Los valores de identidad, E-value y puntuación son ilustrativos; no representan resultados reales de una búsqueda BLAST ni deben utilizarse para inferencias biológicas.
+:::
+
+## Archivos de trabajo
+
+Descarga y descomprime [`datos_sesion_02_blast.zip`](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/data/datos_sesion_02_blast.zip). Dentro de tu proyecto de RStudio crea `data_raw/` y coloca ahí la carpeta descomprimida. Tendrás, entre otros, los archivos:
+
+```text
+mi_proyecto/
+├── mi_proyecto.Rproj
+├── data_raw/
+│   └── datos_sesion_02_blast/
+│       ├── resultados_blast.tsv
+│       ├── metadata_secuencias.csv
+│       ├── secuencias.fasta
+│       ├── blast_comentarios.tsv
+│       ├── blast_separador_incorrecto.csv
+│       └── blast_valores_faltantes.tsv
+└── scripts/
+```
+
+Los ejemplos utilizan rutas relativas a la raíz del proyecto. Si guardas los archivos en otra carpeta, modifica las rutas.
+
+## Reconocer archivos desde R
+
+Antes de importar un archivo conviene responder tres preguntas: **¿dónde está?, ¿cómo está organizado? y ¿qué información contiene?**. La extensión es una pista, pero no garantiza su contenido.
+
+### Directorios y archivos
+
+```{r}
+getwd()  # Directorio de trabajo actual
+list.files("data_raw/datos_sesion_02_blast")
+file.exists("data_raw/datos_sesion_02_blast/resultados_blast.tsv")
+file.info("data_raw/datos_sesion_02_blast/resultados_blast.tsv")
+```
+
+`list.files()` muestra los nombres disponibles; `file.exists()` comprueba una ruta y `file.info()` ofrece información como tamaño y fecha de modificación. `getwd()` permite verificar dónde está trabajando R; cuando abres tu proyecto, normalmente coincide con su carpeta raíz.
+
+Podemos guardar una ruta en un objeto para no repetirla:
+
+```{r}
+archivo_blast <- "data_raw/datos_sesion_02_blast/resultados_blast.tsv"
+file.exists(archivo_blast)
+```
+
+### Mirar el contenido sin importarlo todavía
+
+`readLines()` lee líneas de texto. Es útil para inspeccionar un archivo desconocido, comprobar si tiene encabezados o reconocer su separador.
+
+```{r}
+readLines(archivo_blast, n = 5)
+```
+
+En el archivo de práctica verás una primera línea con nombres de columnas y, después, registros. Los campos están separados por **tabulaciones** (`\t`), no por comas.
+
+| Extensión habitual | Contenido frecuente | Separador o estructura |
+|---|---|---|
+| `.csv` | Tabla | Comas, aunque depende de cómo se exportó |
+| `.tsv` | Tabla | Tabulaciones |
+| `.txt` | Texto o tabla | Depende del archivo |
+| `.fasta` / `.fa` | Secuencias | Encabezados `>` y líneas de secuencia |
+| `.gz` | Archivo comprimido | Depende del formato interno |
+
+::: {.callout-note title="Una precaución útil"}
+No basta con mirar la extensión. Un archivo llamado `.csv` podría estar separado por tabulaciones. Conviene inspeccionar sus primeras líneas si no conoces su procedencia.
+:::
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 1: Reconocer un archivo antes de importarlo
+
+Sin abrirlo en una hoja de cálculo, utiliza R para comprobar que existe `blast_separador_incorrecto.csv`, mostrar sus tres primeras líneas y determinar qué separador utiliza realmente.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+ruta <- "data_raw/datos_sesion_02_blast/blast_separador_incorrecto.csv"
+file.exists(ruta)
+readLines(ruta, n = 3)
+```
+
+Aunque termina en `.csv`, sus columnas están separadas por tabulaciones. Por tanto, se debe importar como una tabla delimitada por tabulaciones.
+:::
+::::
+
+## Importación de archivos tabulares
+
+Una tabla tiene filas (registros) y columnas (variables o atributos). En nuestro ejemplo, cada fila representa un resultado de alineamiento y contiene identificadores y valores asociados. **Importar** significa interpretar correctamente esa estructura y convertirla en un objeto de R.
+
+### CSV y TSV con R base
+
+```{r}
+blast <- read.delim("data_raw/datos_sesion_02_blast/resultados_blast.tsv")
+metadata <- read.csv("data_raw/datos_sesion_02_blast/metadata_secuencias.csv",
+                     colClasses = c(codigo_muestra = "character"))
+
+class(blast)
+head(blast)
+head(metadata)
+```
+
+`read.csv()` asume comas y `read.delim()` asume tabulaciones. Ambas devuelven un `data.frame`. La opción `colClasses` permite indicar que `codigo_muestra` es texto, de modo que los ceros iniciales de identificadores como `001` no desaparezcan.
+
+### Importación con `readr`
+
+`readr` ofrece funciones equivalentes, mensajes sobre los tipos de columnas y herramientas para detectar problemas de lectura. Instálalo una sola vez si aún no lo tienes; después cárgalo en cada sesión donde lo utilices.
+
+```{r}
+#install.packages("readr")  # Solo si no está instalado
+library(readr)
+```
+
+```{r}
+blast <- readr::read_tsv(
+  "data_raw/datos_sesion_02_blast/resultados_blast.tsv",
+  show_col_types = FALSE
+)
+
+metadata <- readr::read_csv(
+  "data_raw/datos_sesion_02_blast/metadata_secuencias.csv",
+  col_types = readr::cols(codigo_muestra = readr::col_character()),
+  show_col_types = FALSE
+)
+```
+
+En este caso, `read_tsv()` devuelve un **tibble**, una versión moderna del `data.frame`. La diferencia no es el contenido biológico, sino ciertas características de impresión y comportamiento en R.
+
+```{r}
+class(blast)
+class(metadata)
+```
+
+| R base | `readr` | Uso |
+|---|---|---|
+| `read.csv()` | `read_csv()` | Archivos separados por comas |
+| `read.delim()` | `read_tsv()` | Archivos separados por tabulaciones |
+| `read.table()` | `read_delim()` | Archivos con separador configurable |
+
+No es necesario utilizar ambos sistemas simultáneamente. Los comparamos para que puedas leer código escrito por otras personas; en las siguientes prácticas usaremos principalmente `readr`.
+
+### Encabezados, comentarios y valores faltantes
+
+Algunos archivos tienen líneas explicativas antes de la tabla. Por ejemplo, `blast_comentarios.tsv` comienza con dos líneas que llevan `#`.
+
+```{r}
+readLines("data_raw/datos_sesion_02_blast/blast_comentarios.tsv", n = 4)
+
+blast_con_comentarios <- readr::read_tsv(
+  "data_raw/datos_sesion_02_blast/blast_comentarios.tsv",
+  comment = "#",
+  show_col_types = FALSE
+)
+
+head(blast_con_comentarios)
+```
+
+`comment = "#"` indica que esas líneas no son registros de la tabla. No elimina los comentarios del archivo original. Simplemente los ignora durante la importación.
+
+Por otra parte, un campo vacío o la cadena `NA` pueden representar información faltante:
+
+```{r}
+blast_na <- readr::read_tsv(
+  "data_raw/datos_sesion_02_blast/blast_valores_faltantes.tsv",
+  na = c("", "NA"),
+  show_col_types = FALSE
+)
+anyNA(blast_na)
+```
+
+### Problemas al interpretar columnas
+
+Una columna que debería contener números puede importarse como texto si incluye valores inesperados. No siempre es un error del programa: a veces es una característica del archivo. Antes de convertir tipos, revisa qué contiene realmente la columna.
+
+```{r}
+str(blast)
+readr::spec(blast)
+readr::problems(blast)
+```
+
+`spec()` muestra la especificación de tipos de columnas y `problems()` informa de problemas detectados durante la importación con `readr`.
+
+Para observar cómo funciona `problems()` cuando se detectan errores de importación, construiremos un pequeño conjunto de datos directamente en R. En este ejemplo, la columna identidad debería contener únicamente valores numéricos, pero introduciremos intencionalmente un texto ("error"). Indicaremos a R que esa columna debe ser numérica y revisaremos qué ocurre al importar los datos y cómo podemos identificar el problema.
+
+
+```{r}
+# Simulamos el contenido de un archivo TSV
+blast_error <- read_tsv(
+  I("secuencia\tidentidad
+seq1\t98.5
+seq2\t95.2
+seq3\terror
+seq4\t99.1"),
+  col_types = cols(
+    secuencia = col_character(),
+    identidad = col_double()
+  )
+)
+
+# Revisamos los datos importados
+blast_error
+
+# Consultamos los problemas de importación
+problems(blast_error)
+```
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 2: Elegir la función adecuada
+
+Importa `metadata_secuencias.csv` y `blast_comentarios.tsv` utilizando `readr`. Conserva `codigo_muestra` como texto. Comprueba la clase de cada objeto y muestra sus primeras filas.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+metadata <- readr::read_csv(
+  "data_raw/datos_sesion_02_blast/metadata_secuencias.csv",
+  col_types = readr::cols(codigo_muestra = readr::col_character()),
+  show_col_types = FALSE
+)
+
+blast_com <- readr::read_tsv(
+  "data_raw/datos_sesion_02_blast/blast_comentarios.tsv",
+  comment = "#", show_col_types = FALSE
+)
+
+class(metadata)
+class(blast_com)
+head(metadata)
+head(blast_com)
+```
+
+Ambos objetos son tibbles. Los identificadores de muestra conservan sus ceros iniciales.
+:::
+::::
+
+## Explorar el contenido de una tabla
+
+Importar no significa comprender. Antes de analizar una tabla, debemos identificar qué representa cada fila, qué contiene cada columna y cuántos registros tenemos.
+
+### Dimensiones, nombres y tipos
+
+```{r}
+dim(blast)       # Filas y columnas
+nrow(blast)      # Número de filas
+ncol(blast)      # Número de columnas
+names(blast)     # Nombres de columnas
+head(blast, 4)   # Primeras cuatro filas
+tail(blast, 3)   # Últimas tres filas
+str(blast)       # Estructura y tipos
+summary(blast)   # Resumen por columna
+```
+
+`summary()` produce un resumen que depende del tipo de columna; **no constituye por sí solo un análisis estadístico**. Aquí lo usamos para reconocer rangos de valores y detectar posibles lecturas incorrectas.
+
+### Seleccionar columnas y filas
+
+R base permite seleccionar información con corchetes.
+
+```{r}
+blast$query_id# Una columna  
+blast[, c("query_id", "pident")]
+blast[1:5, ] # Primeras cinco filas
+blast[blast$query_id == "seq01", ]
+blast[blast$pident >= 90, ]
+```
+
+La última instrucción selecciona filas cuyo porcentaje de identidad es al menos 90. **Es un filtro descriptivo para practicar R**, no una regla universal para determinar homología o significancia biológica.
+
+### Valores únicos y frecuencias
+
+```{r}
+unique(blast$query_id)
+length(unique(blast$query_id))
+table(blast$query_id)
+sort(table(blast$query_id), decreasing = TRUE)
+```
+
+`unique()` devuelve los identificadores distintos; `table()` cuenta cuántas veces aparece cada uno. Si un `query_id` aparece en varias filas, puede corresponder a varios resultados de alineamiento; eso **no implica automáticamente que sea un duplicado erróneo**.
+
+### Preguntas que podemos responder
+
+Con estas funciones podemos averiguar cuántas consultas tienen resultados, cuántos registros corresponden a cada consulta y qué filas cumplen una condición. También podemos observar si hay valores faltantes:
+
+```{r}
+colSums(is.na(blast))
+anyNA(blast)
+```
+
+No vamos a eliminar registros ni corregir valores automáticamente: primero debemos entender qué representan.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 3: Explorar resultados tipo BLAST
+
+Con `resultados_blast.tsv`, responde mediante código:
+
+1. ¿Cuántos registros y columnas tiene la tabla?
+2. ¿Cuántos `query_id` diferentes aparecen?
+3. ¿Cuántos resultados tiene cada consulta?
+4. ¿Qué filas tienen `pident` mayor o igual a 95?
+5. ¿Hay valores faltantes?
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+#| eval: false
+blast <- readr::read_tsv(
+  "data_raw/datos_sesion_02_blast/resultados_blast.tsv",
+  show_col_types = FALSE
+)
+dim(blast)
+length(unique(blast$query_id))
+table(blast$query_id)
+blast[blast$pident >= 95, ]
+colSums(is.na(blast))
+```
+
+Las respuestas numéricas dependen del archivo de práctica; lo importante es identificar qué función resuelve cada pregunta.
+:::
+::::
+
+## Cuando una importación no sale como esperamos
+
+Los problemas más comunes suelen ser de **formato**, no de biología. Veamos cómo reconocerlos antes de seguir trabajando.
+
+### Separador equivocado
+
+```{r}
+ruta <- "data_raw/datos_sesion_02_blast/blast_separador_incorrecto.csv"
+mal <- readr::read_csv(ruta, show_col_types = FALSE)
+names(mal)
+
+bien <- readr::read_tsv(ruta, show_col_types = FALSE)
+names(bien)
+```
+
+Si la primera lectura genera una sola columna que contiene tabulaciones, el separador es incorrecto. La solución no es renombrar el archivo, sino elegir la función de lectura adecuada.
+
+### Identificadores que parecen números
+
+Un identificador como `001` no necesariamente representa el número 1. Si se convierte a número, pierde los ceros iniciales. Por eso conviene declarar su tipo como carácter cuando sea necesario.
+
+```{r}
+metadata <- readr::read_csv(
+  "data_raw/datos_sesion_02_blast/metadata_secuencias.csv",
+  col_types = readr::cols(codigo_muestra = readr::col_character()),
+  show_col_types = FALSE
+)
+metadata$codigo_muestra
+```
+
+### Ausencias y registros repetidos
+
+```{r}
+blast_na <- readr::read_tsv(
+  "data_raw/datos_sesion_02_blast/blast_valores_faltantes.tsv",
+  show_col_types = FALSE
+)
+colSums(is.na(blast_na))
+
+anyDuplicated(blast_na)
+anyDuplicated(blast_na$query_id)
+```
+
+`anyDuplicated(blast_na$query_id)` puede devolver un índice distinto de cero, porque varias filas comparten la misma consulta. **No debemos confundir identificadores repetidos con filas duplicadas**: cada fila puede describir un alineamiento diferente.
+
+::: {.callout-caution title="No corrijas datos sin conocer su significado"}
+Evita borrar filas, reemplazar `NA` por cero o convertir columnas indiscriminadamente. Primero revisa la documentación del archivo y qué representa cada valor.
+:::
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 4: Detectar un problema de lectura
+
+Una compañera importa `blast_separador_incorrecto.csv` con `read_csv()` y obtiene una sola columna. ¿Significa que el archivo contiene una única variable? Explica cómo comprobarlo y corrige la importación.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+No necesariamente. La extensión `.csv` no garantiza que el separador sea una coma.
+
+```{r}
+#| eval: false
+ruta <- "data_raw/datos_sesion_02_blast/blast_separador_incorrecto.csv"
+readLines(ruta, n = 2)
+blast_corregido <- readr::read_tsv(ruta, show_col_types = FALSE)
+names(blast_corregido)
+dim(blast_corregido)
+```
+
+La inspección revela tabulaciones y la segunda importación recupera las columnas esperadas.
+:::
+::::
+
+## Una mirada breve a FASTA desde R
+
+FASTA es un formato de texto utilizado para almacenar secuencias. Aquí **no construiremos un analizador completo de FASTA** ni utilizaremos paquetes especializados: solo aprovecharemos funciones de texto para reconocer su estructura.
+
+```{r}
+lineas <- readLines("data_raw/datos_sesion_02_blast/secuencias.fasta")
+head(lineas, 6)
+```
+
+Las líneas que comienzan con `>` contienen encabezados. Podemos localizarlas con `grep()`:
+
+```{r}
+encabezados <- grep("^>", lineas, value = TRUE)
+encabezados
+length(encabezados)
+```
+
+El símbolo `^` indica el inicio de la línea y `>` es el carácter que buscamos. Este ejemplo funciona incluso si un archivo FASTA contiene secuencias repartidas en varias líneas, porque **solo estamos contando encabezados**, no intentando reconstruir las secuencias.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 5: Reconocer secuencias en FASTA
+
+Utiliza `readLines()` y `grep()` para identificar los encabezados de `secuencias.fasta`. ¿Cuántas entradas FASTA contiene el archivo? Muestra únicamente sus encabezados.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+```{r}
+#| eval: false
+lineas <- readLines("data_raw/datos_sesion_02_blast/secuencias.fasta")
+encabezados <- grep("^>", lineas, value = TRUE)
+length(encabezados)
+encabezados
+```
+
+El número de encabezados indica cuántas entradas FASTA aparecen en el archivo.
+:::
+::::
+
+## Práctica Final: explorar un conjunto de resultados
+
+En esta actividad reunirás las herramientas de la sesión sin utilizar aún `dplyr`, uniones entre tablas ni métodos estadísticos.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio 6: De los archivos a una descripción de los datos
+
+Crea un script llamado `02_exploracion.R` dentro de tu proyecto. El script debe:
+
+1. Comprobar que existen `resultados_blast.tsv`, `metadata_secuencias.csv` y `secuencias.fasta`.
+2. Importar las dos tablas con `readr` y conservar `codigo_muestra` como texto.
+3. Mostrar dimensiones, nombres y tipos de columnas.
+4. Identificar los `query_id` distintos y contar los resultados por consulta.
+5. Mostrar las filas con `pident >= 90` y explicar qué representa este filtro.
+6. Leer el FASTA e indicar cuántos encabezados contiene.
+7. Mostrar si alguna de las tablas tiene valores faltantes.
+
+Escribe al final del script, como comentarios, **tres observaciones sobre la estructura de los datos**, sin extraer conclusiones biológicas.
+
+
+::::
+
+## Observaciones
+
+Hoy practicamos una secuencia de trabajo sencilla:
+
+1. **Localizar** archivos y reconocer su formato.
+2. **Importar** tablas con el separador y los tipos adecuados.
+3. **Explorar** dimensiones, columnas, identificadores y registros.
+4. **Reconocer** problemas de lectura antes de modificar datos.
+5. **Documentar** qué contiene cada objeto.
+
+::: {.callout-note title="Lista de verificación"}
+- [ ] Puedo identificar si un archivo está separado por comas o tabulaciones.
+- [ ] Sé importar CSV y TSV con R base y con `readr`.
+- [ ] Puedo revisar dimensiones, columnas y tipos de datos.
+- [ ] Sé seleccionar filas y columnas y contar valores distintos.
+- [ ] Reconozco cuándo una columna debe conservarse como texto.
+- [ ] Puedo inspeccionar un FASTA como archivo de texto.
+- [ ] Sé distinguir un problema de importación de una interpretación biológica.
+:::
+
+**En la siguiente sesión:** aprenderemos a transformar y reorganizar estas tablas con `dplyr` y `tidyr`, evitando repetir instrucciones manuales para cada archivo.

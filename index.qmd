@@ -20,9 +20,9 @@
 ### Calendario de sesiones
 
 | Sesión | Fecha | Horario asignado | Aula | Tema |
-|:--:|----|----|----|----|
+|:-------------:|---------------|---------------|---------------|---------------|
 | 1 | Miércoles 4 de noviembre | 3:00–5:30 p. m. | VI-204 | Introducción a R y organización de proyectos bioinformáticos |
-| 2 | Jueves 5 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Importación, exploración y validación de datos biológicos |
+| 2 | Jueves 5 de noviembre | 3:30–6:00 p. m. | VI-PB01 |  Importación y exploración de datos bioinformáticos en R |
 | 3 | Miércoles 11 de noviembre | 3:00–5:30 p. m. | VI-204 | Manipulación y transformación de datos con `dplyr` y `tidyr` |
 | 4 | Jueves 12 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Integración de datos y automatización de análisis |
 | 5 | Miércoles 18 de noviembre | 3:00–5:30 p. m. | VI-204 | Visualización científica con `ggplot2` |

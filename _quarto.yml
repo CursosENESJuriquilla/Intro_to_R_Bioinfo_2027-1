@@ -37,7 +37,7 @@ book:
           - parte4.qmd # Ciclos
           - parte5.qmd # funciones
           - parte6.qmd # scripts
-    - part: "**Importación, exploración y validación de datos biológicos**"
+    - part: "**Importación y exploración de datos bioinformáticos en R**"
       chapters: 
         - parte7.qmd # 
     
