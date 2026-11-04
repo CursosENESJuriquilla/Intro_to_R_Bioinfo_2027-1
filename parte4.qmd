@@ -1,0 +1,93 @@
+# Operadores y estructuras de control
+
+## Operadores aritméticos, relacionales y lógicos
+
+| Operación | Operadores |
+|---|---|
+| Aritmética | `+`, `-`, `*`, `/`, `^`, `%%`, `%/%` |
+| Comparación | `==`, `!=`, `<`, `<=`, `>`, `>=` |
+| Lógica vectorizada | `&`, `|`, `!` |
+| Pertenencia | `%in%` |
+
+Los paréntesis permiten hacer explícita la precedencia de las operaciones. En condiciones de `if`, utiliza una expresión lógica de longitud uno; para combinar condiciones escalares puedes usar `&&` y `||`.
+
+```{r}
+longitudes <- c(100, 250, 700, 90)
+(longitudes >= 200) & (longitudes <= 600)
+"g2" %in% c("g1", "g2", "g3")
+(2 + 3) * 4
+```
+
+## Condicionales: `if`, `else if` y `else`
+
+Un condicional permite ejecutar instrucciones diferentes según una condición.
+
+```{r}
+longitud_gen <- 350
+
+if (longitud_gen >= 300) {
+  mensaje <- "Gen de longitud al menos 300"
+} else {
+  mensaje <- "Gen de longitud menor que 300"
+}
+mensaje
+```
+
+Cuando se necesita clasificar un vector completo, `ifelse()` puede ser más apropiado que escribir un `if` por cada elemento:
+
+```{r}
+tamanos <- c(120, 350, 700)
+ifelse(tamanos >= 300, "largo", "corto")
+```
+
+## Ciclos `for` y `while`
+
+Los ciclos permiten repetir una operación. Ya conoces esta idea de Bash; aquí cambia la sintaxis.
+
+```{r}
+secuencias <- c("ATGC", "GGTAAC", "CCG")
+
+for (secuencia in secuencias) {
+  print(nchar(secuencia))
+}
+```
+
+`while` repite mientras una condición siga siendo verdadera. Es necesario que el estado cambie para evitar un ciclo infinito.
+
+```{r}
+contador <- 1
+while (contador <= 3) {
+  print(contador)
+  contador <- contador + 1
+}
+```
+
+Cuando existe una función vectorizada, suele ser más sencilla:
+
+```{r}
+nchar(secuencias)
+```
+
+::: {.callout-note title="Ejercicio 3. Control de flujo"}
+Con `secuencias <- c("ATG", "ATGCGC", "TTAACGTA", "GG")`:
+
+1. Escribe un ciclo `for` que muestre la longitud de cada secuencia.
+2. Usa `if` para indicar si la primera secuencia tiene al menos cinco nucleótidos.
+3. Obtén todas las longitudes con una sola instrucción, sin ciclo.
+:::
+
+::: {.callout-tip collapse="true" title="Solución · Ejercicio 3"}
+```{r}
+secuencias <- c("ATG", "ATGCGC", "TTAACGTA", "GG")
+for (s in secuencias) {
+  print(nchar(s))
+}
+if (nchar(secuencias[1]) >= 5) {
+  print("Al menos cinco")
+} else {
+  print("Menos de cinco")
+}
+nchar(secuencias)
+```
+:::
+

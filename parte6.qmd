@@ -1,0 +1,119 @@
+# Scripts, paquetes y proyectos de RStudio
+
+## De la consola al script
+
+La consola es útil para experimentar, pero un **script `.R`** conserva las instrucciones y permite ejecutarlas de nuevo. En RStudio selecciona **File → New File → R Script**, escribe código y guarda el archivo. Para ejecutar la línea actual o la selección usa **Ctrl + Enter** (Windows/Linux) o **Cmd + Enter** (macOS).
+
+Un script legible tiene un propósito claro, comentarios útiles, nombres descriptivos y no depende de objetos creados previamente en la consola.
+
+```{r}
+# Ejemplo de contenido para guardar en scripts/01_exploracion.R
+ids <- c("g1", "g2", "g3")
+secuencias <- c("ATGC", "GGCCAA", "ATAT")
+longitudes <- nchar(secuencias)
+resultado <- data.frame(gen = ids, longitud = longitudes)
+print(resultado)
+```
+
+## Organizar el trabajo con un proyecto `.Rproj`
+
+Como ya conoces directorios y Git, nos concentraremos en la función del proyecto de RStudio: abrir el trabajo en un contexto consistente y facilitar el uso de **rutas relativas**.
+
+1. En RStudio elige **File → New Project**.
+2. Selecciona **New Directory → New Project** (o abre un repositorio existente con **Existing Directory**).
+3. Elige un nombre y una carpeta en tu computadora.
+4. Guarda los scripts y archivos del análisis dentro del proyecto.
+
+Una estructura inicial sencilla puede ser:
+
+```text
+intro_R/
+├── intro_R.Rproj
+├── data_raw/
+├── scripts/
+│   └── 01_exploracion.R
+├── results/
+└── README.md
+```
+
+`getwd()` muestra el directorio de trabajo actual. Evita rutas absolutas específicas de tu computadora. **No es necesario utilizar `setwd()` dentro de cada script** cuando trabajas desde un proyecto bien organizado.
+
+```{r}
+#| eval: false
+getwd()
+# Ejemplo de ruta relativa dentro del proyecto:
+# readr::read_csv("data_raw/muestras.csv")
+```
+
+## Paquetes en los scripts
+
+Las dependencias deben quedar explícitas al inicio del script o utilizarse con `paquete::funcion()`. En las siguientes sesiones aprenderemos `readr`, `dplyr`, `tidyr`, `purrr` y `ggplot2`. No necesitamos cargarlos todos para resolver los ejercicios de hoy.
+
+::: {.callout-warning title="Una regla para comprobar tu código"}
+Antes de entregar un script, reinicia la sesión de R y ejecútalo desde el inicio. Si solo funciona porque quedaron objetos en **Environment**, todavía no es reproducible.
+:::
+
+# Actividad integradora y cierre
+
+::: {.callout-note title="Práctica final. De secuencias a una tabla"}
+Trabaja con estas secuencias sintéticas:
+
+```{r}
+ids_final <- c("genA", "genB", "genC", "genD")
+secuencias_final <- c("ATGCGC", "AAAA", "GGCTTA", "ATGATGCC")
+```
+
+1. Construye una función que cuente las bases G y C de una secuencia.
+2. Obtén para cada gen su longitud y su número de bases G/C.
+3. Organiza los resultados en un `data.frame`.
+4. Añade una columna lógica que indique si la secuencia contiene el motivo `"ATG"`.
+5. Selecciona los genes con longitud de al menos seis nucleótidos.
+6. Guarda el código en un script dentro de un proyecto de RStudio. Comprueba que funciona al ejecutarlo desde una sesión limpia.
+
+**Entrega sugerida:** script `.R` y una breve descripción en el README de lo que produce. No es necesario aplicar técnicas estadísticas.
+:::
+
+::: {.callout-tip collapse="true" title="Solución sugerida · Actividad integradora"}
+```{r}
+ids_final <- c("genA", "genB", "genC", "genD")
+secuencias_final <- c("ATGCGC", "AAAA", "GGCTTA", "ATGATGCC")
+
+contar_gc_final <- function(secuencia) {
+  stopifnot(is.character(secuencia), length(secuencia) == 1L,
+            !is.na(secuencia), grepl("^[ACGT]+$", secuencia))
+  letras <- strsplit(secuencia, "", fixed = TRUE)[[1]]
+  sum(letras %in% c("G", "C"))
+}
+
+resultado_final <- data.frame(
+  gen = ids_final,
+  secuencia = secuencias_final,
+  longitud = nchar(secuencias_final),
+  gc = vapply(secuencias_final, contar_gc_final, integer(1)),
+  contiene_atg = grepl("ATG", secuencias_final, fixed = TRUE)
+)
+
+resultado_final
+resultado_final[resultado_final$longitud >= 6, ]
+```
+
+`vapply()` aplica la función a cada elemento y exige un resultado entero por secuencia. En la sesión 4 compararemos este enfoque con `lapply()` y `purrr::map()`.
+:::
+
+## Ideas para recordar
+
+- **R** ejecuta el código; **RStudio** facilita escribirlo y organizarlo.
+- Un paquete se **instala** y se **carga**: son acciones distintas.
+- Vectores, matrices, data frames y listas resuelven necesidades diferentes.
+- R indexa desde **1** y permite operaciones vectorizadas.
+- Las funciones permiten reutilizar código y definir reglas claras de entrada.
+- Un script debe ejecutarse desde el principio dentro de su proyecto, sin depender del estado previo de la consola.
+
+**En la siguiente sesión:** importaremos archivos tabulares de bioinformática, inspeccionaremos sus columnas y verificaremos su consistencia antes de transformarlos.
+
+## Material de consulta
+
+- [Code & Data Bootcamp: Introducción a R](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte26.html).
+- [Code & Data Bootcamp: Estructuras de datos en R](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte27.html).
+- [Seminario de Estadística: Introducción a R y RStudio](https://haydeeperuyero.github.io/Seminario_Estadistica/introducci%C3%B3n-a-r-y-rstudio.html).
+- [Manual oficial de introducción a R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html).

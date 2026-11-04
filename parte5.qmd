@@ -1,0 +1,46 @@
+# Funciones propias
+
+Una función encapsula instrucciones que deseamos reutilizar. Se define con `function()`, recibe argumentos y devuelve un resultado. En R, la última expresión evaluada se devuelve de manera implícita; `return()` permite hacerlo explícitamente.
+
+```{r}
+longitud_secuencia <- function(secuencia) {
+  nchar(secuencia)
+}
+
+longitud_secuencia("ATGCC")
+```
+
+Los argumentos pueden tener valores predeterminados y pueden verificarse antes de operar:
+
+```{r}
+contiene_motivo <- function(secuencia, motivo = "ATG") {
+  stopifnot(is.character(secuencia), length(secuencia) == 1L,
+            !is.na(secuencia), is.character(motivo),
+            length(motivo) == 1L, !is.na(motivo), nzchar(motivo))
+  grepl(motivo, secuencia, fixed = TRUE)
+}
+
+contiene_motivo("CCATGAA")
+contiene_motivo("CCATGAA", motivo = "TAA")
+```
+
+La función `grepl()` busca coincidencias; `fixed = TRUE` indica que el motivo debe interpretarse como texto literal, no como expresión regular. Para conjuntos de secuencias grandes o análisis especializados utilizaremos herramientas apropiadas en otras prácticas.
+
+::: {.callout-note title="Ejercicio 4. Escribir una función"}
+Escribe una función `contar_gc()` que reciba **una secuencia de ADN no vacía** compuesta únicamente por A, C, G y T, y devuelva el número de nucleótidos G o C. Prueba tu función con `"ATGCGC"` y `"AAAA"`. Como reto adicional, valida la entrada.
+:::
+
+::: {.callout-tip collapse="true" title="Solución · Ejercicio 4"}
+```{r}
+contar_gc <- function(secuencia) {
+  stopifnot(is.character(secuencia), length(secuencia) == 1L,
+            !is.na(secuencia), grepl("^[ACGT]+$", secuencia))
+  letras <- strsplit(secuencia, "", fixed = TRUE)[[1]]
+  sum(letras %in% c("G", "C"))
+}
+contar_gc("ATGCGC")
+contar_gc("AAAA")
+```
+El primer resultado es 4 y el segundo es 0. La función exige letras mayúsculas y no contempla bases ambiguas; esa restricción forma parte de su contrato.
+:::
+

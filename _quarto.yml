@@ -31,8 +31,9 @@ book:
     - temario.qmd
     - part: "**De Bash a R: programación para bioinformática**"
       chapters: 
-          - parte1.qmd
-    
+          - parte1.qmd # Buenas practicas
+          - parte2.qmd # instalar R
+          - parte3.qmd
     
   # Information
   repo-url: https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1 # link de Github

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; De Bash a R: programación para bioinformática – Introducción a R para Bioinformática I</title>
+<title>1&nbsp; Buenas prácticas en bioinformática – Introducción a R para Bioinformática I</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -68,6 +33,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./parte2.html" rel="next">
 <link href="./temario.html" rel="prev">
 <link href="./figures/favicon.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
@@ -121,7 +87,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte1.html"><strong>De Bash a R: programación para bioinformática</strong></a></li><li class="breadcrumb-item"><a href="./parte1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">De Bash a R: programación para bioinformática</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte1.html"><strong>De Bash a R: programación para bioinformática</strong></a></li><li class="breadcrumb-item"><a href="./parte1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Buenas prácticas en bioinformática</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -200,7 +166,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./parte1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">De Bash a R: programación para bioinformática</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Buenas prácticas en bioinformática</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">1.5 Primer inicio de RStudio</span></span></a>
   </div>
 </li>
       </ul>
@@ -215,47 +193,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Tabla de contenidos</h2>
    
   <ul>
-  <li><a href="#material-previo-opcional-instalación-y-preparación-del-entorno" id="toc-material-previo-opcional-instalación-y-preparación-del-entorno" class="nav-link active" data-scroll-target="#material-previo-opcional-instalación-y-preparación-del-entorno"><span class="header-section-number">2</span> Material previo opcional: instalación y preparación del entorno</a>
-  <ul>
-  <li><a href="#qué-son-r-rstudio-y-las-herramientas-de-compilación" id="toc-qué-son-r-rstudio-y-las-herramientas-de-compilación" class="nav-link" data-scroll-target="#qué-son-r-rstudio-y-las-herramientas-de-compilación"><span class="header-section-number">2.1</span> ¿Qué son R, RStudio y las herramientas de compilación?</a></li>
-  <li><a href="#windows-r-rstudio-y-rtools" id="toc-windows-r-rstudio-y-rtools" class="nav-link" data-scroll-target="#windows-r-rstudio-y-rtools"><span class="header-section-number">2.2</span> Windows: R, RStudio y Rtools</a></li>
-  <li><a href="#macos-r-rstudio-y-herramientas-de-desarrollo" id="toc-macos-r-rstudio-y-herramientas-de-desarrollo" class="nav-link" data-scroll-target="#macos-r-rstudio-y-herramientas-de-desarrollo"><span class="header-section-number">2.3</span> macOS: R, RStudio y herramientas de desarrollo</a></li>
-  <li><a href="#linux-r-y-compiladores-del-sistema" id="toc-linux-r-y-compiladores-del-sistema" class="nav-link" data-scroll-target="#linux-r-y-compiladores-del-sistema"><span class="header-section-number">2.4</span> Linux: R y compiladores del sistema</a></li>
-  <li><a href="#comprobar-la-instalación-de-r" id="toc-comprobar-la-instalación-de-r" class="nav-link" data-scroll-target="#comprobar-la-instalación-de-r"><span class="header-section-number">2.5</span> Comprobar la instalación de R</a></li>
-  <li><a href="#instalar-y-cargar-paquetes-de-r" id="toc-instalar-y-cargar-paquetes-de-r" class="nav-link" data-scroll-target="#instalar-y-cargar-paquetes-de-r"><span class="header-section-number">2.6</span> Instalar y cargar paquetes de R</a>
-  <ul class="collapse">
-  <li><a href="#lista-de-verificación-antes-de-la-clase" id="toc-lista-de-verificación-antes-de-la-clase" class="nav-link" data-scroll-target="#lista-de-verificación-antes-de-la-clase"><span class="header-section-number">2.6.1</span> Lista de verificación antes de la clase</a></li>
-  </ul></li>
-  <li><a href="#de-la-terminal-a-la-consola-de-r" id="toc-de-la-terminal-a-la-consola-de-r" class="nav-link" data-scroll-target="#de-la-terminal-a-la-consola-de-r"><span class="header-section-number">2.7</span> De la terminal a la consola de R</a></li>
-  <li><a href="#objetos-y-estructuras-de-datos" id="toc-objetos-y-estructuras-de-datos" class="nav-link" data-scroll-target="#objetos-y-estructuras-de-datos"><span class="header-section-number">2.8</span> Objetos y estructuras de datos</a>
-  <ul class="collapse">
-  <li><a href="#tipos-básicos-y-vectores" id="toc-tipos-básicos-y-vectores" class="nav-link" data-scroll-target="#tipos-básicos-y-vectores"><span class="header-section-number">2.8.1</span> Tipos básicos y vectores</a></li>
-  <li><a href="#tablas-data-frames" id="toc-tablas-data-frames" class="nav-link" data-scroll-target="#tablas-data-frames"><span class="header-section-number">2.8.2</span> Tablas: data frames</a></li>
-  <li><a href="#listas" id="toc-listas" class="nav-link" data-scroll-target="#listas"><span class="header-section-number">2.8.3</span> Listas</a></li>
-  </ul></li>
-  <li><a href="#operaciones-indexación-y-funciones" id="toc-operaciones-indexación-y-funciones" class="nav-link" data-scroll-target="#operaciones-indexación-y-funciones"><span class="header-section-number">2.9</span> Operaciones, indexación y funciones</a>
-  <ul class="collapse">
-  <li><a href="#trabajar-con-secuencias-como-cadenas-de-caracteres" id="toc-trabajar-con-secuencias-como-cadenas-de-caracteres" class="nav-link" data-scroll-target="#trabajar-con-secuencias-como-cadenas-de-caracteres"><span class="header-section-number">2.9.1</span> Trabajar con secuencias como cadenas de caracteres</a></li>
-  <li><a href="#definir-funciones" id="toc-definir-funciones" class="nav-link" data-scroll-target="#definir-funciones"><span class="header-section-number">2.9.2</span> Definir funciones</a></li>
-  </ul></li>
-  <li><a href="#condiciones-e-iteración" id="toc-condiciones-e-iteración" class="nav-link" data-scroll-target="#condiciones-e-iteración"><span class="header-section-number">2.10</span> Condiciones e iteración</a>
-  <ul class="collapse">
-  <li><a href="#condiciones" id="toc-condiciones" class="nav-link" data-scroll-target="#condiciones"><span class="header-section-number">2.10.1</span> Condiciones</a></li>
-  <li><a href="#ciclos-y-funciones-de-aplicación" id="toc-ciclos-y-funciones-de-aplicación" class="nav-link" data-scroll-target="#ciclos-y-funciones-de-aplicación"><span class="header-section-number">2.10.2</span> Ciclos y funciones de aplicación</a></li>
-  </ul></li>
-  <li><a href="#scripts-paquetes-y-proyectos-rstudio" id="toc-scripts-paquetes-y-proyectos-rstudio" class="nav-link" data-scroll-target="#scripts-paquetes-y-proyectos-rstudio"><span class="header-section-number">2.11</span> Scripts, paquetes y proyectos RStudio</a></li>
-  <li><a href="#actividad-integradora" id="toc-actividad-integradora" class="nav-link" data-scroll-target="#actividad-integradora"><span class="header-section-number">2.12</span> Actividad integradora</a></li>
-  </ul></li>
-  <li><a href="#cierre" id="toc-cierre" class="nav-link" data-scroll-target="#cierre"><span class="header-section-number">3</span> Cierre</a></li>
+  <li><a href="#un-algoritmo-nos-permite-resolver-un-problema" id="toc-un-algoritmo-nos-permite-resolver-un-problema" class="nav-link active" data-scroll-target="#un-algoritmo-nos-permite-resolver-un-problema"><span class="header-section-number">1.1</span> <strong>Un algoritmo nos permite resolver un problema ⭐</strong></a></li>
+  <li><a href="#para-escribir-un-buen-software-necesitas" id="toc-para-escribir-un-buen-software-necesitas" class="nav-link" data-scroll-target="#para-escribir-un-buen-software-necesitas"><span class="header-section-number">1.2</span> <strong>Para escribir un buen software necesitas:</strong></a></li>
+  <li><a href="#documentación" id="toc-documentación" class="nav-link" data-scroll-target="#documentación"><span class="header-section-number">1.3</span> <strong>Documentación</strong></a></li>
+  <li><a href="#puntos-claves-para-buenas-prácticas-en-bioinfo" id="toc-puntos-claves-para-buenas-prácticas-en-bioinfo" class="nav-link" data-scroll-target="#puntos-claves-para-buenas-prácticas-en-bioinfo"><span class="header-section-number">1.4</span> Puntos claves para buenas prácticas en bioinfo ⭐</a></li>
+  <li><a href="#referencias" id="toc-referencias" class="nav-link" data-scroll-target="#referencias"><span class="header-section-number">1.5</span> Referencias</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte1.html"><strong>De Bash a R: programación para bioinformática</strong></a></li><li class="breadcrumb-item"><a href="./parte1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">De Bash a R: programación para bioinformática</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte1.html"><strong>De Bash a R: programación para bioinformática</strong></a></li><li class="breadcrumb-item"><a href="./parte1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Buenas prácticas en bioinformática</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">De Bash a R: programación para bioinformática</span></h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Buenas prácticas en bioinformática</span></h1>
 </div>
 
 
@@ -272,991 +223,149 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div class="callout callout-style-default callout-tip callout-titled" title="Objetivos de aprendizaje">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Objetivos de aprendizaje
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Al finalizar la sesión podrás:</p>
-<ol type="1">
-<li>Trabajar con scripts y objetos en R y reconocer las diferencias esenciales con Bash.</li>
-<li>Utilizar vectores, listas y <code>data.frame</code> para representar datos biológicos.</li>
-<li>Seleccionar registros, construir funciones y recorrer colecciones de datos.</li>
-<li>Instalar, cargar y consultar paquetes de R.</li>
-<li>Integrar un script de R a un repositorio bioinformático que ya utiliza Git.</li>
-</ol>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Punto de partida">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Punto de partida
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Ya conoces</strong> terminal de Linux, Git/GitHub, Markdown, procedencia de datos, FASTA, BED, alineamientos y anotaciones. No repetiremos esos temas: los usaremos como contexto para aprender <strong>la sintaxis y la forma de trabajo de R</strong>. No se requieren conocimientos de estadística.</p>
-</div>
-</div>
-<section id="material-previo-opcional-instalación-y-preparación-del-entorno" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Material previo opcional: instalación y preparación del entorno</h1>
-<div class="callout callout-style-default callout-note callout-titled" title="Antes de la primera sesión · No cuenta dentro de las dos horas">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Antes de la primera sesión · No cuenta dentro de las dos horas
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Realiza esta preparación <strong>solo si todavía no tienes R y las herramientas necesarias</strong>. No es necesario reinstalar programas que ya funcionan. Las instrucciones varían según el sistema operativo. Si utilizas un clúster compartido, sigue primero las indicaciones de sus administradores.</p>
-</div>
-</div>
-<section id="qué-son-r-rstudio-y-las-herramientas-de-compilación" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="qué-son-r-rstudio-y-las-herramientas-de-compilación"><span class="header-section-number">2.1</span> ¿Qué son R, RStudio y las herramientas de compilación?</h2>
+<section id="un-algoritmo-nos-permite-resolver-un-problema" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="un-algoritmo-nos-permite-resolver-un-problema"><span class="header-section-number">1.1</span> <strong>Un algoritmo nos permite resolver un problema ⭐</strong></h2>
+<p>Un <strong>algoritmo</strong> es un método para resolver un problema mediante una serie de pasos <strong>definidos, precisos</strong> y <strong>finitos</strong>.</p>
 <ul>
-<li><strong>R</strong> es el lenguaje y el entorno que ejecuta los análisis.</li>
-<li><strong>RStudio Desktop</strong> es un entorno de desarrollo (IDE) para editar scripts, trabajar con proyectos y ejecutar R; no sustituye la instalación de R.</li>
-<li><strong>Las herramientas de compilación</strong> permiten instalar paquetes desde su código fuente cuando no existe un binario apropiado o cuando el paquete requiere compilación. <strong>No todos los paquetes las necesitan.</strong></li>
+<li><strong>Definido</strong>: si se sigue dos veces, se obtiene el mismo resultado. Es reproducible.</li>
+<li><strong>Preciso</strong>: implica el orden de realización de cada uno de los pasos.</li>
+<li><strong>Finito</strong>: Tiene un numero determinado de pasos, implica que tiene un fin.</li>
 </ul>
+<blockquote class="blockquote">
+<p>Un algoritmo podemos definirlo como un <strong>programa o software</strong>.</p>
+</blockquote>
+<p><a href="https://allisonhorst.com/allison-horst"><img src="figures/allison-horst-code-kitchen.png" class="img-fluid"></a></p>
 </section>
-<section id="windows-r-rstudio-y-rtools" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="windows-r-rstudio-y-rtools"><span class="header-section-number">2.2</span> Windows: R, RStudio y Rtools</h2>
-<ol type="1">
-<li>Descarga e instala R desde <a href="https://cran.r-project.org/bin/windows/base/" class="uri">https://cran.r-project.org/bin/windows/base/</a>.</li>
-<li>Descarga e instala RStudio Desktop desde <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>.</li>
-<li>Consulta <a href="https://cran.r-project.org/bin/windows/Rtools/" class="uri">https://cran.r-project.org/bin/windows/Rtools/</a> e instala <strong>la versión de Rtools compatible con tu versión de R</strong>. No elijas una versión al azar: CRAN indica las correspondencias.</li>
-<li>Reinicia RStudio después de instalar las herramientas, si ya estaba abierto.</li>
-</ol>
-<p><strong>Verificación de Rtools (desde la consola de R):</strong></p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"pkgbuild"</span>)  <span class="co"># Solo si aún no está instalado</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pkgbuild<span class="sc">::</span><span class="fu">check_build_tools</span>(<span class="at">debug =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<section id="para-escribir-un-buen-software-necesitas" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="para-escribir-un-buen-software-necesitas"><span class="header-section-number">1.2</span> <strong>Para escribir un buen software necesitas:</strong></h2>
+<blockquote class="blockquote">
+<p>Escribir <strong>código mantenible (maintainable code), usar control de versiones (version control) y rastreadores de problemas (issue trackers), revisiones de código (code reviews), pruebas unitarias (unit testing) y automatización de tareas (task automation)</strong>.</p>
+<p><a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745">Wilson, <em>et al.</em> 2014. <em>PLOS Biology</em></a></p>
+</blockquote>
+<p>En bioinformática, es fundamental garantizar el uso <strong>ético y responsable de datos sensibles</strong>, como los genomas humanos, respetando la privacidad y los marcos legales vigentes. Al mismo tiempo, se debe fomentar la ciencia abierta <strong>mediante prácticas transparentes y reproducibles</strong>, sin comprometer la integridad de la información. Estas acciones no solo fortalecen la <strong>confianza en los resultados</strong>, sino que también previenen errores graves que podrían derivar en la <strong>retracción de artículos científicos</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://devcom.com/tech-blog/code-quality-definition-how-to-improve-code-quality/"><img src="figures/what-code-quality-1.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img"></a></p>
+</figure>
 </div>
-<p>Si la verificación falla, revisa las instrucciones de CRAN para la versión instalada de R y Rtools antes de modificar manualmente variables como <code>PATH</code>.</p>
-</section>
-<section id="macos-r-rstudio-y-herramientas-de-desarrollo" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="macos-r-rstudio-y-herramientas-de-desarrollo"><span class="header-section-number">2.3</span> macOS: R, RStudio y herramientas de desarrollo</h2>
-<ol type="1">
-<li>Instala la versión de R correspondiente a tu equipo desde <a href="https://cran.r-project.org/bin/macosx/" class="uri">https://cran.r-project.org/bin/macosx/</a> (verifica si es Apple Silicon o Intel).</li>
-<li>Instala RStudio Desktop desde <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a>.</li>
-<li>En la <strong>terminal de macOS</strong>, instala las herramientas de línea de comandos de Xcode:</li>
-</ol>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">xcode-select</span> <span class="at">--install</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<ol start="4" type="1">
-<li>Algunos paquetes que compilan código Fortran requieren <strong>GNU Fortran</strong> además de las herramientas anteriores. Consulta las versiones y las indicaciones oficiales en <a href="https://mac.r-project.org/tools/" class="uri">https://mac.r-project.org/tools/</a>; deben ser compatibles con tu instalación de R.</li>
-</ol>
-<p>No hace falta instalar Xcode completo para la mayoría de las tareas de compilación de paquetes de R.</p>
-</section>
-<section id="linux-r-y-compiladores-del-sistema" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="linux-r-y-compiladores-del-sistema"><span class="header-section-number">2.4</span> Linux: R y compiladores del sistema</h2>
-<p>En Ubuntu o Debian, si tienes permisos de administración y todavía no están instalados, puedes ejecutar <strong>en la terminal</strong>:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install <span class="at">-y</span> r-base r-base-dev build-essential gfortran</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>Después puedes instalar RStudio Desktop desde <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a> si deseas utilizarlo.</p>
-<p>En otras distribuciones (Fedora, Arch, etc.), los nombres de los paquetes y los comandos del gestor de paquetes son diferentes. Algunas bibliotecas adicionales (<code>libcurl</code>, <code>libxml2</code>, <code>libssl</code>, entre otras) pueden ser necesarias <strong>solo para determinados paquetes de R</strong>.</p>
-<p><strong>En un clúster o servidor compartido</strong>, no ejecutes <code>sudo</code> ni intentes instalar paquetes globales sin autorización. Comprueba si R está disponible:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">R</span> <span class="at">--version</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> <span class="at">--version</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># En sistemas que usan módulos, consulta la documentación local:</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">module</span> avail R</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</section>
-<section id="comprobar-la-instalación-de-r" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="comprobar-la-instalación-de-r"><span class="header-section-number">2.5</span> Comprobar la instalación de R</h2>
-<p>Abre RStudio (o una sesión interactiva de R) y ejecuta:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "R version 4.6.0 (2026-04-24 ucrt)"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.info</span>()[[<span class="st">"sysname"</span>]]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Windows"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
-</div>
-</section>
-<section id="instalar-y-cargar-paquetes-de-r" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="instalar-y-cargar-paquetes-de-r"><span class="header-section-number">2.6</span> Instalar y cargar paquetes de R</h2>
-<p>Un paquete se <strong>instala</strong> una vez por entorno o biblioteca; se <strong>carga</strong> con <code>library()</code> en cada sesión en la que se necesita. No incluyas <code>install.packages()</code> en scripts de análisis que deban ejecutarse repetidamente.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejecutar en la consola, una vez por entorno:</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"tidyr"</span>, <span class="st">"ggplot2"</span>, <span class="st">"purrr"</span>, <span class="st">"here"</span>))</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># En los scripts, cargar los paquetes necesarios:</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># También se puede llamar una función con paquete::función:</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># readr::read_tsv("data_raw/anotaciones.tsv")</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>Para comprobar las herramientas de compilación de tu sistema, cuando corresponda:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"pkgbuild"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">install.packages</span>(<span class="st">"pkgbuild"</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>pkgbuild<span class="sc">::</span><span class="fu">check_build_tools</span>(<span class="at">debug =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>Para revisar el entorno y consultar la ayuda:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "R version 4.6.0 (2026-04-24 ucrt)"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="st">"readr"</span> <span class="sc">%in%</span> <span class="fu">rownames</span>(<span class="fu">installed.packages</span>())</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>R version 4.6.0 (2026-04-24 ucrt)
-Platform: x86_64-w64-mingw32/x64
-Running under: Windows 11 x64 (build 26200)
-
-Matrix products: default
-  LAPACK version 3.12.1
-
-locale:
-[1] LC_COLLATE=Spanish_Mexico.utf8  LC_CTYPE=Spanish_Mexico.utf8   
-[3] LC_MONETARY=Spanish_Mexico.utf8 LC_NUMERIC=C                   
-[5] LC_TIME=Spanish_Mexico.utf8    
-
-time zone: America/Mexico_City
-tzcode source: internal
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-loaded via a namespace (and not attached):
- [1] htmlwidgets_1.6.4 compiler_4.6.0    fastmap_1.2.0     cli_3.6.6        
- [5] tools_4.6.0       htmltools_0.5.9   otel_0.2.0        rstudioapi_0.19.0
- [9] yaml_2.3.12       rmarkdown_2.32    knitr_1.52        jsonlite_2.0.0   
-[13] xfun_0.61         digest_0.6.39     rlang_1.2.0       evaluate_1.0.5   </code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>?read.table</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stderr">
-<pre><code>starting httpd help server ... done</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Paquetes de Bioconductor">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Paquetes de Bioconductor
+<span class="screen-reader-only">Nota</span>Pasos para escribir un buen software
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Además de CRAN, en bioinformática se utilizan paquetes de <strong>Bioconductor</strong>, cuyo instalador recomendado es <code>BiocManager</code>. No es necesario instalar paquetes especializados en esta primera sesión.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="st">"Biostrings"</span>)  <span class="co"># Ejemplo; solo cuando se necesite</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
+<ol type="1">
+<li><p>Análisis del problema / Definir el problema</p></li>
+<li><p>Diseño del algoritmo / Diseño del programa</p></li>
+<li><p>Codificación / Escribir el código</p></li>
+<li><p>Compilación y ejecución del programa</p></li>
+<li><p>Verificación / Realizar pruebas</p></li>
+<li><p>Depuración / Detectar los errores y corregirlos</p></li>
+</ol>
+<blockquote class="blockquote">
+<p>Programacion defensiva</p>
+</blockquote>
+<ol start="7" type="1">
+<li>Documentación</li>
+</ol>
 </div>
 </div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled" title="Si falla una instalación">
+</section>
+<section id="documentación" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="documentación"><span class="header-section-number">1.3</span> <strong>Documentación</strong></h2>
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>Si falla una instalación
+Nota
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Lee el <strong>primer mensaje de error relevante</strong>: distingue entre problemas de red, permisos, versión de R, herramientas de compilación y bibliotecas externas. Un paquete que se instala desde un binario puede no necesitar compiladores, mientras que el mismo paquete instalado desde código fuente sí puede necesitarlos. En equipos institucionales o clústeres, consulta al personal administrador cuando falten dependencias del sistema.</p>
-</div>
-</div>
-<section id="lista-de-verificación-antes-de-la-clase" class="level3" data-number="2.6.1">
-<h3 data-number="2.6.1" class="anchored" data-anchor-id="lista-de-verificación-antes-de-la-clase"><span class="header-section-number">2.6.1</span> Lista de verificación antes de la clase</h3>
-<ul class="task-list">
-<li><label><input type="checkbox">Puedo abrir R y ejecutar <code>2 + 2</code>.</label></li>
-<li><label><input type="checkbox">Puedo abrir RStudio, o sé cómo ejecutar <code>Rscript</code> en mi entorno.</label></li>
-<li><label><input type="checkbox">Puedo instalar y cargar un paquete de CRAN.</label></li>
-<li><label><input type="checkbox">Conozco qué herramientas de compilación corresponden a mi sistema y cómo verificar si están disponibles.</label></li>
-<li><label><input type="checkbox">Puedo consultar <code>sessionInfo()</code> para documentar mi entorno.</label></li>
+<ul>
+<li><p><em>Título</em> (opcional)</p></li>
+<li><p><em>Autor (author)</em>: Su nombre</p></li>
+<li><p><em>Dia (date)</em>: Fecha de creación</p></li>
+<li><p><em>Paquetes (packages)</em></p></li>
+<li><p><em>Directorio de trabajo (Working directory)</em>: En que carpeta se encuentra tu datos y programa.</p></li>
+<li><p><em>Información descriptiva del programa (Description)</em>: ¿Para qué sirve el programa? Ej: El siguiente programa realiza la suma de dos numeros enteros a partir de la entrada del usuario y posteriormente la imprime en pantalla.</p></li>
+<li><p><em>Usage</em> ¿Cómo se utiliza?</p></li>
+<li><p><em>Argumentos (Arguments)</em></p>
+<ul>
+<li><p><em>Información de entrada (Data Inputs)</em>: Ej: Solo numeros enteros (sin decimales).</p></li>
+<li><p><em>Información de salida (Outpus)</em>: Graficas, figuras, tablas, etc.</p></li>
+</ul></li>
 </ul>
-<hr>
+</div>
+</div>
 </section>
-</section>
-<section id="de-la-terminal-a-la-consola-de-r" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="de-la-terminal-a-la-consola-de-r"><span class="header-section-number">2.7</span> De la terminal a la consola de R</h2>
-<p>Ya has utilizado herramientas de línea de comandos para transformar datos. R es otro entorno de programación: conserva ideas conocidas (variables, funciones, condiciones, ciclos), pero utiliza sintaxis y estructuras propias.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Tarea</th>
-<th>Bash</th>
-<th>R</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Asignar valor</td>
-<td><code>n=5</code></td>
-<td><code>n &lt;- 5</code></td>
-</tr>
-<tr class="even">
-<td>Mostrar valor</td>
-<td><code>echo "$n"</code></td>
-<td><code>print(n)</code></td>
-</tr>
-<tr class="odd">
-<td>Ejecutar archivo</td>
-<td><code>bash script.sh</code></td>
-<td><code>Rscript script.R</code></td>
-</tr>
-<tr class="even">
-<td>Comentario</td>
-<td><code># comentario</code></td>
-<td><code># comentario</code></td>
-</tr>
-<tr class="odd">
-<td>Consultar ayuda</td>
-<td><code>man awk</code></td>
-<td><code>?read.table</code></td>
-</tr>
-</tbody>
-</table>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>n <span class="sc">*</span> <span class="dv">2</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mensaje <span class="ot">&lt;-</span> <span class="st">"Hola, bioinformática"</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(mensaje)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "Hola, bioinformática"</code></pre>
-</div>
-</div>
-<p><strong>Prueba en RStudio:</strong> escribe una instrucción en la consola y luego guárdala en un archivo <code>.R</code>. Ejecuta una línea del script. ¿Qué diferencia encuentras entre guardar instrucciones y ejecutarlas interactivamente?</p>
-</section>
-<section id="objetos-y-estructuras-de-datos" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="objetos-y-estructuras-de-datos"><span class="header-section-number">2.8</span> Objetos y estructuras de datos</h2>
-<section id="tipos-básicos-y-vectores" class="level3" data-number="2.8.1">
-<h3 data-number="2.8.1" class="anchored" data-anchor-id="tipos-básicos-y-vectores"><span class="header-section-number">2.8.1</span> Tipos básicos y vectores</h3>
-<p>En R, un vector atómico contiene elementos del mismo tipo. Los índices <strong>comienzan en 1</strong>, no en 0.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"genA"</span>, <span class="st">"genB"</span>, <span class="st">"genC"</span>, <span class="st">"genD"</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>longitudes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">320</span>, <span class="dv">90</span>, <span class="dv">210</span>)</span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>anotado <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>)</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(ids)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "character"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(ids)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 4</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ids[<span class="dv">1</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "genA"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>ids[<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "genB" "genD"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>longitudes[longitudes <span class="sc">&gt;=</span> <span class="dv">200</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 320 210</code></pre>
-</div>
-</div>
-<p>Las comparaciones producen vectores lógicos que pueden utilizarse para seleccionar elementos. Los valores faltantes se representan con <code>NA</code>.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>longitudes2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="cn">NA</span>, <span class="dv">90</span>)</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(longitudes2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE  TRUE FALSE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>longitudes2[<span class="sc">!</span><span class="fu">is.na</span>(longitudes2)]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 150  90</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 1. Selección de genes (5 min)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio 1. Selección de genes (5 min)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Crea los vectores <code>genes &lt;- c("g1", "g2", "g3", "g4", "g5")</code> y <code>tam &lt;- c(450, 120, 800, 300, 75)</code>.</p>
+<section id="puntos-claves-para-buenas-prácticas-en-bioinfo" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="puntos-claves-para-buenas-prácticas-en-bioinfo"><span class="header-section-number">1.4</span> Puntos claves para buenas prácticas en bioinfo ⭐</h2>
 <ol type="1">
-<li>Obtén el tercer identificador.</li>
-<li>Selecciona los genes con longitud <strong>mayor o igual a 300</strong>.</li>
-<li>Cuenta cuántos genes cumplen esa condición, sin utilizar ciclos.</li>
+<li><p>Escriba <strong>programas para personas, no para computadoras</strong> (Documenta qué hace y por qué). - Se coherente en la nomenclatura, indentación y otros aspectos del estilo.</p></li>
+<li><p>Modularidad: Divide los programas en <em>funciones cortas de un solo propósito.</em> 💻 📚</p></li>
+<li><p><strong>No repitas tu código</strong>. Crea pasos reproducibles o que se repitan por si solas. ➰</p></li>
+<li><p>Planifique los errores (<strong>Programacion defensiva</strong>) 🚩</p></li>
+<li><p>Optimice el software sólo después de que funcione correctamente. - Si funciona no lo modifiques, simplificalo.</p></li>
+<li><p>Colaborar - Buscar siempre bibliotecas de software bien mantenidas que hagan lo que necesita. 👥</p></li>
 </ol>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución · Ejercicio 1">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución · Ejercicio 1
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"g1"</span>, <span class="st">"g2"</span>, <span class="st">"g3"</span>, <span class="st">"g4"</span>, <span class="st">"g5"</span>)</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>tam <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">450</span>, <span class="dv">120</span>, <span class="dv">800</span>, <span class="dv">300</span>, <span class="dv">75</span>)</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>genes[<span class="dv">3</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "g3"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>genes[tam <span class="sc">&gt;=</span> <span class="dv">300</span>]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "g1" "g3" "g4"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(tam <span class="sc">&gt;=</span> <span class="dv">300</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 3</code></pre>
-</div>
-</div>
-<p><code>sum()</code> cuenta los valores <code>TRUE</code> porque en operaciones aritméticas equivalen a 1.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="tablas-data-frames" class="level3" data-number="2.8.2">
-<h3 data-number="2.8.2" class="anchored" data-anchor-id="tablas-data-frames"><span class="header-section-number">2.8.2</span> Tablas: data frames</h3>
-<p>Un <code>data.frame</code> representa una tabla cuyas columnas pueden tener tipos diferentes. Aquí cada fila corresponde a un gen.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>anotaciones <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">gen =</span> <span class="fu">c</span>(<span class="st">"g1"</span>, <span class="st">"g2"</span>, <span class="st">"g3"</span>, <span class="st">"g4"</span>),</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud =</span> <span class="fu">c</span>(<span class="dv">450</span>, <span class="dv">120</span>, <span class="dv">800</span>, <span class="dv">300</span>),</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">producto =</span> <span class="fu">c</span>(<span class="st">"transportador"</span>, <span class="st">"hipotetica"</span>, <span class="st">"enzima"</span>, <span class="st">"enzima"</span>),</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>anotaciones</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  gen longitud      producto
-1  g1      450 transportador
-2  g2      120    hipotetica
-3  g3      800        enzima
-4  g4      300        enzima</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(anotaciones)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   4 obs. of  3 variables:
- $ gen     : chr  "g1" "g2" "g3" "g4"
- $ longitud: num  450 120 800 300
- $ producto: chr  "transportador" "hipotetica" "enzima" "enzima"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>anotaciones<span class="sc">$</span>gen</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "g1" "g2" "g3" "g4"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>anotaciones[anotaciones<span class="sc">$</span>producto <span class="sc">==</span> <span class="st">"enzima"</span>, ]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  gen longitud producto
-3  g3      800   enzima
-4  g4      300   enzima</code></pre>
-</div>
-</div>
-<p>Recuerda la diferencia entre seleccionar una columna (<code>anotaciones$gen</code>), una fila (<code>anotaciones[2, ]</code>) y una celda (<code>anotaciones[2, 3]</code>).</p>
-</section>
-<section id="listas" class="level3" data-number="2.8.3">
-<h3 data-number="2.8.3" class="anchored" data-anchor-id="listas"><span class="header-section-number">2.8.3</span> Listas</h3>
-<p>Una lista puede almacenar objetos de tipos y tamaños diferentes, por ejemplo secuencias, metadatos y una tabla de resultados.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>muestra <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="st">"M01"</span>,</span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">secuencias =</span> <span class="fu">c</span>(<span class="st">"ATGCGT"</span>, <span class="st">"ATTA"</span>, <span class="st">"GGCCATG"</span>),</span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">anotaciones =</span> anotaciones</span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>muestra<span class="sc">$</span>id</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "M01"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>muestra<span class="sc">$</span>secuencias</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "ATGCGT"  "ATTA"    "GGCCATG"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>muestra[[<span class="st">"anotaciones"</span>]]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>  gen longitud      producto
-1  g1      450 transportador
-2  g2      120    hipotetica
-3  g3      800        enzima
-4  g4      300        enzima</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled" title="No confundir">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Importante</span>No confundir
+<span class="screen-reader-only">Nota</span>Ejemplo:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Un vector atómico, una lista y un <code>data.frame</code> <strong>no son equivalentes</strong>. Elegir la estructura apropiada facilita el procesamiento y evita conversiones innecesarias.</p>
+<p>Aqui un script bien documentado <a href="https://github.com/EveliaCoss/RNAseq_classFEB2024/blob/main/Practica_Dia3/scripts/VisualizacionDatos.R">VisualizacionDatos.R</a>. Tomado del curso de <a href="https://github.com/EveliaCoss/RNAseq_classFEB2024">Análisis de datos de RNA-Seq</a>.</p>
 </div>
 </div>
-</section>
-</section>
-<section id="operaciones-indexación-y-funciones" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="operaciones-indexación-y-funciones"><span class="header-section-number">2.9</span> Operaciones, indexación y funciones</h2>
-<section id="trabajar-con-secuencias-como-cadenas-de-caracteres" class="level3" data-number="2.9.1">
-<h3 data-number="2.9.1" class="anchored" data-anchor-id="trabajar-con-secuencias-como-cadenas-de-caracteres"><span class="header-section-number">2.9.1</span> Trabajar con secuencias como cadenas de caracteres</h3>
-<p>Usaremos secuencias cortas para practicar funciones de R; esto <strong>no reemplaza</strong> herramientas especializadas para archivos FASTA grandes.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>secuencias <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">genA =</span> <span class="st">"ATGCCGTAA"</span>,</span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">genB =</span> <span class="st">"CCGTTAGG"</span>,</span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">genC =</span> <span class="st">"ATGATGCC"</span></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(secuencias)                 <span class="co"># Longitud de cada cadena</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>genA genB genC 
-   9    8    8 </code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grepl</span>(<span class="st">"ATG"</span>, secuencias)        <span class="co"># ¿Contiene el patrón literal?</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  TRUE FALSE  TRUE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(secuencias)[<span class="fu">grepl</span>(<span class="st">"ATG"</span>, secuencias)]</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "genA" "genC"</code></pre>
-</div>
-</div>
-<p><code>grepl()</code> devuelve un vector lógico; <code>grep()</code> devuelve posiciones (o valores con argumentos adicionales). Encontrar <code>ATG</code> no basta para identificar genes funcionales ni validar un marco de lectura.</p>
-</section>
-<section id="definir-funciones" class="level3" data-number="2.9.2">
-<h3 data-number="2.9.2" class="anchored" data-anchor-id="definir-funciones"><span class="header-section-number">2.9.2</span> Definir funciones</h3>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>contiene_motivo <span class="ot">&lt;-</span> <span class="cf">function</span>(secuencia, <span class="at">motivo =</span> <span class="st">"ATG"</span>) {</span>
-<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(motivo, secuencia, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb66-5"><a href="#cb66-5" aria-hidden="true" tabindex="-1"></a><span class="fu">contiene_motivo</span>(<span class="st">"CCATGTT"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a><span class="fu">contiene_motivo</span>(<span class="st">"CCATGTT"</span>, <span class="st">"TGA"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE</code></pre>
-</div>
-</div>
-<p>Una función recibe argumentos, realiza operaciones y devuelve un resultado. Los nombres de los argumentos deben expresar qué información espera la función.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 2. Una función reutilizable (7 min)">
+<div class="callout callout-style-default callout-note callout-titled" title="Nota sobre el material">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio 2. Una función reutilizable (7 min)
+<span class="screen-reader-only">Nota</span>Nota sobre el material
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Escribe una función <code>es_adn_simple()</code> que reciba una cadena y devuelva <code>TRUE</code> si contiene únicamente las letras <code>A</code>, <code>C</code>, <code>G</code> y <code>T</code> (en mayúsculas). Prueba con <code>"ACGT"</code>, <code>"ACNT"</code> y <code>"ACGTX"</code>. Para este ejercicio no consideres símbolos de ambigüedad IUPAC.</p>
-<p><strong>Pista:</strong> <code>grepl()</code> acepta expresiones regulares; <code>^[ACGT]+$</code> describe una o más letras válidas desde el principio hasta el final.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución · Ejercicio 2">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución · Ejercicio 2
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>es_adn_simple <span class="ot">&lt;-</span> <span class="cf">function</span>(secuencia) {</span>
-<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grepl</span>(<span class="st">"^[ACGT]+$"</span>, secuencia)</span>
-<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="fu">es_adn_simple</span>(<span class="st">"ACGT"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">es_adn_simple</span>(<span class="st">"ACNT"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="fu">es_adn_simple</span>(<span class="st">"ACGTX"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] FALSE</code></pre>
-</div>
-</div>
-<p>Esta función comprueba un criterio deliberadamente restringido; secuencias reales pueden utilizar códigos de ambigüedad.</p>
-</div>
+<p>Parte del contenido de estas notas fue tomado y adaptado del curso <a href="https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte1.html"><strong>Bootcamp de Git, Bash y R (2026)</strong></a>, impartido con la Dra. Evelia Coss. El material fue reorganizado, complementado y adaptado a los objetivos del presente curso de Bioinformática I.</p>
 </div>
 </div>
 </section>
-</section>
-<section id="condiciones-e-iteración" class="level2" data-number="2.10">
-<h2 data-number="2.10" class="anchored" data-anchor-id="condiciones-e-iteración"><span class="header-section-number">2.10</span> Condiciones e iteración</h2>
-<section id="condiciones" class="level3" data-number="2.10.1">
-<h3 data-number="2.10.1" class="anchored" data-anchor-id="condiciones"><span class="header-section-number">2.10.1</span> Condiciones</h3>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>clasificar_longitud <span class="ot">&lt;-</span> <span class="cf">function</span>(n) {</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.na</span>(n)) {</span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="st">"desconocida"</span>)</span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (n <span class="sc">&gt;=</span> <span class="dv">300</span>) {</span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"larga"</span></span>
-<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"corta"</span></span>
-<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a><span class="fu">clasificar_longitud</span>(<span class="dv">450</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "larga"</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">clasificar_longitud</span>(<span class="dv">120</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "corta"</code></pre>
-</div>
-</div>
-<p>Los umbrales de este ejemplo son <strong>arbitrarios y didácticos</strong>; no representan categorías biológicas universales.</p>
-</section>
-<section id="ciclos-y-funciones-de-aplicación" class="level3" data-number="2.10.2">
-<h3 data-number="2.10.2" class="anchored" data-anchor-id="ciclos-y-funciones-de-aplicación"><span class="header-section-number">2.10.2</span> Ciclos y funciones de aplicación</h3>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (id <span class="cf">in</span> <span class="fu">names</span>(secuencias)) {</span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(id, <span class="st">": "</span>, <span class="fu">nchar</span>(secuencias[[id]]), <span class="st">" nt</span><span class="sc">\n</span><span class="st">"</span>, <span class="at">sep =</span> <span class="st">""</span>)</span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>genA: 9 nt
-genB: 8 nt
-genC: 8 nt</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Una alternativa vectorizada:</span></span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">nchar</span>(secuencias)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>genA genB genC 
-   9    8    8 </code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar una función a los elementos de una lista:</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">as.list</span>(secuencias), contiene_motivo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>$genA
-[1] TRUE
-
-$genB
-[1] FALSE
-
-$genC
-[1] TRUE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simplificar a un vector lógico:</span></span>
-<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="fu">as.list</span>(secuencias), contiene_motivo)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code> genA  genB  genC 
- TRUE FALSE  TRUE </code></pre>
-</div>
-</div>
-<p>En R no siempre necesitamos escribir un ciclo explícito. Más adelante conoceremos <code>purrr::map()</code> para trabajar de manera consistente con colecciones de archivos y resultados.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 3. Comparar estrategias (6 min)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio 3. Comparar estrategias (6 min)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A partir de <code>secuencias</code>, construye un vector lógico que indique qué secuencias contienen <code>ATG</code> de dos formas: (a) mediante un ciclo <code>for</code> y (b) mediante <code>vapply()</code>. Verifica que los resultados sean iguales.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución · Ejercicio 3">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución · Ejercicio 3
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a>resultado_for <span class="ot">&lt;-</span> <span class="fu">setNames</span>(<span class="fu">logical</span>(<span class="fu">length</span>(secuencias)), <span class="fu">names</span>(secuencias))</span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(secuencias)) {</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>  resultado_for[i] <span class="ot">&lt;-</span> <span class="fu">contiene_motivo</span>(secuencias[[i]])</span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>resultado_apply <span class="ot">&lt;-</span> <span class="fu">vapply</span>(secuencias, contiene_motivo, <span class="fu">logical</span>(<span class="dv">1</span>))</span>
-<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a><span class="fu">identical</span>(resultado_for, resultado_apply)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] TRUE</code></pre>
-</div>
-</div>
-<p><code>vapply()</code> exige que la función devuelva el tipo y tamaño indicados (<code>logical(1)</code>), lo que puede ayudar a detectar errores.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="scripts-paquetes-y-proyectos-rstudio" class="level2" data-number="2.11">
-<h2 data-number="2.11" class="anchored" data-anchor-id="scripts-paquetes-y-proyectos-rstudio"><span class="header-section-number">2.11</span> Scripts, paquetes y proyectos RStudio</h2>
-<p>Ya conoces directorios, rutas relativas y Git. Ahora veamos cómo se integran con R:</p>
-<pre class="text"><code>proyecto-bioinfo/
-├── proyecto-bioinfo.Rproj
-├── README.md
-├── .gitignore
-├── data_raw/
-├── R/
-│   └── funciones.R
-├── scripts/
-│   └── 01_resumen.R
-└── results/</code></pre>
-<p>Abre un proyecto existente mediante <strong>File &gt; New Project</strong> o crea uno nuevo en una carpeta versionada. Un archivo <code>.Rproj</code> almacena opciones del proyecto; no reemplaza a Git.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb91"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo dentro de scripts/01_resumen.R</span></span>
-<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"R/funciones.R"</span>)</span>
-<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.delim</span>(<span class="st">"data_raw/anotaciones.tsv"</span>)</span>
-<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Validar columnas antes de procesar:</span></span>
-<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(<span class="fu">c</span>(<span class="st">"gen"</span>, <span class="st">"longitud"</span>) <span class="sc">%in%</span> <span class="fu">names</span>(datos)))</span>
-<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(datos, <span class="st">"results/anotaciones_revisadas.tsv"</span>,</span>
-<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>Las rutas del ejemplo se interpretan desde la <strong>raíz del proyecto</strong>. Si ejecutas <code>Rscript scripts/01_resumen.R</code> desde otra carpeta, el directorio de trabajo puede ser diferente. Para un flujo robusto, acuerda explícitamente desde dónde se ejecutan los scripts o utiliza herramientas de rutas basadas en la raíz del proyecto.</p>
-<div class="callout callout-style-default callout-note callout-titled" title="Ejercicio 4. Auditoría rápida (5 min)">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Ejercicio 4. Auditoría rápida (5 min)
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Identifica <strong>al menos cuatro problemas</strong> del siguiente fragmento y propón una versión mejorada:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:/Users/ana/Escritorio/proyecto"</span>)</span>
-<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"readr"</span>)</span>
-<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"datos.tsv"</span>)</span>
-<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> x[x<span class="sc">$</span>longitud <span class="sc">&gt;</span> <span class="dv">100</span>, ]</span>
-<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(x, <span class="st">"datos.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución sugerida · Ejercicio 4">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución sugerida · Ejercicio 4
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<p>Problemas: ruta absoluta personal, instalación repetida dentro del script, falta de separación entre datos originales y resultados, escritura de CSV con extensión TSV, ausencia de validaciones y nombres poco descriptivos.</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb93"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Se ejecuta desde la raíz del proyecto.</span></span>
-<span id="cb93-2"><a href="#cb93-2" aria-hidden="true" tabindex="-1"></a>anotaciones <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_tsv</span>(<span class="st">"data_raw/anotaciones.tsv"</span>)</span>
-<span id="cb93-3"><a href="#cb93-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="st">"longitud"</span> <span class="sc">%in%</span> <span class="fu">names</span>(anotaciones))</span>
-<span id="cb93-4"><a href="#cb93-4" aria-hidden="true" tabindex="-1"></a>seleccion <span class="ot">&lt;-</span> anotaciones[<span class="sc">!</span><span class="fu">is.na</span>(anotaciones<span class="sc">$</span>longitud) <span class="sc">&amp;</span></span>
-<span id="cb93-5"><a href="#cb93-5" aria-hidden="true" tabindex="-1"></a>                           anotaciones<span class="sc">$</span>longitud <span class="sc">&gt;</span> <span class="dv">100</span>, ]</span>
-<span id="cb93-6"><a href="#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"results"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb93-7"><a href="#cb93-7" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(seleccion, <span class="st">"results/genes_seleccionados.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="actividad-integradora" class="level2" data-number="2.12">
-<h2 data-number="2.12" class="anchored" data-anchor-id="actividad-integradora"><span class="header-section-number">2.12</span> Actividad integradora</h2>
-<div class="callout callout-style-default callout-note callout-titled" title="Reto. Un resumen de secuencias en R">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Reto. Un resumen de secuencias en R
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Recibes las siguientes secuencias, que ya se consideran extraídas de un archivo FASTA:</p>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a>secuencias_reto <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">seq01 =</span> <span class="st">"ATGCGTAA"</span>,</span>
-<span id="cb94-3"><a href="#cb94-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">seq02 =</span> <span class="st">"CCGTTAGC"</span>,</span>
-<span id="cb94-4"><a href="#cb94-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">seq03 =</span> <span class="st">"ATGATGCC"</span>,</span>
-<span id="cb94-5"><a href="#cb94-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">seq04 =</span> <span class="st">"TTTTGGCA"</span>,</span>
-<span id="cb94-6"><a href="#cb94-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">seq05 =</span> <span class="st">"GGATGCCC"</span></span>
-<span id="cb94-7"><a href="#cb94-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p>Construye un script que:</p>
-<ol type="1">
-<li>Guarde los identificadores y secuencias en una tabla.</li>
-<li>Agregue una columna con la longitud de cada secuencia.</li>
-<li>Agregue una columna lógica que indique si contiene el motivo literal <code>ATG</code>.</li>
-<li>Seleccione las secuencias que contienen el motivo.</li>
-<li>Muestre cuántas secuencias cumplen la condición.</li>
-<li><strong>Opcional:</strong> guarde la tabla completa en un archivo TSV dentro de <code>results/</code>.</li>
-</ol>
-<p>Antes de programar, escribe dos líneas que describan <strong>entrada → procesamiento → salida</strong>. Al finalizar, comprueba manualmente al menos una fila.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled" title="Solución · Actividad integradora">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución · Actividad integradora
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">id =</span> <span class="fu">names</span>(secuencias_reto),</span>
-<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">secuencia =</span> <span class="fu">unname</span>(secuencias_reto),</span>
-<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span></span>
-<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>resumen<span class="sc">$</span>longitud <span class="ot">&lt;-</span> <span class="fu">nchar</span>(resumen<span class="sc">$</span>secuencia)</span>
-<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>resumen<span class="sc">$</span>tiene_ATG <span class="ot">&lt;-</span> <span class="fu">grepl</span>(<span class="st">"ATG"</span>, resumen<span class="sc">$</span>secuencia, <span class="at">fixed =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>seleccion <span class="ot">&lt;-</span> resumen[resumen<span class="sc">$</span>tiene_ATG, ]</span>
-<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resumen)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     id secuencia longitud tiene_ATG
-1 seq01  ATGCGTAA        8      TRUE
-2 seq02  CCGTTAGC        8     FALSE
-3 seq03  ATGATGCC        8      TRUE
-4 seq04  TTTTGGCA        8     FALSE
-5 seq05  GGATGCCC        8      TRUE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(seleccion)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>     id secuencia longitud tiene_ATG
-1 seq01  ATGCGTAA        8      TRUE
-3 seq03  ATGATGCC        8      TRUE
-5 seq05  GGATGCCC        8      TRUE</code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Secuencias con ATG:"</span>, <span class="fu">sum</span>(resumen<span class="sc">$</span>tiene_ATG), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code>Secuencias con ATG: 3 </code></pre>
-</div>
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Guardado opcional:</span></span>
-<span id="cb101-2"><a href="#cb101-2" aria-hidden="true" tabindex="-1"></a><span class="co"># dir.create("results", showWarnings = FALSE)</span></span>
-<span id="cb101-3"><a href="#cb101-3" aria-hidden="true" tabindex="-1"></a><span class="co"># write.table(resumen, "results/resumen_secuencias.tsv",</span></span>
-<span id="cb101-4"><a href="#cb101-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             sep = "\t", row.names = FALSE, quote = FALSE)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
-<p><strong>Entrada:</strong> vector nombrado de secuencias. <strong>Procesamiento:</strong> obtener longitudes y buscar un patrón literal. <strong>Salida:</strong> tabla anotada y subconjunto de coincidencias.</p>
-<p><strong>Interpretación:</strong> la coincidencia de un motivo corto no permite inferir por sí sola función biológica, ortología o expresión.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="cierre" class="level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span> Cierre</h1>
-<p>Comprueba que puedes explicar la diferencia entre un vector, una lista y un <code>data.frame</code>; escribir una función; seleccionar registros mediante condiciones; y ejecutar un script desde un proyecto de RStudio.</p>
-<p><strong>Para la siguiente sesión:</strong> trabajaremos con archivos TSV de anotaciones y metadatos que contienen inconsistencias deliberadas. Utilizaremos R para importarlos, inspeccionarlos y validar su estructura, sin recurrir a métodos estadísticos.</p>
+<section id="referencias" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="referencias"><span class="header-section-number">1.5</span> Referencias</h2>
+<ul>
+<li>Presentación de <a href="https://miriamll.github.io/teaching_R_Rmd/Repro#1">Reproducibilidad de Miriam Lerma</a></li>
+<li>Presentación <a href="https://miriamll.github.io/teaching_R_Rmd/GitGithubZenodo#1">introducción a Git, GitHub y Zenodo de Miriam Lerma</a></li>
+<li><a href="https://lcg-cursos.github.io/material/introbioinfo/L2-buenas-practicas.html#1">Presentación de Introducción a la Bioinformática - Heladia Salgado</a></li>
+<li><a href="https://flor14.github.io/rladies-jujuy/presentacion.html?panelset=compendio&amp;panelset1=bibliograf%25C3%25ADa#3">Mi próximo artículo científico en R de Florencia D´Andrea</a></li>
+<li><a href="https://github.com/WhitakerLab/ReproducibleResearch">Kristie Reproducible Research</a></li>
+<li><a href="https://figshare.com/articles/journal_contribution/Showing_your_working_a_how_to_guide_to_reproducible_research/5443201/1?file=9410686">Presentación de Kristie</a></li>
+<li><a href="https://ifb-elixirfr.github.io/IFB-FAIR-bioinfo-training/assets/pdf/Session2020/01_introduction.pdf">FAIR- bioinformatic</a></li>
+<li><a href="https://github.com/AliciaMstt/BioinfInvRepro2016-II/blob/master/Unidad1/Unidad1_Bioinf_e_Investigaci%C3%B3n_Reproducible.md">Unidad 1 Bioinformática e investigación reproducible</a></li>
+<li><a href="https://academic.oup.com/bib/article/24/6/bbad375/7326135">The five pillars of computational reproducibility: bioinformatics and beyond</a></li>
+<li><a href="https://open-science-training-handbook.github.io/Open-Science-Training-Handbook_ES/02OpenScienceBasics/04ReproducibleResearchAndDataAnalysis.html">Investigación reproducible y análisis de datos</a></li>
+<li>Haydee tutorial: <a href="https://haydeeperuyero.github.io/Computo_Cientifico/">Temas Selectos de Análisis Numérico y Computación Científica: Computo científico para el análisis de datos</a></li>
+<li>Alejandra Medina tutorial: <a href="https://comunidadbioinfo.github.io/cdsb2023/control-de-versiones-con-github-y-rstudio.html">Control de versiones con GitHub y RStudio</a></li>
+<li>Wilson, et al.&nbsp;2014. <a href="https://journals.plos.org/plosbiology/article?id=10.1371/journal.pbio.1001745">Best Practices for Scientific Computing</a>. PLOS Biology</li>
+<li>Evelia Coss - tutorial <a href="https://github.com/EveliaCoss/Buenaspracticas_R_Mayo2024">Buenas practicas en R</a></li>
+<li>Evelia Coss - <a href="https://github.com/EveliaCoss/Make_yourCV">Make your CV tutorial</a></li>
+<li>Markdwn Guide - <a href="https://www.markdownguide.org/getting-started/">Getting Started</a></li>
+<li>Allison Horst - <a href="https://allisonhorst.com/allison-horst">Imagenes</a></li>
+<li><a href="https://srvanderplas.github.io/stat-computing-r-python/">Statistical Computing using R and Python</a></li>
+<li><a href="https://learning.nceas.ucsb.edu/2024-10-coreR/">Training Materials</a></li>
+<li><a href="https://damiandeluca.com.ar/como-comenzar-con-visual-studio-code-una-guia-para-principiantes">Visual Studio Code</a></li>
+<li><a href="https://blog.ml.cmu.edu/2020/08/31/5-reproducibility/">Articulo reproducibilidad</a></li>
+</ul>
 
 
 </section>
@@ -1708,6 +817,9 @@ $genC
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./parte2.html" class="pagination-link" aria-label="Introducción a R">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -1,0 +1,212 @@
+## Objetos y estructuras de datos en R
+
+
+### Recordatorio
+
+Al abrir RStudio Desktop encontrarás normalmente cuatro áreas:
+
+- **Source (editor):** permite escribir y guardar scripts `.R` y documentos `.qmd`.
+- **Console:** ejecuta instrucciones de R y muestra sus resultados o errores.
+- **Environment/History:** muestra objetos creados durante la sesión y comandos anteriores.
+- **Files/Plots/Packages/Help:** permite navegar archivos, ver gráficos, gestionar paquetes y consultar documentación.
+
+Los paneles pueden cambiar de posición desde **Tools > Global Options > Pane Layout**. Para modificar el tema visual, utiliza **Tools > Global Options > Appearance**.
+
+Escribe estas instrucciones **una por una en la consola de RStudio**:
+
+```{r}
+2 + 3 * 4
+sqrt(81)
+R.version.string
+getwd()
+```
+
+`getwd()` muestra la carpeta de trabajo actual; al trabajar con un proyecto de RStudio podemos administrar mejor nuestras rutas.
+
+
+
+
+
+## Asignación, nombres y tipos básicos
+
+Un **objeto** almacena un valor o una estructura que podremos reutilizar. Usaremos `<-` para asignar valores. Los nombres distinguen mayúsculas de minúsculas: `gen` y `Gen` son objetos distintos.
+
+```{r}
+identificador <- "gene_001"
+longitud <- 450L
+proporcion_gc <- 0.53
+anotado <- TRUE
+
+class(identificador)
+class(longitud)
+class(proporcion_gc)
+class(anotado)
+```
+
+| Tipo | Ejemplo | Uso |
+|---|---|---|
+| `character` | `"ATGC"` | Secuencias, nombres e identificadores |
+| `integer` | `450L` | Conteos y posiciones enteras |
+| `double` | `0.53` | Mediciones numéricas |
+| `logical` | `TRUE` | Indicadores y condiciones |
+
+`numeric` se usa habitualmente para valores numéricos, aunque `class(1.5)` devuelve `"numeric"` y `typeof(1.5)` devuelve `"double"`. Usa `class()`, `typeof()` y `str()` para inspeccionar objetos.
+
+```{r}
+class(1.5)
+typeof(1.5)
+str(identificador)
+```
+
+::: {.callout-important title="Valores faltantes y conversiones"}
+`NA` representa un valor faltante. Una conversión puede introducir `NA` si el texto no se puede interpretar como número; nunca supongas que la conversión fue correcta sin revisarla.
+:::
+
+```{r}
+valores <- c("12", "18", "sin_dato")
+# La conversión produce una advertencia; no la ejecutamos automáticamente
+# as.numeric(valores)
+is.na(c(10, NA, 20))
+```
+
+## Vectores e indexación
+
+Un **vector atómico** contiene elementos del mismo tipo. Se construye con `c()` y se indexa mediante corchetes. **R comienza a contar posiciones desde 1**, no desde 0.
+
+```{r}
+genes <- c("gA", "gB", "gC", "gD")
+longitudes <- c(150, 400, 220, 510)
+
+length(genes)
+genes[1]
+genes[c(2, 4)]
+genes[longitudes >= 300]
+```
+
+Las operaciones vectorizadas se aplican a varios elementos sin escribir un ciclo explícito:
+
+```{r}
+longitudes / 3
+longitudes >= 300
+sum(longitudes >= 300)
+```
+
+::: {.callout-note title="Ejercicio 1. Vectores y selección"}
+Crea los vectores `ids <- c("g1", "g2", "g3", "g4", "g5")` y `tam <- c(90, 450, 310, 120, 600)`.
+
+1. Selecciona el tercer identificador.
+2. Recupera los identificadores de genes con longitud de al menos 300.
+3. Cuenta cuántos cumplen esa condición sin usar un ciclo.
+:::
+
+::: {.callout-tip collapse="true" title="Solución · Ejercicio 1"}
+```{r}
+ids <- c("g1", "g2", "g3", "g4", "g5")
+tam <- c(90, 450, 310, 120, 600)
+ids[3]
+ids[tam >= 300]
+sum(tam >= 300)
+```
+Los genes seleccionados son `g2`, `g3` y `g5`; el conteo es 3.
+:::
+
+## Matrices y arreglos
+
+Una **matriz** tiene dos dimensiones y almacena elementos del mismo tipo. Un **arreglo** (*array*) generaliza esta idea a más dimensiones.
+
+```{r}
+conteos <- matrix(
+  c(12, 8, 4, 6, 10, 2),
+  nrow = 3,
+  dimnames = list(c("g1", "g2", "g3"), c("M1", "M2"))
+)
+conteos
+conteos[2, 1]
+conteos[, "M2"]
+dim(conteos)
+```
+
+```{r}
+arreglo <- array(1:8, dim = c(2, 2, 2))
+dim(arreglo)
+```
+
+## Data frames y tibbles
+
+Un **data frame** es una tabla: cada columna puede tener un tipo diferente, pero todas deben tener la misma cantidad de filas. En la sesión 2 veremos importación y validación de tablas, y en la sesión 3 su transformación con `dplyr` y `tidyr`.
+
+```{r}
+anotaciones <- data.frame(
+  gen = c("g1", "g2", "g3"),
+  longitud = c(450, 120, 800),
+  producto = c("transportador", "hipotetica", "enzima")
+)
+
+anotaciones
+str(anotaciones)
+anotaciones$longitud
+anotaciones[2, ]
+anotaciones[anotaciones$longitud > 200, ]
+```
+
+Un **tibble** es una variante moderna de `data.frame`, con una impresión más compacta y comportamientos de selección más consistentes.
+
+```{r}
+#| eval: false
+# Requiere haber instalado tibble
+# tibble::as_tibble(anotaciones)
+```
+
+## Listas y factores
+
+Las **listas** pueden almacenar objetos de distintos tipos y tamaños. Resultan útiles para reunir resultados de un análisis.
+
+```{r}
+muestra <- list(
+  id = "M01",
+  secuencias = c("ATGCGT", "CCATGA"),
+  anotaciones = anotaciones
+)
+
+muestra$id
+muestra[["secuencias"]]
+muestra["secuencias"] # Conserva una lista
+```
+
+Un **factor** representa categorías con niveles definidos. Su orden puede importar al crear tablas o gráficos.
+
+```{r}
+condicion <- factor(c("control", "tratamiento", "control"),
+                    levels = c("control", "tratamiento"))
+levels(condicion)
+```
+
+| Estructura | Dimensiones | ¿Elementos del mismo tipo? | Ejemplo de uso |
+|---|---|---|---|
+| Vector | 1 | Sí | Identificadores o longitudes |
+| Matriz | 2 | Sí | Conteos por gen y muestra |
+| Array | 2 o más | Sí | Datos multidimensionales |
+| Data frame / tibble | 2 | Por columna | Tabla de anotaciones |
+| Lista | Variable | No | Resultados heterogéneos |
+
+::: {.callout-note title="Ejercicio 2. Elegir estructuras"}
+1. Construye un `data.frame` con tres genes, sus longitudes y una etiqueta funcional.
+2. Recupera únicamente las filas con longitud mayor que 200.
+3. Crea una lista que contenga la tabla y el identificador de una muestra.
+4. Explica por qué una matriz de caracteres no sería una buena sustitución para la tabla cuando queremos conservar longitudes numéricas.
+:::
+
+::: {.callout-tip collapse="true" title="Solución · Ejercicio 2"}
+```{r}
+tabla <- data.frame(
+  gen = c("g1", "g2", "g3"),
+  longitud = c(100, 350, 500),
+  funcion = c("hipotetica", "enzima", "transportador")
+)
+tabla[tabla$longitud > 200, ]
+resultado <- list(muestra = "M01", genes = tabla)
+resultado$genes
+```
+En una matriz todos los elementos comparten tipo; al combinar texto y números, las longitudes se convertirían en caracteres.
+:::
+

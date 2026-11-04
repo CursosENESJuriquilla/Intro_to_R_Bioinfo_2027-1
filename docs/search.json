@@ -22,12 +22,12 @@
   {
     "objectID": "parte1.html",
     "href": "parte1.html",
-    "title": "1  De Bash a R: programación para bioinformática",
+    "title": "1  Buenas prácticas en bioinformática",
     "section": "",
-    "text": "2 Material previo opcional: instalación y preparación del entorno",
+    "text": "1.1 Un algoritmo nos permite resolver un problema ⭐\nUn algoritmo es un método para resolver un problema mediante una serie de pasos definidos, precisos y finitos.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -38,7 +38,7 @@
     "text": "2.1 ¿Qué son R, RStudio y las herramientas de compilación?\n\nR es el lenguaje y el entorno que ejecuta los análisis.\nRStudio Desktop es un entorno de desarrollo (IDE) para editar scripts, trabajar con proyectos y ejecutar R; no sustituye la instalación de R.\nLas herramientas de compilación permiten instalar paquetes desde su código fuente cuando no existe un binario apropiado o cuando el paquete requiere compilación. No todos los paquetes las necesitan.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -49,7 +49,7 @@
     "text": "2.2 Windows: R, RStudio y Rtools\n\nDescarga e instala R desde https://cran.r-project.org/bin/windows/base/.\nDescarga e instala RStudio Desktop desde https://posit.co/download/rstudio-desktop/.\nConsulta https://cran.r-project.org/bin/windows/Rtools/ e instala la versión de Rtools compatible con tu versión de R. No elijas una versión al azar: CRAN indica las correspondencias.\nReinicia RStudio después de instalar las herramientas, si ya estaba abierto.\n\nVerificación de Rtools (desde la consola de R):\n\n\nCódigo\ninstall.packages(\"pkgbuild\")  # Solo si aún no está instalado\npkgbuild::check_build_tools(debug = TRUE)\n\n\nSi la verificación falla, revisa las instrucciones de CRAN para la versión instalada de R y Rtools antes de modificar manualmente variables como PATH.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -60,7 +60,7 @@
     "text": "2.3 macOS: R, RStudio y herramientas de desarrollo\n\nInstala la versión de R correspondiente a tu equipo desde https://cran.r-project.org/bin/macosx/ (verifica si es Apple Silicon o Intel).\nInstala RStudio Desktop desde https://posit.co/download/rstudio-desktop/.\nEn la terminal de macOS, instala las herramientas de línea de comandos de Xcode:\n\n\n\nCódigo\nxcode-select --install\n\n\n\nAlgunos paquetes que compilan código Fortran requieren GNU Fortran además de las herramientas anteriores. Consulta las versiones y las indicaciones oficiales en https://mac.r-project.org/tools/; deben ser compatibles con tu instalación de R.\n\nNo hace falta instalar Xcode completo para la mayoría de las tareas de compilación de paquetes de R.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -71,7 +71,7 @@
     "text": "2.4 Linux: R y compiladores del sistema\nEn Ubuntu o Debian, si tienes permisos de administración y todavía no están instalados, puedes ejecutar en la terminal:\n\n\nCódigo\nsudo apt update\nsudo apt install -y r-base r-base-dev build-essential gfortran\n\n\nDespués puedes instalar RStudio Desktop desde https://posit.co/download/rstudio-desktop/ si deseas utilizarlo.\nEn otras distribuciones (Fedora, Arch, etc.), los nombres de los paquetes y los comandos del gestor de paquetes son diferentes. Algunas bibliotecas adicionales (libcurl, libxml2, libssl, entre otras) pueden ser necesarias solo para determinados paquetes de R.\nEn un clúster o servidor compartido, no ejecutes sudo ni intentes instalar paquetes globales sin autorización. Comprueba si R está disponible:\n\n\nCódigo\nR --version\nRscript --version\n# En sistemas que usan módulos, consulta la documentación local:\nmodule avail R",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -82,7 +82,7 @@
     "text": "2.5 Comprobar la instalación de R\nAbre RStudio (o una sesión interactiva de R) y ejecuta:\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\nSys.info()[[\"sysname\"]]\n\n\n[1] \"Windows\"\n\n\nCódigo\n2 + 2\n\n\n[1] 4",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -93,7 +93,7 @@
     "text": "2.6 Instalar y cargar paquetes de R\nUn paquete se instala una vez por entorno o biblioteca; se carga con library() en cada sesión en la que se necesita. No incluyas install.packages() en scripts de análisis que deban ejecutarse repetidamente.\n\n\nCódigo\n# Ejecutar en la consola, una vez por entorno:\ninstall.packages(c(\"readr\", \"dplyr\", \"tidyr\", \"ggplot2\", \"purrr\", \"here\"))\n\n# En los scripts, cargar los paquetes necesarios:\nlibrary(readr)\nlibrary(dplyr)\n\n# También se puede llamar una función con paquete::función:\n# readr::read_tsv(\"data_raw/anotaciones.tsv\")\n\n\nPara comprobar las herramientas de compilación de tu sistema, cuando corresponda:\n\n\nCódigo\nif (!requireNamespace(\"pkgbuild\", quietly = TRUE)) {\n  install.packages(\"pkgbuild\")\n}\npkgbuild::check_build_tools(debug = TRUE)\n\n\nPara revisar el entorno y consultar la ayuda:\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\n\"readr\" %in% rownames(installed.packages())\n\n\n[1] TRUE\n\n\nCódigo\nsessionInfo()\n\n\nR version 4.6.0 (2026-04-24 ucrt)\nPlatform: x86_64-w64-mingw32/x64\nRunning under: Windows 11 x64 (build 26200)\n\nMatrix products: default\n  LAPACK version 3.12.1\n\nlocale:\n[1] LC_COLLATE=Spanish_Mexico.utf8  LC_CTYPE=Spanish_Mexico.utf8   \n[3] LC_MONETARY=Spanish_Mexico.utf8 LC_NUMERIC=C                   \n[5] LC_TIME=Spanish_Mexico.utf8    \n\ntime zone: America/Mexico_City\ntzcode source: internal\n\nattached base packages:\n[1] stats     graphics  grDevices utils     datasets  methods   base     \n\nloaded via a namespace (and not attached):\n [1] htmlwidgets_1.6.4 compiler_4.6.0    fastmap_1.2.0     cli_3.6.6        \n [5] tools_4.6.0       htmltools_0.5.9   otel_0.2.0        rstudioapi_0.19.0\n [9] yaml_2.3.12       rmarkdown_2.32    knitr_1.52        jsonlite_2.0.0   \n[13] xfun_0.61         digest_0.6.39     rlang_1.2.0       evaluate_1.0.5   \n\n\nCódigo\n?read.table\n\n\nstarting httpd help server ... done\n\n\n\n\n\n\n\n\nNotaPaquetes de Bioconductor\n\n\n\nAdemás de CRAN, en bioinformática se utilizan paquetes de Bioconductor, cuyo instalador recomendado es BiocManager. No es necesario instalar paquetes especializados en esta primera sesión.\n\n\nCódigo\ninstall.packages(\"BiocManager\")\nBiocManager::install(\"Biostrings\")  # Ejemplo; solo cuando se necesite\n\n\n\n\n\n\n\n\n\n\nAdvertenciaSi falla una instalación\n\n\n\nLee el primer mensaje de error relevante: distingue entre problemas de red, permisos, versión de R, herramientas de compilación y bibliotecas externas. Un paquete que se instala desde un binario puede no necesitar compiladores, mientras que el mismo paquete instalado desde código fuente sí puede necesitarlos. En equipos institucionales o clústeres, consulta al personal administrador cuando falten dependencias del sistema.\n\n\n\n2.6.1 Lista de verificación antes de la clase\n\nPuedo abrir R y ejecutar 2 + 2.\nPuedo abrir RStudio, o sé cómo ejecutar Rscript en mi entorno.\nPuedo instalar y cargar un paquete de CRAN.\nConozco qué herramientas de compilación corresponden a mi sistema y cómo verificar si están disponibles.\nPuedo consultar sessionInfo() para documentar mi entorno.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -181,7 +181,7 @@
     "text": "2.7 De la terminal a la consola de R\nYa has utilizado herramientas de línea de comandos para transformar datos. R es otro entorno de programación: conserva ideas conocidas (variables, funciones, condiciones, ciclos), pero utiliza sintaxis y estructuras propias.\n\n\n\nTarea\nBash\nR\n\n\n\n\nAsignar valor\nn=5\nn &lt;- 5\n\n\nMostrar valor\necho \"$n\"\nprint(n)\n\n\nEjecutar archivo\nbash script.sh\nRscript script.R\n\n\nComentario\n# comentario\n# comentario\n\n\nConsultar ayuda\nman awk\n?read.table\n\n\n\n\n\nCódigo\nn &lt;- 5\nn * 2\n\n\n[1] 10\n\n\nCódigo\nmensaje &lt;- \"Hola, bioinformática\"\nprint(mensaje)\n\n\n[1] \"Hola, bioinformática\"\n\n\nPrueba en RStudio: escribe una instrucción en la consola y luego guárdala en un archivo .R. Ejecuta una línea del script. ¿Qué diferencia encuentras entre guardar instrucciones y ejecutarlas interactivamente?",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -192,7 +192,7 @@
     "text": "2.8 Objetos y estructuras de datos\n\n2.8.1 Tipos básicos y vectores\nEn R, un vector atómico contiene elementos del mismo tipo. Los índices comienzan en 1, no en 0.\n\n\nCódigo\nids &lt;- c(\"genA\", \"genB\", \"genC\", \"genD\")\nlongitudes &lt;- c(150, 320, 90, 210)\nanotado &lt;- c(TRUE, FALSE, TRUE, TRUE)\n\nclass(ids)\n\n\n[1] \"character\"\n\n\nCódigo\nlength(ids)\n\n\n[1] 4\n\n\nCódigo\nids[1]\n\n\n[1] \"genA\"\n\n\nCódigo\nids[c(2, 4)]\n\n\n[1] \"genB\" \"genD\"\n\n\nCódigo\nlongitudes[longitudes &gt;= 200]\n\n\n[1] 320 210\n\n\nLas comparaciones producen vectores lógicos que pueden utilizarse para seleccionar elementos. Los valores faltantes se representan con NA.\n\n\nCódigo\nlongitudes2 &lt;- c(150, NA, 90)\nis.na(longitudes2)\n\n\n[1] FALSE  TRUE FALSE\n\n\nCódigo\nlongitudes2[!is.na(longitudes2)]\n\n\n[1] 150  90\n\n\n\n\n\n\n\n\nNotaEjercicio 1. Selección de genes (5 min)\n\n\n\nCrea los vectores genes &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\") y tam &lt;- c(450, 120, 800, 300, 75).\n\nObtén el tercer identificador.\nSelecciona los genes con longitud mayor o igual a 300.\nCuenta cuántos genes cumplen esa condición, sin utilizar ciclos.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 1\n\n\n\n\n\n\n\nCódigo\ngenes &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\")\ntam &lt;- c(450, 120, 800, 300, 75)\ngenes[3]\n\n\n[1] \"g3\"\n\n\nCódigo\ngenes[tam &gt;= 300]\n\n\n[1] \"g1\" \"g3\" \"g4\"\n\n\nCódigo\nsum(tam &gt;= 300)\n\n\n[1] 3\n\n\nsum() cuenta los valores TRUE porque en operaciones aritméticas equivalen a 1.\n\n\n\n\n\n2.8.2 Tablas: data frames\nUn data.frame representa una tabla cuyas columnas pueden tener tipos diferentes. Aquí cada fila corresponde a un gen.\n\n\nCódigo\nanotaciones &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\", \"g4\"),\n  longitud = c(450, 120, 800, 300),\n  producto = c(\"transportador\", \"hipotetica\", \"enzima\", \"enzima\"),\n  stringsAsFactors = FALSE\n)\nanotaciones\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n4  g4      300        enzima\n\n\nCódigo\nstr(anotaciones)\n\n\n'data.frame':   4 obs. of  3 variables:\n $ gen     : chr  \"g1\" \"g2\" \"g3\" \"g4\"\n $ longitud: num  450 120 800 300\n $ producto: chr  \"transportador\" \"hipotetica\" \"enzima\" \"enzima\"\n\n\nCódigo\nanotaciones$gen\n\n\n[1] \"g1\" \"g2\" \"g3\" \"g4\"\n\n\nCódigo\nanotaciones[anotaciones$producto == \"enzima\", ]\n\n\n  gen longitud producto\n3  g3      800   enzima\n4  g4      300   enzima\n\n\nRecuerda la diferencia entre seleccionar una columna (anotaciones$gen), una fila (anotaciones[2, ]) y una celda (anotaciones[2, 3]).\n\n\n2.8.3 Listas\nUna lista puede almacenar objetos de tipos y tamaños diferentes, por ejemplo secuencias, metadatos y una tabla de resultados.\n\n\nCódigo\nmuestra &lt;- list(\n  id = \"M01\",\n  secuencias = c(\"ATGCGT\", \"ATTA\", \"GGCCATG\"),\n  anotaciones = anotaciones\n)\nmuestra$id\n\n\n[1] \"M01\"\n\n\nCódigo\nmuestra$secuencias\n\n\n[1] \"ATGCGT\"  \"ATTA\"    \"GGCCATG\"\n\n\nCódigo\nmuestra[[\"anotaciones\"]]\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n4  g4      300        enzima\n\n\n\n\n\n\n\n\nImportanteNo confundir\n\n\n\nUn vector atómico, una lista y un data.frame no son equivalentes. Elegir la estructura apropiada facilita el procesamiento y evita conversiones innecesarias.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -203,7 +203,7 @@
     "text": "2.9 Operaciones, indexación y funciones\n\n2.9.1 Trabajar con secuencias como cadenas de caracteres\nUsaremos secuencias cortas para practicar funciones de R; esto no reemplaza herramientas especializadas para archivos FASTA grandes.\n\n\nCódigo\nsecuencias &lt;- c(\n  genA = \"ATGCCGTAA\",\n  genB = \"CCGTTAGG\",\n  genC = \"ATGATGCC\"\n)\n\nnchar(secuencias)                 # Longitud de cada cadena\n\n\ngenA genB genC \n   9    8    8 \n\n\nCódigo\ngrepl(\"ATG\", secuencias)        # ¿Contiene el patrón literal?\n\n\n[1]  TRUE FALSE  TRUE\n\n\nCódigo\nnames(secuencias)[grepl(\"ATG\", secuencias)]\n\n\n[1] \"genA\" \"genC\"\n\n\ngrepl() devuelve un vector lógico; grep() devuelve posiciones (o valores con argumentos adicionales). Encontrar ATG no basta para identificar genes funcionales ni validar un marco de lectura.\n\n\n2.9.2 Definir funciones\n\n\nCódigo\ncontiene_motivo &lt;- function(secuencia, motivo = \"ATG\") {\n  grepl(motivo, secuencia, fixed = TRUE)\n}\n\ncontiene_motivo(\"CCATGTT\")\n\n\n[1] TRUE\n\n\nCódigo\ncontiene_motivo(\"CCATGTT\", \"TGA\")\n\n\n[1] FALSE\n\n\nUna función recibe argumentos, realiza operaciones y devuelve un resultado. Los nombres de los argumentos deben expresar qué información espera la función.\n\n\n\n\n\n\nNotaEjercicio 2. Una función reutilizable (7 min)\n\n\n\nEscribe una función es_adn_simple() que reciba una cadena y devuelva TRUE si contiene únicamente las letras A, C, G y T (en mayúsculas). Prueba con \"ACGT\", \"ACNT\" y \"ACGTX\". Para este ejercicio no consideres símbolos de ambigüedad IUPAC.\nPista: grepl() acepta expresiones regulares; ^[ACGT]+$ describe una o más letras válidas desde el principio hasta el final.\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 2\n\n\n\n\n\n\n\nCódigo\nes_adn_simple &lt;- function(secuencia) {\n  grepl(\"^[ACGT]+$\", secuencia)\n}\n\nes_adn_simple(\"ACGT\")\n\n\n[1] TRUE\n\n\nCódigo\nes_adn_simple(\"ACNT\")\n\n\n[1] FALSE\n\n\nCódigo\nes_adn_simple(\"ACGTX\")\n\n\n[1] FALSE\n\n\nEsta función comprueba un criterio deliberadamente restringido; secuencias reales pueden utilizar códigos de ambigüedad.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -214,7 +214,7 @@
     "text": "2.10 Condiciones e iteración\n\n2.10.1 Condiciones\n\n\nCódigo\nclasificar_longitud &lt;- function(n) {\n  if (is.na(n)) {\n    return(\"desconocida\")\n  }\n  if (n &gt;= 300) {\n    \"larga\"\n  } else {\n    \"corta\"\n  }\n}\n\nclasificar_longitud(450)\n\n\n[1] \"larga\"\n\n\nCódigo\nclasificar_longitud(120)\n\n\n[1] \"corta\"\n\n\nLos umbrales de este ejemplo son arbitrarios y didácticos; no representan categorías biológicas universales.\n\n\n2.10.2 Ciclos y funciones de aplicación\n\n\nCódigo\nfor (id in names(secuencias)) {\n  cat(id, \": \", nchar(secuencias[[id]]), \" nt\\n\", sep = \"\")\n}\n\n\ngenA: 9 nt\ngenB: 8 nt\ngenC: 8 nt\n\n\nCódigo\n# Una alternativa vectorizada:\nnchar(secuencias)\n\n\ngenA genB genC \n   9    8    8 \n\n\nCódigo\n# Aplicar una función a los elementos de una lista:\nlapply(as.list(secuencias), contiene_motivo)\n\n\n$genA\n[1] TRUE\n\n$genB\n[1] FALSE\n\n$genC\n[1] TRUE\n\n\nCódigo\n# Simplificar a un vector lógico:\nsapply(as.list(secuencias), contiene_motivo)\n\n\n genA  genB  genC \n TRUE FALSE  TRUE \n\n\nEn R no siempre necesitamos escribir un ciclo explícito. Más adelante conoceremos purrr::map() para trabajar de manera consistente con colecciones de archivos y resultados.\n\n\n\n\n\n\nNotaEjercicio 3. Comparar estrategias (6 min)\n\n\n\nA partir de secuencias, construye un vector lógico que indique qué secuencias contienen ATG de dos formas: (a) mediante un ciclo for y (b) mediante vapply(). Verifica que los resultados sean iguales.\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 3\n\n\n\n\n\n\n\nCódigo\nresultado_for &lt;- setNames(logical(length(secuencias)), names(secuencias))\nfor (i in seq_along(secuencias)) {\n  resultado_for[i] &lt;- contiene_motivo(secuencias[[i]])\n}\n\nresultado_apply &lt;- vapply(secuencias, contiene_motivo, logical(1))\nidentical(resultado_for, resultado_apply)\n\n\n[1] TRUE\n\n\nvapply() exige que la función devuelva el tipo y tamaño indicados (logical(1)), lo que puede ayudar a detectar errores.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -225,7 +225,7 @@
     "text": "2.11 Scripts, paquetes y proyectos RStudio\nYa conoces directorios, rutas relativas y Git. Ahora veamos cómo se integran con R:\nproyecto-bioinfo/\n├── proyecto-bioinfo.Rproj\n├── README.md\n├── .gitignore\n├── data_raw/\n├── R/\n│   └── funciones.R\n├── scripts/\n│   └── 01_resumen.R\n└── results/\nAbre un proyecto existente mediante File &gt; New Project o crea uno nuevo en una carpeta versionada. Un archivo .Rproj almacena opciones del proyecto; no reemplaza a Git.\n\n\nCódigo\n# Ejemplo dentro de scripts/01_resumen.R\nsource(\"R/funciones.R\")\n\ndatos &lt;- read.delim(\"data_raw/anotaciones.tsv\")\n# Validar columnas antes de procesar:\nstopifnot(all(c(\"gen\", \"longitud\") %in% names(datos)))\n\nwrite.table(datos, \"results/anotaciones_revisadas.tsv\",\n            sep = \"\\t\", row.names = FALSE, quote = FALSE)\n\n\nLas rutas del ejemplo se interpretan desde la raíz del proyecto. Si ejecutas Rscript scripts/01_resumen.R desde otra carpeta, el directorio de trabajo puede ser diferente. Para un flujo robusto, acuerda explícitamente desde dónde se ejecutan los scripts o utiliza herramientas de rutas basadas en la raíz del proyecto.\n\n\n\n\n\n\nNotaEjercicio 4. Auditoría rápida (5 min)\n\n\n\nIdentifica al menos cuatro problemas del siguiente fragmento y propón una versión mejorada:\n\n\nCódigo\nsetwd(\"C:/Users/ana/Escritorio/proyecto\")\ninstall.packages(\"readr\")\nx &lt;- readr::read_tsv(\"datos.tsv\")\nx &lt;- x[x$longitud &gt; 100, ]\nwrite.csv(x, \"datos.tsv\")\n\n\n\n\n\n\n\n\n\n\nTipSolución sugerida · Ejercicio 4\n\n\n\n\n\nProblemas: ruta absoluta personal, instalación repetida dentro del script, falta de separación entre datos originales y resultados, escritura de CSV con extensión TSV, ausencia de validaciones y nombres poco descriptivos.\n\n\nCódigo\n# Se ejecuta desde la raíz del proyecto.\nanotaciones &lt;- readr::read_tsv(\"data_raw/anotaciones.tsv\")\nstopifnot(\"longitud\" %in% names(anotaciones))\nseleccion &lt;- anotaciones[!is.na(anotaciones$longitud) &\n                           anotaciones$longitud &gt; 100, ]\ndir.create(\"results\", showWarnings = FALSE)\nreadr::write_tsv(seleccion, \"results/genes_seleccionados.tsv\")",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
     ]
   },
   {
@@ -236,7 +236,876 @@
     "text": "2.12 Actividad integradora\n\n\n\n\n\n\nNotaReto. Un resumen de secuencias en R\n\n\n\nRecibes las siguientes secuencias, que ya se consideran extraídas de un archivo FASTA:\n\n\nCódigo\nsecuencias_reto &lt;- c(\n  seq01 = \"ATGCGTAA\",\n  seq02 = \"CCGTTAGC\",\n  seq03 = \"ATGATGCC\",\n  seq04 = \"TTTTGGCA\",\n  seq05 = \"GGATGCCC\"\n)\n\n\nConstruye un script que:\n\nGuarde los identificadores y secuencias en una tabla.\nAgregue una columna con la longitud de cada secuencia.\nAgregue una columna lógica que indique si contiene el motivo literal ATG.\nSeleccione las secuencias que contienen el motivo.\nMuestre cuántas secuencias cumplen la condición.\nOpcional: guarde la tabla completa en un archivo TSV dentro de results/.\n\nAntes de programar, escribe dos líneas que describan entrada → procesamiento → salida. Al finalizar, comprueba manualmente al menos una fila.\n\n\n\n\n\n\n\n\nTipSolución · Actividad integradora\n\n\n\n\n\n\n\nCódigo\nresumen &lt;- data.frame(\n  id = names(secuencias_reto),\n  secuencia = unname(secuencias_reto),\n  stringsAsFactors = FALSE\n)\nresumen$longitud &lt;- nchar(resumen$secuencia)\nresumen$tiene_ATG &lt;- grepl(\"ATG\", resumen$secuencia, fixed = TRUE)\n\nseleccion &lt;- resumen[resumen$tiene_ATG, ]\nprint(resumen)\n\n\n     id secuencia longitud tiene_ATG\n1 seq01  ATGCGTAA        8      TRUE\n2 seq02  CCGTTAGC        8     FALSE\n3 seq03  ATGATGCC        8      TRUE\n4 seq04  TTTTGGCA        8     FALSE\n5 seq05  GGATGCCC        8      TRUE\n\n\nCódigo\nprint(seleccion)\n\n\n     id secuencia longitud tiene_ATG\n1 seq01  ATGCGTAA        8      TRUE\n3 seq03  ATGATGCC        8      TRUE\n5 seq05  GGATGCCC        8      TRUE\n\n\nCódigo\ncat(\"Secuencias con ATG:\", sum(resumen$tiene_ATG), \"\\n\")\n\n\nSecuencias con ATG: 3 \n\n\nCódigo\n# Guardado opcional:\n# dir.create(\"results\", showWarnings = FALSE)\n# write.table(resumen, \"results/resumen_secuencias.tsv\",\n#             sep = \"\\t\", row.names = FALSE, quote = FALSE)\n\n\nEntrada: vector nombrado de secuencias. Procesamiento: obtener longitudes y buscar un patrón literal. Salida: tabla anotada y subconjunto de coincidencias.\nInterpretación: la coincidencia de un motivo corto no permite inferir por sí sola función biológica, ortología o expresión.",
     "crumbs": [
       "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#qué-son-r-y-rstudio",
+    "href": "parte1.html#qué-son-r-y-rstudio",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.1 1.1 ¿Qué son R y RStudio?",
+    "text": "2.1 1.1 ¿Qué son R y RStudio?\nR es un lenguaje de programación y un entorno de cómputo que permite procesar datos, automatizar operaciones y crear visualizaciones. RStudio Desktop es un entorno de desarrollo integrado (IDE): ofrece editor de código, consola, explorador de archivos, ayuda, gráficos y administración de proyectos. RStudio no sustituye a R: primero se instala R y después RStudio.\nEn esta asignatura usaremos la versión local de RStudio Desktop, instalada en la computadora personal. No necesitaremos RStudio Server ni ejecución remota.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#instalación-de-r-y-rstudio",
+    "href": "parte1.html#instalación-de-r-y-rstudio",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.2 1.2 Instalación de R y RStudio",
+    "text": "2.2 1.2 Instalación de R y RStudio\n\nDescarga R desde CRAN y selecciona tu sistema operativo.\nInstala RStudio Desktop.\nAbre RStudio y ejecuta en la consola:\n\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\nSys.info()[[\"sysname\"]]\n\n\n[1] \"Windows\"\n\n\nSi estos comandos producen resultados, R está funcionando dentro de RStudio. No hace falta reinstalarlo si ya lo tienes configurado.\n\n\n\n\n\n\nNotaInstalación de compiladores (consulta según tu sistema operativo)\n\n\n\n\n\nAlgunos paquetes se distribuyen como binarios y no requieren compilación; otros pueden necesitar herramientas adicionales para instalarse desde el código fuente.\nWindows. Consulta Rtools en CRAN e instala la versión compatible con tu versión de R. No todas las instalaciones de paquetes lo requieren.\nmacOS. Instala las herramientas de línea de comandos de Xcode, si son necesarias. Desde la terminal de macOS (no desde la consola de R):\nxcode-select --install\nAlgunos paquetes necesitan además GNU Fortran; revisa las herramientas oficiales para R en macOS.\nLinux (Ubuntu/Debian). En una terminal local, si tienes permisos de administración:\nsudo apt update\nsudo apt install -y r-base r-base-dev build-essential gfortran\nSegún el paquete pueden requerirse bibliotecas adicionales del sistema. En otras distribuciones de Linux los nombres y gestores de paquetes cambian.\nComprobación opcional de herramientas de compilación:\n\n\nCódigo\ninstall.packages(\"pkgbuild\")\npkgbuild::check_build_tools(debug = TRUE)",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#reconocer-la-interfaz-de-rstudio",
+    "href": "parte1.html#reconocer-la-interfaz-de-rstudio",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.3 1.3 Reconocer la interfaz de RStudio",
+    "text": "2.3 1.3 Reconocer la interfaz de RStudio\nIdentifica los cuatro paneles habituales (su ubicación puede variar): editor, consola, Environment/History y Files/Plots/Packages/Help. En la consola se ejecutan instrucciones de forma interactiva; en el editor se guardan para volver a ejecutarlas.\nPrueba las siguientes expresiones directamente en la consola:\n\n\nCódigo\n2 + 3 * 4\n\n\n[1] 14\n\n\nCódigo\nsqrt(81)\n\n\n[1] 9\n\n\nCódigo\nlog10(1000)\n\n\n[1] 3\n\n\nEl símbolo # inicia un comentario que R no ejecuta.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#instalar-cargar-y-consultar-paquetes",
+    "href": "parte1.html#instalar-cargar-y-consultar-paquetes",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.4 1.4 Instalar, cargar y consultar paquetes",
+    "text": "2.4 1.4 Instalar, cargar y consultar paquetes\nUn paquete es un conjunto de funciones, datos y documentación que amplía las capacidades de R. En R, un paquete se instala en la computadora y después se carga en cada sesión en la que se necesita.\n\n2.4.1 Paquetes desde CRAN\n\n\nCódigo\n# Instalación: normalmente se realiza una sola vez por entorno\ninstall.packages(\"dplyr\")\ninstall.packages(c(\"readr\", \"ggplot2\", \"tidyr\", \"purrr\"))\n\n# Carga: se realiza en las sesiones donde se utilizará el paquete\nlibrary(dplyr)\n\n# También puedes llamar una función sin cargar el paquete completo\n# dplyr::filter(datos, condicion)\n\n\nNo coloques install.packages() en el código que se ejecutará cada vez que reproduzcas un análisis. La instalación corresponde a la preparación del entorno; library() o paquete::funcion() corresponden al uso.\n\n\n2.4.2 Paquetes desde Bioconductor\nBioconductor reúne paquetes especializados para análisis de datos biológicos. No se instala igual que un paquete ordinario de CRAN:\n\n\nCódigo\ninstall.packages(\"BiocManager\")\nBiocManager::install(\"Biostrings\")\n\nlibrary(Biostrings)\n\n\nPor ahora solo distinguiremos los repositorios; aprenderemos a utilizar herramientas específicas conforme las necesitemos.\n\n\n2.4.3 Consultar, actualizar y eliminar paquetes\n\n\nCódigo\ninstalled.packages()[, \"Package\"]\npackageVersion(\"dplyr\")\nhelp(package = \"dplyr\")\n?mean\nupdate.packages(ask = FALSE) # No es necesario ejecutarlo durante la clase\nremove.packages(\"nombre_del_paquete\") # Solo si realmente deseas desinstalarlo\n\n\n\n\n\n\n\n\nAdvertenciaProblemas frecuentes\n\n\n\n\n«there is no package called …»: el paquete no está instalado en la biblioteca de R utilizada actualmente.\n«could not find function …»: comprueba el nombre de la función y si cargaste su paquete; también puedes usar paquete::funcion().\nErrores al compilar: verifica las herramientas de desarrollo y dependencias del sistema.\n«package is not available for this version of R»: comprueba la versión de R y la disponibilidad del paquete.\n\n\n\n\n\n2.4.4 Lista de verificación\n\nR abre correctamente dentro de RStudio Desktop.\nPuedo ejecutar una operación en la consola.\nSé dónde escribir y guardar un script .R.\nDistingo install.packages() de library().\nPuedo consultar packageVersion() y la ayuda de una función.\nSé qué herramientas de compilación corresponden a mi sistema operativo, si llego a necesitarlas.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#asignación-nombres-y-tipos-básicos",
+    "href": "parte1.html#asignación-nombres-y-tipos-básicos",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "3.1 2.1 Asignación, nombres y tipos básicos",
+    "text": "3.1 2.1 Asignación, nombres y tipos básicos\nUn objeto almacena un valor o una estructura que podremos reutilizar. Usaremos &lt;- para asignar valores. Los nombres distinguen mayúsculas de minúsculas: gen y Gen son objetos distintos.\n\n\nCódigo\nidentificador &lt;- \"gene_001\"\nlongitud &lt;- 450L\nproporcion_gc &lt;- 0.53\nanotado &lt;- TRUE\n\nclass(identificador)\n\n\n[1] \"character\"\n\n\nCódigo\nclass(longitud)\n\n\n[1] \"integer\"\n\n\nCódigo\nclass(proporcion_gc)\n\n\n[1] \"numeric\"\n\n\nCódigo\nclass(anotado)\n\n\n[1] \"logical\"\n\n\n\n\n\nTipo\nEjemplo\nUso\n\n\n\n\ncharacter\n\"ATGC\"\nSecuencias, nombres e identificadores\n\n\ninteger\n450L\nConteos y posiciones enteras\n\n\ndouble\n0.53\nMediciones numéricas\n\n\nlogical\nTRUE\nIndicadores y condiciones\n\n\n\nnumeric se usa habitualmente para valores numéricos, aunque class(1.5) devuelve \"numeric\" y typeof(1.5) devuelve \"double\". Usa class(), typeof() y str() para inspeccionar objetos.\n\n\nCódigo\nclass(1.5)\n\n\n[1] \"numeric\"\n\n\nCódigo\ntypeof(1.5)\n\n\n[1] \"double\"\n\n\nCódigo\nstr(identificador)\n\n\n chr \"gene_001\"\n\n\n\n\n\n\n\n\nImportanteValores faltantes y conversiones\n\n\n\nNA representa un valor faltante. Una conversión puede introducir NA si el texto no se puede interpretar como número; nunca supongas que la conversión fue correcta sin revisarla.\n\n\n\n\nCódigo\nvalores &lt;- c(\"12\", \"18\", \"sin_dato\")\n# La conversión produce una advertencia; no la ejecutamos automáticamente\n# as.numeric(valores)\nis.na(c(10, NA, 20))\n\n\n[1] FALSE  TRUE FALSE",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#vectores-e-indexación",
+    "href": "parte1.html#vectores-e-indexación",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "3.2 2.2 Vectores e indexación",
+    "text": "3.2 2.2 Vectores e indexación\nUn vector atómico contiene elementos del mismo tipo. Se construye con c() y se indexa mediante corchetes. R comienza a contar posiciones desde 1, no desde 0.\n\n\nCódigo\ngenes &lt;- c(\"gA\", \"gB\", \"gC\", \"gD\")\nlongitudes &lt;- c(150, 400, 220, 510)\n\nlength(genes)\n\n\n[1] 4\n\n\nCódigo\ngenes[1]\n\n\n[1] \"gA\"\n\n\nCódigo\ngenes[c(2, 4)]\n\n\n[1] \"gB\" \"gD\"\n\n\nCódigo\ngenes[longitudes &gt;= 300]\n\n\n[1] \"gB\" \"gD\"\n\n\nLas operaciones vectorizadas se aplican a varios elementos sin escribir un ciclo explícito:\n\n\nCódigo\nlongitudes / 3\n\n\n[1]  50.00000 133.33333  73.33333 170.00000\n\n\nCódigo\nlongitudes &gt;= 300\n\n\n[1] FALSE  TRUE FALSE  TRUE\n\n\nCódigo\nsum(longitudes &gt;= 300)\n\n\n[1] 2\n\n\n\n\n\n\n\n\nNotaEjercicio 1. Vectores y selección\n\n\n\nCrea los vectores ids &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\") y tam &lt;- c(90, 450, 310, 120, 600).\n\nSelecciona el tercer identificador.\nRecupera los identificadores de genes con longitud de al menos 300.\nCuenta cuántos cumplen esa condición sin usar un ciclo.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 1\n\n\n\n\n\n\n\nCódigo\nids &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\")\ntam &lt;- c(90, 450, 310, 120, 600)\nids[3]\n\n\n[1] \"g3\"\n\n\nCódigo\nids[tam &gt;= 300]\n\n\n[1] \"g2\" \"g3\" \"g5\"\n\n\nCódigo\nsum(tam &gt;= 300)\n\n\n[1] 3\n\n\nLos genes seleccionados son g2, g3 y g5; el conteo es 3.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#matrices-y-arreglos",
+    "href": "parte1.html#matrices-y-arreglos",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "3.3 2.3 Matrices y arreglos",
+    "text": "3.3 2.3 Matrices y arreglos\nUna matriz tiene dos dimensiones y almacena elementos del mismo tipo. Un arreglo (array) generaliza esta idea a más dimensiones.\n\n\nCódigo\nconteos &lt;- matrix(\n  c(12, 8, 4, 6, 10, 2),\n  nrow = 3,\n  dimnames = list(c(\"g1\", \"g2\", \"g3\"), c(\"M1\", \"M2\"))\n)\nconteos\n\n\n   M1 M2\ng1 12  6\ng2  8 10\ng3  4  2\n\n\nCódigo\nconteos[2, 1]\n\n\n[1] 8\n\n\nCódigo\nconteos[, \"M2\"]\n\n\ng1 g2 g3 \n 6 10  2 \n\n\nCódigo\ndim(conteos)\n\n\n[1] 3 2\n\n\n\n\nCódigo\narreglo &lt;- array(1:8, dim = c(2, 2, 2))\ndim(arreglo)\n\n\n[1] 2 2 2",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#data-frames-y-tibbles",
+    "href": "parte1.html#data-frames-y-tibbles",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "3.4 2.4 Data frames y tibbles",
+    "text": "3.4 2.4 Data frames y tibbles\nUn data frame es una tabla: cada columna puede tener un tipo diferente, pero todas deben tener la misma cantidad de filas. En la sesión 2 veremos importación y validación de tablas, y en la sesión 3 su transformación con dplyr y tidyr.\n\n\nCódigo\nanotaciones &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\"),\n  longitud = c(450, 120, 800),\n  producto = c(\"transportador\", \"hipotetica\", \"enzima\")\n)\n\nanotaciones\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n\n\nCódigo\nstr(anotaciones)\n\n\n'data.frame':   3 obs. of  3 variables:\n $ gen     : chr  \"g1\" \"g2\" \"g3\"\n $ longitud: num  450 120 800\n $ producto: chr  \"transportador\" \"hipotetica\" \"enzima\"\n\n\nCódigo\nanotaciones$longitud\n\n\n[1] 450 120 800\n\n\nCódigo\nanotaciones[2, ]\n\n\n  gen longitud   producto\n2  g2      120 hipotetica\n\n\nCódigo\nanotaciones[anotaciones$longitud &gt; 200, ]\n\n\n  gen longitud      producto\n1  g1      450 transportador\n3  g3      800        enzima\n\n\nUn tibble es una variante moderna de data.frame, con una impresión más compacta y comportamientos de selección más consistentes.\n\n\nCódigo\n# Requiere haber instalado tibble\n# tibble::as_tibble(anotaciones)",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#listas-y-factores",
+    "href": "parte1.html#listas-y-factores",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "3.5 2.5 Listas y factores",
+    "text": "3.5 2.5 Listas y factores\nLas listas pueden almacenar objetos de distintos tipos y tamaños. Resultan útiles para reunir resultados de un análisis.\n\n\nCódigo\nmuestra &lt;- list(\n  id = \"M01\",\n  secuencias = c(\"ATGCGT\", \"CCATGA\"),\n  anotaciones = anotaciones\n)\n\nmuestra$id\n\n\n[1] \"M01\"\n\n\nCódigo\nmuestra[[\"secuencias\"]]\n\n\n[1] \"ATGCGT\" \"CCATGA\"\n\n\nCódigo\nmuestra[\"secuencias\"] # Conserva una lista\n\n\n$secuencias\n[1] \"ATGCGT\" \"CCATGA\"\n\n\nUn factor representa categorías con niveles definidos. Su orden puede importar al crear tablas o gráficos.\n\n\nCódigo\ncondicion &lt;- factor(c(\"control\", \"tratamiento\", \"control\"),\n                    levels = c(\"control\", \"tratamiento\"))\nlevels(condicion)\n\n\n[1] \"control\"     \"tratamiento\"\n\n\n\n\n\n\n\n\n\n\n\nEstructura\nDimensiones\n¿Elementos del mismo tipo?\nEjemplo de uso\n\n\n\n\nVector\n1\nSí\nIdentificadores o longitudes\n\n\nMatriz\n2\nSí\nConteos por gen y muestra\n\n\nArray\n2 o más\nSí\nDatos multidimensionales\n\n\nData frame / tibble\n2\nPor columna\nTabla de anotaciones\n\n\nLista\nVariable\nNo\nResultados heterogéneos\n\n\n\n\n\n\n\n\n\nNotaEjercicio 2. Elegir estructuras\n\n\n\n\nConstruye un data.frame con tres genes, sus longitudes y una etiqueta funcional.\nRecupera únicamente las filas con longitud mayor que 200.\nCrea una lista que contenga la tabla y el identificador de una muestra.\nExplica por qué una matriz de caracteres no sería una buena sustitución para la tabla cuando queremos conservar longitudes numéricas.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 2\n\n\n\n\n\n\n\nCódigo\ntabla &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\"),\n  longitud = c(100, 350, 500),\n  funcion = c(\"hipotetica\", \"enzima\", \"transportador\")\n)\ntabla[tabla$longitud &gt; 200, ]\n\n\n  gen longitud       funcion\n2  g2      350        enzima\n3  g3      500 transportador\n\n\nCódigo\nresultado &lt;- list(muestra = \"M01\", genes = tabla)\nresultado$genes\n\n\n  gen longitud       funcion\n1  g1      100    hipotetica\n2  g2      350        enzima\n3  g3      500 transportador\n\n\nEn una matriz todos los elementos comparten tipo; al combinar texto y números, las longitudes se convertirían en caracteres.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#operadores-aritméticos-relacionales-y-lógicos",
+    "href": "parte1.html#operadores-aritméticos-relacionales-y-lógicos",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "4.1 3.1 Operadores aritméticos, relacionales y lógicos",
+    "text": "4.1 3.1 Operadores aritméticos, relacionales y lógicos\n\n\n\nOperación\nOperadores\n\n\n\n\nAritmética\n+, -, *, /, ^, %%, %/%\n\n\nComparación\n==, !=, &lt;, &lt;=, &gt;, &gt;=\n\n\nLógica vectorizada\n&, |, !\n\n\nPertenencia\n%in%\n\n\n\nLos paréntesis permiten hacer explícita la precedencia de las operaciones. En condiciones de if, utiliza una expresión lógica de longitud uno; para combinar condiciones escalares puedes usar && y ||.\n\n\nCódigo\nlongitudes &lt;- c(100, 250, 700, 90)\n(longitudes &gt;= 200) & (longitudes &lt;= 600)\n\n\n[1] FALSE  TRUE FALSE FALSE\n\n\nCódigo\n\"g2\" %in% c(\"g1\", \"g2\", \"g3\")\n\n\n[1] TRUE\n\n\nCódigo\n(2 + 3) * 4\n\n\n[1] 20",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#condicionales-if-else-if-y-else",
+    "href": "parte1.html#condicionales-if-else-if-y-else",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "4.2 3.2 Condicionales: if, else if y else",
+    "text": "4.2 3.2 Condicionales: if, else if y else\nUn condicional permite ejecutar instrucciones diferentes según una condición.\n\n\nCódigo\nlongitud_gen &lt;- 350\n\nif (longitud_gen &gt;= 300) {\n  mensaje &lt;- \"Gen de longitud al menos 300\"\n} else {\n  mensaje &lt;- \"Gen de longitud menor que 300\"\n}\nmensaje\n\n\n[1] \"Gen de longitud al menos 300\"\n\n\nCuando se necesita clasificar un vector completo, ifelse() puede ser más apropiado que escribir un if por cada elemento:\n\n\nCódigo\ntamanos &lt;- c(120, 350, 700)\nifelse(tamanos &gt;= 300, \"largo\", \"corto\")\n\n\n[1] \"corto\" \"largo\" \"largo\"",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#ciclos-for-y-while",
+    "href": "parte1.html#ciclos-for-y-while",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "4.3 3.3 Ciclos for y while",
+    "text": "4.3 3.3 Ciclos for y while\nLos ciclos permiten repetir una operación. Ya conoces esta idea de Bash; aquí cambia la sintaxis.\n\n\nCódigo\nsecuencias &lt;- c(\"ATGC\", \"GGTAAC\", \"CCG\")\n\nfor (secuencia in secuencias) {\n  print(nchar(secuencia))\n}\n\n\n[1] 4\n[1] 6\n[1] 3\n\n\nwhile repite mientras una condición siga siendo verdadera. Es necesario que el estado cambie para evitar un ciclo infinito.\n\n\nCódigo\ncontador &lt;- 1\nwhile (contador &lt;= 3) {\n  print(contador)\n  contador &lt;- contador + 1\n}\n\n\n[1] 1\n[1] 2\n[1] 3\n\n\nCuando existe una función vectorizada, suele ser más sencilla:\n\n\nCódigo\nnchar(secuencias)\n\n\n[1] 4 6 3\n\n\n\n\n\n\n\n\nNotaEjercicio 3. Control de flujo\n\n\n\nCon secuencias &lt;- c(\"ATG\", \"ATGCGC\", \"TTAACGTA\", \"GG\"):\n\nEscribe un ciclo for que muestre la longitud de cada secuencia.\nUsa if para indicar si la primera secuencia tiene al menos cinco nucleótidos.\nObtén todas las longitudes con una sola instrucción, sin ciclo.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 3\n\n\n\n\n\n\n\nCódigo\nsecuencias &lt;- c(\"ATG\", \"ATGCGC\", \"TTAACGTA\", \"GG\")\nfor (s in secuencias) {\n  print(nchar(s))\n}\n\n\n[1] 3\n[1] 6\n[1] 8\n[1] 2\n\n\nCódigo\nif (nchar(secuencias[1]) &gt;= 5) {\n  print(\"Al menos cinco\")\n} else {\n  print(\"Menos de cinco\")\n}\n\n\n[1] \"Menos de cinco\"\n\n\nCódigo\nnchar(secuencias)\n\n\n[1] 3 6 8 2",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#de-la-consola-al-script",
+    "href": "parte1.html#de-la-consola-al-script",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "6.1 5.1 De la consola al script",
+    "text": "6.1 5.1 De la consola al script\nLa consola es útil para experimentar, pero un script .R conserva las instrucciones y permite ejecutarlas de nuevo. En RStudio selecciona File → New File → R Script, escribe código y guarda el archivo. Para ejecutar la línea actual o la selección usa Ctrl + Enter (Windows/Linux) o Cmd + Enter (macOS).\nUn script legible tiene un propósito claro, comentarios útiles, nombres descriptivos y no depende de objetos creados previamente en la consola.\n\n\nCódigo\n# Ejemplo de contenido para guardar en scripts/01_exploracion.R\nids &lt;- c(\"g1\", \"g2\", \"g3\")\nsecuencias &lt;- c(\"ATGC\", \"GGCCAA\", \"ATAT\")\nlongitudes &lt;- nchar(secuencias)\nresultado &lt;- data.frame(gen = ids, longitud = longitudes)\nprint(resultado)\n\n\n  gen longitud\n1  g1        4\n2  g2        6\n3  g3        4",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#organizar-el-trabajo-con-un-proyecto-.rproj",
+    "href": "parte1.html#organizar-el-trabajo-con-un-proyecto-.rproj",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "6.2 5.2 Organizar el trabajo con un proyecto .Rproj",
+    "text": "6.2 5.2 Organizar el trabajo con un proyecto .Rproj\nComo ya conoces directorios y Git, nos concentraremos en la función del proyecto de RStudio: abrir el trabajo en un contexto consistente y facilitar el uso de rutas relativas.\n\nEn RStudio elige File → New Project.\nSelecciona New Directory → New Project (o abre un repositorio existente con Existing Directory).\nElige un nombre y una carpeta en tu computadora.\nGuarda los scripts y archivos del análisis dentro del proyecto.\n\nUna estructura inicial sencilla puede ser:\nintro_R/\n├── intro_R.Rproj\n├── data_raw/\n├── scripts/\n│   └── 01_exploracion.R\n├── results/\n└── README.md\ngetwd() muestra el directorio de trabajo actual. Evita rutas absolutas específicas de tu computadora. No es necesario utilizar setwd() dentro de cada script cuando trabajas desde un proyecto bien organizado.\n\n\nCódigo\ngetwd()\n# Ejemplo de ruta relativa dentro del proyecto:\n# readr::read_csv(\"data_raw/muestras.csv\")",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#paquetes-en-los-scripts",
+    "href": "parte1.html#paquetes-en-los-scripts",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "6.3 5.3 Paquetes en los scripts",
+    "text": "6.3 5.3 Paquetes en los scripts\nLas dependencias deben quedar explícitas al inicio del script o utilizarse con paquete::funcion(). En las siguientes sesiones aprenderemos readr, dplyr, tidyr, purrr y ggplot2. No necesitamos cargarlos todos para resolver los ejercicios de hoy.\n\n\n\n\n\n\nAdvertenciaUna regla para comprobar tu código\n\n\n\nAntes de entregar un script, reinicia la sesión de R y ejecútalo desde el inicio. Si solo funciona porque quedaron objetos en Environment, todavía no es reproducible.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#ideas-para-recordar",
+    "href": "parte1.html#ideas-para-recordar",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "7.1 Ideas para recordar",
+    "text": "7.1 Ideas para recordar\n\nR ejecuta el código; RStudio facilita escribirlo y organizarlo.\nUn paquete se instala y se carga: son acciones distintas.\nVectores, matrices, data frames y listas resuelven necesidades diferentes.\nR indexa desde 1 y permite operaciones vectorizadas.\nLas funciones permiten reutilizar código y definir reglas claras de entrada.\nUn script debe ejecutarse desde el principio dentro de su proyecto, sin depender del estado previo de la consola.\n\nEn la siguiente sesión: importaremos archivos tabulares de bioinformática, inspeccionaremos sus columnas y verificaremos su consistencia antes de transformarlos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#material-de-consulta",
+    "href": "parte1.html#material-de-consulta",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "7.2 Material de consulta",
+    "text": "7.2 Material de consulta\n\nCode & Data Bootcamp: Introducción a R.\nCode & Data Bootcamp: Estructuras de datos en R.\nSeminario de Estadística: Introducción a R y RStudio.\nManual oficial de introducción a R.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#qué-son-r-cran-y-rstudio",
+    "href": "parte1.html#qué-son-r-cran-y-rstudio",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.1 1.1 ¿Qué son R, CRAN y RStudio?",
+    "text": "2.1 1.1 ¿Qué son R, CRAN y RStudio?\nR es el lenguaje y entorno de programación que ejecuta nuestras instrucciones. CRAN (Comprehensive R Archive Network) distribuye R y numerosos paquetes adicionales. RStudio Desktop es la aplicación desde la que escribimos, ejecutamos, organizamos y depuramos código R. Por tanto, primero instalamos R y después RStudio. Son programas diferentes y ambos son necesarios para seguir estas prácticas en el entorno propuesto.\n\n\n\n\n\n\nImportanteOrden recomendado de instalación\n\n\n\n\nInstalar R.\nInstalar las herramientas de compilación correspondientes al sistema operativo (especialmente Rtools en Windows).\nInstalar RStudio Desktop.\nComprobar que RStudio detecta R.\nInstalar y probar los paquetes de CRAN y Bioconductor que usaremos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#instalación-en-windows",
+    "href": "parte1.html#instalación-en-windows",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.2 1.2 Instalación en Windows",
+    "text": "2.2 1.2 Instalación en Windows\n\n2.2.1 Paso 1. Descargar e instalar R\n\nEntra a https://cran.r-project.org/.\nSelecciona Download R for Windows.\nEntra en base y elige Download R for Windows (la versión actual ofrecida por CRAN).\nEjecuta el instalador .exe descargado. Acepta las opciones predeterminadas salvo que tengas una razón para modificarlas.\nAl terminar, comprueba que aparece R entre tus aplicaciones.\n\n\n\n\n\n\n\nNota¿Qué versión de R tengo?\n\n\n\nUna vez instalado, abre R o RStudio y ejecuta:\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\ngetRversion()\n\n\n[1] '4.6.0'\n\n\nLa versión exacta importa porque Rtools debe ser compatible con esa versión.\n\n\n\n\n2.2.2 Paso 2. Instalar Rtools (importante)\nRtools proporciona compiladores y otras herramientas que R necesita en Windows para construir e instalar paquetes desde código fuente, por ejemplo paquetes con componentes en C, C++ o Fortran. Muchos paquetes de CRAN tienen versiones binarias precompiladas, pero no todos: instalar Rtools desde el principio ayuda a evitar problemas posteriores, especialmente en bioinformática.\n\nEntra a la página oficial: https://cran.r-project.org/bin/windows/Rtools/.\nConsulta la tabla de compatibilidad y selecciona la versión de Rtools correspondiente a tu versión de R. No elijas una versión solamente porque sea la más reciente.\nAbre la página de esa versión de Rtools y descarga su instalador.\nEjecuta el instalador y conserva la ruta de instalación predeterminada, salvo que las instrucciones oficiales indiquen otra cosa.\nCierra y vuelve a abrir RStudio después de instalarlo.\nComprueba desde la consola de RStudio que las herramientas funcionan:\n\n\n\nCódigo\ninstall.packages(\"pkgbuild\")\npkgbuild::has_build_tools(debug = TRUE)\n\n\nSi el resultado es TRUE, R puede encontrar las herramientas de compilación. Si aparece FALSE, revisa que las versiones sean compatibles, reinicia RStudio y consulta las instrucciones oficiales de Rtools para esa versión.\n\n\n\n\n\n\nAdvertenciaRtools no es un paquete de R\n\n\n\nNo se instala con install.packages(\"Rtools\"). Es un programa adicional de Windows, cuyo instalador se descarga desde CRAN. Tampoco debes copiar comandos de configuración del PATH de versiones antiguas sin comprobar primero las instrucciones actuales: la configuración varía entre versiones.\n\n\n\n\n2.2.3 Paso 3. Instalar RStudio Desktop\n\nAbre https://posit.co/download/rstudio-desktop/.\nDescarga el instalador de RStudio Desktop para Windows.\nEjecuta el archivo descargado y sigue el asistente.\nAbre RStudio y comprueba que puedes escribir 2 + 2 en su consola.\n\nSi RStudio no encuentra R, confirma que R quedó instalado correctamente y revisa Tools &gt; Global Options &gt; General &gt; R version (la ubicación puede variar ligeramente según la versión de RStudio).",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#instalación-en-macos",
+    "href": "parte1.html#instalación-en-macos",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.3 1.3 Instalación en macOS",
+    "text": "2.3 1.3 Instalación en macOS\n\n2.3.1 Paso 1. Descargar e instalar R\n\nEntra a https://cran.r-project.org/ y selecciona Download R for macOS.\nElige el instalador .pkg apropiado para tu arquitectura: Apple silicon (arm64) o Intel (x86_64). Comprueba tu arquitectura en el menú de Apple, Acerca de esta Mac.\nAbre el .pkg y completa la instalación.\nComprueba la versión desde R o, posteriormente, desde RStudio mediante R.version.string.\n\n\n\n2.3.2 Paso 2. Instalar las herramientas de compilación\nEn macOS, el equivalente funcional de parte de Rtools son las Xcode Command Line Tools, que proporcionan herramientas como clang y make. Para algunos paquetes también se necesita GNU Fortran, que se instala por separado.\n\nAbre la aplicación Terminal de macOS (no la consola de R).\nEjecuta:\n\nxcode-select --install\n\nSigue el asistente de instalación. Si indica que las herramientas ya están instaladas, no es necesario reinstalarlas.\nComprueba en Terminal:\n\nxcode-select -p\nclang --version\nmake --version\n\nRevisa https://mac.r-project.org/tools/ para descargar una versión de GNU Fortran compatible con tu instalación de R, cuando vayas a compilar paquetes que lo necesiten. La compatibilidad depende de la versión de R, la arquitectura y las herramientas del sistema.\nSi instalaste GNU Fortran, comprueba en Terminal:\n\ngfortran --version\n\n\n\n\n\n\nAdvertenciaNo confundir Terminal con la consola de R\n\n\n\nLos comandos xcode-select, clang, make y gfortran se ejecutan en Terminal. En cambio, install.packages() y library() son instrucciones de R que se ejecutan en la consola de RStudio.\n\n\n\n\n2.3.3 Paso 3. Instalar RStudio Desktop\n\nDescarga RStudio desde https://posit.co/download/rstudio-desktop/.\nSelecciona la versión de macOS compatible con tu equipo.\nAbre el archivo descargado e instala la aplicación según las instrucciones del sistema.\nInicia RStudio y comprueba que detecta R.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#instalación-en-linux-ubuntudebian",
+    "href": "parte1.html#instalación-en-linux-ubuntudebian",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.4 1.4 Instalación en Linux (Ubuntu/Debian)",
+    "text": "2.4 1.4 Instalación en Linux (Ubuntu/Debian)\nEn Linux, la instalación depende de la distribución. Mostraremos el procedimiento para Ubuntu/Debian, trabajando en una terminal de la computadora local.\n\n2.4.1 Paso 1. Instalar R y las herramientas de compilación\nsudo apt update\nsudo apt install -y r-base r-base-dev build-essential gfortran\nr-base instala R; r-base-dev y build-essential proporcionan herramientas necesarias para compilar muchos paquetes, mientras que gfortran permite compilar código Fortran.\nComprueba en Terminal:\nR --version\ngcc --version\ngfortran --version\n\n\n\n\n\n\nNotaVersiones de R en Linux\n\n\n\nLos repositorios de Ubuntu/Debian pueden ofrecer una versión de R anterior a la publicada en CRAN. Si necesitas una versión más reciente, consulta las instrucciones oficiales de CRAN específicas para tu distribución y versión de Linux: https://cran.r-project.org/bin/linux/. No mezcles repositorios de distintas versiones de Ubuntu/Debian.\n\n\n\n\n2.4.2 Paso 2. Instalar dependencias frecuentes\nAlgunos paquetes necesitan bibliotecas externas. En Ubuntu/Debian suelen ser útiles:\nsudo apt install -y libcurl4-openssl-dev libssl-dev libxml2-dev\nEstas bibliotecas no resuelven todos los problemas posibles; cada paquete puede requerir otras dependencias, que deben consultarse en su documentación o en el mensaje de error de instalación.\n\n\n2.4.3 Paso 3. Instalar RStudio Desktop\n\nVisita https://posit.co/download/rstudio-desktop/.\nDescarga el paquete .deb compatible con tu versión de Ubuntu/Debian y arquitectura.\nAbre una Terminal en la carpeta donde lo descargaste y ejecuta, sustituyendo el nombre por el archivo real:\n\nsudo apt install ./nombre-del-instalador.deb\n\nAbre RStudio Desktop desde el menú de aplicaciones y verifica que R funciona.\n\nSi utilizas Fedora u otra distribución, consulta las instrucciones específicas de Posit y el gestor de paquetes de tu distribución; no utilices directamente los comandos apt.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#primer-inicio-de-rstudio",
+    "href": "parte1.html#primer-inicio-de-rstudio",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.5 1.5 Primer inicio de RStudio",
+    "text": "2.5 1.5 Primer inicio de RStudio\nAl abrir RStudio Desktop encontrarás normalmente cuatro áreas:\n\nSource (editor): permite escribir y guardar scripts .R y documentos .qmd.\nConsole: ejecuta instrucciones de R y muestra sus resultados o errores.\nEnvironment/History: muestra objetos creados durante la sesión y comandos anteriores.\nFiles/Plots/Packages/Help: permite navegar archivos, ver gráficos, gestionar paquetes y consultar documentación.\n\nLos paneles pueden cambiar de posición desde Tools &gt; Global Options &gt; Pane Layout. Para modificar el tema visual, utiliza Tools &gt; Global Options &gt; Appearance.\nEscribe estas instrucciones una por una en la consola de RStudio:\n\n\nCódigo\n2 + 3 * 4\n\n\n[1] 14\n\n\nCódigo\nsqrt(81)\n\n\n[1] 9\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\ngetwd()\n\n\n[1] \"C:/Users/HaydeePeruyero/Documents/RSites/Intro_to_R_Bioinfo_2027-1\"\n\n\ngetwd() muestra la carpeta de trabajo actual; más adelante crearemos un proyecto de RStudio para administrar mejor nuestras rutas.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#descargar-instalar-y-cargar-paquetes",
+    "href": "parte1.html#descargar-instalar-y-cargar-paquetes",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.6 1.6 Descargar, instalar y cargar paquetes",
+    "text": "2.6 1.6 Descargar, instalar y cargar paquetes\n\n2.6.1 ¿Qué es un paquete?\nUn paquete de R reúne funciones, datos y documentación. R incluye paquetes básicos, pero podemos instalar otros para importar archivos, transformar tablas, visualizar datos o trabajar con secuencias biológicas.\nHay una diferencia fundamental:\n\nInstalar (install.packages()): descarga y agrega el paquete a una biblioteca de paquetes de R. Se realiza normalmente una vez por instalación o entorno.\nCargar (library()): permite usar las funciones del paquete en la sesión actual. Se repite cuando abrimos una nueva sesión y necesitamos ese paquete.\n\n\n\n2.6.2 Instalar paquetes desde CRAN\nEn la consola de RStudio, ejecuta:\n\n\nCódigo\ninstall.packages(\"ggplot2\")\ninstall.packages(c(\"dplyr\", \"readr\", \"tidyr\", \"purrr\"))\n\n\nTambién puedes usar Tools &gt; Install Packages o el botón Install de la pestaña Packages. Asegúrate de escribir correctamente los nombres.\n\n\n\n\n\n\nTipSi Windows pregunta si deseas instalar desde código fuente\n\n\n\nCuando exista un binario adecuado, suele ser más sencillo utilizarlo. Si un paquete debe compilarse desde código fuente, necesitarás Rtools correctamente instalado. En macOS o Linux necesitarás las herramientas de compilación correspondientes.\n\n\n\n\n2.6.3 Cargar y utilizar un paquete\n\n\nCódigo\nlibrary(ggplot2)\nlibrary(dplyr)\n\n# Alternativa: llamar una función con el nombre de su paquete\n# dplyr::filter(tabla, conteo &gt; 10)\n\n\nlibrary(ggplot2) no instala ggplot2: si no está instalado, mostrará un error. Puedes utilizar paquete::funcion() para acceder a una función sin adjuntar todo el paquete al espacio de búsqueda.\n\n\n2.6.4 Instalar paquetes desde Bioconductor\nBioconductor distribuye paquetes especializados en bioinformática y biología computacional. Para instalarlos, primero se instala BiocManager desde CRAN y luego se usa BiocManager::install():\n\n\nCódigo\ninstall.packages(\"BiocManager\")  # Una vez por entorno, si falta\nBiocManager::install(\"Biostrings\")\n\nlibrary(Biostrings)\n\n\nBiocManager elige una versión de Bioconductor compatible con tu R. Si tienes problemas, consulta https://bioconductor.org/install/ y comprueba:\n\n\nCódigo\nBiocManager::version()\nBiocManager::valid()\n\n\n\n\n2.6.5 Verificar paquetes instalados y sus versiones\n\n\nCódigo\n\"ggplot2\" %in% rownames(installed.packages())\npackageVersion(\"ggplot2\")\ninstalled.packages()[, c(\"Package\", \"Version\")]\nhelp(package = \"ggplot2\")\n?plot\n\n\nLa pestaña Packages de RStudio también muestra los paquetes instalados y sus versiones.\n\n\n2.6.6 Actualizar y eliminar paquetes\n\n\nCódigo\nupdate.packages(ask = TRUE)      # Revisa antes de actualizar\nremove.packages(\"nombre_paquete\") # Sustituye por un paquete real\n\n\nNo es obligatorio desinstalar un paquete para actualizarlo. Tampoco es recomendable actualizar todos los paquetes justo antes de una práctica: algunas actualizaciones pueden cambiar dependencias o comportamientos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#solución-de-problemas-frecuentes",
+    "href": "parte1.html#solución-de-problemas-frecuentes",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.7 1.7 Solución de problemas frecuentes",
+    "text": "2.7 1.7 Solución de problemas frecuentes\n\n\n\n\n\n\n\n\nProblema\nPosible causa\nQué revisar\n\n\n\n\nRStudio no encuentra R\nR no está instalado o no fue detectado\nInstala R primero; revisa la versión de R en las opciones de RStudio.\n\n\nthere is no package called ...\nEl paquete no está instalado en la biblioteca activa\nEjecuta install.packages() o el instalador de Bioconductor correspondiente.\n\n\ncould not find function ...\nNo se cargó el paquete o el nombre está mal escrito\nUsa library(paquete) o paquete::funcion().\n\n\nError de compilación en Windows\nFalta Rtools o es incompatible con R\nRevisa la tabla oficial de compatibilidad y pkgbuild::has_build_tools().\n\n\nError de compilación en macOS\nFaltan Xcode Command Line Tools o GNU Fortran\nComprueba clang, make y, si se requiere, gfortran.\n\n\nError de compilación en Linux\nFaltan compiladores o bibliotecas del sistema\nRevisa build-essential, gfortran y las dependencias mencionadas en el error.\n\n\nPaquete no disponible para la versión de R\nIncompatibilidad de versiones\nRevisa la versión de R, CRAN o Bioconductor y los requisitos del paquete.\n\n\npermission denied\nNo hay permisos de escritura en la biblioteca de paquetes\nUsa una biblioteca personal de R o revisa los permisos, sin modificar carpetas del sistema indiscriminadamente.\n\n\n\n\n\n\n\n\n\nAdvertenciaAnte un error de instalación\n\n\n\nLee el primer mensaje de error relevante y anota: sistema operativo, versión de R, nombre del paquete y mensaje completo. No intentes resolverlo instalando herramientas al azar. Muchos errores de compilación se deben a una dependencia específica, no a RStudio.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#actividad-comprobar-que-el-entorno-está-listo",
+    "href": "parte1.html#actividad-comprobar-que-el-entorno-está-listo",
+    "title": "1  De Bash a R: programación para bioinformática",
+    "section": "2.8 1.8 Actividad: comprobar que el entorno está listo",
+    "text": "2.8 1.8 Actividad: comprobar que el entorno está listo\n\nAbre RStudio Desktop.\nEjecuta R.version.string y Sys.info()[[\"sysname\"]].\nComprueba que ggplot2 y dplyr están instalados; si no lo están, instálalos desde CRAN.\nCarga ambos paquetes y consulta sus versiones.\nIdentifica las herramientas de compilación correspondientes a tu sistema operativo. En Windows, comprueba especialmente la compatibilidad de Rtools.\n\n\n\nCódigo\nR.version.string\nSys.info()[[\"sysname\"]]\n\ninstall.packages(c(\"ggplot2\", \"dplyr\")) # Solo si faltan\nlibrary(ggplot2)\nlibrary(dplyr)\npackageVersion(\"ggplot2\")\npackageVersion(\"dplyr\")\n\n\n\n\n\n\n\n\nNotaSolución y comentarios de la actividad\n\n\n\n\n\nR.version.string indica la versión de R; Sys.info()[[\"sysname\"]] identifica el sistema operativo. packageVersion() devuelve la versión instalada del paquete. Si library() funciona sin errores, el paquete está disponible en la sesión. La instalación de compiladores se comprueba de manera diferente según el sistema; en Windows se puede utilizar pkgbuild::has_build_tools(debug = TRUE).\n\n\n\n\n2.8.1 Lista de verificación de instalación\n\nInstalé R desde CRAN y conozco mi versión.\nInstalé RStudio Desktop y puedo abrir su consola.\nWindows: instalé la versión de Rtools compatible con R y comprobé sus herramientas.\nmacOS: instalé Xcode Command Line Tools y sé cuándo necesito GNU Fortran.\nLinux: instalé R y las herramientas de compilación de mi distribución.\nPuedo ejecutar expresiones de R desde RStudio.\nSé instalar paquetes desde CRAN y Bioconductor.\nDistingo entre instalar y cargar un paquete.\nSé consultar las versiones y la documentación de los paquetes.\nSé qué información reunir si aparece un error de instalación.\n\nReferencias para esta sección: Introducción a R — Code & Data Bootcamp, CRAN, Rtools, herramientas de R para macOS, RStudio Desktop y Bioconductor.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>De Bash a R: programación para bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#un-algoritmo-nos-permite-resolver-un-problema",
+    "href": "parte1.html#un-algoritmo-nos-permite-resolver-un-problema",
+    "title": "1  Buenas prácticas en bioinformática",
+    "section": "",
+    "text": "Definido: si se sigue dos veces, se obtiene el mismo resultado. Es reproducible.\nPreciso: implica el orden de realización de cada uno de los pasos.\nFinito: Tiene un numero determinado de pasos, implica que tiene un fin.\n\n\nUn algoritmo podemos definirlo como un programa o software.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#para-escribir-un-buen-software-necesitas",
+    "href": "parte1.html#para-escribir-un-buen-software-necesitas",
+    "title": "1  Buenas prácticas en bioinformática",
+    "section": "1.2 Para escribir un buen software necesitas:",
+    "text": "1.2 Para escribir un buen software necesitas:\n\nEscribir código mantenible (maintainable code), usar control de versiones (version control) y rastreadores de problemas (issue trackers), revisiones de código (code reviews), pruebas unitarias (unit testing) y automatización de tareas (task automation).\nWilson, et al. 2014. PLOS Biology\n\nEn bioinformática, es fundamental garantizar el uso ético y responsable de datos sensibles, como los genomas humanos, respetando la privacidad y los marcos legales vigentes. Al mismo tiempo, se debe fomentar la ciencia abierta mediante prácticas transparentes y reproducibles, sin comprometer la integridad de la información. Estas acciones no solo fortalecen la confianza en los resultados, sino que también previenen errores graves que podrían derivar en la retracción de artículos científicos.\n\n\n\n\n\n\n\n\n\n\n\nNotaPasos para escribir un buen software\n\n\n\n\nAnálisis del problema / Definir el problema\nDiseño del algoritmo / Diseño del programa\nCodificación / Escribir el código\nCompilación y ejecución del programa\nVerificación / Realizar pruebas\nDepuración / Detectar los errores y corregirlos\n\n\nProgramacion defensiva\n\n\nDocumentación",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#documentación",
+    "href": "parte1.html#documentación",
+    "title": "1  Buenas prácticas en bioinformática",
+    "section": "1.3 Documentación",
+    "text": "1.3 Documentación\n\n\n\n\n\n\nNota\n\n\n\n\nTítulo (opcional)\nAutor (author): Su nombre\nDia (date): Fecha de creación\nPaquetes (packages)\nDirectorio de trabajo (Working directory): En que carpeta se encuentra tu datos y programa.\nInformación descriptiva del programa (Description): ¿Para qué sirve el programa? Ej: El siguiente programa realiza la suma de dos numeros enteros a partir de la entrada del usuario y posteriormente la imprime en pantalla.\nUsage ¿Cómo se utiliza?\nArgumentos (Arguments)\n\nInformación de entrada (Data Inputs): Ej: Solo numeros enteros (sin decimales).\nInformación de salida (Outpus): Graficas, figuras, tablas, etc.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#puntos-claves-para-buenas-prácticas-en-bioinfo",
+    "href": "parte1.html#puntos-claves-para-buenas-prácticas-en-bioinfo",
+    "title": "1  Buenas prácticas en bioinformática",
+    "section": "1.4 Puntos claves para buenas prácticas en bioinfo ⭐",
+    "text": "1.4 Puntos claves para buenas prácticas en bioinfo ⭐\n\nEscriba programas para personas, no para computadoras (Documenta qué hace y por qué). - Se coherente en la nomenclatura, indentación y otros aspectos del estilo.\nModularidad: Divide los programas en funciones cortas de un solo propósito. 💻 📚\nNo repitas tu código. Crea pasos reproducibles o que se repitan por si solas. ➰\nPlanifique los errores (Programacion defensiva) 🚩\nOptimice el software sólo después de que funcione correctamente. - Si funciona no lo modifiques, simplificalo.\nColaborar - Buscar siempre bibliotecas de software bien mantenidas que hagan lo que necesita. 👥\n\n\n\n\n\n\n\nNotaEjemplo:\n\n\n\nAqui un script bien documentado VisualizacionDatos.R. Tomado del curso de Análisis de datos de RNA-Seq.\n\n\n\n\n\n\n\n\nNotaNota sobre el material\n\n\n\nParte del contenido de estas notas fue tomado y adaptado del curso Bootcamp de Git, Bash y R (2026), impartido con la Dra. Evelia Coss. El material fue reorganizado, complementado y adaptado a los objetivos del presente curso de Bioinformática I.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte1.html#referencias",
+    "href": "parte1.html#referencias",
+    "title": "1  Buenas prácticas en bioinformática",
+    "section": "1.5 Referencias",
+    "text": "1.5 Referencias\n\nPresentación de Reproducibilidad de Miriam Lerma\nPresentación introducción a Git, GitHub y Zenodo de Miriam Lerma\nPresentación de Introducción a la Bioinformática - Heladia Salgado\nMi próximo artículo científico en R de Florencia D´Andrea\nKristie Reproducible Research\nPresentación de Kristie\nFAIR- bioinformatic\nUnidad 1 Bioinformática e investigación reproducible\nThe five pillars of computational reproducibility: bioinformatics and beyond\nInvestigación reproducible y análisis de datos\nHaydee tutorial: Temas Selectos de Análisis Numérico y Computación Científica: Computo científico para el análisis de datos\nAlejandra Medina tutorial: Control de versiones con GitHub y RStudio\nWilson, et al. 2014. Best Practices for Scientific Computing. PLOS Biology\nEvelia Coss - tutorial Buenas practicas en R\nEvelia Coss - Make your CV tutorial\nMarkdwn Guide - Getting Started\nAllison Horst - Imagenes\nStatistical Computing using R and Python\nTraining Materials\nVisual Studio Code\nArticulo reproducibilidad",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Buenas prácticas en bioinformática</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html",
+    "href": "parte2.html",
+    "title": "2  Introducción a R",
+    "section": "",
+    "text": "2.1 ¿Qué es R?\nR es un entorno de desarrollo de software libre y lenguaje de programación.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#qué-es-r",
+    "href": "parte2.html#qué-es-r",
+    "title": "2  Introducción a R",
+    "section": "",
+    "text": "¿Por qué utilizar R?\nEs ampliamente utilizado para la computación estadística, gráfica, y de machine learning. Ofrece una amplia variedad de funciones estadísticas (modelos lineales y no lineales, pruebas estadísticas clásicas, análisis de series de tiempo, clasificación, agrupamiento, etc.), y para realizar gráficas.\nAdemás, existen numerosas librerías que nos pemiten realizar análisis y más gráficas, incluyendo para análisis de datos genómicos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#cómo-instalamos-r",
+    "href": "parte2.html#cómo-instalamos-r",
+    "title": "2  Introducción a R",
+    "section": "2.2 ¿Cómo instalamos R?",
+    "text": "2.2 ¿Cómo instalamos R?\nPara installar R, debemos de entrar a la página de CRAN “The Comprehensive R Archive Network”. Al installar R, descargamos también ~ 25 paqueterías/librerías.\nCRAN es una red en la que se archivan todas las versiones de R base, así como todos los paquetes para R que han pasado por un proceso de revisión riguroso, realizado por el CRAN Team.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#qué-es-rstudio",
+    "href": "parte2.html#qué-es-rstudio",
+    "title": "2  Introducción a R",
+    "section": "2.3 ¿Qué es RStudio?",
+    "text": "2.3 ¿Qué es RStudio?\nRStudio es un entorno de desarrollo integrado (IDE) para R. Un IDE es una aplicación que ayuda a los programadores a desarrollar código de una manera eficiente. Nos proporciona una interfaz para poder editar código fuente, herramientas de ambiente, visualización, terminal y consola.\nRStudio Desktop es una aplicación que se utiliza ampliamente para desarrollar programas en R, pero también podemos accesar al IDE de RStudio a través con RStudio Server, a través de un navegador web.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#cómo-descargamos-rstudio",
+    "href": "parte2.html#cómo-descargamos-rstudio",
+    "title": "2  Introducción a R",
+    "section": "2.4 ¿Cómo descargamos RStudio?",
+    "text": "2.4 ¿Cómo descargamos RStudio?\nPodemos descargar RStudio desde esta página. Ya realizamos el paso 1: Install R.\nEn el paso 2: Install R studio, nos debería detectar el sistema operativo, descarguemos la versión recomendada en el botón azul y sigamos las instrucciones de instalación.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#las-partes-de-rstudio",
+    "href": "parte2.html#las-partes-de-rstudio",
+    "title": "2  Introducción a R",
+    "section": "2.5 Las partes de RStudio",
+    "text": "2.5 Las partes de RStudio",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#cambiando-el-aspecto-de-rstudio",
+    "href": "parte2.html#cambiando-el-aspecto-de-rstudio",
+    "title": "2  Introducción a R",
+    "section": "2.6 Cambiando el aspecto de RStudio",
+    "text": "2.6 Cambiando el aspecto de RStudio\nPodemos cambiar la forma en que se ve la aplicación desde Editar &gt; Preferencias &gt; Apariencia, escogemos el tema que nos guste y damos click en Aplicar y luego OK",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#crear-un-r-project",
+    "href": "parte2.html#crear-un-r-project",
+    "title": "2  Introducción a R",
+    "section": "2.7 Crear un R Project",
+    "text": "2.7 Crear un R Project\nAl comenzar a trabajar con R y RStudio, ya sea para crear un programa para un proyecto, crear una aplicación, presentación, blog, paquete, etc, es recomendado crear un R project.\n\n2.7.1 ¿Qué es un R Project y por qué usarlo?\n\nCarpeta de trabajo dedicada: al crear un R Project, RStudio genera automáticamente una carpeta que contiene todos los archivos y configuraciones necesarias para tu proyecto.\nOrganización: te permite mantener en un solo lugar tus scripts, datos, variables y documentos relacionados.\nReproducibilidad: facilita que cualquier persona (incluido tú en el futuro) pueda abrir el proyecto y trabajar con el mismo entorno.\nIntegración con Git/GitHub: al tener el mismo nombre que tu repositorio, se asegura una sincronización más clara y ordenada entre tu proyecto local y el repositorio remoto.\n\n\n\n2.7.2 ¿Cómo iniciamos un R project?\n\nVayamos en la parte superior al menú Archivos &gt; Nuevo Proyecto.\n\n\n\nSeleccionamos la opción de Nuevo directorio.\n\n\n\nSeleccionamos el tipo de projecto que vamos a iniciar, en nuestro caso Nuevo proyecto.\n\n\n\nNombramos el folder que crearemos y seleccionamos en dónde queremos que se almacene.\n\n\n¡Felicidades, acabas de crear un R project! Si vamos al folder en donde creamos nuestro proyecto, podemos observar que se creó un archivo con terminación Rproj, este es un archivo que contiene la configuración específica para nuestro proyecto.\n\n\n2.7.3 Directorio de trabajo\nEste archivo (Rproj) también establece como directorio de trabajo el folder en donde iniciamos el proyecto (puedes comprobarlo desde la consola de RStudio, escribiendo el comando getwd()). Esto es muy conveniente puesto que así podemos asegurarnos de que vamos a acceder a los archivos que estén exclusivamente en nuestro entorno de trabajo.\nColoca en la consola dentro de Rstudio:\n\n\nCódigo\ngetwd()\n\n\n[1] \"C:/Users/HaydeePeruyero/Documents/RSites/Intro_to_R_Bioinfo_2027-1\"",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#crear-un-rscript",
+    "href": "parte2.html#crear-un-rscript",
+    "title": "2  Introducción a R",
+    "section": "2.8 Crear un Rscript",
+    "text": "2.8 Crear un Rscript\nPara comenzar a trabajar en un proyecto, necesitamos crear un archivo para escribir nuestro programa. Entra en Archivo &gt; Nuevo Archivo.\nPodemos ver que tenemos distintas opciones de archivos que podemos crear, en este caso vamos a crear nuestro primer Rscript.\n\n\n2.8.1 ¿Qué es un Rscript?\nEs simplemente un archivo de texto con las instrucciones de nuestro algoritmo escritas en el lenguaje de R. También contiene nuestros comentarios escritos con #.\nIntenta escribir tu primer Rscript en el editor, copiando el siguiente algoritmo para realizar una suma:\n\n\nCódigo\na &lt;- 2\nb &lt;- 3\nsuma = a + b\nsuma\n\n\n[1] 5\n\n\n\n\n2.8.2 ¿Cómo ejecutamos el código?\nSelecciona todo el código, después ve a la parte superior de la ventana del editor y da click en el botón Run. También pueden ejecutar tu código línea por línea, poniendo tu cursor al principio o al final de la linea y presionando las teclas Control + Enter o Command + Enter.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#descargar-y-cargar-librerías",
+    "href": "parte2.html#descargar-y-cargar-librerías",
+    "title": "2  Introducción a R",
+    "section": "2.9 Descargar y cargar Librerías",
+    "text": "2.9 Descargar y cargar Librerías\n\n2.9.1 ¿Qué es una librería?\nEn programación, una librería es una colección de código pre-escrito. Una librería contiene una “paquete” o “librería” de funciones que podemos utilizar si descargamos e importamos esa librería a nuestro programa.\nComo mencioné anteriormente, al descargar R, también descargamos una serie de librerías, llamadas base R packages. Sin embargo, dependiendo del problema que queramos resolver con nuestro programa, necesitaremos librerías que nos permitan hacer otras cosas.\nExisten distintas formas de instalar librerías.\n\n\n2.9.2 Instalar librerías: CRAN\n\nInstalación desde el repositorio de CRAN: podemos descargar paqueterías de CRAN de dos formas:\n\nLa primera, desde consola con el siguiente comando:\n\n\nCódigo\ninstall.packages(\"tidyverse\")\n\n\nLa segunda, desde el menú Herramientas &gt; Instalar paqueterías. En la ventana, ingresamos el nombre de la librería y click en Instalar.\n\n\n\n\n\nLa tercera opción es usar el botón “install” dentro de la pestaña de Packages.\n\n\n\n2.9.3 Instalar librerías: Bioconductor\nAlternativamente, podemos instalar paqueterías de Bioconductor, que es otro repositorio de paquetes diseñados para el análisis de datos genómicos, por ejemplo para hacer análisis estadísticos, anotación, acceso a bases de datos públicas, etc.\nHay muchas librerías que están tanto en CRAN como en Bioconductor, pero también hay librerías específicas para uno de ellos. Para poder instalar desde bioconductor, necesitamos primero instalar el “instalador de bioconductor”:\n\n\nCódigo\ninstall.packages(\"BiocManager\") # Esto es necesario solo 1 vez\n\n\n\n\n2.9.4 ¿Cómo podemos verificar que paquetes tenemos?\nEn la ventana inferior derecha, existe una pestaña que se llama “Packages” que contendra la lista de paquetes instalados en tu computadora, su descripción corta y su versión.\nTambien en esta pestaña podemos instalar paquetes dandado click en INSTALL.\n\n\n\n\n\n\n\n2.9.5 Eliminación de paquetes\nEn algunas ocasiones vamos a tener que actualizar las versiones de los paquetes, pero primero dedes eliminar la versión anterior. Dando click en el botón que contiene una X que esta al final de la fila en cada programa.\n\n\n\n\n\nTambién puedes usar codigo para eliminar el paquete:\n\n\nCódigo\nremove.packages(\"package-to-remove\")\n\n\n\n\n2.9.6 Cargar paquetes en el ambiente de R\n\nOpción A: Emplear la función library para cargar en el ambiente el paquete.\n\n\n\nCódigo\nlibrary(ggplot2)\n\n\n\nOpción B: Dando click a la casilla que indica el paquete. Para dejar de usarlo da de nuevo click en esa casilla para que deje de estar marcada.\n\n\n\n\n\n\n\n\n\n\n\n\nNotaActividad\n\n\n\nCopia y pega el siguiente código en tu consola dentro de Rstudio:\n\n\nCódigo\ninstall.packages(\"palmerpenguins\")\ninstall.packages(\"ggplot2\")\ninstall.packages(\"dplyr\")\ninstall.packages(\"DT\")\n\n\n\n\nDebes poder ver algo como esto:\n\n\n\n2.9.7 Verificar paquetes instalados y sus versiones\n\n\nCódigo\n\"ggplot2\" %in% rownames(installed.packages())\npackageVersion(\"ggplot2\")\ninstalled.packages()[, c(\"Package\", \"Version\")]\nhelp(package = \"ggplot2\")\n?plot\n\n\nLa pestaña Packages de RStudio también muestra los paquetes instalados y sus versiones.\n\n\n2.9.8 Actualizar paquetes\n\n\nCódigo\nupdate.packages(ask = TRUE)",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#evitar-conflictos-para-la-instalación-de-paquetes-en-r",
+    "href": "parte2.html#evitar-conflictos-para-la-instalación-de-paquetes-en-r",
+    "title": "2  Introducción a R",
+    "section": "2.10 Evitar conflictos para la instalación de paquetes en R",
+    "text": "2.10 Evitar conflictos para la instalación de paquetes en R\n\n2.10.1 Si usamos Windows debemos instalar Rtools\nEn Windows utilizamos Rtools para evitar problemas al instalar paquetes desde código fuente en RStudio. Selecciona la versión que se adapta a tu versión de R.\n\n\n\n\n\nYo seleccioné la versión Rtools 4.5 y me aparece la siguiente página web, después di clic en donde aparece el instalador, descargue el archivo y lo ejecute.\n\n\n\n2.10.2 Si usamos Mac/iOs debemos instalar Xcode\nEn macOS, no existe un equivalente directo a Rtools. En su lugar, se emplean las Xcode Command Line Tools (que incluyen clang y make) junto con GNU Fortran para compilar paquetes que requieren código en C/C++ o Fortran.\n\nEsto significa que, si trabajan en Mac, deben asegurarse de tener instaladas estas herramientas para evitar errores al instalar ciertos paquetes de R. Abre una terminal de Bash y coloca este código:\n\n\nCódigo\nsudo xcode-select --install",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#qué-son-r-cran-y-rstudio",
+    "href": "parte2.html#qué-son-r-cran-y-rstudio",
+    "title": "2  Introducción a R",
+    "section": "3.1 1.1 ¿Qué son R, CRAN y RStudio?",
+    "text": "3.1 1.1 ¿Qué son R, CRAN y RStudio?\nR es el lenguaje y entorno de programación que ejecuta nuestras instrucciones. CRAN (Comprehensive R Archive Network) distribuye R y numerosos paquetes adicionales. RStudio Desktop es la aplicación desde la que escribimos, ejecutamos, organizamos y depuramos código R. Por tanto, primero instalamos R y después RStudio. Son programas diferentes y ambos son necesarios para seguir estas prácticas en el entorno propuesto.\n\n\n\n\n\n\nImportanteOrden recomendado de instalación\n\n\n\n\nInstalar R.\nInstalar las herramientas de compilación correspondientes al sistema operativo (especialmente Rtools en Windows).\nInstalar RStudio Desktop.\nComprobar que RStudio detecta R.\nInstalar y probar los paquetes de CRAN y Bioconductor que usaremos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#instalación-en-windows",
+    "href": "parte2.html#instalación-en-windows",
+    "title": "2  Introducción a R",
+    "section": "3.2 1.2 Instalación en Windows",
+    "text": "3.2 1.2 Instalación en Windows\n\n3.2.1 Paso 1. Descargar e instalar R\n\nEntra a https://cran.r-project.org/.\nSelecciona Download R for Windows.\nEntra en base y elige Download R for Windows (la versión actual ofrecida por CRAN).\nEjecuta el instalador .exe descargado. Acepta las opciones predeterminadas salvo que tengas una razón para modificarlas.\nAl terminar, comprueba que aparece R entre tus aplicaciones.\n\n\n\n\n\n\n\nNota¿Qué versión de R tengo?\n\n\n\nUna vez instalado, abre R o RStudio y ejecuta:\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\ngetRversion()\n\n\n[1] '4.6.0'\n\n\nLa versión exacta importa porque Rtools debe ser compatible con esa versión.\n\n\n\n\n3.2.2 Paso 2. Instalar Rtools (importante)\nRtools proporciona compiladores y otras herramientas que R necesita en Windows para construir e instalar paquetes desde código fuente, por ejemplo paquetes con componentes en C, C++ o Fortran. Muchos paquetes de CRAN tienen versiones binarias precompiladas, pero no todos: instalar Rtools desde el principio ayuda a evitar problemas posteriores, especialmente en bioinformática.\n\nEntra a la página oficial: https://cran.r-project.org/bin/windows/Rtools/.\nConsulta la tabla de compatibilidad y selecciona la versión de Rtools correspondiente a tu versión de R. No elijas una versión solamente porque sea la más reciente.\nAbre la página de esa versión de Rtools y descarga su instalador.\nEjecuta el instalador y conserva la ruta de instalación predeterminada, salvo que las instrucciones oficiales indiquen otra cosa.\nCierra y vuelve a abrir RStudio después de instalarlo.\nComprueba desde la consola de RStudio que las herramientas funcionan:\n\n\n\nCódigo\ninstall.packages(\"pkgbuild\")\npkgbuild::has_build_tools(debug = TRUE)\n\n\nSi el resultado es TRUE, R puede encontrar las herramientas de compilación. Si aparece FALSE, revisa que las versiones sean compatibles, reinicia RStudio y consulta las instrucciones oficiales de Rtools para esa versión.\n\n\n\n\n\n\nAdvertenciaRtools no es un paquete de R\n\n\n\nNo se instala con install.packages(\"Rtools\"). Es un programa adicional de Windows, cuyo instalador se descarga desde CRAN. Tampoco debes copiar comandos de configuración del PATH de versiones antiguas sin comprobar primero las instrucciones actuales: la configuración varía entre versiones.\n\n\n\n\n3.2.3 Paso 3. Instalar RStudio Desktop\n\nAbre https://posit.co/download/rstudio-desktop/.\nDescarga el instalador de RStudio Desktop para Windows.\nEjecuta el archivo descargado y sigue el asistente.\nAbre RStudio y comprueba que puedes escribir 2 + 2 en su consola.\n\nSi RStudio no encuentra R, confirma que R quedó instalado correctamente y revisa Tools &gt; Global Options &gt; General &gt; R version (la ubicación puede variar ligeramente según la versión de RStudio).",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#instalación-en-macos",
+    "href": "parte2.html#instalación-en-macos",
+    "title": "2  Introducción a R",
+    "section": "3.3 1.3 Instalación en macOS",
+    "text": "3.3 1.3 Instalación en macOS\n\n3.3.1 Paso 1. Descargar e instalar R\n\nEntra a https://cran.r-project.org/ y selecciona Download R for macOS.\nElige el instalador .pkg apropiado para tu arquitectura: Apple silicon (arm64) o Intel (x86_64). Comprueba tu arquitectura en el menú de Apple, Acerca de esta Mac.\nAbre el .pkg y completa la instalación.\nComprueba la versión desde R o, posteriormente, desde RStudio mediante R.version.string.\n\n\n\n3.3.2 Paso 2. Instalar las herramientas de compilación\nEn macOS, el equivalente funcional de parte de Rtools son las Xcode Command Line Tools, que proporcionan herramientas como clang y make. Para algunos paquetes también se necesita GNU Fortran, que se instala por separado.\n\nAbre la aplicación Terminal de macOS (no la consola de R).\nEjecuta:\n\nxcode-select --install\n\nSigue el asistente de instalación. Si indica que las herramientas ya están instaladas, no es necesario reinstalarlas.\nComprueba en Terminal:\n\nxcode-select -p\nclang --version\nmake --version\n\nRevisa https://mac.r-project.org/tools/ para descargar una versión de GNU Fortran compatible con tu instalación de R, cuando vayas a compilar paquetes que lo necesiten. La compatibilidad depende de la versión de R, la arquitectura y las herramientas del sistema.\nSi instalaste GNU Fortran, comprueba en Terminal:\n\ngfortran --version\n\n\n\n\n\n\nAdvertenciaNo confundir Terminal con la consola de R\n\n\n\nLos comandos xcode-select, clang, make y gfortran se ejecutan en Terminal. En cambio, install.packages() y library() son instrucciones de R que se ejecutan en la consola de RStudio.\n\n\n\n\n3.3.3 Paso 3. Instalar RStudio Desktop\n\nDescarga RStudio desde https://posit.co/download/rstudio-desktop/.\nSelecciona la versión de macOS compatible con tu equipo.\nAbre el archivo descargado e instala la aplicación según las instrucciones del sistema.\nInicia RStudio y comprueba que detecta R.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#instalación-en-linux-ubuntudebian",
+    "href": "parte2.html#instalación-en-linux-ubuntudebian",
+    "title": "2  Introducción a R",
+    "section": "3.4 1.4 Instalación en Linux (Ubuntu/Debian)",
+    "text": "3.4 1.4 Instalación en Linux (Ubuntu/Debian)\nEn Linux, la instalación depende de la distribución. Mostraremos el procedimiento para Ubuntu/Debian, trabajando en una terminal de la computadora local.\n\n3.4.1 Paso 1. Instalar R y las herramientas de compilación\nsudo apt update\nsudo apt install -y r-base r-base-dev build-essential gfortran\nr-base instala R; r-base-dev y build-essential proporcionan herramientas necesarias para compilar muchos paquetes, mientras que gfortran permite compilar código Fortran.\nComprueba en Terminal:\nR --version\ngcc --version\ngfortran --version\n\n\n\n\n\n\nNotaVersiones de R en Linux\n\n\n\nLos repositorios de Ubuntu/Debian pueden ofrecer una versión de R anterior a la publicada en CRAN. Si necesitas una versión más reciente, consulta las instrucciones oficiales de CRAN específicas para tu distribución y versión de Linux: https://cran.r-project.org/bin/linux/. No mezcles repositorios de distintas versiones de Ubuntu/Debian.\n\n\n\n\n3.4.2 Paso 2. Instalar dependencias frecuentes\nAlgunos paquetes necesitan bibliotecas externas. En Ubuntu/Debian suelen ser útiles:\nsudo apt install -y libcurl4-openssl-dev libssl-dev libxml2-dev\nEstas bibliotecas no resuelven todos los problemas posibles; cada paquete puede requerir otras dependencias, que deben consultarse en su documentación o en el mensaje de error de instalación.\n\n\n3.4.3 Paso 3. Instalar RStudio Desktop\n\nVisita https://posit.co/download/rstudio-desktop/.\nDescarga el paquete .deb compatible con tu versión de Ubuntu/Debian y arquitectura.\nAbre una Terminal en la carpeta donde lo descargaste y ejecuta, sustituyendo el nombre por el archivo real:\n\nsudo apt install ./nombre-del-instalador.deb\n\nAbre RStudio Desktop desde el menú de aplicaciones y verifica que R funciona.\n\nSi utilizas Fedora u otra distribución, consulta las instrucciones específicas de Posit y el gestor de paquetes de tu distribución; no utilices directamente los comandos apt.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#primer-inicio-de-rstudio",
+    "href": "parte2.html#primer-inicio-de-rstudio",
+    "title": "2  Introducción a R",
+    "section": "3.5 1.5 Primer inicio de RStudio",
+    "text": "3.5 1.5 Primer inicio de RStudio\nAl abrir RStudio Desktop encontrarás normalmente cuatro áreas:\n\nSource (editor): permite escribir y guardar scripts .R y documentos .qmd.\nConsole: ejecuta instrucciones de R y muestra sus resultados o errores.\nEnvironment/History: muestra objetos creados durante la sesión y comandos anteriores.\nFiles/Plots/Packages/Help: permite navegar archivos, ver gráficos, gestionar paquetes y consultar documentación.\n\nLos paneles pueden cambiar de posición desde Tools &gt; Global Options &gt; Pane Layout. Para modificar el tema visual, utiliza Tools &gt; Global Options &gt; Appearance.\nEscribe estas instrucciones una por una en la consola de RStudio:\n\n\nCódigo\n2 + 3 * 4\n\n\n[1] 14\n\n\nCódigo\nsqrt(81)\n\n\n[1] 9\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\ngetwd()\n\n\n[1] \"C:/Users/HaydeePeruyero/Documents/RSites/Intro_to_R_Bioinfo_2027-1\"\n\n\ngetwd() muestra la carpeta de trabajo actual; más adelante crearemos un proyecto de RStudio para administrar mejor nuestras rutas.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#descargar-instalar-y-cargar-paquetes",
+    "href": "parte2.html#descargar-instalar-y-cargar-paquetes",
+    "title": "2  Introducción a R",
+    "section": "3.6 1.6 Descargar, instalar y cargar paquetes",
+    "text": "3.6 1.6 Descargar, instalar y cargar paquetes\n\n3.6.1 ¿Qué es un paquete?\nUn paquete de R reúne funciones, datos y documentación. R incluye paquetes básicos, pero podemos instalar otros para importar archivos, transformar tablas, visualizar datos o trabajar con secuencias biológicas.\nHay una diferencia fundamental:\n\nInstalar (install.packages()): descarga y agrega el paquete a una biblioteca de paquetes de R. Se realiza normalmente una vez por instalación o entorno.\nCargar (library()): permite usar las funciones del paquete en la sesión actual. Se repite cuando abrimos una nueva sesión y necesitamos ese paquete.\n\n\n\n3.6.2 Instalar paquetes desde CRAN\nEn la consola de RStudio, ejecuta:\n\n\nCódigo\ninstall.packages(\"ggplot2\")\ninstall.packages(c(\"dplyr\", \"readr\", \"tidyr\", \"purrr\"))\n\n\nTambién puedes usar Tools &gt; Install Packages o el botón Install de la pestaña Packages. Asegúrate de escribir correctamente los nombres.\n\n\n\n\n\n\nTipSi Windows pregunta si deseas instalar desde código fuente\n\n\n\nCuando exista un binario adecuado, suele ser más sencillo utilizarlo. Si un paquete debe compilarse desde código fuente, necesitarás Rtools correctamente instalado. En macOS o Linux necesitarás las herramientas de compilación correspondientes.\n\n\n\n\n3.6.3 Cargar y utilizar un paquete\n\n\nCódigo\nlibrary(ggplot2)\nlibrary(dplyr)\n\n# Alternativa: llamar una función con el nombre de su paquete\n# dplyr::filter(tabla, conteo &gt; 10)\n\n\nlibrary(ggplot2) no instala ggplot2: si no está instalado, mostrará un error. Puedes utilizar paquete::funcion() para acceder a una función sin adjuntar todo el paquete al espacio de búsqueda.\n\n\n3.6.4 Instalar paquetes desde Bioconductor\nBioconductor distribuye paquetes especializados en bioinformática y biología computacional. Para instalarlos, primero se instala BiocManager desde CRAN y luego se usa BiocManager::install():\n\n\nCódigo\ninstall.packages(\"BiocManager\")  # Una vez por entorno, si falta\nBiocManager::install(\"Biostrings\")\n\nlibrary(Biostrings)\n\n\nBiocManager elige una versión de Bioconductor compatible con tu R. Si tienes problemas, consulta https://bioconductor.org/install/ y comprueba:\n\n\nCódigo\nBiocManager::version()\nBiocManager::valid()\n\n\n\n\n3.6.5 Verificar paquetes instalados y sus versiones\n\n\nCódigo\n\"ggplot2\" %in% rownames(installed.packages())\npackageVersion(\"ggplot2\")\ninstalled.packages()[, c(\"Package\", \"Version\")]\nhelp(package = \"ggplot2\")\n?plot\n\n\nLa pestaña Packages de RStudio también muestra los paquetes instalados y sus versiones.\n\n\n3.6.6 Actualizar y eliminar paquetes\n\n\nCódigo\nupdate.packages(ask = TRUE)      # Revisa antes de actualizar\nremove.packages(\"nombre_paquete\") # Sustituye por un paquete real\n\n\nNo es obligatorio desinstalar un paquete para actualizarlo. Tampoco es recomendable actualizar todos los paquetes justo antes de una práctica: algunas actualizaciones pueden cambiar dependencias o comportamientos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#solución-de-problemas-frecuentes",
+    "href": "parte2.html#solución-de-problemas-frecuentes",
+    "title": "2  Introducción a R",
+    "section": "2.11 Solución de problemas frecuentes",
+    "text": "2.11 Solución de problemas frecuentes\n\n\n\n\n\n\n\n\nProblema\nPosible causa\nQué revisar\n\n\n\n\nRStudio no encuentra R\nR no está instalado o no fue detectado\nInstala R primero; revisa la versión de R en las opciones de RStudio.\n\n\nthere is no package called ...\nEl paquete no está instalado en la biblioteca activa\nEjecuta install.packages() o el instalador de Bioconductor correspondiente.\n\n\ncould not find function ...\nNo se cargó el paquete o el nombre está mal escrito\nUsa library(paquete) o paquete::funcion().\n\n\nError de compilación en Windows\nFalta Rtools o es incompatible con R\nRevisa la tabla oficial de compatibilidad y pkgbuild::has_build_tools().\n\n\nError de compilación en macOS\nFaltan Xcode Command Line Tools o GNU Fortran\nComprueba clang, make y, si se requiere, gfortran.\n\n\nError de compilación en Linux\nFaltan compiladores o bibliotecas del sistema\nRevisa build-essential, gfortran y las dependencias mencionadas en el error.\n\n\nPaquete no disponible para la versión de R\nIncompatibilidad de versiones\nRevisa la versión de R, CRAN o Bioconductor y los requisitos del paquete.\n\n\npermission denied\nNo hay permisos de escritura en la biblioteca de paquetes\nUsa una biblioteca personal de R o revisa los permisos, sin modificar carpetas del sistema indiscriminadamente.\n\n\n\n\n\n\n\n\n\nAdvertenciaAnte un error de instalación\n\n\n\nLee el primer mensaje de error relevante y anota: sistema operativo, versión de R, nombre del paquete y mensaje completo. No intentes resolverlo instalando herramientas al azar. Muchos errores de compilación se deben a una dependencia específica, no a RStudio.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#actividad-comprobar-que-el-entorno-está-listo",
+    "href": "parte2.html#actividad-comprobar-que-el-entorno-está-listo",
+    "title": "2  Introducción a R",
+    "section": "2.12 Actividad: comprobar que el entorno está listo",
+    "text": "2.12 Actividad: comprobar que el entorno está listo\n\nAbre RStudio Desktop.\nEjecuta R.version.string y Sys.info()[[\"sysname\"]].\nComprueba que ggplot2 y dplyr están instalados; si no lo están, instálalos desde CRAN.\nCarga ambos paquetes y consulta sus versiones.\nIdentifica las herramientas de compilación correspondientes a tu sistema operativo. En Windows, comprueba especialmente la compatibilidad de Rtools.\n\n\n\nCódigo\nR.version.string\nSys.info()[[\"sysname\"]]\n\ninstall.packages(c(\"ggplot2\", \"dplyr\")) # Solo si faltan\nlibrary(ggplot2)\nlibrary(dplyr)\npackageVersion(\"ggplot2\")\npackageVersion(\"dplyr\")\n\n\n\n\n\n\n\n\nNotaSolución y comentarios de la actividad\n\n\n\n\n\nR.version.string indica la versión de R; Sys.info()[[\"sysname\"]] identifica el sistema operativo. packageVersion() devuelve la versión instalada del paquete. Si library() funciona sin errores, el paquete está disponible en la sesión. La instalación de compiladores se comprueba de manera diferente según el sistema; en Windows se puede utilizar pkgbuild::has_build_tools(debug = TRUE).\n\n\n\n\n2.12.1 Lista de verificación de instalación\n\nInstalé R desde CRAN y conozco mi versión.\nInstalé RStudio Desktop y puedo abrir su consola.\nWindows: instalé la versión de Rtools compatible con R y comprobé sus herramientas.\nmacOS: instalé Xcode Command Line Tools y sé cuándo necesito GNU Fortran.\nLinux: instalé R y las herramientas de compilación de mi distribución.\nPuedo ejecutar expresiones de R desde RStudio.\nSé instalar paquetes desde CRAN y Bioconductor.\nDistingo entre instalar y cargar un paquete.\nSé consultar las versiones y la documentación de los paquetes.\nSé qué información reunir si aparece un error de instalación.\n\nReferencias para esta sección: Introducción a R — Code & Data Bootcamp, CRAN, Rtools, herramientas de R para macOS, RStudio Desktop y Bioconductor.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#asignación-nombres-y-tipos-básicos",
+    "href": "parte2.html#asignación-nombres-y-tipos-básicos",
+    "title": "2  Introducción a R",
+    "section": "4.1 2.1 Asignación, nombres y tipos básicos",
+    "text": "4.1 2.1 Asignación, nombres y tipos básicos\nUn objeto almacena un valor o una estructura que podremos reutilizar. Usaremos &lt;- para asignar valores. Los nombres distinguen mayúsculas de minúsculas: gen y Gen son objetos distintos.\n\n\nCódigo\nidentificador &lt;- \"gene_001\"\nlongitud &lt;- 450L\nproporcion_gc &lt;- 0.53\nanotado &lt;- TRUE\n\nclass(identificador)\n\n\n[1] \"character\"\n\n\nCódigo\nclass(longitud)\n\n\n[1] \"integer\"\n\n\nCódigo\nclass(proporcion_gc)\n\n\n[1] \"numeric\"\n\n\nCódigo\nclass(anotado)\n\n\n[1] \"logical\"\n\n\n\n\n\nTipo\nEjemplo\nUso\n\n\n\n\ncharacter\n\"ATGC\"\nSecuencias, nombres e identificadores\n\n\ninteger\n450L\nConteos y posiciones enteras\n\n\ndouble\n0.53\nMediciones numéricas\n\n\nlogical\nTRUE\nIndicadores y condiciones\n\n\n\nnumeric se usa habitualmente para valores numéricos, aunque class(1.5) devuelve \"numeric\" y typeof(1.5) devuelve \"double\". Usa class(), typeof() y str() para inspeccionar objetos.\n\n\nCódigo\nclass(1.5)\n\n\n[1] \"numeric\"\n\n\nCódigo\ntypeof(1.5)\n\n\n[1] \"double\"\n\n\nCódigo\nstr(identificador)\n\n\n chr \"gene_001\"\n\n\n\n\n\n\n\n\nImportanteValores faltantes y conversiones\n\n\n\nNA representa un valor faltante. Una conversión puede introducir NA si el texto no se puede interpretar como número; nunca supongas que la conversión fue correcta sin revisarla.\n\n\n\n\nCódigo\nvalores &lt;- c(\"12\", \"18\", \"sin_dato\")\n# La conversión produce una advertencia; no la ejecutamos automáticamente\n# as.numeric(valores)\nis.na(c(10, NA, 20))\n\n\n[1] FALSE  TRUE FALSE",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#vectores-e-indexación",
+    "href": "parte2.html#vectores-e-indexación",
+    "title": "2  Introducción a R",
+    "section": "4.2 2.2 Vectores e indexación",
+    "text": "4.2 2.2 Vectores e indexación\nUn vector atómico contiene elementos del mismo tipo. Se construye con c() y se indexa mediante corchetes. R comienza a contar posiciones desde 1, no desde 0.\n\n\nCódigo\ngenes &lt;- c(\"gA\", \"gB\", \"gC\", \"gD\")\nlongitudes &lt;- c(150, 400, 220, 510)\n\nlength(genes)\n\n\n[1] 4\n\n\nCódigo\ngenes[1]\n\n\n[1] \"gA\"\n\n\nCódigo\ngenes[c(2, 4)]\n\n\n[1] \"gB\" \"gD\"\n\n\nCódigo\ngenes[longitudes &gt;= 300]\n\n\n[1] \"gB\" \"gD\"\n\n\nLas operaciones vectorizadas se aplican a varios elementos sin escribir un ciclo explícito:\n\n\nCódigo\nlongitudes / 3\n\n\n[1]  50.00000 133.33333  73.33333 170.00000\n\n\nCódigo\nlongitudes &gt;= 300\n\n\n[1] FALSE  TRUE FALSE  TRUE\n\n\nCódigo\nsum(longitudes &gt;= 300)\n\n\n[1] 2\n\n\n\n\n\n\n\n\nNotaEjercicio 1. Vectores y selección\n\n\n\nCrea los vectores ids &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\") y tam &lt;- c(90, 450, 310, 120, 600).\n\nSelecciona el tercer identificador.\nRecupera los identificadores de genes con longitud de al menos 300.\nCuenta cuántos cumplen esa condición sin usar un ciclo.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 1\n\n\n\n\n\n\n\nCódigo\nids &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\")\ntam &lt;- c(90, 450, 310, 120, 600)\nids[3]\n\n\n[1] \"g3\"\n\n\nCódigo\nids[tam &gt;= 300]\n\n\n[1] \"g2\" \"g3\" \"g5\"\n\n\nCódigo\nsum(tam &gt;= 300)\n\n\n[1] 3\n\n\nLos genes seleccionados son g2, g3 y g5; el conteo es 3.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#matrices-y-arreglos",
+    "href": "parte2.html#matrices-y-arreglos",
+    "title": "2  Introducción a R",
+    "section": "4.3 2.3 Matrices y arreglos",
+    "text": "4.3 2.3 Matrices y arreglos\nUna matriz tiene dos dimensiones y almacena elementos del mismo tipo. Un arreglo (array) generaliza esta idea a más dimensiones.\n\n\nCódigo\nconteos &lt;- matrix(\n  c(12, 8, 4, 6, 10, 2),\n  nrow = 3,\n  dimnames = list(c(\"g1\", \"g2\", \"g3\"), c(\"M1\", \"M2\"))\n)\nconteos\n\n\n   M1 M2\ng1 12  6\ng2  8 10\ng3  4  2\n\n\nCódigo\nconteos[2, 1]\n\n\n[1] 8\n\n\nCódigo\nconteos[, \"M2\"]\n\n\ng1 g2 g3 \n 6 10  2 \n\n\nCódigo\ndim(conteos)\n\n\n[1] 3 2\n\n\n\n\nCódigo\narreglo &lt;- array(1:8, dim = c(2, 2, 2))\ndim(arreglo)\n\n\n[1] 2 2 2",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#data-frames-y-tibbles",
+    "href": "parte2.html#data-frames-y-tibbles",
+    "title": "2  Introducción a R",
+    "section": "4.4 2.4 Data frames y tibbles",
+    "text": "4.4 2.4 Data frames y tibbles\nUn data frame es una tabla: cada columna puede tener un tipo diferente, pero todas deben tener la misma cantidad de filas. En la sesión 2 veremos importación y validación de tablas, y en la sesión 3 su transformación con dplyr y tidyr.\n\n\nCódigo\nanotaciones &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\"),\n  longitud = c(450, 120, 800),\n  producto = c(\"transportador\", \"hipotetica\", \"enzima\")\n)\n\nanotaciones\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n\n\nCódigo\nstr(anotaciones)\n\n\n'data.frame':   3 obs. of  3 variables:\n $ gen     : chr  \"g1\" \"g2\" \"g3\"\n $ longitud: num  450 120 800\n $ producto: chr  \"transportador\" \"hipotetica\" \"enzima\"\n\n\nCódigo\nanotaciones$longitud\n\n\n[1] 450 120 800\n\n\nCódigo\nanotaciones[2, ]\n\n\n  gen longitud   producto\n2  g2      120 hipotetica\n\n\nCódigo\nanotaciones[anotaciones$longitud &gt; 200, ]\n\n\n  gen longitud      producto\n1  g1      450 transportador\n3  g3      800        enzima\n\n\nUn tibble es una variante moderna de data.frame, con una impresión más compacta y comportamientos de selección más consistentes.\n\n\nCódigo\n# Requiere haber instalado tibble\n# tibble::as_tibble(anotaciones)",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#listas-y-factores",
+    "href": "parte2.html#listas-y-factores",
+    "title": "2  Introducción a R",
+    "section": "4.5 2.5 Listas y factores",
+    "text": "4.5 2.5 Listas y factores\nLas listas pueden almacenar objetos de distintos tipos y tamaños. Resultan útiles para reunir resultados de un análisis.\n\n\nCódigo\nmuestra &lt;- list(\n  id = \"M01\",\n  secuencias = c(\"ATGCGT\", \"CCATGA\"),\n  anotaciones = anotaciones\n)\n\nmuestra$id\n\n\n[1] \"M01\"\n\n\nCódigo\nmuestra[[\"secuencias\"]]\n\n\n[1] \"ATGCGT\" \"CCATGA\"\n\n\nCódigo\nmuestra[\"secuencias\"] # Conserva una lista\n\n\n$secuencias\n[1] \"ATGCGT\" \"CCATGA\"\n\n\nUn factor representa categorías con niveles definidos. Su orden puede importar al crear tablas o gráficos.\n\n\nCódigo\ncondicion &lt;- factor(c(\"control\", \"tratamiento\", \"control\"),\n                    levels = c(\"control\", \"tratamiento\"))\nlevels(condicion)\n\n\n[1] \"control\"     \"tratamiento\"\n\n\n\n\n\n\n\n\n\n\n\nEstructura\nDimensiones\n¿Elementos del mismo tipo?\nEjemplo de uso\n\n\n\n\nVector\n1\nSí\nIdentificadores o longitudes\n\n\nMatriz\n2\nSí\nConteos por gen y muestra\n\n\nArray\n2 o más\nSí\nDatos multidimensionales\n\n\nData frame / tibble\n2\nPor columna\nTabla de anotaciones\n\n\nLista\nVariable\nNo\nResultados heterogéneos\n\n\n\n\n\n\n\n\n\nNotaEjercicio 2. Elegir estructuras\n\n\n\n\nConstruye un data.frame con tres genes, sus longitudes y una etiqueta funcional.\nRecupera únicamente las filas con longitud mayor que 200.\nCrea una lista que contenga la tabla y el identificador de una muestra.\nExplica por qué una matriz de caracteres no sería una buena sustitución para la tabla cuando queremos conservar longitudes numéricas.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 2\n\n\n\n\n\n\n\nCódigo\ntabla &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\"),\n  longitud = c(100, 350, 500),\n  funcion = c(\"hipotetica\", \"enzima\", \"transportador\")\n)\ntabla[tabla$longitud &gt; 200, ]\n\n\n  gen longitud       funcion\n2  g2      350        enzima\n3  g3      500 transportador\n\n\nCódigo\nresultado &lt;- list(muestra = \"M01\", genes = tabla)\nresultado$genes\n\n\n  gen longitud       funcion\n1  g1      100    hipotetica\n2  g2      350        enzima\n3  g3      500 transportador\n\n\nEn una matriz todos los elementos comparten tipo; al combinar texto y números, las longitudes se convertirían en caracteres.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#operadores-aritméticos-relacionales-y-lógicos",
+    "href": "parte2.html#operadores-aritméticos-relacionales-y-lógicos",
+    "title": "2  Introducción a R",
+    "section": "5.1 3.1 Operadores aritméticos, relacionales y lógicos",
+    "text": "5.1 3.1 Operadores aritméticos, relacionales y lógicos\n\n\n\nOperación\nOperadores\n\n\n\n\nAritmética\n+, -, *, /, ^, %%, %/%\n\n\nComparación\n==, !=, &lt;, &lt;=, &gt;, &gt;=\n\n\nLógica vectorizada\n&, |, !\n\n\nPertenencia\n%in%\n\n\n\nLos paréntesis permiten hacer explícita la precedencia de las operaciones. En condiciones de if, utiliza una expresión lógica de longitud uno; para combinar condiciones escalares puedes usar && y ||.\n\n\nCódigo\nlongitudes &lt;- c(100, 250, 700, 90)\n(longitudes &gt;= 200) & (longitudes &lt;= 600)\n\n\n[1] FALSE  TRUE FALSE FALSE\n\n\nCódigo\n\"g2\" %in% c(\"g1\", \"g2\", \"g3\")\n\n\n[1] TRUE\n\n\nCódigo\n(2 + 3) * 4\n\n\n[1] 20",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#condicionales-if-else-if-y-else",
+    "href": "parte2.html#condicionales-if-else-if-y-else",
+    "title": "2  Introducción a R",
+    "section": "5.2 3.2 Condicionales: if, else if y else",
+    "text": "5.2 3.2 Condicionales: if, else if y else\nUn condicional permite ejecutar instrucciones diferentes según una condición.\n\n\nCódigo\nlongitud_gen &lt;- 350\n\nif (longitud_gen &gt;= 300) {\n  mensaje &lt;- \"Gen de longitud al menos 300\"\n} else {\n  mensaje &lt;- \"Gen de longitud menor que 300\"\n}\nmensaje\n\n\n[1] \"Gen de longitud al menos 300\"\n\n\nCuando se necesita clasificar un vector completo, ifelse() puede ser más apropiado que escribir un if por cada elemento:\n\n\nCódigo\ntamanos &lt;- c(120, 350, 700)\nifelse(tamanos &gt;= 300, \"largo\", \"corto\")\n\n\n[1] \"corto\" \"largo\" \"largo\"",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#ciclos-for-y-while",
+    "href": "parte2.html#ciclos-for-y-while",
+    "title": "2  Introducción a R",
+    "section": "5.3 3.3 Ciclos for y while",
+    "text": "5.3 3.3 Ciclos for y while\nLos ciclos permiten repetir una operación. Ya conoces esta idea de Bash; aquí cambia la sintaxis.\n\n\nCódigo\nsecuencias &lt;- c(\"ATGC\", \"GGTAAC\", \"CCG\")\n\nfor (secuencia in secuencias) {\n  print(nchar(secuencia))\n}\n\n\n[1] 4\n[1] 6\n[1] 3\n\n\nwhile repite mientras una condición siga siendo verdadera. Es necesario que el estado cambie para evitar un ciclo infinito.\n\n\nCódigo\ncontador &lt;- 1\nwhile (contador &lt;= 3) {\n  print(contador)\n  contador &lt;- contador + 1\n}\n\n\n[1] 1\n[1] 2\n[1] 3\n\n\nCuando existe una función vectorizada, suele ser más sencilla:\n\n\nCódigo\nnchar(secuencias)\n\n\n[1] 4 6 3\n\n\n\n\n\n\n\n\nNotaEjercicio 3. Control de flujo\n\n\n\nCon secuencias &lt;- c(\"ATG\", \"ATGCGC\", \"TTAACGTA\", \"GG\"):\n\nEscribe un ciclo for que muestre la longitud de cada secuencia.\nUsa if para indicar si la primera secuencia tiene al menos cinco nucleótidos.\nObtén todas las longitudes con una sola instrucción, sin ciclo.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 3\n\n\n\n\n\n\n\nCódigo\nsecuencias &lt;- c(\"ATG\", \"ATGCGC\", \"TTAACGTA\", \"GG\")\nfor (s in secuencias) {\n  print(nchar(s))\n}\n\n\n[1] 3\n[1] 6\n[1] 8\n[1] 2\n\n\nCódigo\nif (nchar(secuencias[1]) &gt;= 5) {\n  print(\"Al menos cinco\")\n} else {\n  print(\"Menos de cinco\")\n}\n\n\n[1] \"Menos de cinco\"\n\n\nCódigo\nnchar(secuencias)\n\n\n[1] 3 6 8 2",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#de-la-consola-al-script",
+    "href": "parte2.html#de-la-consola-al-script",
+    "title": "2  Introducción a R",
+    "section": "7.1 5.1 De la consola al script",
+    "text": "7.1 5.1 De la consola al script\nLa consola es útil para experimentar, pero un script .R conserva las instrucciones y permite ejecutarlas de nuevo. En RStudio selecciona File → New File → R Script, escribe código y guarda el archivo. Para ejecutar la línea actual o la selección usa Ctrl + Enter (Windows/Linux) o Cmd + Enter (macOS).\nUn script legible tiene un propósito claro, comentarios útiles, nombres descriptivos y no depende de objetos creados previamente en la consola.\n\n\nCódigo\n# Ejemplo de contenido para guardar en scripts/01_exploracion.R\nids &lt;- c(\"g1\", \"g2\", \"g3\")\nsecuencias &lt;- c(\"ATGC\", \"GGCCAA\", \"ATAT\")\nlongitudes &lt;- nchar(secuencias)\nresultado &lt;- data.frame(gen = ids, longitud = longitudes)\nprint(resultado)\n\n\n  gen longitud\n1  g1        4\n2  g2        6\n3  g3        4",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#organizar-el-trabajo-con-un-proyecto-.rproj",
+    "href": "parte2.html#organizar-el-trabajo-con-un-proyecto-.rproj",
+    "title": "2  Introducción a R",
+    "section": "7.2 5.2 Organizar el trabajo con un proyecto .Rproj",
+    "text": "7.2 5.2 Organizar el trabajo con un proyecto .Rproj\nComo ya conoces directorios y Git, nos concentraremos en la función del proyecto de RStudio: abrir el trabajo en un contexto consistente y facilitar el uso de rutas relativas.\n\nEn RStudio elige File → New Project.\nSelecciona New Directory → New Project (o abre un repositorio existente con Existing Directory).\nElige un nombre y una carpeta en tu computadora.\nGuarda los scripts y archivos del análisis dentro del proyecto.\n\nUna estructura inicial sencilla puede ser:\nintro_R/\n├── intro_R.Rproj\n├── data_raw/\n├── scripts/\n│   └── 01_exploracion.R\n├── results/\n└── README.md\ngetwd() muestra el directorio de trabajo actual. Evita rutas absolutas específicas de tu computadora. No es necesario utilizar setwd() dentro de cada script cuando trabajas desde un proyecto bien organizado.\n\n\nCódigo\ngetwd()\n# Ejemplo de ruta relativa dentro del proyecto:\n# readr::read_csv(\"data_raw/muestras.csv\")",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#paquetes-en-los-scripts",
+    "href": "parte2.html#paquetes-en-los-scripts",
+    "title": "2  Introducción a R",
+    "section": "7.3 5.3 Paquetes en los scripts",
+    "text": "7.3 5.3 Paquetes en los scripts\nLas dependencias deben quedar explícitas al inicio del script o utilizarse con paquete::funcion(). En las siguientes sesiones aprenderemos readr, dplyr, tidyr, purrr y ggplot2. No necesitamos cargarlos todos para resolver los ejercicios de hoy.\n\n\n\n\n\n\nAdvertenciaUna regla para comprobar tu código\n\n\n\nAntes de entregar un script, reinicia la sesión de R y ejecútalo desde el inicio. Si solo funciona porque quedaron objetos en Environment, todavía no es reproducible.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#ideas-para-recordar",
+    "href": "parte2.html#ideas-para-recordar",
+    "title": "2  Introducción a R",
+    "section": "8.1 Ideas para recordar",
+    "text": "8.1 Ideas para recordar\n\nR ejecuta el código; RStudio facilita escribirlo y organizarlo.\nUn paquete se instala y se carga: son acciones distintas.\nVectores, matrices, data frames y listas resuelven necesidades diferentes.\nR indexa desde 1 y permite operaciones vectorizadas.\nLas funciones permiten reutilizar código y definir reglas claras de entrada.\nUn script debe ejecutarse desde el principio dentro de su proyecto, sin depender del estado previo de la consola.\n\nEn la siguiente sesión: importaremos archivos tabulares de bioinformática, inspeccionaremos sus columnas y verificaremos su consistencia antes de transformarlos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte2.html#material-de-consulta",
+    "href": "parte2.html#material-de-consulta",
+    "title": "2  Introducción a R",
+    "section": "8.2 Material de consulta",
+    "text": "8.2 Material de consulta\n\nCode & Data Bootcamp: Introducción a R.\nCode & Data Bootcamp: Estructuras de datos en R.\nSeminario de Estadística: Introducción a R y RStudio.\nManual oficial de introducción a R.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html",
+    "href": "parte3.html",
+    "title": "3  Objetos y estructuras de datos en R",
+    "section": "",
+    "text": "3.0.1 Recordatorio\nAl abrir RStudio Desktop encontrarás normalmente cuatro áreas:\nLos paneles pueden cambiar de posición desde Tools &gt; Global Options &gt; Pane Layout. Para modificar el tema visual, utiliza Tools &gt; Global Options &gt; Appearance.\nEscribe estas instrucciones una por una en la consola de RStudio:\nCódigo\n2 + 3 * 4\n\n\n[1] 14\n\n\nCódigo\nsqrt(81)\n\n\n[1] 9\n\n\nCódigo\nR.version.string\n\n\n[1] \"R version 4.6.0 (2026-04-24 ucrt)\"\n\n\nCódigo\ngetwd()\n\n\n[1] \"C:/Users/HaydeePeruyero/Documents/RSites/Intro_to_R_Bioinfo_2027-1\"\ngetwd() muestra la carpeta de trabajo actual; al trabajar con un proyecto de RStudio podemos administrar mejor nuestras rutas.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Objetos y estructuras de datos en R</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#descargar-instalar-y-cargar-paquetes",
+    "href": "parte3.html#descargar-instalar-y-cargar-paquetes",
+    "title": "3  Primer inicio de RStudio",
+    "section": "",
+    "text": "3.1.1 ¿Qué es un paquete?\nUn paquete de R reúne funciones, datos y documentación. R incluye paquetes básicos, pero podemos instalar otros para importar archivos, transformar tablas, visualizar datos o trabajar con secuencias biológicas.\nHay una diferencia fundamental:\n\nInstalar (install.packages()): descarga y agrega el paquete a una biblioteca de paquetes de R. Se realiza normalmente una vez por instalación o entorno.\nCargar (library()): permite usar las funciones del paquete en la sesión actual. Se repite cuando abrimos una nueva sesión y necesitamos ese paquete.\n\n\n\n3.1.2 Instalar paquetes desde CRAN\nEn la consola de RStudio, ejecuta:\n\n\nCódigo\ninstall.packages(\"ggplot2\")\ninstall.packages(c(\"dplyr\", \"readr\", \"tidyr\", \"purrr\"))\n\n\nTambién puedes usar Tools &gt; Install Packages o el botón Install de la pestaña Packages. Asegúrate de escribir correctamente los nombres.\n\n\n\n\n\n\nTipSi Windows pregunta si deseas instalar desde código fuente\n\n\n\nCuando exista un binario adecuado, suele ser más sencillo utilizarlo. Si un paquete debe compilarse desde código fuente, necesitarás Rtools correctamente instalado. En macOS o Linux necesitarás las herramientas de compilación correspondientes.\n\n\n\n\n3.1.3 Cargar y utilizar un paquete\n\n\nCódigo\nlibrary(ggplot2)\nlibrary(dplyr)\n\n# Alternativa: llamar una función con el nombre de su paquete\n# dplyr::filter(tabla, conteo &gt; 10)\n\n\nlibrary(ggplot2) no instala ggplot2: si no está instalado, mostrará un error. Puedes utilizar paquete::funcion() para acceder a una función sin adjuntar todo el paquete al espacio de búsqueda.\n\n\n3.1.4 Instalar paquetes desde Bioconductor\nBioconductor distribuye paquetes especializados en bioinformática y biología computacional. Para instalarlos, primero se instala BiocManager desde CRAN y luego se usa BiocManager::install():\n\n\nCódigo\ninstall.packages(\"BiocManager\")  # Una vez por entorno, si falta\nBiocManager::install(\"Biostrings\")\n\nlibrary(Biostrings)\n\n\nBiocManager elige una versión de Bioconductor compatible con tu R. Si tienes problemas, consulta https://bioconductor.org/install/ y comprueba:\n\n\nCódigo\nBiocManager::version()\nBiocManager::valid()\n\n\n\n\n3.1.5 Verificar paquetes instalados y sus versiones\n\n\nCódigo\n\"ggplot2\" %in% rownames(installed.packages())\npackageVersion(\"ggplot2\")\ninstalled.packages()[, c(\"Package\", \"Version\")]\nhelp(package = \"ggplot2\")\n?plot\n\n\nLa pestaña Packages de RStudio también muestra los paquetes instalados y sus versiones.\n\n\n3.1.6 Actualizar y eliminar paquetes\n\n\nCódigo\nupdate.packages(ask = TRUE)      # Revisa antes de actualizar\nremove.packages(\"nombre_paquete\") # Sustituye por un paquete real\n\n\nNo es obligatorio desinstalar un paquete para actualizarlo. Tampoco es recomendable actualizar todos los paquetes justo antes de una práctica: algunas actualizaciones pueden cambiar dependencias o comportamientos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#solución-de-problemas-frecuentes",
+    "href": "parte3.html#solución-de-problemas-frecuentes",
+    "title": "3  Primer inicio de RStudio",
+    "section": "3.2 1.7 Solución de problemas frecuentes",
+    "text": "3.2 1.7 Solución de problemas frecuentes\n\n\n\n\n\n\n\n\nProblema\nPosible causa\nQué revisar\n\n\n\n\nRStudio no encuentra R\nR no está instalado o no fue detectado\nInstala R primero; revisa la versión de R en las opciones de RStudio.\n\n\nthere is no package called ...\nEl paquete no está instalado en la biblioteca activa\nEjecuta install.packages() o el instalador de Bioconductor correspondiente.\n\n\ncould not find function ...\nNo se cargó el paquete o el nombre está mal escrito\nUsa library(paquete) o paquete::funcion().\n\n\nError de compilación en Windows\nFalta Rtools o es incompatible con R\nRevisa la tabla oficial de compatibilidad y pkgbuild::has_build_tools().\n\n\nError de compilación en macOS\nFaltan Xcode Command Line Tools o GNU Fortran\nComprueba clang, make y, si se requiere, gfortran.\n\n\nError de compilación en Linux\nFaltan compiladores o bibliotecas del sistema\nRevisa build-essential, gfortran y las dependencias mencionadas en el error.\n\n\nPaquete no disponible para la versión de R\nIncompatibilidad de versiones\nRevisa la versión de R, CRAN o Bioconductor y los requisitos del paquete.\n\n\npermission denied\nNo hay permisos de escritura en la biblioteca de paquetes\nUsa una biblioteca personal de R o revisa los permisos, sin modificar carpetas del sistema indiscriminadamente.\n\n\n\n\n\n\n\n\n\nAdvertenciaAnte un error de instalación\n\n\n\nLee el primer mensaje de error relevante y anota: sistema operativo, versión de R, nombre del paquete y mensaje completo. No intentes resolverlo instalando herramientas al azar. Muchos errores de compilación se deben a una dependencia específica, no a RStudio.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#actividad-comprobar-que-el-entorno-está-listo",
+    "href": "parte3.html#actividad-comprobar-que-el-entorno-está-listo",
+    "title": "3  Primer inicio de RStudio",
+    "section": "3.3 1.8 Actividad: comprobar que el entorno está listo",
+    "text": "3.3 1.8 Actividad: comprobar que el entorno está listo\n\nAbre RStudio Desktop.\nEjecuta R.version.string y Sys.info()[[\"sysname\"]].\nComprueba que ggplot2 y dplyr están instalados; si no lo están, instálalos desde CRAN.\nCarga ambos paquetes y consulta sus versiones.\nIdentifica las herramientas de compilación correspondientes a tu sistema operativo. En Windows, comprueba especialmente la compatibilidad de Rtools.\n\n\n\nCódigo\nR.version.string\nSys.info()[[\"sysname\"]]\n\ninstall.packages(c(\"ggplot2\", \"dplyr\")) # Solo si faltan\nlibrary(ggplot2)\nlibrary(dplyr)\npackageVersion(\"ggplot2\")\npackageVersion(\"dplyr\")\n\n\n\n\n\n\n\n\nNotaSolución y comentarios de la actividad\n\n\n\n\n\nR.version.string indica la versión de R; Sys.info()[[\"sysname\"]] identifica el sistema operativo. packageVersion() devuelve la versión instalada del paquete. Si library() funciona sin errores, el paquete está disponible en la sesión. La instalación de compiladores se comprueba de manera diferente según el sistema; en Windows se puede utilizar pkgbuild::has_build_tools(debug = TRUE).\n\n\n\n\n3.3.1 Lista de verificación de instalación\n\nInstalé R desde CRAN y conozco mi versión.\nInstalé RStudio Desktop y puedo abrir su consola.\nWindows: instalé la versión de Rtools compatible con R y comprobé sus herramientas.\nmacOS: instalé Xcode Command Line Tools y sé cuándo necesito GNU Fortran.\nLinux: instalé R y las herramientas de compilación de mi distribución.\nPuedo ejecutar expresiones de R desde RStudio.\nSé instalar paquetes desde CRAN y Bioconductor.\nDistingo entre instalar y cargar un paquete.\nSé consultar las versiones y la documentación de los paquetes.\nSé qué información reunir si aparece un error de instalación.\n\nReferencias para esta sección: Introducción a R — Code & Data Bootcamp, CRAN, Rtools, herramientas de R para macOS, RStudio Desktop y Bioconductor.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#asignación-nombres-y-tipos-básicos",
+    "href": "parte3.html#asignación-nombres-y-tipos-básicos",
+    "title": "3  Objetos y estructuras de datos en R",
+    "section": "3.1 Asignación, nombres y tipos básicos",
+    "text": "3.1 Asignación, nombres y tipos básicos\nUn objeto almacena un valor o una estructura que podremos reutilizar. Usaremos &lt;- para asignar valores. Los nombres distinguen mayúsculas de minúsculas: gen y Gen son objetos distintos.\n\n\nCódigo\nidentificador &lt;- \"gene_001\"\nlongitud &lt;- 450L\nproporcion_gc &lt;- 0.53\nanotado &lt;- TRUE\n\nclass(identificador)\n\n\n[1] \"character\"\n\n\nCódigo\nclass(longitud)\n\n\n[1] \"integer\"\n\n\nCódigo\nclass(proporcion_gc)\n\n\n[1] \"numeric\"\n\n\nCódigo\nclass(anotado)\n\n\n[1] \"logical\"\n\n\n\n\n\nTipo\nEjemplo\nUso\n\n\n\n\ncharacter\n\"ATGC\"\nSecuencias, nombres e identificadores\n\n\ninteger\n450L\nConteos y posiciones enteras\n\n\ndouble\n0.53\nMediciones numéricas\n\n\nlogical\nTRUE\nIndicadores y condiciones\n\n\n\nnumeric se usa habitualmente para valores numéricos, aunque class(1.5) devuelve \"numeric\" y typeof(1.5) devuelve \"double\". Usa class(), typeof() y str() para inspeccionar objetos.\n\n\nCódigo\nclass(1.5)\n\n\n[1] \"numeric\"\n\n\nCódigo\ntypeof(1.5)\n\n\n[1] \"double\"\n\n\nCódigo\nstr(identificador)\n\n\n chr \"gene_001\"\n\n\n\n\n\n\n\n\nImportanteValores faltantes y conversiones\n\n\n\nNA representa un valor faltante. Una conversión puede introducir NA si el texto no se puede interpretar como número; nunca supongas que la conversión fue correcta sin revisarla.\n\n\n\n\nCódigo\nvalores &lt;- c(\"12\", \"18\", \"sin_dato\")\n# La conversión produce una advertencia; no la ejecutamos automáticamente\n# as.numeric(valores)\nis.na(c(10, NA, 20))\n\n\n[1] FALSE  TRUE FALSE",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Objetos y estructuras de datos en R</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#vectores-e-indexación",
+    "href": "parte3.html#vectores-e-indexación",
+    "title": "3  Objetos y estructuras de datos en R",
+    "section": "3.2 Vectores e indexación",
+    "text": "3.2 Vectores e indexación\nUn vector atómico contiene elementos del mismo tipo. Se construye con c() y se indexa mediante corchetes. R comienza a contar posiciones desde 1, no desde 0.\n\n\nCódigo\ngenes &lt;- c(\"gA\", \"gB\", \"gC\", \"gD\")\nlongitudes &lt;- c(150, 400, 220, 510)\n\nlength(genes)\n\n\n[1] 4\n\n\nCódigo\ngenes[1]\n\n\n[1] \"gA\"\n\n\nCódigo\ngenes[c(2, 4)]\n\n\n[1] \"gB\" \"gD\"\n\n\nCódigo\ngenes[longitudes &gt;= 300]\n\n\n[1] \"gB\" \"gD\"\n\n\nLas operaciones vectorizadas se aplican a varios elementos sin escribir un ciclo explícito:\n\n\nCódigo\nlongitudes / 3\n\n\n[1]  50.00000 133.33333  73.33333 170.00000\n\n\nCódigo\nlongitudes &gt;= 300\n\n\n[1] FALSE  TRUE FALSE  TRUE\n\n\nCódigo\nsum(longitudes &gt;= 300)\n\n\n[1] 2\n\n\n\n\n\n\n\n\nNotaEjercicio 1. Vectores y selección\n\n\n\nCrea los vectores ids &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\") y tam &lt;- c(90, 450, 310, 120, 600).\n\nSelecciona el tercer identificador.\nRecupera los identificadores de genes con longitud de al menos 300.\nCuenta cuántos cumplen esa condición sin usar un ciclo.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 1\n\n\n\n\n\n\n\nCódigo\nids &lt;- c(\"g1\", \"g2\", \"g3\", \"g4\", \"g5\")\ntam &lt;- c(90, 450, 310, 120, 600)\nids[3]\n\n\n[1] \"g3\"\n\n\nCódigo\nids[tam &gt;= 300]\n\n\n[1] \"g2\" \"g3\" \"g5\"\n\n\nCódigo\nsum(tam &gt;= 300)\n\n\n[1] 3\n\n\nLos genes seleccionados son g2, g3 y g5; el conteo es 3.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Objetos y estructuras de datos en R</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#matrices-y-arreglos",
+    "href": "parte3.html#matrices-y-arreglos",
+    "title": "3  Objetos y estructuras de datos en R",
+    "section": "3.3 Matrices y arreglos",
+    "text": "3.3 Matrices y arreglos\nUna matriz tiene dos dimensiones y almacena elementos del mismo tipo. Un arreglo (array) generaliza esta idea a más dimensiones.\n\n\nCódigo\nconteos &lt;- matrix(\n  c(12, 8, 4, 6, 10, 2),\n  nrow = 3,\n  dimnames = list(c(\"g1\", \"g2\", \"g3\"), c(\"M1\", \"M2\"))\n)\nconteos\n\n\n   M1 M2\ng1 12  6\ng2  8 10\ng3  4  2\n\n\nCódigo\nconteos[2, 1]\n\n\n[1] 8\n\n\nCódigo\nconteos[, \"M2\"]\n\n\ng1 g2 g3 \n 6 10  2 \n\n\nCódigo\ndim(conteos)\n\n\n[1] 3 2\n\n\n\n\nCódigo\narreglo &lt;- array(1:8, dim = c(2, 2, 2))\ndim(arreglo)\n\n\n[1] 2 2 2",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Objetos y estructuras de datos en R</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#data-frames-y-tibbles",
+    "href": "parte3.html#data-frames-y-tibbles",
+    "title": "3  Objetos y estructuras de datos en R",
+    "section": "3.4 Data frames y tibbles",
+    "text": "3.4 Data frames y tibbles\nUn data frame es una tabla: cada columna puede tener un tipo diferente, pero todas deben tener la misma cantidad de filas. En la sesión 2 veremos importación y validación de tablas, y en la sesión 3 su transformación con dplyr y tidyr.\n\n\nCódigo\nanotaciones &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\"),\n  longitud = c(450, 120, 800),\n  producto = c(\"transportador\", \"hipotetica\", \"enzima\")\n)\n\nanotaciones\n\n\n  gen longitud      producto\n1  g1      450 transportador\n2  g2      120    hipotetica\n3  g3      800        enzima\n\n\nCódigo\nstr(anotaciones)\n\n\n'data.frame':   3 obs. of  3 variables:\n $ gen     : chr  \"g1\" \"g2\" \"g3\"\n $ longitud: num  450 120 800\n $ producto: chr  \"transportador\" \"hipotetica\" \"enzima\"\n\n\nCódigo\nanotaciones$longitud\n\n\n[1] 450 120 800\n\n\nCódigo\nanotaciones[2, ]\n\n\n  gen longitud   producto\n2  g2      120 hipotetica\n\n\nCódigo\nanotaciones[anotaciones$longitud &gt; 200, ]\n\n\n  gen longitud      producto\n1  g1      450 transportador\n3  g3      800        enzima\n\n\nUn tibble es una variante moderna de data.frame, con una impresión más compacta y comportamientos de selección más consistentes.\n\n\nCódigo\n# Requiere haber instalado tibble\n# tibble::as_tibble(anotaciones)",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Objetos y estructuras de datos en R</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#listas-y-factores",
+    "href": "parte3.html#listas-y-factores",
+    "title": "3  Objetos y estructuras de datos en R",
+    "section": "3.5 Listas y factores",
+    "text": "3.5 Listas y factores\nLas listas pueden almacenar objetos de distintos tipos y tamaños. Resultan útiles para reunir resultados de un análisis.\n\n\nCódigo\nmuestra &lt;- list(\n  id = \"M01\",\n  secuencias = c(\"ATGCGT\", \"CCATGA\"),\n  anotaciones = anotaciones\n)\n\nmuestra$id\n\n\n[1] \"M01\"\n\n\nCódigo\nmuestra[[\"secuencias\"]]\n\n\n[1] \"ATGCGT\" \"CCATGA\"\n\n\nCódigo\nmuestra[\"secuencias\"] # Conserva una lista\n\n\n$secuencias\n[1] \"ATGCGT\" \"CCATGA\"\n\n\nUn factor representa categorías con niveles definidos. Su orden puede importar al crear tablas o gráficos.\n\n\nCódigo\ncondicion &lt;- factor(c(\"control\", \"tratamiento\", \"control\"),\n                    levels = c(\"control\", \"tratamiento\"))\nlevels(condicion)\n\n\n[1] \"control\"     \"tratamiento\"\n\n\n\n\n\n\n\n\n\n\n\nEstructura\nDimensiones\n¿Elementos del mismo tipo?\nEjemplo de uso\n\n\n\n\nVector\n1\nSí\nIdentificadores o longitudes\n\n\nMatriz\n2\nSí\nConteos por gen y muestra\n\n\nArray\n2 o más\nSí\nDatos multidimensionales\n\n\nData frame / tibble\n2\nPor columna\nTabla de anotaciones\n\n\nLista\nVariable\nNo\nResultados heterogéneos\n\n\n\n\n\n\n\n\n\nNotaEjercicio 2. Elegir estructuras\n\n\n\n\nConstruye un data.frame con tres genes, sus longitudes y una etiqueta funcional.\nRecupera únicamente las filas con longitud mayor que 200.\nCrea una lista que contenga la tabla y el identificador de una muestra.\nExplica por qué una matriz de caracteres no sería una buena sustitución para la tabla cuando queremos conservar longitudes numéricas.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 2\n\n\n\n\n\n\n\nCódigo\ntabla &lt;- data.frame(\n  gen = c(\"g1\", \"g2\", \"g3\"),\n  longitud = c(100, 350, 500),\n  funcion = c(\"hipotetica\", \"enzima\", \"transportador\")\n)\ntabla[tabla$longitud &gt; 200, ]\n\n\n  gen longitud       funcion\n2  g2      350        enzima\n3  g3      500 transportador\n\n\nCódigo\nresultado &lt;- list(muestra = \"M01\", genes = tabla)\nresultado$genes\n\n\n  gen longitud       funcion\n1  g1      100    hipotetica\n2  g2      350        enzima\n3  g3      500 transportador\n\n\nEn una matriz todos los elementos comparten tipo; al combinar texto y números, las longitudes se convertirían en caracteres.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Objetos y estructuras de datos en R</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#operadores-aritméticos-relacionales-y-lógicos",
+    "href": "parte3.html#operadores-aritméticos-relacionales-y-lógicos",
+    "title": "3  Primer inicio de RStudio",
+    "section": "5.1 3.1 Operadores aritméticos, relacionales y lógicos",
+    "text": "5.1 3.1 Operadores aritméticos, relacionales y lógicos\n\n\n\nOperación\nOperadores\n\n\n\n\nAritmética\n+, -, *, /, ^, %%, %/%\n\n\nComparación\n==, !=, &lt;, &lt;=, &gt;, &gt;=\n\n\nLógica vectorizada\n&, |, !\n\n\nPertenencia\n%in%\n\n\n\nLos paréntesis permiten hacer explícita la precedencia de las operaciones. En condiciones de if, utiliza una expresión lógica de longitud uno; para combinar condiciones escalares puedes usar && y ||.\n\n\nCódigo\nlongitudes &lt;- c(100, 250, 700, 90)\n(longitudes &gt;= 200) & (longitudes &lt;= 600)\n\n\n[1] FALSE  TRUE FALSE FALSE\n\n\nCódigo\n\"g2\" %in% c(\"g1\", \"g2\", \"g3\")\n\n\n[1] TRUE\n\n\nCódigo\n(2 + 3) * 4\n\n\n[1] 20",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#condicionales-if-else-if-y-else",
+    "href": "parte3.html#condicionales-if-else-if-y-else",
+    "title": "3  Primer inicio de RStudio",
+    "section": "5.2 3.2 Condicionales: if, else if y else",
+    "text": "5.2 3.2 Condicionales: if, else if y else\nUn condicional permite ejecutar instrucciones diferentes según una condición.\n\n\nCódigo\nlongitud_gen &lt;- 350\n\nif (longitud_gen &gt;= 300) {\n  mensaje &lt;- \"Gen de longitud al menos 300\"\n} else {\n  mensaje &lt;- \"Gen de longitud menor que 300\"\n}\nmensaje\n\n\n[1] \"Gen de longitud al menos 300\"\n\n\nCuando se necesita clasificar un vector completo, ifelse() puede ser más apropiado que escribir un if por cada elemento:\n\n\nCódigo\ntamanos &lt;- c(120, 350, 700)\nifelse(tamanos &gt;= 300, \"largo\", \"corto\")\n\n\n[1] \"corto\" \"largo\" \"largo\"",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#ciclos-for-y-while",
+    "href": "parte3.html#ciclos-for-y-while",
+    "title": "3  Primer inicio de RStudio",
+    "section": "5.3 3.3 Ciclos for y while",
+    "text": "5.3 3.3 Ciclos for y while\nLos ciclos permiten repetir una operación. Ya conoces esta idea de Bash; aquí cambia la sintaxis.\n\n\nCódigo\nsecuencias &lt;- c(\"ATGC\", \"GGTAAC\", \"CCG\")\n\nfor (secuencia in secuencias) {\n  print(nchar(secuencia))\n}\n\n\n[1] 4\n[1] 6\n[1] 3\n\n\nwhile repite mientras una condición siga siendo verdadera. Es necesario que el estado cambie para evitar un ciclo infinito.\n\n\nCódigo\ncontador &lt;- 1\nwhile (contador &lt;= 3) {\n  print(contador)\n  contador &lt;- contador + 1\n}\n\n\n[1] 1\n[1] 2\n[1] 3\n\n\nCuando existe una función vectorizada, suele ser más sencilla:\n\n\nCódigo\nnchar(secuencias)\n\n\n[1] 4 6 3\n\n\n\n\n\n\n\n\nNotaEjercicio 3. Control de flujo\n\n\n\nCon secuencias &lt;- c(\"ATG\", \"ATGCGC\", \"TTAACGTA\", \"GG\"):\n\nEscribe un ciclo for que muestre la longitud de cada secuencia.\nUsa if para indicar si la primera secuencia tiene al menos cinco nucleótidos.\nObtén todas las longitudes con una sola instrucción, sin ciclo.\n\n\n\n\n\n\n\n\n\nTipSolución · Ejercicio 3\n\n\n\n\n\n\n\nCódigo\nsecuencias &lt;- c(\"ATG\", \"ATGCGC\", \"TTAACGTA\", \"GG\")\nfor (s in secuencias) {\n  print(nchar(s))\n}\n\n\n[1] 3\n[1] 6\n[1] 8\n[1] 2\n\n\nCódigo\nif (nchar(secuencias[1]) &gt;= 5) {\n  print(\"Al menos cinco\")\n} else {\n  print(\"Menos de cinco\")\n}\n\n\n[1] \"Menos de cinco\"\n\n\nCódigo\nnchar(secuencias)\n\n\n[1] 3 6 8 2",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#de-la-consola-al-script",
+    "href": "parte3.html#de-la-consola-al-script",
+    "title": "3  Primer inicio de RStudio",
+    "section": "7.1 5.1 De la consola al script",
+    "text": "7.1 5.1 De la consola al script\nLa consola es útil para experimentar, pero un script .R conserva las instrucciones y permite ejecutarlas de nuevo. En RStudio selecciona File → New File → R Script, escribe código y guarda el archivo. Para ejecutar la línea actual o la selección usa Ctrl + Enter (Windows/Linux) o Cmd + Enter (macOS).\nUn script legible tiene un propósito claro, comentarios útiles, nombres descriptivos y no depende de objetos creados previamente en la consola.\n\n\nCódigo\n# Ejemplo de contenido para guardar en scripts/01_exploracion.R\nids &lt;- c(\"g1\", \"g2\", \"g3\")\nsecuencias &lt;- c(\"ATGC\", \"GGCCAA\", \"ATAT\")\nlongitudes &lt;- nchar(secuencias)\nresultado &lt;- data.frame(gen = ids, longitud = longitudes)\nprint(resultado)\n\n\n  gen longitud\n1  g1        4\n2  g2        6\n3  g3        4",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#organizar-el-trabajo-con-un-proyecto-.rproj",
+    "href": "parte3.html#organizar-el-trabajo-con-un-proyecto-.rproj",
+    "title": "3  Primer inicio de RStudio",
+    "section": "7.2 5.2 Organizar el trabajo con un proyecto .Rproj",
+    "text": "7.2 5.2 Organizar el trabajo con un proyecto .Rproj\nComo ya conoces directorios y Git, nos concentraremos en la función del proyecto de RStudio: abrir el trabajo en un contexto consistente y facilitar el uso de rutas relativas.\n\nEn RStudio elige File → New Project.\nSelecciona New Directory → New Project (o abre un repositorio existente con Existing Directory).\nElige un nombre y una carpeta en tu computadora.\nGuarda los scripts y archivos del análisis dentro del proyecto.\n\nUna estructura inicial sencilla puede ser:\nintro_R/\n├── intro_R.Rproj\n├── data_raw/\n├── scripts/\n│   └── 01_exploracion.R\n├── results/\n└── README.md\ngetwd() muestra el directorio de trabajo actual. Evita rutas absolutas específicas de tu computadora. No es necesario utilizar setwd() dentro de cada script cuando trabajas desde un proyecto bien organizado.\n\n\nCódigo\ngetwd()\n# Ejemplo de ruta relativa dentro del proyecto:\n# readr::read_csv(\"data_raw/muestras.csv\")",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#paquetes-en-los-scripts",
+    "href": "parte3.html#paquetes-en-los-scripts",
+    "title": "3  Primer inicio de RStudio",
+    "section": "7.3 5.3 Paquetes en los scripts",
+    "text": "7.3 5.3 Paquetes en los scripts\nLas dependencias deben quedar explícitas al inicio del script o utilizarse con paquete::funcion(). En las siguientes sesiones aprenderemos readr, dplyr, tidyr, purrr y ggplot2. No necesitamos cargarlos todos para resolver los ejercicios de hoy.\n\n\n\n\n\n\nAdvertenciaUna regla para comprobar tu código\n\n\n\nAntes de entregar un script, reinicia la sesión de R y ejecútalo desde el inicio. Si solo funciona porque quedaron objetos en Environment, todavía no es reproducible.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#ideas-para-recordar",
+    "href": "parte3.html#ideas-para-recordar",
+    "title": "3  Primer inicio de RStudio",
+    "section": "8.1 Ideas para recordar",
+    "text": "8.1 Ideas para recordar\n\nR ejecuta el código; RStudio facilita escribirlo y organizarlo.\nUn paquete se instala y se carga: son acciones distintas.\nVectores, matrices, data frames y listas resuelven necesidades diferentes.\nR indexa desde 1 y permite operaciones vectorizadas.\nLas funciones permiten reutilizar código y definir reglas claras de entrada.\nUn script debe ejecutarse desde el principio dentro de su proyecto, sin depender del estado previo de la consola.\n\nEn la siguiente sesión: importaremos archivos tabulares de bioinformática, inspeccionaremos sus columnas y verificaremos su consistencia antes de transformarlos.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
+    ]
+  },
+  {
+    "objectID": "parte3.html#material-de-consulta",
+    "href": "parte3.html#material-de-consulta",
+    "title": "3  Primer inicio de RStudio",
+    "section": "8.2 Material de consulta",
+    "text": "8.2 Material de consulta\n\nCode & Data Bootcamp: Introducción a R.\nCode & Data Bootcamp: Estructuras de datos en R.\nSeminario de Estadística: Introducción a R y RStudio.\nManual oficial de introducción a R.",
+    "crumbs": [
+      "**De Bash a R: programación para bioinformática**",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Primer inicio de RStudio</span>"
     ]
   }
 ]
