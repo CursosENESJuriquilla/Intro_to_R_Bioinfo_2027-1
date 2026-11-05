@@ -14,7 +14,7 @@ Los datos de esta sesión son **sintéticos**. Los valores de identidad, E-value
 
 Descarga y descomprime [`datos_sesion_02_blast.zip`](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_sesion_02_blast.zip). Dentro de tu proyecto de RStudio crea `data_raw/` y coloca ahí la carpeta descomprimida. Tendrás, entre otros, los archivos:
 
-```text
+``` text
 mi_proyecto/
 ├── mi_proyecto.Rproj
 ├── data_raw/
@@ -63,7 +63,7 @@ readLines(archivo_blast, n = 5)
 En el archivo de práctica verás una primera línea con nombres de columnas y, después, registros. Los campos están separados por **tabulaciones** (`\t`), no por comas.
 
 | Extensión habitual | Contenido frecuente | Separador o estructura |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | `.csv` | Tabla | Comas, aunque depende de cómo se exportó |
 | `.tsv` | Tabla | Tabulaciones |
 | `.txt` | Texto o tabla | Depende del archivo |
@@ -82,13 +82,7 @@ Sin abrirlo en una hoja de cálculo, utiliza R para comprobar que existe `blast_
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
 
-```{r}
-ruta <- "data_raw/datos_sesion_02_blast/blast_separador_incorrecto.csv"
-file.exists(ruta)
-readLines(ruta, n = 3)
-```
 
-Aunque termina en `.csv`, sus columnas están separadas por tabulaciones. Por tanto, se debe importar como una tabla delimitada por tabulaciones.
 :::
 ::::
 
@@ -139,10 +133,10 @@ class(blast)
 class(metadata)
 ```
 
-| R base | `readr` | Uso |
-|---|---|---|
-| `read.csv()` | `read_csv()` | Archivos separados por comas |
-| `read.delim()` | `read_tsv()` | Archivos separados por tabulaciones |
+| R base         | `readr`        | Uso                                 |
+|----------------|----------------|-------------------------------------|
+| `read.csv()`   | `read_csv()`   | Archivos separados por comas        |
+| `read.delim()` | `read_tsv()`   | Archivos separados por tabulaciones |
 | `read.table()` | `read_delim()` | Archivos con separador configurable |
 
 No es necesario utilizar ambos sistemas simultáneamente. Los comparamos para que puedas leer código escrito por otras personas; en las siguientes prácticas usaremos principalmente `readr`.
@@ -186,10 +180,15 @@ readr::spec(blast)
 readr::problems(blast)
 ```
 
-`spec()` muestra la especificación de tipos de columnas y `problems()` informa de problemas detectados durante la importación con `readr`.
+- La función `str(blast)` permite consultar la **estructura de un objeto en R**, mostrando el tipo de objeto, sus dimensiones, los nombres de las columnas, sus tipos de datos y algunos de sus valores.
+
+- La función `readr::spec()` permite consultar las **especificaciones de las columnas** de un conjunto de datos importado con `readr`, especialmente los tipos de datos que se asignaron durante la lectura del archivo.
+
+- La función `readr::problems(blast)` permite identificar **problemas detectados durante la importación de los datos** con `readr`, como valores que no corresponden al tipo de dato esperado. Si no se detectaron problemas, devuelve una tabla vacía.
+
+
 
 Para observar cómo funciona `problems()` cuando se detectan errores de importación, construiremos un pequeño conjunto de datos directamente en R. En este ejemplo, la columna identidad debería contener únicamente valores numéricos, pero introduciremos intencionalmente un texto ("error"). Indicaremos a R que esa columna debe ser numérica y revisaremos qué ocurre al importar los datos y cómo podemos identificar el problema.
-
 
 ```{r}
 # Simulamos el contenido de un archivo TSV
@@ -220,25 +219,7 @@ Importa `metadata_secuencias.csv` y `blast_comentarios.tsv` utilizando `readr`. 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
 
-```{r}
-metadata <- readr::read_csv(
-  "data_raw/datos_sesion_02_blast/metadata_secuencias.csv",
-  col_types = readr::cols(codigo_muestra = readr::col_character()),
-  show_col_types = FALSE
-)
 
-blast_com <- readr::read_tsv(
-  "data_raw/datos_sesion_02_blast/blast_comentarios.tsv",
-  comment = "#", show_col_types = FALSE
-)
-
-class(metadata)
-class(blast_com)
-head(metadata)
-head(blast_com)
-```
-
-Ambos objetos son tibbles. Los identificadores de muestra conservan sus ceros iniciales.
 :::
 ::::
 
@@ -284,7 +265,11 @@ table(blast$query_id)
 sort(table(blast$query_id), decreasing = TRUE)
 ```
 
-`unique()` devuelve los identificadores distintos; `table()` cuenta cuántas veces aparece cada uno. Si un `query_id` aparece en varias filas, puede corresponder a varios resultados de alineamiento; eso **no implica automáticamente que sea un duplicado erróneo**.
+- `unique()` devuelve los identificadores distintos. 
+
+- `table()` construye una **tabla de frecuencias**, contando cuántas veces aparece cada valor diferente en un vector.
+
+
 
 ### Preguntas que podemos responder
 
@@ -302,29 +287,16 @@ No vamos a eliminar registros ni corregir valores automáticamente: primero debe
 
 Con `resultados_blast.tsv`, responde mediante código:
 
-1. ¿Cuántos registros y columnas tiene la tabla?
-2. ¿Cuántos `query_id` diferentes aparecen?
-3. ¿Cuántos resultados tiene cada consulta?
-4. ¿Qué filas tienen `pident` mayor o igual a 95?
-5. ¿Hay valores faltantes?
+1.  ¿Cuántos registros y columnas tiene la tabla?
+2.  ¿Cuántos `query_id` diferentes aparecen?
+3.  ¿Cuántos resultados tiene cada consulta?
+4.  ¿Qué filas tienen `pident` mayor o igual a 95?
+5.  ¿Hay valores faltantes?
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
 
-```{r}
-#| eval: false
-blast <- readr::read_tsv(
-  "data_raw/datos_sesion_02_blast/resultados_blast.tsv",
-  show_col_types = FALSE
-)
-dim(blast)
-length(unique(blast$query_id))
-table(blast$query_id)
-blast[blast$pident >= 95, ]
-colSums(is.na(blast))
-```
 
-Las respuestas numéricas dependen del archivo de práctica; lo importante es identificar qué función resuelve cada pregunta.
 :::
 ::::
 
@@ -380,23 +352,12 @@ Evita borrar filas, reemplazar `NA` por cero o convertir columnas indiscriminada
 :::: {.callout-warning icon="false"}
 ## 🧠 Ejercicio 4: Detectar un problema de lectura
 
-Una compañera importa `blast_separador_incorrecto.csv` con `read_csv()` y obtiene una sola columna. ¿Significa que el archivo contiene una única variable? Explica cómo comprobarlo y corrige la importación.
+Un estudiante importa `blast_separador_incorrecto.csv` con `read_csv()` y obtiene una sola columna. ¿Significa que el archivo contiene una única variable? Explica cómo comprobarlo y corrige la importación.
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
 
-No necesariamente. La extensión `.csv` no garantiza que el separador sea una coma.
 
-```{r}
-#| eval: false
-ruta <- "data_raw/datos_sesion_02_blast/blast_separador_incorrecto.csv"
-readLines(ruta, n = 2)
-blast_corregido <- readr::read_tsv(ruta, show_col_types = FALSE)
-names(blast_corregido)
-dim(blast_corregido)
-```
-
-La inspección revela tabulaciones y la segunda importación recupera las columnas esperadas.
 :::
 ::::
 
@@ -427,15 +388,6 @@ Utiliza `readLines()` y `grep()` para identificar los encabezados de `secuencias
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
 
-```{r}
-#| eval: false
-lineas <- readLines("data_raw/datos_sesion_02_blast/secuencias.fasta")
-encabezados <- grep("^>", lineas, value = TRUE)
-length(encabezados)
-encabezados
-```
-
-El número de encabezados indica cuántas entradas FASTA aparecen en el archivo.
 :::
 ::::
 
@@ -443,33 +395,31 @@ El número de encabezados indica cuántas entradas FASTA aparecen en el archivo.
 
 En esta actividad reunirás las herramientas de la sesión sin utilizar aún `dplyr`, uniones entre tablas ni métodos estadísticos.
 
-:::: {.callout-warning icon="false"}
+::: {.callout-warning icon="false"}
 ## 🧠 Ejercicio 6: De los archivos a una descripción de los datos
 
 Crea un script llamado `02_exploracion.R` dentro de tu proyecto. El script debe:
 
-1. Comprobar que existen `resultados_blast.tsv`, `metadata_secuencias.csv` y `secuencias.fasta`.
-2. Importar las dos tablas con `readr` y conservar `codigo_muestra` como texto.
-3. Mostrar dimensiones, nombres y tipos de columnas.
-4. Identificar los `query_id` distintos y contar los resultados por consulta.
-5. Mostrar las filas con `pident >= 90` y explicar qué representa este filtro.
-6. Leer el FASTA e indicar cuántos encabezados contiene.
-7. Mostrar si alguna de las tablas tiene valores faltantes.
+1.  Comprobar que existen `resultados_blast.tsv`, `metadata_secuencias.csv` y `secuencias.fasta`.
+2.  Importar las dos tablas con `readr` y conservar `codigo_muestra` como texto.
+3.  Mostrar dimensiones, nombres y tipos de columnas.
+4.  Identificar los `query_id` distintos y contar los resultados por consulta.
+5.  Mostrar las filas con `pident >= 90` y explicar qué representa este filtro.
+6.  Leer el FASTA e indicar cuántos encabezados contiene.
+7.  Mostrar si alguna de las tablas tiene valores faltantes.
 
 Escribe al final del script, como comentarios, **tres observaciones sobre la estructura de los datos**, sin extraer conclusiones biológicas.
-
-
-::::
+:::
 
 ## Observaciones
 
 Hoy practicamos una secuencia de trabajo sencilla:
 
-1. **Localizar** archivos y reconocer su formato.
-2. **Importar** tablas con el separador y los tipos adecuados.
-3. **Explorar** dimensiones, columnas, identificadores y registros.
-4. **Reconocer** problemas de lectura antes de modificar datos.
-5. **Documentar** qué contiene cada objeto.
+1.  **Localizar** archivos y reconocer su formato.
+2.  **Importar** tablas con el separador y los tipos adecuados.
+3.  **Explorar** dimensiones, columnas, identificadores y registros.
+4.  **Reconocer** problemas de lectura antes de modificar datos.
+5.  **Documentar** qué contiene cada objeto.
 
 ::: {.callout-note title="Lista de verificación"}
 - [ ] Puedo identificar si un archivo está separado por comas o tabulaciones.

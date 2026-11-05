@@ -237,6 +237,61 @@ La pestaña **Packages** de RStudio también muestra los paquetes instalados y s
 update.packages(ask = TRUE)
 ```
 
+### Instalación de una versión específica de un paquete
+
+En ocasiones, necesitamos instalar una **versión específica de un paquete** en lugar de la versión más reciente. Esto puede ser útil cuando queremos reproducir un análisis, seguir un tutorial o trabajar con código desarrollado con una versión anterior.
+
+Para hacerlo, podemos utilizar la función `install_version()` del paquete `remotes`.
+
+**Paso 1.** Instalar el paquete `remotes` (si aún no está instalado).
+
+```{r}
+#| eval: false
+
+install.packages("remotes")
+```
+
+**Paso 2.** Instalar la versión deseada. Por ejemplo, para instalar la versión `1.1.4` de `dplyr`:
+
+```{r}
+#| eval: false
+
+remotes::install_version(
+  "dplyr",
+  version = "1.1.4",
+  repos = "https://cloud.r-project.org"
+)
+```
+
+**Paso 3.** Verificar qué versión quedó instalada:
+
+```{r}
+#| eval: false
+packageVersion("dplyr")
+```
+
+::: {.callout-note}
+## ¿Dónde consultar las versiones disponibles?
+
+Las versiones anteriores de los paquetes pueden consultarse en el archivo histórico de CRAN:
+
+<https://cran.r-project.org/src/contrib/Archive/>
+
+Por ejemplo, las versiones anteriores de `dplyr` están disponibles en:
+
+<https://cran.r-project.org/src/contrib/Archive/dplyr/>
+:::
+
+::: {.callout-warning}
+## Consideraciones importantes
+
+- Instalar una versión específica puede reemplazar la versión que ya tenemos instalada.
+- Algunas versiones antiguas pueden ser incompatibles con nuestra versión de R o con otros paquetes.
+- En Windows, algunas instalaciones pueden requerir **Rtools** para compilar el paquete desde su código fuente.
+
+Se recomienda ejecutar las instrucciones de instalación directamente en la **consola de R**.
+:::
+
 ## Evitar conflictos para la instalación de paquetes en R
 
 ### Si usamos Windows debemos instalar Rtools
@@ -264,7 +319,7 @@ sudo xcode-select --install
 ## Solución de problemas frecuentes
 
 | Problema | Posible causa | Qué revisar |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | RStudio no encuentra R | R no está instalado o no fue detectado | Instala R primero; revisa la versión de R en las opciones de RStudio. |
 | `there is no package called ...` | El paquete no está instalado en la biblioteca activa | Ejecuta `install.packages()` o el instalador de Bioconductor correspondiente. |
 | `could not find function ...` | No se cargó el paquete o el nombre está mal escrito | Usa `library(paquete)` o `paquete::funcion()`. |

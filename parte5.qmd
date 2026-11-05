@@ -59,6 +59,18 @@ contiene_motivo("ATGCGTAA", "GGG")
 
 El argumento `fixed = TRUE` indica que buscamos el motivo como texto literal, sin interpretarlo como una expresión regular. La función devuelve `TRUE` o `FALSE`.
 
+::: {.callout-note}
+## ¿Qué hace `fixed = TRUE` en `grepl()`?
+
+La función `grepl(patron, texto)` busca si un patrón aparece dentro de una cadena de texto y devuelve `TRUE` si lo encuentra o `FALSE` en caso contrario.
+
+El argumento **`fixed = TRUE`** indica que el patrón debe buscarse como texto literal, sin interpretar caracteres especiales como expresiones regulares.
+
+Esto es útil cuando buscamos motivos o subsecuencias específicas de ADN, ya que queremos encontrar exactamente la combinación de nucleótidos indicada.
+
+Por ejemplo, `grepl("ATG", "CCATGTA", fixed = TRUE)` devuelve `TRUE` porque el motivo `"ATG"` aparece dentro de la secuencia.
+:::
+
 :::: {.callout-warning icon="false"}
 ## 🧠 Ejercicio 1: Función 1
 
@@ -67,16 +79,7 @@ Escribe una función llamada `empieza_con` que reciba una secuencia y un prefijo
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
 
-```{r}
-empieza_con <- function(secuencia, prefijo) {
-  startsWith(secuencia, prefijo)
-}
-
-empieza_con("ATGCGT", "ATG")
-empieza_con("ATGCGT", "TGA")
-```
-
-`startsWith()` devuelve un valor lógico e identifica si el texto comienza con el prefijo indicado.
+Puedes usar `startsWith()`, esta te devuelve un valor lógico e identifica si el texto comienza con el prefijo indicado.
 :::
 ::::
 
@@ -152,18 +155,18 @@ Modifica `resumir_adn()` para que también devuelva la proporción de nucleótid
 resumir_adn <- function(id, secuencia) {
   secuencia <- toupper(secuencia)
   bases <- strsplit(secuencia, "", fixed = TRUE)[[1]]
-  longitud <- nchar(secuencia)
-  conteo_gc <- sum(bases %in% c("G", "C"))
+  #longitud <- 
+  #conteo_gc <- 
 
   list(
     id = id,
     longitud = longitud,
     conteo_gc = conteo_gc,
-    proporcion_gc = conteo_gc / longitud
+    #proporcion_gc = 
   )
 }
 
-resumir_adn("GEN_01", "ATGCGTAA")
+#resumir_adn("GEN_01", "ATGCGTAA")
 ```
 
 En esta versión suponemos que la secuencia no está vacía y contiene únicamente bases válidas. La proporción es una descripción de la composición de la secuencia, no una prueba estadística.
@@ -176,8 +179,10 @@ Una función debe evitar producir resultados engañosos cuando recibe datos inco
 
 ```{r}
 validar_adn <- function(secuencia) {
-  if (!is.character(secuencia) || length(secuencia) != 1 ||
-      is.na(secuencia) || !grepl("^[ACGT]+$", toupper(secuencia))) {
+  if (!is.character(secuencia) ||
+      length(secuencia) != 1 ||
+      is.na(secuencia) ||
+      !grepl("^[ACGT]+$", toupper(secuencia))) {
     stop("Se requiere una secuencia no vacía con bases A, C, G o T.")
   }
 
@@ -189,6 +194,70 @@ validar_adn("ATGCGT")
 
 En esta función, `^[ACGT]+$` es una **expresión regular**: exige que todos los caracteres sean `A`, `C`, `G` o `T`, y que exista al menos uno. El uso de `toupper()` permite aceptar letras minúsculas.
 
+
+::: {.callout-note}
+## Operadores lógicos en una condición: `||` y `!`
+
+En R, el operador **`||`** representa la operación lógica **O**. Permite combinar varias condiciones y devuelve `TRUE` cuando **al menos una de ellas es verdadera**.
+
+Por su parte, el operador **`!`** representa la negación lógica: cambia `TRUE` por `FALSE` y viceversa.
+
+En la función `validar_adn()`, utilizamos estos operadores para comprobar que una secuencia cumpla varios requisitos:
+
+- `!is.character(secuencia)`: la entrada no es texto.
+- `length(secuencia) != 1`: la entrada no contiene exactamente un elemento.
+- `is.na(secuencia)`: la entrada es un valor faltante (`NA`).
+- `!grepl("^[ACGT]+$", toupper(secuencia))`: la secuencia está vacía o contiene caracteres no permitidos.
+
+### ¿Qué hace la última condición?
+
+Analicemos la expresión:
+
+```{r}
+#| eval: false
+!grepl("^[ACGT]+$", toupper(secuencia))
+```
+
+Esta instrucción combina varias operaciones:
+
+1. **`toupper(secuencia)`** convierte todas las letras de la secuencia a mayúsculas. Por ejemplo, `"atgc"` se convierte en `"ATGC"`.
+
+2. **`grepl(patron, texto)`** verifica si una cadena de texto cumple con un patrón y devuelve `TRUE` si encuentra una coincidencia o `FALSE` en caso contrario.
+
+3. **`"^[ACGT]+$"`** es una *expresión regular*, es decir, un patrón que describe qué caracteres están permitidos y cómo deben aparecer:
+
+   - `^`: indica el inicio de la cadena.
+   - `[ACGT]`: permite cualquiera de las cuatro letras A, C, G o T.
+   - `+`: indica que debe aparecer **una o más veces** alguno de los caracteres permitidos.
+   - `$`: indica el final de la cadena.
+
+   En conjunto, el patrón exige que **toda la secuencia esté formada exclusivamente por A, C, G o T y que no esté vacía**.
+
+4. **`!`** niega el resultado de `grepl()`. Por lo tanto, la condición será `TRUE` cuando la secuencia **no cumpla** con el patrón establecido.
+
+Por ejemplo:
+
+```{r}
+grepl("^[ACGT]+$", toupper("atgc"))
+
+
+grepl("^[ACGT]+$", toupper("ATXG"))
+
+
+!grepl("^[ACGT]+$", toupper("ATXG"))
+
+```
+
+### ¿Cómo funciona toda la condición del `if`?
+
+Si **cualquiera de las condiciones unidas mediante `||` es verdadera**, se ejecuta `stop()`, que detiene la función y muestra un mensaje de error.
+
+En cambio, si todas las condiciones son falsas, la secuencia pasa la validación y la función devuelve `TRUE`.
+
+**Importante:** El operador `||` evalúa las condiciones de izquierda a derecha y se detiene cuando encuentra una verdadera. Esto evita evaluar condiciones posteriores cuando ya se detectó un error.
+:::
+
+
 ```{r}
 #| eval: false
 validar_adn("ATNG")  # Error: contiene N
@@ -199,13 +268,26 @@ Para verificaciones breves también existe `stopifnot()`. Esta función detiene 
 
 ```{r}
 longitud_validada <- function(secuencia) {
-  stopifnot(is.character(secuencia), length(secuencia) == 1,
-            !is.na(secuencia))
+  stopifnot(
+    is.character(secuencia),
+    length(secuencia) == 1,
+    !is.na(secuencia)
+  )
+
   nchar(secuencia)
 }
 
+
 longitud_validada("ATGCGT")
+
+# longitud_validada(123)
+# Error en longitud_validada(123): is.character(secuencia) is not TRUE
+
+# longitud_validada(c("ATG", "CCA"))
+# Error en longitud_validada(c("ATG", "CCA")): 
+#length(secuencia) == 1 is not TRUE
 ```
+
 
 ::: {.callout-note icon="false"}
 `stop()` resulta útil cuando queremos explicar claramente el problema. `stopifnot()` es práctico para comprobaciones cortas, aunque sus mensajes de error suelen ser menos descriptivos. En ambos casos, la función deja de ejecutarse si falla la validación.
@@ -217,14 +299,18 @@ Las funciones pueden incorporar `if`, `for` y `while`. Por ejemplo, podemos revi
 
 ```{r}
 revisar_secuencias <- function(secuencias) {
+  # Creamos el vector de resultados lógico (FALSE) de longitud n
   resultado <- logical(length(secuencias))
 
   for (i in seq_along(secuencias)) {
+    # Extraemos la secuencia i y la guardamos en secuencia temporalmente
     secuencia <- secuencias[i]
 
     if (is.na(secuencia)) {
+      # si es vacía asignamos FALSE
       resultado[i] <- FALSE
     } else {
+      # si no es vacía, verificamos que silo contenga A, C, G o T
       resultado[i] <- grepl("^[ACGT]+$", toupper(secuencia))
     }
   }
@@ -252,15 +338,18 @@ Utiliza la función `revisar_secuencias()` del ejemplo anterior.
 ## Solución
 
 ```{r}
+#| eval: false
 clasificar_secuencias <- function(secuencias) {
-  stopifnot(is.character(secuencias))
+# 1. Verifica que el argumento recibido sea un vector de tipo carácter.
 
-  es_valida <- revisar_secuencias(secuencias)
+# 2. Utiliza la función revisar_secuencias() para identificar
+#    cuáles secuencias son válidas y guarda los resultados.
 
-  list(
-    validas = secuencias[es_valida],
-    invalidas = secuencias[!es_valida]
-  )
+# 3. Devuelve una lista con dos elementos:
+#    - validas: las secuencias que cumplen con los criterios.
+#    - invalidas: las secuencias que no cumplen con los criterios.
+#    Utiliza el vector lógico obtenido para seleccionar
+#    las secuencias correspondientes.
 }
 
 clasificar_secuencias(c("ATGCGT", "ACNTGA", "ttacga", NA))
@@ -272,7 +361,7 @@ La función devuelve una lista con dos vectores de caracteres. Los valores falta
 
 ## Actividad Final
 
-:::: {.callout-warning icon="false"}
+::: {.callout-warning icon="false"}
 ## 🧠 Ejercicio 4
 
 Un archivo de secuencias ha sido representado en R mediante dos vectores:
@@ -288,9 +377,7 @@ Escribe una función `crear_reporte_secuencias(ids, secuencias)` que:
 2.  Identifique las secuencias válidas mediante `revisar_secuencias()`.
 3.  Devuelva un `data.frame` con las columnas `id`, `secuencia`, `longitud` y `valida`.
 4.  Asigne `NA` a la longitud de las secuencias inválidas.
-
-
-::::
+:::
 
 ## Resumen
 

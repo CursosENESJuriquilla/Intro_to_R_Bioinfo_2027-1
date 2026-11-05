@@ -242,7 +242,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><strong>Importación, exploración y validación de datos biológicos</strong></span></a>
+ <span class="menu-text"><strong>Importación y exploración de datos bioinformáticos en R</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -251,7 +251,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./parte7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Pendiente</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Integración de datos y automatización de análisis en R</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></span></a>
   </div>
 </li>
       </ul>
@@ -293,6 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#cargar-paquetes-en-el-ambiente-de-r" id="toc-cargar-paquetes-en-el-ambiente-de-r" class="nav-link" data-scroll-target="#cargar-paquetes-en-el-ambiente-de-r"><span class="header-section-number">2.9.6</span> Cargar paquetes en el ambiente de R</a></li>
   <li><a href="#verificar-paquetes-instalados-y-sus-versiones" id="toc-verificar-paquetes-instalados-y-sus-versiones" class="nav-link" data-scroll-target="#verificar-paquetes-instalados-y-sus-versiones"><span class="header-section-number">2.9.7</span> Verificar paquetes instalados y sus versiones</a></li>
   <li><a href="#actualizar-paquetes" id="toc-actualizar-paquetes" class="nav-link" data-scroll-target="#actualizar-paquetes"><span class="header-section-number">2.9.8</span> Actualizar paquetes</a></li>
+  <li><a href="#instalación-de-una-versión-específica-de-un-paquete" id="toc-instalación-de-una-versión-específica-de-un-paquete" class="nav-link" data-scroll-target="#instalación-de-una-versión-específica-de-un-paquete"><span class="header-section-number">2.9.9</span> Instalación de una versión específica de un paquete</a></li>
   </ul></li>
   <li><a href="#evitar-conflictos-para-la-instalación-de-paquetes-en-r" id="toc-evitar-conflictos-para-la-instalación-de-paquetes-en-r" class="nav-link" data-scroll-target="#evitar-conflictos-para-la-instalación-de-paquetes-en-r"><span class="header-section-number">2.10</span> Evitar conflictos para la instalación de paquetes en R</a>
   <ul>
@@ -587,6 +622,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
+<section id="instalación-de-una-versión-específica-de-un-paquete" class="level3" data-number="2.9.9">
+<h3 data-number="2.9.9" class="anchored" data-anchor-id="instalación-de-una-versión-específica-de-un-paquete"><span class="header-section-number">2.9.9</span> Instalación de una versión específica de un paquete</h3>
+<p>En ocasiones, necesitamos instalar una <strong>versión específica de un paquete</strong> en lugar de la versión más reciente. Esto puede ser útil cuando queremos reproducir un análisis, seguir un tutorial o trabajar con código desarrollado con una versión anterior.</p>
+<p>Para hacerlo, podemos utilizar la función <code>install_version()</code> del paquete <code>remotes</code>.</p>
+<p><strong>Paso 1.</strong> Instalar el paquete <code>remotes</code> (si aún no está instalado).</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><strong>Paso 2.</strong> Instalar la versión deseada. Por ejemplo, para instalar la versión <code>1.1.4</code> de <code>dplyr</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_version</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"dplyr"</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">version =</span> <span class="st">"1.1.4"</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="st">"https://cloud.r-project.org"</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><strong>Paso 3.</strong> Verificar qué versión quedó instalada:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"dplyr"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Dónde consultar las versiones disponibles?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las versiones anteriores de los paquetes pueden consultarse en el archivo histórico de CRAN:</p>
+<p><a href="https://cran.r-project.org/src/contrib/Archive/" class="uri">https://cran.r-project.org/src/contrib/Archive/</a></p>
+<p>Por ejemplo, las versiones anteriores de <code>dplyr</code> están disponibles en:</p>
+<p><a href="https://cran.r-project.org/src/contrib/Archive/dplyr/" class="uri">https://cran.r-project.org/src/contrib/Archive/dplyr/</a></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Consideraciones importantes
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Instalar una versión específica puede reemplazar la versión que ya tenemos instalada.</li>
+<li>Algunas versiones antiguas pueden ser incompatibles con nuestra versión de R o con otros paquetes.</li>
+<li>En Windows, algunas instalaciones pueden requerir <strong>Rtools</strong> para compilar el paquete desde su código fuente.</li>
+</ul>
+<p>Se recomienda ejecutar las instrucciones de instalación directamente en la <strong>consola de R</strong>.</p>
+</div>
+</div>
+</section>
 </section>
 <section id="evitar-conflictos-para-la-instalación-de-paquetes-en-r" class="level2" data-number="2.10">
 <h2 data-number="2.10" class="anchored" data-anchor-id="evitar-conflictos-para-la-instalación-de-paquetes-en-r"><span class="header-section-number">2.10</span> Evitar conflictos para la instalación de paquetes en R</h2>
@@ -609,7 +708,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> xcode-select <span class="at">--install</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> xcode-select <span class="at">--install</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -703,7 +802,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Identifica las herramientas de compilación correspondientes a tu sistema operativo. En <strong>Windows</strong>, comprueba especialmente la compatibilidad de <strong>Rtools</strong>.</li>
 </ol>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -712,19 +811,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.info</span>()[[<span class="st">"sysname"</span>]]</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"ggplot2"</span>, <span class="st">"dplyr"</span>)) <span class="co"># Solo si faltan</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"ggplot2"</span>)</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"dplyr"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>R.version.string</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.info</span>()[[<span class="st">"sysname"</span>]]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"ggplot2"</span>, <span class="st">"dplyr"</span>)) <span class="co"># Solo si faltan</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">packageVersion</span>(<span class="st">"dplyr"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </div>
@@ -733,7 +832,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled" title="Solución y comentarios de la actividad">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -742,7 +841,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p><code>R.version.string</code> indica la versión de R; <code>Sys.info()[["sysname"]]</code> identifica el sistema operativo. <code>packageVersion()</code> devuelve la versión instalada del paquete. Si <code>library()</code> funciona sin errores, el paquete está disponible en la sesión. La instalación de compiladores se comprueba de manera diferente según el sistema; en Windows se puede utilizar <code>pkgbuild::has_build_tools(debug = TRUE)</code>.</p>
 </div>
@@ -1227,7 +1326,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       &nbsp;
     </div>   
     <div class="nav-footer-center">
-<p>Temas Selectos de ML, 7mo semestre: Haydeé Peruyero</p>
+<p>Introducción a R para Bioinformática I, 3er semestre: Haydeé Peruyero</p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

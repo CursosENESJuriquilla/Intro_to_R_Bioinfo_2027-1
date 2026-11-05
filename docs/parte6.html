@@ -387,6 +387,44 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Observa que el script <strong>define sus propios datos de entrada</strong>, comprueba una condición importante y construye el resultado. No necesita que <code>muestras</code> o <code>secuencias</code> existan previamente en el panel <em>Environment</em>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Cómo ejecutar un script de R?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un <strong>script de R</strong> es un archivo con extensión <code>.R</code> que contiene instrucciones que podemos guardar y ejecutar posteriormente.</p>
+<p>Existen diferentes formas de ejecutarlo:</p>
+<p><strong>1. Desde la consola de R</strong></p>
+<p>Podemos ejecutar un script completo utilizando la función <code>source()</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"scripts/analisis.R"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Esta instrucción ejecuta, en orden, el código contenido en el archivo <code>analisis.R</code>.</p>
+<p>También podemos utilizar <code>source("scripts/analisis.R", echo = TRUE)</code> para mostrar las instrucciones conforme se ejecutan.</p>
+<p><strong>2. Desde RStudio</strong></p>
+<p>Si tenemos abierto el archivo <code>.R</code> en el editor de RStudio:</p>
+<ul>
+<li><code>Ctrl + Enter</code>: ejecuta la línea actual o el código seleccionado.</li>
+<li><code>Ctrl + Shift + Enter</code>: ejecuta todo el script.</li>
+<li>Botón <strong>Source</strong>: ejecuta el archivo completo.</li>
+</ul>
+<p>Estos atajos corresponden a Windows y Linux. En macOS se utiliza <code>Cmd</code> en lugar de <code>Ctrl</code>.</p>
+<p><strong>3. Desde la terminal del sistema operativo</strong></p>
+<p>También podemos ejecutar un script directamente desde una terminal, sin necesidad de abrir RStudio, utilizando el comando <code>Rscript</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Rscript</span> scripts/analisis.R</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Este comando inicia R, ejecuta las instrucciones del archivo y termina el proceso al finalizar.</p>
+<p>Para utilizarlo, R debe estar instalado y el comando <code>Rscript</code> debe estar disponible en la terminal (incluido en la variable de entorno <code>PATH</code>).</p>
+<p><strong>Importante:</strong> Las rutas de los archivos se interpretan con respecto al directorio de trabajo actual. Por ello, es recomendable ejecutar estos comandos desde la carpeta principal de nuestro proyecto y utilizar rutas relativas.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -413,12 +451,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo de uso de un paquete dentro de un script:</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(readr)</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># datos &lt;- read_csv("data_raw/muestras.csv")</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativa sin cargar el paquete completo:</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># datos &lt;- readr::read_csv("data_raw/muestras.csv")</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ejemplo de uso de un paquete dentro de un script:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># library(readr)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># datos &lt;- read_csv("data_raw/muestras.csv")</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternativa sin cargar el paquete completo:</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># datos &lt;- readr::read_csv("data_raw/muestras.csv")</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -461,16 +499,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>longitudes <span class="ot">&lt;-</span> <span class="fu">nchar</span>(secuencias)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>resultado <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> ids, <span class="at">longitud =</span> longitudes)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resultado)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>longitudes <span class="ot">&lt;-</span> <span class="fu">nchar</span>(secuencias)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>resultado <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">id =</span> ids, <span class="at">longitud =</span> longitudes)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resultado)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Un estudiante afirma que el archivo funciona porque obtuvo una tabla al ejecutarlo en su computadora.</p>
 <ol type="1">
 <li>¿Por qué podría fallar si otra persona abre el archivo y lo ejecuta desde una sesión nueva de R?</li>
-<li>Modifica el script para que pueda ejecutarse completo sin depender de objetos creados previamente en la consola.</li>
-<li>¿Qué cambiarías cuando los datos de entrada provengan de un archivo <code>.csv</code>?</li>
+<li>¿Cómo se puede modificar el script para que pueda ejecutarse completo sin depender de objetos creados previamente en la consola?</li>
 </ol>
 </div>
 </div>

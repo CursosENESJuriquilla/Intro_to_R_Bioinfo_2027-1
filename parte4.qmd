@@ -236,6 +236,16 @@ longitudes
 
 Aquí `seq_along(secuencias)` genera las posiciones del vector. Es preferible a `1:length(secuencias)` porque también funciona correctamente si el vector está vacío.
 
+::: {.callout-note}
+## ¿Qué hace `seq_along()`?
+
+La función `seq_along(x)` genera una secuencia de números enteros desde `1` hasta la longitud del objeto `x`. Es útil para recorrer los índices de un vector o una lista, especialmente dentro de un ciclo `for`.
+
+Por ejemplo, `seq_along(c("BRCA1", "TP53", "EGFR"))` devuelve `1, 2, 3`.
+
+A diferencia de `1:length(x)`, si el objeto está vacío, `seq_along(x)` devuelve una secuencia vacía, evitando iteraciones inesperadas.
+:::
+
 ::: {.callout-tip title="Buenas prácticas al usar ciclos"}
 Cuando sabemos cuántos resultados vamos a guardar, es recomendable **reservar el espacio antes de iniciar el ciclo**, por ejemplo con `numeric()`, `character()` o `vector("list", n)`. Así evitamos ampliar el objeto en cada iteración.
 :::
@@ -390,10 +400,37 @@ nchar(secuencia)
 :::
 ::::
 
+
+::: {.callout-note}
+## Diferencia entre `nchar()` y `length()`
+
+Aunque ambas funciones permiten medir la longitud de un objeto en R, **no hacen lo mismo**:
+
+- **`length(x)`** devuelve el número de elementos de un vector o una lista.
+- **`nchar(x)`** devuelve el número de caracteres de una cadena de texto.
+
+Por ejemplo:
+
+```{r}
+secuencia <- "ATGCGTA"
+
+length(secuencia)
+
+
+nchar(secuencia)
+
+```
+
+En este caso, `length()` devuelve `1` porque la secuencia es un vector con un solo elemento, mientras que `nchar()` devuelve `7` porque la cadena contiene siete caracteres.
+
+**Importante:** Cuando trabajamos con secuencias biológicas almacenadas como texto, utilizamos `nchar()` para conocer su longitud en nucleótidos. Si queremos saber cuántas secuencias tenemos almacenadas en un vector, utilizamos `length()`.
+:::
+
+
 ## ¿Cuándo utilizar cada estructura?
 
 | Estructura | ¿Para qué sirve? | Ejemplo de aplicación |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | `if` / `else` | Elegir entre alternativas a partir de una condición única. | Verificar si un conteo es válido. |
 | `ifelse()` | Clasificar elementos de un vector. | Etiquetar conteos positivos y ceros. |
 | `for` | Recorrer una colección de elementos. | Calcular la longitud de varias secuencias. |

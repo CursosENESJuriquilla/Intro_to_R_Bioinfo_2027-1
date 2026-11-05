@@ -54,6 +54,56 @@ print(resumen)
 
 Observa que el script **define sus propios datos de entrada**, comprueba una condición importante y construye el resultado. No necesita que `muestras` o `secuencias` existan previamente en el panel *Environment*.
 
+
+
+::: {.callout-note}
+## ¿Cómo ejecutar un script de R?
+
+Un **script de R** es un archivo con extensión `.R` que contiene instrucciones que podemos guardar y ejecutar posteriormente.
+
+Existen diferentes formas de ejecutarlo:
+
+**1. Desde la consola de R**
+
+Podemos ejecutar un script completo utilizando la función `source()`:
+
+```{r}
+#| eval: false
+
+source("scripts/analisis.R")
+```
+
+Esta instrucción ejecuta, en orden, el código contenido en el archivo `analisis.R`.
+
+También podemos utilizar `source("scripts/analisis.R", echo = TRUE)` para mostrar las instrucciones conforme se ejecutan.
+
+**2. Desde RStudio**
+
+Si tenemos abierto el archivo `.R` en el editor de RStudio:
+
+- `Ctrl + Enter`: ejecuta la línea actual o el código seleccionado.
+- `Ctrl + Shift + Enter`: ejecuta todo el script.
+- Botón **Source**: ejecuta el archivo completo.
+
+Estos atajos corresponden a Windows y Linux. En macOS se utiliza `Cmd` en lugar de `Ctrl`.
+
+**3. Desde la terminal del sistema operativo**
+
+También podemos ejecutar un script directamente desde una terminal, sin necesidad de abrir RStudio, utilizando el comando `Rscript`:
+
+```bash
+Rscript scripts/analisis.R
+```
+
+Este comando inicia R, ejecuta las instrucciones del archivo y termina el proceso al finalizar.
+
+Para utilizarlo, R debe estar instalado y el comando `Rscript` debe estar disponible en la terminal (incluido en la variable de entorno `PATH`).
+
+**Importante:** Las rutas de los archivos se interpretan con respecto al directorio de trabajo actual. Por ello, es recomendable ejecutar estos comandos desde la carpeta principal de nuestro proyecto y utilizar rutas relativas.
+:::
+
+
+
 ::: {.callout-note icon="false"}
 ## ¿Qué cambia cuando trabajamos con archivos reales?
 
@@ -112,7 +162,7 @@ Antes de considerar terminado un script, revisa que:
 - Las funciones y paquetes necesarios estén identificados.
 - Los resultados se puedan obtener sin ejecutar comandos adicionales manualmente.
 
-:::: {.callout-warning icon="false"}
+::: {.callout-warning icon="false"}
 ## 🧠 Ejercicio 1
 
 Considera el siguiente código, guardado en un archivo llamado `revision.R`:
@@ -127,8 +177,5 @@ print(resultado)
 Un estudiante afirma que el archivo funciona porque obtuvo una tabla al ejecutarlo en su computadora.
 
 1.  ¿Por qué podría fallar si otra persona abre el archivo y lo ejecuta desde una sesión nueva de R?
-2.  Modifica el script para que pueda ejecutarse completo sin depender de objetos creados previamente en la consola.
-3.  ¿Qué cambiarías cuando los datos de entrada provengan de un archivo `.csv`?
-
-
-::::
+2.  ¿Cómo se puede modificar el script para que pueda ejecutarse completo sin depender de objetos creados previamente en la consola?
+:::
