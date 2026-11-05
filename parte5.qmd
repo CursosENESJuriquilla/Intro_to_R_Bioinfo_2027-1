@@ -289,35 +289,7 @@ Escribe una función `crear_reporte_secuencias(ids, secuencias)` que:
 3.  Devuelva un `data.frame` con las columnas `id`, `secuencia`, `longitud` y `valida`.
 4.  Asigne `NA` a la longitud de las secuencias inválidas.
 
-::: {.callout-tip collapse="true" icon="false"}
-## Solución
 
-```{r}
-crear_reporte_secuencias <- function(ids, secuencias) {
-  if (!is.character(ids) || !is.character(secuencias)) {
-    stop("Los identificadores y las secuencias deben ser texto.")
-  }
-  if (length(ids) != length(secuencias)) {
-    stop("Debe haber un identificador por cada secuencia.")
-  }
-
-  valida <- revisar_secuencias(secuencias)
-  longitud <- nchar(secuencias)
-  longitud[!valida] <- NA_integer_
-
-  data.frame(
-    id = ids,
-    secuencia = secuencias,
-    longitud = longitud,
-    valida = valida
-  )
-}
-
-crear_reporte_secuencias(ids, secuencias)
-```
-
-Este ejemplo integra **funciones, validaciones, condicionales, vectores y data frames**. En las próximas sesiones trabajaremos con tablas importadas desde archivos y aplicaremos transformaciones similares.
-:::
 ::::
 
 ## Resumen

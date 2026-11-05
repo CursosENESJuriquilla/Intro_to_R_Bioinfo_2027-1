@@ -10,11 +10,11 @@ Ya aprendimos a crear archivos `.R` desde el editor de RStudio y a ejecutar lín
 
 Un script de análisis suele tener las siguientes partes:
 
-1. **Descripción:** propósito del programa y, cuando sea pertinente, autoría y fecha.
-2. **Dependencias:** paquetes y funciones que se utilizarán.
-3. **Datos de entrada:** objetos o archivos necesarios.
-4. **Procesamiento:** operaciones, condiciones, ciclos o llamadas a funciones.
-5. **Resultados:** objetos, tablas o archivos que se obtienen.
+1.  **Descripción:** propósito del programa y, cuando sea pertinente, autoría y fecha.
+2.  **Dependencias:** paquetes y funciones que se utilizarán.
+3.  **Datos de entrada:** objetos o archivos necesarios.
+4.  **Procesamiento:** operaciones, condiciones, ciclos o llamadas a funciones.
+5.  **Resultados:** objetos, tablas o archivos que se obtienen.
 
 Estas partes no son reglas obligatorias del lenguaje, sino una forma de escribir código más claro y fácil de revisar.
 
@@ -86,7 +86,7 @@ Ya creamos un proyecto `.Rproj` y comprobamos su directorio de trabajo con `getw
 
 Una organización sencilla podría ser:
 
-```text
+``` text
 analisis_secuencias/
 ├── analisis_secuencias.Rproj
 ├── data_raw/
@@ -126,36 +126,9 @@ print(resultado)
 
 Un estudiante afirma que el archivo funciona porque obtuvo una tabla al ejecutarlo en su computadora.
 
-1. ¿Por qué podría fallar si otra persona abre el archivo y lo ejecuta desde una sesión nueva de R?
-2. Modifica el script para que pueda ejecutarse completo sin depender de objetos creados previamente en la consola.
-3. ¿Qué cambiarías cuando los datos de entrada provengan de un archivo `.csv`?
+1.  ¿Por qué podría fallar si otra persona abre el archivo y lo ejecuta desde una sesión nueva de R?
+2.  Modifica el script para que pueda ejecutarse completo sin depender de objetos creados previamente en la consola.
+3.  ¿Qué cambiarías cuando los datos de entrada provengan de un archivo `.csv`?
 
-::: {.callout-tip collapse="true" icon="false"}
-## Solución
 
-El código depende de que `secuencias` e `ids` existan previamente. Si esos objetos no están definidos, la ejecución fallará.
-
-Una versión independiente es:
-
-```{r}
-# Datos de entrada
-ids <- c("M01", "M02", "M03")
-secuencias <- c("ATGCCG", "GGAT", "TTACGA")
-
-# Verificación
-stopifnot(length(ids) == length(secuencias))
-
-# Procesamiento
-longitudes <- nchar(secuencias)
-
-# Resultado
-resultado <- data.frame(id = ids, longitud = longitudes)
-print(resultado)
-```
-
-Si los datos estuvieran en un archivo `.csv`, sustituiríamos la creación manual de los vectores por una instrucción para leer el archivo desde una ruta relativa dentro del proyecto. Aprenderemos a hacerlo en la siguiente sesión.
-
-:::
 ::::
-
-
