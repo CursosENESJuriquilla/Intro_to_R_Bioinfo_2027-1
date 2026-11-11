@@ -416,6 +416,80 @@ conteos_recuperados
 Para que esta conversión sea directa, cada combinación de `gen` y `muestra` debe identificar un único valor. Si hay varias filas para la misma combinación, necesitaremos decidir cómo agregarlas o resolverlas.
 
 
+## ¿Por qué importa la organización de los datos?
+
+Hasta ahora hemos aprendido a transformar tablas, seleccionar columnas, filtrar registros y cambiar entre formatos ancho y largo. Pero ¿por qué es importante la forma en que organizamos nuestros datos?
+
+La estructura de una tabla influye en qué tan sencillo resulta analizarla, resumirla y representarla gráficamente.
+
+Una forma de organizar los datos es mediante el principio de *tidy data* (datos ordenados), que propone:
+
+1. Cada variable ocupa una columna.
+2. Cada observación ocupa una fila.
+3. Cada valor ocupa una celda.
+
+Por ejemplo, consideremos una tabla de conteos de genes en distintas muestras:
+
+| gen | muestra_A | muestra_B | muestra_C |
+|---|---:|---:|---:|
+| gen01 | 120 | 90 | 150 |
+| gen02 | 45 | 70 | 38 |
+| gen03 | 200 | 180 | 210 |
+
+Esta tabla está en formato ancho. Es útil para comparar los valores de un mismo gen entre muestras, pero si queremos utilizar la muestra como una variable en una gráfica, resulta conveniente reorganizarla.
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+conteos_ejemplo <- tibble::tribble(
+  ~gen,    ~muestra_A, ~muestra_B, ~muestra_C,
+  "gen01", 120,        90,         150,
+  "gen02", 45,         70,          38,
+  "gen03", 200,       180,         210
+)
+
+conteos_largos <- conteos_ejemplo %>%
+  pivot_longer(
+    cols = starts_with("muestra_"),
+    names_to = "muestra",
+    values_to = "conteo"
+  )
+
+conteos_largos
+```
+
+Ahora tenemos tres variables: `gen`, `muestra` y `conteo`. Cada fila representa el conteo de un gen en una muestra determinada.
+
+Esta organización permite construir una gráfica utilizando directamente esas columnas:
+
+```{r, echo=FALSE}
+ggplot(conteos_largos,
+       aes(x = muestra, y = conteo, fill = gen)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Conteos de genes por muestra",
+    x = "Muestra",
+    y = "Conteo",
+    fill = "Gen"
+  ) +
+  theme_minimal()
+```
+
+
+Por ahora, observa que `muestra`, `conteo` y `gen` son columnas de nuestra tabla, y que cada va a cumplir una función distinta en la gráfica.
+
+::: {.callout-note icon="false"}
+## Una aclaración importante
+
+No todos los procedimientos requieren datos en formato largo. Por ejemplo, algunas funciones que trabajan con matrices necesitan que las muestras o variables ocupen columnas diferentes.
+
+La organización adecuada depende de lo que queremos hacer con los datos. El objetivo es aprender a transformar su estructura según nuestras necesidades.
+:::
+
+
+
 
 ## Exportación y práctica integradora
 
@@ -478,8 +552,17 @@ Construye una tabla con una fila por `query_id`, el número de alineamientos (`n
 
 Convierte `conteos` a formato largo, conserva únicamente las filas con `conteo >= 100` y muestra cuántos registros cumplen el criterio en cada muestra. Ordena las muestras alfabéticamente.
 
+### Ejercicio 6: Preparar datos para una visualización
 
-### Ejercicio 6: Preparar una tabla de resultados de BLAST
+A partir de la tabla `conteos_ejemplo`:
+
+1. Transforma los datos a formato largo.
+2. Conserva únicamente las observaciones de `muestra_A` y `muestra_B`.
+3. Ordena los registros de mayor a menor conteo.
+4. Identifica qué columnas utilizarías para representar las muestras en el eje horizontal y los conteos en el eje vertical.
+
+
+### Ejercicio 7: Preparar una tabla de resultados de BLAST
 
 Crea un objeto llamado `blast_preparado` mediante **una sola secuencia de transformaciones con `%>%`** que:
 
