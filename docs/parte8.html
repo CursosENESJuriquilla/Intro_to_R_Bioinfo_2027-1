@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,13 +12,10 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -80,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-256100c28b4d1a71ce469740e6db3c8e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -285,7 +282,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./parte9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">parte9</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></span></a>
   </div>
 </li>
       </ul>
@@ -305,7 +302,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introducción-a-tibble-dplyr" id="toc-introducción-a-tibble-dplyr" class="nav-link" data-scroll-target="#introducción-a-tibble-dplyr"><span class="header-section-number">8.3</span> Introducción a <code>tibble</code>, <code>dplyr</code></a>
   <ul>
   <li><a href="#qué-es-un-tibble" id="toc-qué-es-un-tibble" class="nav-link" data-scroll-target="#qué-es-un-tibble"><span class="header-section-number">8.3.1</span> ¿Qué es un <code>tibble</code>?</a></li>
-  <li><a href="#el-operador" id="toc-el-operador" class="nav-link" data-scroll-target="#el-operador"><span class="header-section-number">8.3.2</span> El operador <code>%&gt;%</code></a></li>
+  <li><a href="#paquete-dplyr" id="toc-paquete-dplyr" class="nav-link" data-scroll-target="#paquete-dplyr"><span class="header-section-number">8.3.2</span> Paquete <code>dplyr</code></a></li>
+  <li><a href="#el-operador" id="toc-el-operador" class="nav-link" data-scroll-target="#el-operador"><span class="header-section-number">8.3.3</span> El operador <code>%&gt;%</code></a></li>
   </ul></li>
   <li><a href="#seleccionar-filtrar-ordenar-y-renombrar" id="toc-seleccionar-filtrar-ordenar-y-renombrar" class="nav-link" data-scroll-target="#seleccionar-filtrar-ordenar-y-renombrar"><span class="header-section-number">8.4</span> Seleccionar, filtrar, ordenar y renombrar</a>
   <ul>
@@ -338,7 +336,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#guardar-resultados-sin-sobrescribir-los-datos-originales" id="toc-guardar-resultados-sin-sobrescribir-los-datos-originales" class="nav-link" data-scroll-target="#guardar-resultados-sin-sobrescribir-los-datos-originales"><span class="header-section-number">8.8.1</span> Guardar resultados sin sobrescribir los datos originales</a></li>
   </ul></li>
-  <li><a href="#práctica-final-preparar-una-tabla-de-resultados-de-blast" id="toc-práctica-final-preparar-una-tabla-de-resultados-de-blast" class="nav-link" data-scroll-target="#práctica-final-preparar-una-tabla-de-resultados-de-blast"><span class="header-section-number">8.9</span> Práctica Final: Preparar una tabla de resultados de BLAST</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">8.9</span> Ejercicios</a>
+  <ul>
+  <li><a href="#ejercicio-1-construir-una-tabla-con-un-pipe" id="toc-ejercicio-1-construir-una-tabla-con-un-pipe" class="nav-link" data-scroll-target="#ejercicio-1-construir-una-tabla-con-un-pipe"><span class="header-section-number">8.9.1</span> Ejercicio 1: Construir una tabla con un pipe</a></li>
+  <li><a href="#ejercicio-2-seleccionar-resultados-de-dos-consultas" id="toc-ejercicio-2-seleccionar-resultados-de-dos-consultas" class="nav-link" data-scroll-target="#ejercicio-2-seleccionar-resultados-de-dos-consultas"><span class="header-section-number">8.9.2</span> Ejercicio 2: Seleccionar resultados de dos consultas</a></li>
+  <li><a href="#ejercicio-3-crear-variables-a-partir-de-columnas-existentes" id="toc-ejercicio-3-crear-variables-a-partir-de-columnas-existentes" class="nav-link" data-scroll-target="#ejercicio-3-crear-variables-a-partir-de-columnas-existentes"><span class="header-section-number">8.9.3</span> Ejercicio 3: Crear variables a partir de columnas existentes</a></li>
+  <li><a href="#ejercicio-4-resumir-resultados-por-secuencia" id="toc-ejercicio-4-resumir-resultados-por-secuencia" class="nav-link" data-scroll-target="#ejercicio-4-resumir-resultados-por-secuencia"><span class="header-section-number">8.9.4</span> Ejercicio 4: Resumir resultados por secuencia</a></li>
+  <li><a href="#ejercicio-5-transformar-y-resumir-conteos" id="toc-ejercicio-5-transformar-y-resumir-conteos" class="nav-link" data-scroll-target="#ejercicio-5-transformar-y-resumir-conteos"><span class="header-section-number">8.9.5</span> Ejercicio 5: Transformar y resumir conteos</a></li>
+  <li><a href="#ejercicio-6-preparar-una-tabla-de-resultados-de-blast" id="toc-ejercicio-6-preparar-una-tabla-de-resultados-de-blast" class="nav-link" data-scroll-target="#ejercicio-6-preparar-una-tabla-de-resultados-de-blast"><span class="header-section-number">8.9.6</span> Ejercicio 6: Preparar una tabla de resultados de BLAST</a></li>
+  </ul></li>
   <li><a href="#observaciones" id="toc-observaciones" class="nav-link" data-scroll-target="#observaciones"><span class="header-section-number">8.10</span> Observaciones</a></li>
   </ul>
 </nav>
@@ -400,9 +406,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readr' was built under R version 4.6.1</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dplyr' was built under R version 4.6.1</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Adjuntando el paquete: 'dplyr'</code></pre>
@@ -419,24 +434,35 @@ Adjuntando el paquete: 'dplyr'</code></pre>
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "C:/Users/hayde/Documents/RSites/Intro_to_R_Bioinfo_2027-1"</code></pre>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidyr' was built under R version 4.6.1</code></pre>
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ruta_blast <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ruta_conteos <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_03_dplyr/conteos_genes.csv"</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">file.exists</span>(ruta_blast), <span class="fu">file.exists</span>(ruta_conteos))</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(ruta_blast, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>conteos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(ruta_conteos, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tibble' was built under R version 4.6.1</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C:/Users/HaydeePeruyero/Documents/RSites/Intro_to_R_Bioinfo_2027-1"</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>ruta_blast <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_02_blast/resultados_blast.tsv"</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>ruta_conteos <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_03_dplyr/conteos_genes.csv"</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">file.exists</span>(ruta_blast), <span class="fu">file.exists</span>(ruta_conteos))</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>blast <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(ruta_blast, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>conteos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(ruta_conteos, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 20
@@ -450,7 +476,7 @@ $ bitscore   &lt;dbl&gt; 118.7, 184.6, 386.1, 259.9, 322.6, 361.9, 96.6, 97.9, 3
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(conteos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(conteos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 10
@@ -525,14 +551,14 @@ Nota
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(blast)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "spec_tbl_df" "tbl_df"      "tbl"         "data.frame" </code></pre>
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">as.data.frame</span>(blast))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(<span class="fu">as.data.frame</span>(blast))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "data.frame"</code></pre>
@@ -542,12 +568,12 @@ Nota
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ejemplo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">secuencia =</span> <span class="fu">c</span>(<span class="st">"seq01"</span>, <span class="st">"seq02"</span>, <span class="st">"seq03"</span>),</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">230</span>, <span class="dv">180</span>),</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grupo =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>ejemplo</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ejemplo <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">secuencia =</span> <span class="fu">c</span>(<span class="st">"seq01"</span>, <span class="st">"seq02"</span>, <span class="st">"seq03"</span>),</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">longitud =</span> <span class="fu">c</span>(<span class="dv">150</span>, <span class="dv">230</span>, <span class="dv">180</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">grupo =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"A"</span>)</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>ejemplo</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
@@ -562,13 +588,13 @@ Nota
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ejemplo2 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>secuencia, <span class="sc">~</span>longitud, <span class="sc">~</span>grupo,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq01"</span>,    <span class="dv">150</span>,       <span class="st">"A"</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq02"</span>,    <span class="dv">230</span>,       <span class="st">"B"</span>,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq03"</span>,    <span class="dv">180</span>,       <span class="st">"A"</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>ejemplo2</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ejemplo2 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>secuencia, <span class="sc">~</span>longitud, <span class="sc">~</span>grupo,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq01"</span>,    <span class="dv">150</span>,       <span class="st">"A"</span>,</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq02"</span>,    <span class="dv">230</span>,       <span class="st">"B"</span>,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"seq03"</span>,    <span class="dv">180</span>,       <span class="st">"A"</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>ejemplo2</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
@@ -581,16 +607,85 @@ Nota
 </div>
 <p>El símbolo <code>~</code> señala los nombres de las columnas en <code>tribble()</code>. No es necesario utilizar esta función para tablas grandes; es especialmente útil para ejemplos y pruebas.</p>
 </section>
-<section id="el-operador" class="level3" data-number="8.3.2">
-<h3 data-number="8.3.2" class="anchored" data-anchor-id="el-operador"><span class="header-section-number">8.3.2</span> El operador <code>%&gt;%</code></h3>
+<section id="paquete-dplyr" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="paquete-dplyr"><span class="header-section-number">8.3.2</span> Paquete <code>dplyr</code></h3>
+<p>El paquete <code>dplyr</code> proporciona funciones que permiten <strong>manipular y transformar conjuntos de datos</strong> de manera sencilla. Entre otras operaciones, podemos seleccionar columnas, filtrar observaciones, ordenar registros, crear nuevas variables y obtener resúmenes de nuestros datos.</p>
+<p>Estas operaciones son especialmente útiles cuando trabajamos con conjuntos de datos bioinformáticos, como resultados de BLAST, conteos de genes o información de muestras.</p>
+<p>A continuación, se presentan algunas de las funciones más utilizadas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Función</th>
+<th>¿Qué hace?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>filter()</code></td>
+<td>Filtra filas que cumplen determinadas condiciones.</td>
+</tr>
+<tr class="even">
+<td><code>select()</code></td>
+<td>Selecciona columnas de un conjunto de datos.</td>
+</tr>
+<tr class="odd">
+<td><code>count()</code></td>
+<td>Cuenta observaciones por categoría o grupo.</td>
+</tr>
+<tr class="even">
+<td><code>arrange()</code></td>
+<td>Ordena las filas según una o varias columnas.</td>
+</tr>
+<tr class="odd">
+<td><code>group_by()</code></td>
+<td>Agrupa observaciones según una o varias variables.</td>
+</tr>
+<tr class="even">
+<td><code>mutate()</code></td>
+<td>Crea nuevas columnas o modifica las existentes.</td>
+</tr>
+<tr class="odd">
+<td><code>summarize()</code></td>
+<td>Calcula estadísticas de resumen, como medias, sumas o máximos.</td>
+</tr>
+<tr class="even">
+<td><code>transmute()</code></td>
+<td>Crea nuevas columnas y conserva únicamente las columnas resultantes.</td>
+</tr>
+<tr class="odd">
+<td><code>ungroup()</code></td>
+<td>Elimina los agrupamientos definidos previamente.</td>
+</tr>
+<tr class="even">
+<td><code>slice_min()</code></td>
+<td>Selecciona filas con los valores más pequeños de una variable.</td>
+</tr>
+<tr class="odd">
+<td><code>slice_max()</code></td>
+<td>Selecciona filas con los valores más grandes de una variable.</td>
+</tr>
+<tr class="even">
+<td><code>left_join()</code></td>
+<td>Combina dos tablas conservando todas las filas de la primera.</td>
+</tr>
+</tbody>
+</table>
+<p>Una ventaja de <code>dplyr</code> es que podemos <strong>combinar varias de estas funciones para realizar diferentes operaciones sobre un mismo conjunto de datos</strong>. Para facilitar este proceso, utilizaremos el operador <code>%&gt;%</code>, conocido como <em>pipe</em>.</p>
+</section>
+<section id="el-operador" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="el-operador"><span class="header-section-number">8.3.3</span> El operador <code>%&gt;%</code></h3>
 <p>Sin pipes, una operación puede requerir objetos intermedios:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>filtrados <span class="ot">&lt;-</span> <span class="fu">filter</span>(blast, pident <span class="sc">&gt;=</span> <span class="dv">90</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>seleccionados <span class="ot">&lt;-</span> <span class="fu">select</span>(filtrados, query_id, subject_id, pident, bitscore)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ordenados <span class="ot">&lt;-</span> <span class="fu">arrange</span>(seleccionados, <span class="fu">desc</span>(bitscore))</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ordenados)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>filtrados <span class="ot">&lt;-</span> <span class="fu">filter</span>(blast, pident <span class="sc">&gt;=</span> <span class="dv">90</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>seleccionados <span class="ot">&lt;-</span> <span class="fu">select</span>(filtrados, query_id, subject_id, pident, bitscore)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>ordenados <span class="ot">&lt;-</span> <span class="fu">arrange</span>(seleccionados, <span class="fu">desc</span>(bitscore))</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ordenados)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
@@ -607,10 +702,10 @@ Nota
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident, bitscore) <span class="sc">%&gt;%</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident, bitscore) <span class="sc">%&gt;%</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
@@ -638,65 +733,6 @@ Tip
 <p>Puedes llamar una función indicando explícitamente su paquete: <code>dplyr::filter()</code> o <code>readr::read_tsv()</code>. Es útil cuando dos paquetes tienen funciones con el mismo nombre.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 1: Construir una tabla con un pipe
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>A partir de <code>blast</code>, conserva únicamente los registros con <code>length &gt;= 150</code>, muestra las columnas <code>query_id</code>, <code>subject_id</code>, <code>length</code> y <code>bitscore</code>, y ordénalos de mayor a menor <code>bitscore</code>. Hazlo en <strong>una sola secuencia</strong> con <code>%&gt;%</code>.</p>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(length <span class="sc">&gt;=</span> <span class="dv">150</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, length, bitscore) <span class="sc">%&gt;%</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 16 × 4
-   query_id subject_id length bitscore
-   &lt;chr&gt;    &lt;chr&gt;       &lt;dbl&gt;    &lt;dbl&gt;
- 1 seq01    ref_003       168    386. 
- 2 seq03    ref_007       254    362. 
- 3 seq03    ref_010       229    336. 
- 4 seq02    ref_005       292    323. 
- 5 seq04    ref_010       162    310. 
- 6 seq08    ref_022       205    306. 
- 7 seq06    ref_017       210    226. 
- 8 seq01    ref_002       245    185. 
- 9 seq05    ref_014       306    175. 
-10 seq05    ref_015       287    160. 
-11 seq08    ref_023       308    152. 
-12 seq01    ref_001       216    119. 
-13 seq03    ref_009       191     97.9
-14 seq03    ref_008       319     96.6
-15 seq07    ref_020       325     79.3
-16 seq06    ref_016       314     49.8</code></pre>
-</div>
-</div>
-<p>Primero reducimos las filas, después elegimos columnas y finalmente cambiamos el orden de presentación. El objeto original <code>blast</code> no se modifica.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="seleccionar-filtrar-ordenar-y-renombrar" class="level2" data-number="8.4">
@@ -706,8 +742,8 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
@@ -736,8 +772,8 @@ Tip
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>evalue)  <span class="co"># Todas las columnas excepto evalue</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>evalue)  <span class="co"># Todas las columnas excepto evalue</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 5
@@ -769,7 +805,7 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"query"</span>), pident, bitscore)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"query"</span>), pident, bitscore)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
@@ -804,7 +840,7 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
@@ -818,7 +854,7 @@ Tip
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>, length <span class="sc">&gt;=</span> <span class="dv">150</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>, length <span class="sc">&gt;=</span> <span class="dv">150</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 6
@@ -831,7 +867,7 @@ Tip
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(query_id <span class="sc">==</span> <span class="st">"seq01"</span> <span class="sc">|</span> query_id <span class="sc">==</span> <span class="st">"seq02"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(query_id <span class="sc">==</span> <span class="st">"seq01"</span> <span class="sc">|</span> query_id <span class="sc">==</span> <span class="st">"seq02"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
@@ -845,7 +881,7 @@ Tip
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(query_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"seq01"</span>, <span class="st">"seq03"</span>, <span class="st">"seq05"</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">filter</span>(query_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"seq01"</span>, <span class="st">"seq03"</span>, <span class="st">"seq05"</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 6
@@ -870,7 +906,7 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(bitscore)         <span class="co"># Menor a mayor</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(bitscore)         <span class="co"># Menor a mayor</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 6
@@ -899,7 +935,7 @@ Tip
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))   <span class="co"># Mayor a menor</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(bitscore))   <span class="co"># Mayor a menor</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 6
@@ -928,7 +964,7 @@ Tip
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(query_id, <span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(query_id, <span class="fu">desc</span>(bitscore))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 6
@@ -963,12 +999,12 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_porcentaje =</span> pident,</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">longitud_alineamiento =</span> length</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, identidad_porcentaje, longitud_alineamiento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_porcentaje =</span> pident,</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">longitud_alineamiento =</span> length</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, identidad_porcentaje, longitud_alineamiento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
@@ -1003,7 +1039,7 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 1
@@ -1020,7 +1056,7 @@ Tip
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(query_id, subject_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(query_id, subject_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 2
@@ -1049,53 +1085,6 @@ Tip
 </div>
 </div>
 <p><code>distinct()</code> conserva una fila por cada combinación única de las columnas indicadas. <strong>No es lo mismo que escoger el mejor alineamiento</strong>: si varias filas corresponden a la misma consulta, hay que definir explícitamente el criterio para elegir una.</p>
-<div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 2: Seleccionar resultados de dos consultas
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Obtén los registros de <code>seq01</code> y <code>seq02</code> con <code>pident &gt;= 80</code>. Conserva únicamente <code>query_id</code>, <code>subject_id</code>, <code>pident</code> y <code>evalue</code>; renombra <code>pident</code> como <code>identidad</code> y ordena primero por <code>query_id</code> y después por <code>identidad</code> descendente.</p>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(query_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"seq01"</span>, <span class="st">"seq02"</span>), pident <span class="sc">&gt;=</span> <span class="dv">80</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, pident, evalue) <span class="sc">%&gt;%</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">identidad =</span> pident) <span class="sc">%&gt;%</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(query_id, <span class="fu">desc</span>(identidad))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  query_id subject_id identidad evalue
-  &lt;chr&gt;    &lt;chr&gt;          &lt;dbl&gt;  &lt;dbl&gt;
-1 seq01    ref_003         93.5  1e-35
-2 seq01    ref_001         87.9  1e-40
-3 seq02    ref_004         82.6  1e-85</code></pre>
-</div>
-</div>
-<p>El orden importa: después de <code>rename()</code>, la columna se llama <code>identidad</code>, por eso utilizamos ese nombre en <code>arrange()</code>.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="crear-y-modificar-columnas-con-mutate" class="level2" data-number="8.5">
@@ -1104,12 +1093,12 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_proporcion =</span> pident <span class="sc">/</span> <span class="dv">100</span>,</span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">longitud_kb =</span> length <span class="sc">/</span> <span class="dv">1000</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, pident, identidad_proporcion, length, longitud_kb)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_proporcion =</span> pident <span class="sc">/</span> <span class="dv">100</span>,</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">longitud_kb =</span> length <span class="sc">/</span> <span class="dv">1000</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, pident, identidad_proporcion, length, longitud_kb)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 5
@@ -1144,12 +1133,12 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">supera_90 =</span> pident <span class="sc">&gt;=</span> <span class="dv">90</span>,</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiqueta =</span> <span class="fu">if_else</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>, <span class="st">"90 o más"</span>, <span class="st">"Menos de 90"</span>)</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, pident, supera_90, etiqueta)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">supera_90 =</span> pident <span class="sc">&gt;=</span> <span class="dv">90</span>,</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiqueta =</span> <span class="fu">if_else</span>(pident <span class="sc">&gt;=</span> <span class="dv">90</span>, <span class="st">"90 o más"</span>, <span class="st">"Menos de 90"</span>)</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, pident, supera_90, etiqueta)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 4
@@ -1183,15 +1172,15 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">grupo_didactico =</span> <span class="fu">case_when</span>(</span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">95</span> <span class="sc">~</span> <span class="st">"Grupo A"</span>,</span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">80</span> <span class="sc">~</span> <span class="st">"Grupo B"</span>,</span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Grupo C"</span></span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(grupo_didactico)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">grupo_didactico =</span> <span class="fu">case_when</span>(</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">95</span> <span class="sc">~</span> <span class="st">"Grupo A"</span>,</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">80</span> <span class="sc">~</span> <span class="st">"Grupo B"</span>,</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Grupo C"</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(grupo_didactico)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -1210,15 +1199,15 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">valor =</span> <span class="fu">c</span>(<span class="dv">92</span>, <span class="cn">NA</span>, <span class="dv">76</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">falta =</span> <span class="fu">is.na</span>(valor),</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiqueta =</span> <span class="fu">case_when</span>(</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">is.na</span>(valor) <span class="sc">~</span> <span class="st">"Sin dato"</span>,</span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>      valor <span class="sc">&gt;=</span> <span class="dv">90</span> <span class="sc">~</span> <span class="st">"90 o más"</span>,</span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Menos de 90"</span></span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">valor =</span> <span class="fu">c</span>(<span class="dv">92</span>, <span class="cn">NA</span>, <span class="dv">76</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">falta =</span> <span class="fu">is.na</span>(valor),</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">etiqueta =</span> <span class="fu">case_when</span>(</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>      <span class="fu">is.na</span>(valor) <span class="sc">~</span> <span class="st">"Sin dato"</span>,</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>      valor <span class="sc">&gt;=</span> <span class="dv">90</span> <span class="sc">~</span> <span class="st">"90 o más"</span>,</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Menos de 90"</span></span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
@@ -1227,75 +1216,6 @@ Tip
 1    92 FALSE 90 o más   
 2    NA TRUE  Sin dato   
 3    76 FALSE Menos de 90</code></pre>
-</div>
-</div>
-<div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 3: Crear variables a partir de columnas existentes
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Agrega a <code>blast</code> una columna <code>identidad_decimal</code> con <code>pident / 100</code> y una columna <code>categoria</code> que diga <code>"Alta"</code> si <code>pident &gt;= 90</code>, <code>"Media"</code> si <code>pident &gt;= 75</code> y <code>"Baja"</code> en los demás casos. Muestra <code>query_id</code>, <code>pident</code>, <code>identidad_decimal</code> y <code>categoria</code>.</p>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_decimal =</span> pident <span class="sc">/</span> <span class="dv">100</span>,</span>
-<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">categoria =</span> <span class="fu">case_when</span>(</span>
-<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">90</span> <span class="sc">~</span> <span class="st">"Alta"</span>,</span>
-<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>      pident <span class="sc">&gt;=</span> <span class="dv">75</span> <span class="sc">~</span> <span class="st">"Media"</span>,</span>
-<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Baja"</span></span>
-<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, pident, identidad_decimal, categoria)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 4
-   query_id pident identidad_decimal categoria
-   &lt;chr&gt;     &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;    
- 1 seq01      87.9             0.879 Media    
- 2 seq01      68.2             0.682 Baja     
- 3 seq01      93.5             0.935 Alta     
- 4 seq02      82.6             0.826 Media    
- 5 seq02      68.7             0.687 Baja     
- 6 seq03      88.2             0.882 Media    
- 7 seq03      93.6             0.936 Alta     
- 8 seq03      97.8             0.978 Alta     
- 9 seq03      99               0.99  Alta     
-10 seq04      83.9             0.839 Media    
-11 seq05      75               0.75  Media    
-12 seq05      88               0.88  Media    
-13 seq05      85.4             0.854 Media    
-14 seq06      80.8             0.808 Media    
-15 seq06      71.3             0.713 Baja     
-16 seq07      95.7             0.957 Alta     
-17 seq07      73               0.73  Baja     
-18 seq07      77.4             0.774 Media    
-19 seq08      69.9             0.699 Baja     
-20 seq08      68.8             0.688 Baja     </code></pre>
-</div>
-</div>
-<p>Las etiquetas se definen mediante umbrales arbitrarios para practicar <code>case_when()</code>.</p>
-</div>
-</div>
-</div>
 </div>
 </div>
 </section>
@@ -1308,7 +1228,7 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">count</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">count</span>(query_id)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 2
@@ -1325,7 +1245,7 @@ Tip
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">count</span>(query_id, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span> <span class="fu">count</span>(query_id, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 2
@@ -1349,16 +1269,16 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> blast <span class="sc">%&gt;%</span></span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
-<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">numero_alineamientos =</span> <span class="fu">n</span>(),</span>
-<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">referencias_distintas =</span> <span class="fu">n_distinct</span>(subject_id),</span>
-<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">bitscore_maximo =</span> <span class="fu">max</span>(bitscore),</span>
-<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_promedio =</span> <span class="fu">mean</span>(pident),</span>
-<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb69-9"><a href="#cb69-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb69-10"><a href="#cb69-10" aria-hidden="true" tabindex="-1"></a>resumen</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>resumen <span class="ot">&lt;-</span> blast <span class="sc">%&gt;%</span></span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">numero_alineamientos =</span> <span class="fu">n</span>(),</span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">referencias_distintas =</span> <span class="fu">n_distinct</span>(subject_id),</span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">bitscore_maximo =</span> <span class="fu">max</span>(bitscore),</span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_promedio =</span> <span class="fu">mean</span>(pident),</span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>resumen</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 5
@@ -1383,11 +1303,11 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alineamientos_por_consulta =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
-<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, alineamientos_por_consulta)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb72-2"><a href="#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb72-3"><a href="#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">alineamientos_por_consulta =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb72-4"><a href="#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb72-5"><a href="#cb72-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(query_id, subject_id, alineamientos_por_consulta)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 20 × 3
@@ -1419,9 +1339,9 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
-<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">alineamientos_por_consulta =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">alineamientos_por_consulta =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 2
@@ -1445,10 +1365,10 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> bitscore, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(<span class="at">order_by =</span> bitscore, <span class="at">n =</span> <span class="dv">1</span>, <span class="at">with_ties =</span> <span class="cn">FALSE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 6
@@ -1465,62 +1385,6 @@ Tip
 </div>
 </div>
 <p><code>with_ties = FALSE</code> garantiza una sola fila por grupo si existen empates; en ese caso la elección entre registros empatados no expresa una preferencia biológica. Para datos reales sería necesario definir cómo resolverlos.</p>
-<div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 4: Resumir resultados por secuencia
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Construye una tabla con una fila por <code>query_id</code>, el número de alineamientos (<code>n_alineamientos</code>), el mayor porcentaje de identidad (<code>identidad_maxima</code>) y el mayor <code>bitscore</code> (<code>bitscore_maximo</code>). Ordénala de mayor a menor <code>n_alineamientos</code>.</p>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>blast <span class="sc">%&gt;%</span></span>
-<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(query_id) <span class="sc">%&gt;%</span></span>
-<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_alineamientos =</span> <span class="fu">n</span>(),</span>
-<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">identidad_maxima =</span> <span class="fu">max</span>(pident),</span>
-<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">bitscore_maximo =</span> <span class="fu">max</span>(bitscore),</span>
-<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb77-9"><a href="#cb77-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_alineamientos))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 8 × 4
-  query_id n_alineamientos identidad_maxima bitscore_maximo
-  &lt;chr&gt;              &lt;int&gt;            &lt;dbl&gt;           &lt;dbl&gt;
-1 seq03                  4             99              362.
-2 seq01                  3             93.5            386.
-3 seq05                  3             88              411.
-4 seq07                  3             95.7            174.
-5 seq02                  2             82.6            323.
-6 seq06                  2             80.8            226.
-7 seq08                  2             69.9            306.
-8 seq04                  1             83.9            310.</code></pre>
-</div>
-</div>
-<p>Los dos máximos se calculan de manera independiente: podrían corresponder a <strong>filas distintas</strong>. No debemos interpretarlos como si describieran necesariamente el mismo alineamiento.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="reorganizar-tablas-con-tidyr" class="level2" data-number="8.7">
@@ -1532,7 +1396,7 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a>conteos</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>conteos</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 5
@@ -1556,13 +1420,13 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>conteos_largos <span class="ot">&lt;-</span> conteos <span class="sc">%&gt;%</span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"muestra_"</span>),</span>
-<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"muestra"</span>,</span>
-<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"conteo"</span></span>
-<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>conteos_largos</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>conteos_largos <span class="ot">&lt;-</span> conteos <span class="sc">%&gt;%</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"muestra_"</span>),</span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"muestra"</span>,</span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"conteo"</span></span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>conteos_largos</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 40 × 3
@@ -1586,13 +1450,13 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a>conteos_largos <span class="sc">%&gt;%</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(muestra) <span class="sc">%&gt;%</span></span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_conteos =</span> <span class="fu">sum</span>(conteo),</span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">genes_registrados =</span> <span class="fu">n</span>(),</span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>conteos_largos <span class="sc">%&gt;%</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(muestra) <span class="sc">%&gt;%</span></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_conteos =</span> <span class="fu">sum</span>(conteo),</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">genes_registrados =</span> <span class="fu">n</span>(),</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
@@ -1610,12 +1474,12 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a>conteos_recuperados <span class="ot">&lt;-</span> conteos_largos <span class="sc">%&gt;%</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> muestra,</span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> conteo</span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>conteos_recuperados</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>conteos_recuperados <span class="ot">&lt;-</span> conteos_largos <span class="sc">%&gt;%</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_from =</span> muestra,</span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_from =</span> conteo</span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>conteos_recuperados</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 5
@@ -1634,59 +1498,6 @@ Tip
 </div>
 </div>
 <p>Para que esta conversión sea directa, cada combinación de <code>gen</code> y <code>muestra</code> debe identificar un único valor. Si hay varias filas para la misma combinación, necesitaremos decidir cómo agregarlas o resolverlas.</p>
-<div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 5: Transformar y resumir conteos
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Convierte <code>conteos</code> a formato largo, conserva únicamente las filas con <code>conteo &gt;= 100</code> y muestra cuántos registros cumplen el criterio en cada muestra. Ordena las muestras alfabéticamente.</p>
-<div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Solución
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-12" class="callout-12-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>conteos <span class="sc">%&gt;%</span></span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"muestra_"</span>),</span>
-<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">names_to =</span> <span class="st">"muestra"</span>,</span>
-<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">values_to =</span> <span class="st">"conteo"</span></span>
-<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(conteo <span class="sc">&gt;=</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(muestra) <span class="sc">%&gt;%</span></span>
-<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">registros =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(muestra)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  muestra   registros
-  &lt;chr&gt;         &lt;int&gt;
-1 muestra_A         5
-2 muestra_B         5
-3 muestra_C         6
-4 muestra_D         6</code></pre>
-</div>
-</div>
-<p>El resultado cuenta <strong>filas gen–muestra</strong> que cumplen el criterio; no cuenta genes únicos de todo el conjunto.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="exportación-y-práctica-integradora" class="level2" data-number="8.8">
@@ -1697,24 +1508,24 @@ Tip
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"results"</span>)) <span class="fu">dir.create</span>(<span class="st">"results"</span>)</span>
-<span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb89-3"><a href="#cb89-3" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(resumen, <span class="st">"results/03_resumen_blast.csv"</span>)</span>
-<span id="cb89-4"><a href="#cb89-4" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(conteos_largos, <span class="st">"results/03_conteos_largos.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(<span class="st">"results"</span>)) <span class="fu">dir.create</span>(<span class="st">"results"</span>)</span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_csv</span>(resumen, <span class="st">"results/03_resumen_blast.csv"</span>)</span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>readr<span class="sc">::</span><span class="fu">write_tsv</span>(conteos_largos, <span class="st">"results/03_conteos_largos.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Podemos comprobar que los archivos se crearon:</p>
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"results/03_resumen_blast.csv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"results/03_resumen_blast.csv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"results/03_conteos_largos.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb89"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">file.exists</span>(<span class="st">"results/03_conteos_largos.tsv"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
@@ -1723,18 +1534,33 @@ Tip
 <p><code>write_csv()</code> y <code>write_tsv()</code> guardan tablas de texto; no conservan automáticamente todas las propiedades de objetos especializados de R. En la sesión 4 aprenderemos a integrar tablas de distintas fuentes.</p>
 </section>
 </section>
-<section id="práctica-final-preparar-una-tabla-de-resultados-de-blast" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="práctica-final-preparar-una-tabla-de-resultados-de-blast"><span class="header-section-number">8.9</span> Práctica Final: Preparar una tabla de resultados de BLAST</h2>
-<div class="callout callout-style-default callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Advertencia</span>🧠 Ejercicio 6: Preparar una tabla de resultados de BLAST
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<section id="ejercicios" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">8.9</span> Ejercicios</h2>
+<section id="ejercicio-1-construir-una-tabla-con-un-pipe" class="level3" data-number="8.9.1">
+<h3 data-number="8.9.1" class="anchored" data-anchor-id="ejercicio-1-construir-una-tabla-con-un-pipe"><span class="header-section-number">8.9.1</span> Ejercicio 1: Construir una tabla con un pipe</h3>
+<p>A partir de <code>blast</code>, conserva únicamente los registros con <code>length &gt;= 150</code>, muestra las columnas <code>query_id</code>, <code>subject_id</code>, <code>length</code> y <code>bitscore</code>, y ordénalos de mayor a menor <code>bitscore</code>. Hazlo en <strong>una sola secuencia</strong> con <code>%&gt;%</code>.</p>
+<p><strong>Hint:</strong> Primero reducimos las filas, después elegimos columnas y finalmente cambiamos el orden de presentación. El objeto original <code>blast</code> no se modifica.</p>
+</section>
+<section id="ejercicio-2-seleccionar-resultados-de-dos-consultas" class="level3" data-number="8.9.2">
+<h3 data-number="8.9.2" class="anchored" data-anchor-id="ejercicio-2-seleccionar-resultados-de-dos-consultas"><span class="header-section-number">8.9.2</span> Ejercicio 2: Seleccionar resultados de dos consultas</h3>
+<p>Obtén los registros de <code>seq01</code> y <code>seq02</code> con <code>pident &gt;= 80</code>. Conserva únicamente <code>query_id</code>, <code>subject_id</code>, <code>pident</code> y <code>evalue</code>; renombra <code>pident</code> como <code>identidad</code> y ordena primero por <code>query_id</code> y después por <code>identidad</code> descendente.</p>
+<p><strong>Hint</strong>: El orden importa: después de <code>rename()</code>, la columna se llama <code>identidad</code>, por eso se debe utilizar el nombre nuevo en <code>arrange()</code>.</p>
+</section>
+<section id="ejercicio-3-crear-variables-a-partir-de-columnas-existentes" class="level3" data-number="8.9.3">
+<h3 data-number="8.9.3" class="anchored" data-anchor-id="ejercicio-3-crear-variables-a-partir-de-columnas-existentes"><span class="header-section-number">8.9.3</span> Ejercicio 3: Crear variables a partir de columnas existentes</h3>
+<p>Agrega a <code>blast</code> una columna <code>identidad_decimal</code> con <code>pident / 100</code> y una columna <code>categoria</code> que diga <code>"Alta"</code> si <code>pident &gt;= 90</code>, <code>"Media"</code> si <code>pident &gt;= 75</code> y <code>"Baja"</code> en los demás casos. Muestra <code>query_id</code>, <code>pident</code>, <code>identidad_decimal</code> y <code>categoria</code>.</p>
+<p><strong>Hint:</strong> Las etiquetas se definen mediante umbrales arbitrarios, usar <code>case_when()</code>.</p>
+</section>
+<section id="ejercicio-4-resumir-resultados-por-secuencia" class="level3" data-number="8.9.4">
+<h3 data-number="8.9.4" class="anchored" data-anchor-id="ejercicio-4-resumir-resultados-por-secuencia"><span class="header-section-number">8.9.4</span> Ejercicio 4: Resumir resultados por secuencia</h3>
+<p>Construye una tabla con una fila por <code>query_id</code>, el número de alineamientos (<code>n_alineamientos</code>), el mayor porcentaje de identidad (<code>identidad_maxima</code>) y el mayor <code>bitscore</code> (<code>bitscore_maximo</code>). Ordénala de mayor a menor <code>n_alineamientos</code>.</p>
+</section>
+<section id="ejercicio-5-transformar-y-resumir-conteos" class="level3" data-number="8.9.5">
+<h3 data-number="8.9.5" class="anchored" data-anchor-id="ejercicio-5-transformar-y-resumir-conteos"><span class="header-section-number">8.9.5</span> Ejercicio 5: Transformar y resumir conteos</h3>
+<p>Convierte <code>conteos</code> a formato largo, conserva únicamente las filas con <code>conteo &gt;= 100</code> y muestra cuántos registros cumplen el criterio en cada muestra. Ordena las muestras alfabéticamente.</p>
+</section>
+<section id="ejercicio-6-preparar-una-tabla-de-resultados-de-blast" class="level3" data-number="8.9.6">
+<h3 data-number="8.9.6" class="anchored" data-anchor-id="ejercicio-6-preparar-una-tabla-de-resultados-de-blast"><span class="header-section-number">8.9.6</span> Ejercicio 6: Preparar una tabla de resultados de BLAST</h3>
 <p>Crea un objeto llamado <code>blast_preparado</code> mediante <strong>una sola secuencia de transformaciones con <code>%&gt;%</code></strong> que:</p>
 <ol type="1">
 <li>Conserve registros con <code>length &gt;= 150</code> y <code>pident &gt;= 80</code>.</li>
@@ -1744,8 +1570,7 @@ Tip
 <li>Ordene por <code>query_id</code> y <code>bitscore</code> descendente.</li>
 </ol>
 <p>Después construye <code>resumen_preparado</code> con el número de registros por <code>query_id</code> y el máximo <code>bitscore</code> de cada consulta. Guarda ambas tablas en <code>results/</code> como archivos CSV. <strong>No modifiques ni sobrescribas</strong> <code>resultados_blast.tsv</code>.</p>
-</div>
-</div>
+</section>
 </section>
 <section id="observaciones" class="level2" data-number="8.10">
 <h2 data-number="8.10" class="anchored" data-anchor-id="observaciones"><span class="header-section-number">8.10</span> Observaciones</h2>
@@ -1757,7 +1582,7 @@ Tip
 <li>¿Qué representan las columnas <code>muestra</code> y <code>conteo</code> después de <code>pivot_longer()</code>?</li>
 <li>¿Por qué conviene guardar resultados en una carpeta distinta de los datos originales?</li>
 </ul>
-<p>En la <strong>sesión 4</strong> integraremos información de varias tablas mediante identificadores y aprenderemos a repetir procesos sobre múltiples archivos.</p>
+<p>En la siguiente sesión integraremos información de varias tablas mediante identificadores y aprenderemos a repetir procesos sobre múltiples archivos.</p>
 
 
 </section>
@@ -2209,8 +2034,8 @@ Tip
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./parte9.html" class="pagination-link" aria-label="parte9">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">parte9</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./parte9.html" class="pagination-link" aria-label="Integración de datos y automatización de análisis en R">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

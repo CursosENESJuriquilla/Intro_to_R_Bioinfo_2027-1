@@ -81,8 +81,6 @@ Sin abrirlo en una hoja de cálculo, utiliza R para comprobar que existe `blast_
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
-
-
 :::
 ::::
 
@@ -125,6 +123,14 @@ metadata <- readr::read_csv(
   show_col_types = FALSE
 )
 ```
+
+
+::: {.callout-note}
+El argumento `show_col_types = FALSE` permite **ocultar el mensaje que muestra los tipos de datos detectados** al importar un archivo con `readr`. No modifica los datos ni los tipos de columnas, únicamente evita que aparezca el mensaje en la consola.
+
+Para consultar posteriormente los tipos de datos detectados, se puede utilizar `readr::spec(blast)`.
+:::
+
 
 En este caso, `read_tsv()` devuelve un **tibble**, una versión moderna del `data.frame`. La diferencia no es el contenido biológico, sino ciertas características de impresión y comportamiento en R.
 
@@ -170,6 +176,17 @@ blast_na <- readr::read_tsv(
 anyNA(blast_na)
 ```
 
+
+::: {.callout-note}
+El argumento `na = c("", "NA")` indica a `readr` qué valores deben interpretarse como **datos faltantes (`NA`)** al importar el archivo.
+
+En este caso:
+- `""`: las celdas vacías se interpretan como `NA`.
+- `"NA"`: las celdas que contienen literalmente el texto `NA` también se interpretan como valores faltantes.
+
+Esto permite identificar y manejar los datos faltantes de manera consistente durante el análisis.
+:::
+
 ### Problemas al interpretar columnas
 
 Una columna que debería contener números puede importarse como texto si incluye valores inesperados. No siempre es un error del programa: a veces es una característica del archivo. Antes de convertir tipos, revisa qué contiene realmente la columna.
@@ -185,8 +202,6 @@ readr::problems(blast)
 - La función `readr::spec()` permite consultar las **especificaciones de las columnas** de un conjunto de datos importado con `readr`, especialmente los tipos de datos que se asignaron durante la lectura del archivo.
 
 - La función `readr::problems(blast)` permite identificar **problemas detectados durante la importación de los datos** con `readr`, como valores que no corresponden al tipo de dato esperado. Si no se detectaron problemas, devuelve una tabla vacía.
-
-
 
 Para observar cómo funciona `problems()` cuando se detectan errores de importación, construiremos un pequeño conjunto de datos directamente en R. En este ejemplo, la columna identidad debería contener únicamente valores numéricos, pero introduciremos intencionalmente un texto ("error"). Indicaremos a R que esa columna debe ser numérica y revisaremos qué ocurre al importar los datos y cómo podemos identificar el problema.
 
@@ -218,8 +233,6 @@ Importa `metadata_secuencias.csv` y `blast_comentarios.tsv` utilizando `readr`. 
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
-
-
 :::
 ::::
 
@@ -265,11 +278,9 @@ table(blast$query_id)
 sort(table(blast$query_id), decreasing = TRUE)
 ```
 
-- `unique()` devuelve los identificadores distintos. 
+- `unique()` devuelve los identificadores distintos.
 
 - `table()` construye una **tabla de frecuencias**, contando cuántas veces aparece cada valor diferente en un vector.
-
-
 
 ### Preguntas que podemos responder
 
@@ -295,8 +306,6 @@ Con `resultados_blast.tsv`, responde mediante código:
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
-
-
 :::
 ::::
 
@@ -330,6 +339,20 @@ metadata <- readr::read_csv(
 metadata$codigo_muestra
 ```
 
+
+::: {.callout-note}
+El argumento `col_types` permite **especificar manualmente el tipo de dato de una o varias columnas** al importar un archivo, en lugar de dejar que `readr` lo detecte automáticamente.
+
+En este ejemplo:
+
+- `readr::cols()` define las especificaciones de los tipos de columnas.
+- `codigo_muestra = readr::col_character()` indica que la columna `codigo_muestra` debe importarse como **texto (`character`)**, aunque contenga números.
+
+Esto es especialmente útil para identificadores de muestras, ya que permite conservar códigos como `"001"`, `"002"` o `"003"` sin perder los ceros iniciales.
+
+Las columnas que no se especifican se interpretan automáticamente.
+:::
+
 ### Ausencias y registros repetidos
 
 ```{r}
@@ -356,8 +379,6 @@ Un estudiante importa `blast_separador_incorrecto.csv` con `read_csv()` y obtien
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
-
-
 :::
 ::::
 
@@ -387,7 +408,6 @@ Utiliza `readLines()` y `grep()` para identificar los encabezados de `secuencias
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución
-
 :::
 ::::
 

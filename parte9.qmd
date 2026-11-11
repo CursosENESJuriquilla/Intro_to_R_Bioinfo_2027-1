@@ -2,23 +2,13 @@
 
 ## Introducción
 
-En la sesión 2 aprendimos a **importar y explorar archivos**, y en la sesión 3 a **transformar una tabla** con `dplyr` y `tidyr`. Ahora resolveremos dos situaciones habituales al trabajar con datos:
+Ya vimos como **importar y explorar archivos**, y como **transformar una tabla** con `dplyr` y `tidyr`. Ahora resolveremos dos situaciones habituales al trabajar con datos:
 
 1.  Tenemos una tabla con resultados y otra con información adicional. ¿Cómo relacionarlas sin perder registros?
 2.  Tenemos varios archivos con la misma estructura. ¿Cómo procesarlos sin repetir el mismo código para cada archivo?
 
 Seguiremos utilizando **resultados sintéticos con estructura de salida tabular de BLAST**. No ejecutaremos BLAST ni interpretaremos estos datos como resultados biológicos reales. Los umbrales utilizados serán ejemplos para practicar programación.
 
-### Objetivos de aprendizaje
-
-Al terminar podrás:
-
-- Identificar las columnas que permiten relacionar dos tablas y distinguir relaciones de uno a uno y uno a muchos.
-- Combinar información mediante `left_join()`, `inner_join()`, `full_join()` y `anti_join()`.
-- Distinguir entre **relacionar tablas por identificadores** y **apilar tablas con las mismas columnas**.
-- Construir funciones sencillas que reciban tablas como argumentos.
-- Localizar, leer y procesar varios archivos con `list.files()`, `lapply()` y `purrr::map()`.
-- Generar y guardar una tabla integrada a partir de varios archivos de entrada.
 
 ## Archivos de trabajo
 
@@ -89,6 +79,13 @@ head(blast_A)
 head(metadata)
 ```
 
+
+- `cols()`: define los tipos de datos de las columnas.
+
+- `codigo_muestra = col_character()`: obliga a que la columna codigo_muestra se importe como texto, incluso si contiene únicamente números. Esto permite conservar identificadores como "001" o "002" sin perder los ceros iniciales.
+
+- `.default = col_guess()`: indica que, para todas las demás columnas, readr debe detectar automáticamente el tipo de dato.
+
 La columna `query_id` aparece en ambas tablas. Por eso podemos utilizarla como **clave de unión**.
 
 Una clave no necesariamente tiene que llamarse igual en las dos tablas, pero debe representar el mismo tipo de identificador. Por ejemplo, no sería correcto unir `query_id` con `subject_id` solamente porque ambos contienen texto.
@@ -122,7 +119,11 @@ Esto nos permitirá observar cómo se comportan las distintas uniones.
 
 ## Combinar tablas mediante `dplyr`
 
-Una **unión** (*join*) combina columnas de dos tablas a partir de los valores de una o varias claves.
+Una **unión** (*join*) combina columnas de dos tablas a partir de los valores de una o varias claves. En la @fig-tipos-join se muestran los principales tipos de uniones disponibles en `dplyr`, así como las diferencias entre las observaciones que conserva cada operación.
+
+
+![Tipos de uniones de tablas con dplyr. Las regiones azules indican las filas que se conservan en cada operación.](figures/tipos_join.png){#fig-tipos-join width="95%" fig-align="center"}
+
 
 ### `left_join()`: conservar la tabla de la izquierda
 
@@ -196,7 +197,7 @@ blast_C %>%
 Cuando una fila no tiene información de la otra tabla, las columnas correspondientes contienen `NA`.
 
 | Función | ¿Qué filas conserva? | Uso típico |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | `left_join(x, y)` | Todas las de `x` y sus coincidencias en `y` | Agregar metadatos a resultados |
 | `inner_join(x, y)` | Solo las que coinciden en ambas | Trabajar con registros compartidos |
 | `anti_join(x, y)` | Las de `x` sin coincidencia en `y` | Encontrar identificadores sin información asociada |
@@ -238,75 +239,7 @@ metadata %>%
 
 Una tabla vacía indica que no se encontraron identificadores repetidos.
 
-:::: {.callout-warning icon="false"}
-## 🧠 Ejercicio 1: ¿Qué información se conserva en cada unión?
 
-Utiliza `blast_C` y `metadata` para:
-
-1.  Construir una tabla con `left_join()`.
-2.  Identificar los registros de BLAST sin metadatos.
-3.  Identificar los registros de metadatos sin resultados en `blast_C`.
-4.  Comparar el número de filas de `blast_C`, de la unión izquierda y de la unión interna.
-
-Antes de ejecutar el código, predice en qué operación aparecerá `seq09`.
-
-::: {.callout-tip collapse="true" icon="false"}
-## Solución
-
-```{r}
-resultado_izquierdo <- blast_C %>%
-  left_join(metadata, by = "query_id")
-
-sin_metadata <- blast_C %>%
-  anti_join(metadata, by = "query_id")
-
-sin_blast_C <- metadata %>%
-  anti_join(blast_C, by = "query_id")
-
-sin_metadata
-sin_blast_C
-
-data.frame(
-  tabla = c("blast_C", "left_join", "inner_join"),
-  filas = c(
-    nrow(blast_C),
-    nrow(resultado_izquierdo),
-    nrow(blast_C %>% inner_join(metadata, by = "query_id"))
-  )
-)
-```
-
-`seq09` aparece en `sin_metadata` y se conserva en `left_join()`, con `NA` en las columnas de metadatos. En `inner_join()` se excluye porque no tiene correspondencia.
-:::
-::::
-
-:::: {.callout-warning icon="false"}
-## 🧠 Ejercicio 2: ¿Por qué aumentó el número de filas?
-
-Une `blast_A` con `metadata_duplicada`. Compara el número de filas antes y después. Identifica qué `query_id` provoca el aumento y explica por qué sucede.
-
-::: {.callout-tip collapse="true" icon="false"}
-## Solución
-
-```{r}
-union_duplicada <- blast_A %>%
-  left_join(metadata_duplicada, by = "query_id")
-
-nrow(blast_A)
-nrow(union_duplicada)
-
-metadata_duplicada %>%
-  count(query_id) %>%
-  filter(n > 1)
-
-union_duplicada %>%
-  filter(query_id == "seq01") %>%
-  select(query_id, subject_id, organismo, origen)
-```
-
-`seq01` tiene dos filas en `metadata_duplicada`. Cada alineamiento de esa consulta se combina con ambas filas, de modo que el resultado crece. Esto no se debe a `dplyr`: es una consecuencia de las correspondencias entre claves.
-:::
-::::
 
 ## Apilar resultados de distintas muestras
 
@@ -348,39 +281,7 @@ blast_total %>%
 
 En esta sesión no necesitaremos `bind_cols()`: unir columnas por posición puede producir correspondencias equivocadas si las filas no están perfectamente alineadas.
 
-:::: {.callout-warning icon="false"}
-## 🧠 Ejercicio 3: Reunir resultados y conservar su procedencia
 
-Combina `blast_A`, `blast_B` y `blast_C` en una sola tabla llamada `todos_los_blast`, con una columna `muestra`. Después:
-
-1.  Cuenta cuántos alineamientos hay por muestra.
-2.  Cuenta cuántos identificadores de consulta diferentes aparecen en cada muestra.
-3.  Ordena la tabla por muestra y, dentro de cada muestra, por `bitscore` descendente.
-
-::: {.callout-tip collapse="true" icon="false"}
-## Solución
-
-```{r}
-todos_los_blast <- bind_rows(
-  muestra_A = blast_A,
-  muestra_B = blast_B,
-  muestra_C = blast_C,
-  .id = "muestra"
-)
-
-todos_los_blast %>%
-  group_by(muestra) %>%
-  summarise(
-    alineamientos = n(),
-    consultas_distintas = n_distinct(query_id),
-    .groups = "drop"
-  )
-
-todos_los_blast %>%
-  arrange(muestra, desc(bitscore))
-```
-:::
-::::
 
 ## Funciones para automatizar transformaciones
 
@@ -430,40 +331,7 @@ resumir_alineamientos(blast_A)
 No significa necesariamente construir un programa complicado. Automatizar consiste en **escribir una operación una sola vez** para poder aplicarla de manera consistente a diferentes entradas.
 :::
 
-:::: {.callout-warning icon="false"}
-## 🧠 Ejercicio 4: Una función con dos criterios
 
-Modifica `filtrar_alineamientos()` para que reciba también una longitud mínima del alineamiento, con valor predeterminado de 100. La función debe conservar registros que cumplan ambos criterios y ordenarlos por `bitscore` descendente.
-
-Prueba la función con `blast_A` y con `blast_C` usando diferentes umbrales.
-
-::: {.callout-tip collapse="true" icon="false"}
-## Solución
-
-```{r}
-filtrar_alineamientos <- function(datos,
-                                  identidad_minima = 90,
-                                  longitud_minima = 100) {
-  datos %>%
-    filter(
-      pident >= identidad_minima,
-      length >= longitud_minima
-    ) %>%
-    arrange(desc(bitscore))
-}
-
-filtrar_alineamientos(blast_A)
-
-filtrar_alineamientos(
-  blast_C,
-  identidad_minima = 95,
-  longitud_minima = 150
-)
-```
-
-Los umbrales se utilizan para practicar argumentos y condiciones; no representan una regla universal para determinar la relevancia biológica de un alineamiento.
-:::
-::::
 
 ## Procesar múltiples archivos
 
@@ -594,52 +462,9 @@ No necesitamos aprender todas las variantes de `map()` en esta sesión. Lo impor
 Las tres alternativas pueden servir para repetir operaciones. Un ciclo `for` es útil cuando queremos controlar cada paso. `lapply()` es una opción de R base para obtener una lista de resultados; `map()` ofrece una interfaz consistente dentro de `purrr`. No es necesario utilizar `map()` para que un análisis sea reproducible.
 :::
 
-:::: {.callout-warning icon="false"}
-## 🧠 Ejercicio 5: Procesar todos los archivos sin escribir sus nombres
 
-Escribe un bloque de código que:
 
-1.  Localice automáticamente todos los archivos `.tsv` de `blast_muestras/`.
-2.  Importe cada archivo en una lista.
-3.  Asigne a cada elemento el nombre de su muestra.
-4.  Aplique `filtrar_alineamientos()` con identidad mínima de 85 y longitud mínima de 150.
-5.  Combine los resultados en una sola tabla con una columna `muestra`.
-
-::: {.callout-tip collapse="true" icon="false"}
-## Solución
-
-```{r}
-archivos <- list.files(
-  carpeta_blast,
-  pattern = "\\.tsv$",
-  full.names = TRUE
-)
-
-tablas <- lapply(
-  archivos,
-  function(x) read_tsv(x, show_col_types = FALSE)
-)
-
-names(tablas) <- tools::file_path_sans_ext(basename(archivos))
-
-tablas_filtradas <- lapply(
-  tablas,
-  filtrar_alineamientos,
-  identidad_minima = 85,
-  longitud_minima = 150
-)
-
-resultado <- bind_rows(tablas_filtradas, .id = "muestra")
-
-resultado %>%
-  count(muestra)
-```
-
-La columna `muestra` conserva la procedencia de cada alineamiento, aunque los datos se encuentren ahora en una sola tabla.
-:::
-::::
-
-## Práctica Final: de varios archivos a una tabla final
+## De varios archivos a una tabla final
 
 Nuestro objetivo será construir un flujo de trabajo completo que pueda ejecutarse nuevamente cuando cambien los archivos de entrada.
 
@@ -709,17 +534,60 @@ resultados_combinados %>%
 
 Que existan identificadores sin correspondencia no significa necesariamente que el archivo esté mal: puede indicar que las dos fuentes cubren conjuntos diferentes de secuencias.
 
-::: {.callout-warning icon="false"}
-## 🧠 Ejercicio 6: Construir un resumen por muestra
 
-A partir de `resultados_finales`, construye una tabla que contenga, para cada muestra:
+## Ejercicios
+
+### Ejercicio 1: ¿Qué información se conserva en cada unión?
+
+Utiliza `blast_C` y `metadata` para:
+
+1.  Construir una tabla con `left_join()`.
+2.  Identificar los registros de BLAST sin metadatos.
+3.  Identificar los registros de metadatos sin resultados en `blast_C`.
+4.  Comparar el número de filas de `blast_C`, de la unión izquierda y de la unión interna.
+
+Antes de ejecutar el código, predice en qué operación aparecerá `seq09`.
+
+### Ejercicio 2: ¿Por qué aumentó el número de filas?
+
+Une `blast_A` con `metadata_duplicada`. Compara el número de filas antes y después. Identifica qué `query_id` provoca el aumento y explica por qué sucede.
+
+
+### Ejercicio 3: Reunir resultados y conservar su procedencia
+
+Combina `blast_A`, `blast_B` y `blast_C` en una sola tabla llamada `todos_los_blast`, con una columna `muestra`. Después:
+
+1.  Cuenta cuántos alineamientos hay por muestra.
+2.  Cuenta cuántos identificadores de consulta diferentes aparecen en cada muestra.
+3.  Ordena la tabla por muestra y, dentro de cada muestra, por `bitscore` descendente.
+
+### Ejercicio 4: Una función con dos criterios
+
+Modifica `filtrar_alineamientos()` para que reciba también una longitud mínima del alineamiento, con valor predeterminado de 100. La función debe conservar registros que cumplan ambos criterios y ordenarlos por `bitscore` descendente.
+
+Prueba la función con `blast_A` y con `blast_C` usando diferentes umbrales.
+
+
+### Ejercicio 5: Procesar todos los archivos sin escribir sus nombres
+
+Escribe un bloque de código que:
+
+1.  Localice automáticamente todos los archivos `.tsv` de `blast_muestras/`.
+2.  Importe cada archivo en una lista.
+3.  Asigne a cada elemento el nombre de su muestra.
+4.  Aplique `filtrar_alineamientos()` con identidad mínima de 85 y longitud mínima de 150.
+5.  Combine los resultados en una sola tabla con una columna `muestra`.
+
+### Ejercicio 6: Construir un resumen por muestra
+
+A partir la tabla de `resultados_finales` de la sección 9.8, construye una tabla que contenga, para cada muestra:
 
 1.  El número de alineamientos que cumplieron los criterios.
 2.  El número de identificadores `query_id` diferentes.
 3.  El mayor `bitscore`.
 
 Guarda la tabla en `results/04_resumen_por_muestra.csv`. Después, explica por qué este archivo se puede volver a generar sin modificar los datos originales.
-:::
+
 
 ## Observaciones
 
@@ -749,4 +617,4 @@ Guardar resultados
 - **Conservar una columna de procedencia** ayuda a saber de qué muestra viene cada resultado.
 - **Guardar resultados en una carpeta separada** permite conservar intactos los archivos de entrada.
 
-En la sesión 5 utilizaremos estas tablas organizadas para aprender a construir visualizaciones con `ggplot2`.
+En la sesión siguiente utilizaremos estas tablas organizadas para aprender a construir visualizaciones con `ggplot2`.
