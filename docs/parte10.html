@@ -1,0 +1,2065 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>10&nbsp; Construcción y exploración visual de datos bioinformáticos con ggplot2 – Introducción a R para Bioinformática I</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./parte9.html" rel="prev">
+<link href="./figures/favicon.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte10.html"><strong>Construcción y exploración visual de datos bioinformáticos con ggplot2</strong></a></li><li class="breadcrumb-item"><a href="./parte10.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Construcción y exploración visual de datos bioinformáticos con ggplot2</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./figures/LogoENES.png" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./figures/LogoENES.png" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Introducción a R para Bioinformática I</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1" title="Ejecutar el código" class="quarto-navigation-tool px-1" aria-label="Ejecutar el código"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Compartir" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Compartir"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Información general</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./temario.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Temario</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Introducción a R y organización de proyectos bioinformáticos</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Buenas prácticas en bioinformática</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introducción a R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Objetos y estructuras de datos en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estructuras de control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Funciones en R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Scripts, paquetes y proyectos de RStudio</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Importación y exploración de datos bioinformáticos en R</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte7.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Importación y exploración de datos bioinformáticos en R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte8.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Manipulación y transformación de datos bioinformáticos con dplyr y tidyr</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Integración de datos y automatización de análisis en R</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte9.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Construcción y exploración visual de datos bioinformáticos con ggplot2</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte10.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Construcción y exploración visual de datos bioinformáticos con ggplot2</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tabla de contenidos</h2>
+   
+  <ul>
+  <li><a href="#antes-de-comenzar-datos-y-paquetes" id="toc-antes-de-comenzar-datos-y-paquetes" class="nav-link active" data-scroll-target="#antes-de-comenzar-datos-y-paquetes"><span class="header-section-number">11</span> Antes de comenzar: datos y paquetes</a>
+  <ul>
+  <li><a href="#de-la-pregunta-a-la-figura" id="toc-de-la-pregunta-a-la-figura" class="nav-link" data-scroll-target="#de-la-pregunta-a-la-figura"><span class="header-section-number">11.1</span> De la pregunta a la figura</a></li>
+  <li><a href="#gramática-de-gráficos-con-ggplot2" id="toc-gramática-de-gráficos-con-ggplot2" class="nav-link" data-scroll-target="#gramática-de-gráficos-con-ggplot2"><span class="header-section-number">11.2</span> Gramática de gráficos con ggplot2</a>
+  <ul class="collapse">
+  <li><a href="#primer-gráfico-longitudes-de-anotaciones" id="toc-primer-gráfico-longitudes-de-anotaciones" class="nav-link" data-scroll-target="#primer-gráfico-longitudes-de-anotaciones"><span class="header-section-number">11.2.1</span> Primer gráfico: longitudes de anotaciones</a></li>
+  <li><a href="#mapeos-dentro-y-fuera-de-aes" id="toc-mapeos-dentro-y-fuera-de-aes" class="nav-link" data-scroll-target="#mapeos-dentro-y-fuera-de-aes"><span class="header-section-number">11.2.2</span> Mapeos dentro y fuera de <code>aes()</code></a></li>
+  <li><a href="#geom_bar-y-geom_col-no-hacen-lo-mismo" id="toc-geom_bar-y-geom_col-no-hacen-lo-mismo" class="nav-link" data-scroll-target="#geom_bar-y-geom_col-no-hacen-lo-mismo"><span class="header-section-number">11.2.3</span> <code>geom_bar()</code> y <code>geom_col()</code>: no hacen lo mismo</a></li>
+  <li><a href="#comparación-de-conteos-entre-muestras-mediante-facet_wrap" id="toc-comparación-de-conteos-entre-muestras-mediante-facet_wrap" class="nav-link" data-scroll-target="#comparación-de-conteos-entre-muestras-mediante-facet_wrap"><span class="header-section-number">11.2.4</span> Comparación de conteos entre muestras mediante <code>facet_wrap()</code></a></li>
+  <li><a href="#capas-añadir-información-sin-modificar-los-datos" id="toc-capas-añadir-información-sin-modificar-los-datos" class="nav-link" data-scroll-target="#capas-añadir-información-sin-modificar-los-datos"><span class="header-section-number">11.2.5</span> Capas: añadir información sin modificar los datos</a></li>
+  </ul></li>
+  <li><a href="#comparaciones-distribuciones-y-paneles" id="toc-comparaciones-distribuciones-y-paneles" class="nav-link" data-scroll-target="#comparaciones-distribuciones-y-paneles"><span class="header-section-number">11.3</span> Comparaciones, distribuciones y paneles</a>
+  <ul class="collapse">
+  <li><a href="#puntos-conteos-de-un-gen-por-muestra" id="toc-puntos-conteos-de-un-gen-por-muestra" class="nav-link" data-scroll-target="#puntos-conteos-de-un-gen-por-muestra"><span class="header-section-number">11.3.1</span> Puntos: conteos de un gen por muestra</a></li>
+  <li><a href="#facetas-varios-genes-sin-mezclar-escalas-conceptuales" id="toc-facetas-varios-genes-sin-mezclar-escalas-conceptuales" class="nav-link" data-scroll-target="#facetas-varios-genes-sin-mezclar-escalas-conceptuales"><span class="header-section-number">11.3.2</span> Facetas: varios genes sin mezclar escalas conceptuales</a></li>
+  <li><a href="#barras-apiladas-qué-se-está-sumando" id="toc-barras-apiladas-qué-se-está-sumando" class="nav-link" data-scroll-target="#barras-apiladas-qué-se-está-sumando"><span class="header-section-number">11.3.3</span> Barras apiladas: ¿qué se está sumando?</a></li>
+  <li><a href="#distribuciones-entre-grupos-boxplots-y-observaciones-individuales" id="toc-distribuciones-entre-grupos-boxplots-y-observaciones-individuales" class="nav-link" data-scroll-target="#distribuciones-entre-grupos-boxplots-y-observaciones-individuales"><span class="header-section-number">11.3.4</span> Distribuciones entre grupos: boxplots y observaciones individuales</a></li>
+  </ul></li>
+  <li><a href="#calidad-de-figuras-y-exportación-material-de-consulta-durante-la-práctica" id="toc-calidad-de-figuras-y-exportación-material-de-consulta-durante-la-práctica" class="nav-link" data-scroll-target="#calidad-de-figuras-y-exportación-material-de-consulta-durante-la-práctica"><span class="header-section-number">11.4</span> Calidad de figuras y exportación (material de consulta durante la práctica)</a>
+  <ul class="collapse">
+  <li><a href="#lista-de-verificación-para-una-figura-científica" id="toc-lista-de-verificación-para-una-figura-científica" class="nav-link" data-scroll-target="#lista-de-verificación-para-una-figura-científica"><span class="header-section-number">11.4.1</span> Lista de verificación para una figura científica</a></li>
+  <li><a href="#tema-y-ajustes" id="toc-tema-y-ajustes" class="nav-link" data-scroll-target="#tema-y-ajustes"><span class="header-section-number">11.4.2</span> Tema y ajustes</a></li>
+  <li><a href="#exportar-de-manera-reproducible" id="toc-exportar-de-manera-reproducible" class="nav-link" data-scroll-target="#exportar-de-manera-reproducible"><span class="header-section-number">11.4.3</span> Exportar de manera reproducible</a></li>
+  <li><a href="#escalas-y-leyendas-qué-significa-el-color" id="toc-escalas-y-leyendas-qué-significa-el-color" class="nav-link" data-scroll-target="#escalas-y-leyendas-qué-significa-el-color"><span class="header-section-number">11.4.4</span> Escalas y leyendas: ¿qué significa el color?</a></li>
+  <li><a href="#estéticas-globales-y-locales-a-qué-capa-afecta-el-color" id="toc-estéticas-globales-y-locales-a-qué-capa-afecta-el-color" class="nav-link" data-scroll-target="#estéticas-globales-y-locales-a-qué-capa-afecta-el-color"><span class="header-section-number">11.4.5</span> Estéticas globales y locales: ¿a qué capa afecta el color?</a></li>
+  <li><a href="#escalas-transformar-la-representación-sin-cambiar-la-tabla" id="toc-escalas-transformar-la-representación-sin-cambiar-la-tabla" class="nav-link" data-scroll-target="#escalas-transformar-la-representación-sin-cambiar-la-tabla"><span class="header-section-number">11.4.6</span> Escalas: transformar la representación sin cambiar la tabla</a>
+  <ul class="collapse">
+  <li><a href="#escalas-continuas" id="toc-escalas-continuas" class="nav-link" data-scroll-target="#escalas-continuas">Escalas continuas</a></li>
+  <li><a href="#escalas-discretas-y-leyendas" id="toc-escalas-discretas-y-leyendas" class="nav-link" data-scroll-target="#escalas-discretas-y-leyendas">Escalas discretas y leyendas</a></li>
+  </ul></li>
+  <li><a href="#zoom-frente-a-eliminación-de-observaciones" id="toc-zoom-frente-a-eliminación-de-observaciones" class="nav-link" data-scroll-target="#zoom-frente-a-eliminación-de-observaciones"><span class="header-section-number">11.4.7</span> Zoom frente a eliminación de observaciones</a></li>
+  <li><a href="#temas-personalizar-solo-lo-necesario" id="toc-temas-personalizar-solo-lo-necesario" class="nav-link" data-scroll-target="#temas-personalizar-solo-lo-necesario"><span class="header-section-number">11.4.8</span> Temas: personalizar solo lo necesario</a></li>
+  </ul></li>
+  <li><a href="#exploración-visual-de-las-preguntas-a-las-figuras" id="toc-exploración-visual-de-las-preguntas-a-las-figuras" class="nav-link" data-scroll-target="#exploración-visual-de-las-preguntas-a-las-figuras"><span class="header-section-number">11.5</span> Exploración visual: de las preguntas a las figuras</a>
+  <ul class="collapse">
+  <li><a href="#pregunta-qué-categorías-funcionales-tienen-más-genes-anotados" id="toc-pregunta-qué-categorías-funcionales-tienen-más-genes-anotados" class="nav-link" data-scroll-target="#pregunta-qué-categorías-funcionales-tienen-más-genes-anotados"><span class="header-section-number">11.5.1</span> Pregunta: ¿qué categorías funcionales tienen más genes anotados?</a></li>
+  <li><a href="#pregunta-hay-relación-entre-la-longitud-anotada-y-los-conteos" id="toc-pregunta-hay-relación-entre-la-longitud-anotada-y-los-conteos" class="nav-link" data-scroll-target="#pregunta-hay-relación-entre-la-longitud-anotada-y-los-conteos"><span class="header-section-number">11.5.2</span> Pregunta: ¿hay relación entre la longitud anotada y los conteos?</a></li>
+  <li><a href="#pregunta-qué-representación-permite-comparar-mejor-varios-genes-entre-muestras" id="toc-pregunta-qué-representación-permite-comparar-mejor-varios-genes-entre-muestras" class="nav-link" data-scroll-target="#pregunta-qué-representación-permite-comparar-mejor-varios-genes-entre-muestras"><span class="header-section-number">11.5.3</span> Pregunta: ¿qué representación permite comparar mejor varios genes entre muestras?</a></li>
+  <li><a href="#una-guía-para-interpretar-y-comunicar-resultados" id="toc-una-guía-para-interpretar-y-comunicar-resultados" class="nav-link" data-scroll-target="#una-guía-para-interpretar-y-comunicar-resultados"><span class="header-section-number">11.5.4</span> Una guía para interpretar y comunicar resultados</a></li>
+  </ul></li>
+  <li><a href="#hábitos-para-comunicar-resultados" id="toc-hábitos-para-comunicar-resultados" class="nav-link" data-scroll-target="#hábitos-para-comunicar-resultados"><span class="header-section-number">11.6</span> Hábitos para comunicar resultados</a></li>
+  <li><a href="#material-de-ampliación-más-geometrías-y-facetas" id="toc-material-de-ampliación-más-geometrías-y-facetas" class="nav-link" data-scroll-target="#material-de-ampliación-más-geometrías-y-facetas"><span class="header-section-number">11.7</span> Material de ampliación: más geometrías y facetas</a>
+  <ul class="collapse">
+  <li><a href="#puntos-superpuestos-geom_jitter" id="toc-puntos-superpuestos-geom_jitter" class="nav-link" data-scroll-target="#puntos-superpuestos-geom_jitter"><span class="header-section-number">11.7.1</span> Puntos superpuestos: <code>geom_jitter()</code></a></li>
+  <li><a href="#diagramas-de-violín-geom_violin" id="toc-diagramas-de-violín-geom_violin" class="nav-link" data-scroll-target="#diagramas-de-violín-geom_violin"><span class="header-section-number">11.7.2</span> Diagramas de violín: <code>geom_violin()</code></a></li>
+  <li><a href="#facetas-con-dos-variables-facet_grid" id="toc-facetas-con-dos-variables-facet_grid" class="nav-link" data-scroll-target="#facetas-con-dos-variables-facet_grid"><span class="header-section-number">11.7.3</span> Facetas con dos variables: <code>facet_grid()</code></a></li>
+  <li><a href="#gráficos-de-líneas-cuándo-tienen-sentido" id="toc-gráficos-de-líneas-cuándo-tienen-sentido" class="nav-link" data-scroll-target="#gráficos-de-líneas-cuándo-tienen-sentido"><span class="header-section-number">11.7.4</span> Gráficos de líneas: cuándo tienen sentido</a></li>
+  <li><a href="#gráficos-de-mosaico-de-colores-con-geom_tile" id="toc-gráficos-de-mosaico-de-colores-con-geom_tile" class="nav-link" data-scroll-target="#gráficos-de-mosaico-de-colores-con-geom_tile"><span class="header-section-number">11.7.5</span> Gráficos de mosaico de colores con <code>geom_tile()</code></a></li>
+  </ul></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">11.8</span> Ejercicios</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1-personalizar-un-gráfico" id="toc-ejercicio-1-personalizar-un-gráfico" class="nav-link" data-scroll-target="#ejercicio-1-personalizar-un-gráfico"><span class="header-section-number">11.8.1</span> Ejercicio 1: Personalizar un gráfico</a></li>
+  <li><a href="#ejercicio-2-elegir-la-figura-apropiada" id="toc-ejercicio-2-elegir-la-figura-apropiada" class="nav-link" data-scroll-target="#ejercicio-2-elegir-la-figura-apropiada"><span class="header-section-number">11.8.2</span> Ejercicio 2: Elegir la figura apropiada</a></li>
+  <li><a href="#ejercicio-3-histogramas-y-diagramas-de-caja" id="toc-ejercicio-3-histogramas-y-diagramas-de-caja" class="nav-link" data-scroll-target="#ejercicio-3-histogramas-y-diagramas-de-caja"><span class="header-section-number">11.8.3</span> Ejercicio 3: Histogramas y diagramas de caja</a></li>
+  <li><a href="#ejercicio-4-detectar-problemas-de-comunicación" id="toc-ejercicio-4-detectar-problemas-de-comunicación" class="nav-link" data-scroll-target="#ejercicio-4-detectar-problemas-de-comunicación"><span class="header-section-number">11.8.4</span> Ejercicio 4: Detectar problemas de comunicación</a></li>
+  <li><a href="#ejercicio-5-qué-cambia-si-movemos-una-estética" id="toc-ejercicio-5-qué-cambia-si-movemos-una-estética" class="nav-link" data-scroll-target="#ejercicio-5-qué-cambia-si-movemos-una-estética"><span class="header-section-number">11.8.5</span> Ejercicio 5: ¿Qué cambia si movemos una estética?</a></li>
+  <li><a href="#ejercicio-6-ajustar-una-figura-sin-ocultar-información" id="toc-ejercicio-6-ajustar-una-figura-sin-ocultar-información" class="nav-link" data-scroll-target="#ejercicio-6-ajustar-una-figura-sin-ocultar-información"><span class="header-section-number">11.8.6</span> Ejercicio 6: Ajustar una figura sin ocultar información</a></li>
+  <li><a href="#ejercicio-7-dos-figuras-una-misma-pregunta" id="toc-ejercicio-7-dos-figuras-una-misma-pregunta" class="nav-link" data-scroll-target="#ejercicio-7-dos-figuras-una-misma-pregunta"><span class="header-section-number">11.8.7</span> Ejercicio 7: Dos figuras, una misma pregunta</a></li>
+  <li><a href="#ejercicio-8-elegir-una-figura-a-partir-de-la-pregunta" id="toc-ejercicio-8-elegir-una-figura-a-partir-de-la-pregunta" class="nav-link" data-scroll-target="#ejercicio-8-elegir-una-figura-a-partir-de-la-pregunta"><span class="header-section-number">11.8.8</span> Ejercicio 8: Elegir una figura a partir de la pregunta</a></li>
+  <li><a href="#ejercicio-9-mini-galería-de-figuras-reproducibles" id="toc-ejercicio-9-mini-galería-de-figuras-reproducibles" class="nav-link" data-scroll-target="#ejercicio-9-mini-galería-de-figuras-reproducibles"><span class="header-section-number">11.8.9</span> Ejercicio 9: Mini-galería de figuras reproducibles</a></li>
+  </ul></li>
+  <li><a href="#créditos-y-lecturas-complementarias" id="toc-créditos-y-lecturas-complementarias" class="nav-link" data-scroll-target="#créditos-y-lecturas-complementarias"><span class="header-section-number">11.9</span> Créditos y lecturas complementarias</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./parte10.html"><strong>Construcción y exploración visual de datos bioinformáticos con ggplot2</strong></a></li><li class="breadcrumb-item"><a href="./parte10.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Construcción y exploración visual de datos bioinformáticos con ggplot2</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Construcción y exploración visual de datos bioinformáticos con ggplot2</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Nos enfocaremos en lo siguiente:</p>
+<ol type="1">
+<li>Elegir una representación gráfica según <strong>la pregunta</strong> y la <strong>estructura de los datos</strong>.</li>
+<li>Construir y modificar gráficos mediante la gramática de <code>ggplot2</code>.</li>
+<li>Diferenciar mapeos estéticos (<code>aes()</code>) de propiedades fijas.</li>
+<li>Crear gráficos de barras, puntos, distribuciones y paneles con etiquetas comprensibles.</li>
+<li>Exportar figuras reproducibles, legibles y adecuadas para un reporte científico.</li>
+<li>Identificar errores frecuentes de comunicación visual sin recurrir a pruebas estadísticas.</li>
+<li>Formular preguntas descriptivas, comparar gráficos alternativos e interpretar sus limitaciones.</li>
+</ol>
+<section id="antes-de-comenzar-datos-y-paquetes" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Antes de comenzar: datos y paquetes</h1>
+<p>Descarga y descomprime el material de la sesión <a href="https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_sesion_05_ggplot2.zip"><code>datos_sesion_05_ggplot2.zip</code></a> dentro de la carpeta <code>data_raw/</code> de tu proyecto de RStudio. La estructura esperada es:</p>
+<pre class="text"><code>mi_proyecto/
+├── mi_proyecto.Rproj
+├── data_raw/
+│   └── datos_sesion_05_ggplot2/
+│       ├── anotaciones_figuras.tsv
+│       ├── conteos_muestras.tsv
+│       └── README.md
+├── figures/
+└── results/</code></pre>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"readr"</span>, <span class="st">"dplyr"</span>, <span class="st">"tidyr"</span>, <span class="st">"ggplot2"</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Adjuntando el paquete: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>carpeta <span class="ot">&lt;-</span> <span class="st">"data_raw/datos_sesion_05_ggplot2"</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">dir.exists</span>(carpeta))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>conteos <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(carpeta, <span class="st">"conteos_muestras.tsv"</span>),</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">muestra =</span> <span class="fu">col_character</span>(), <span class="at">grupo =</span> <span class="fu">col_character</span>(),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">gene_id =</span> <span class="fu">col_character</span>(), <span class="at">conteo =</span> <span class="fu">col_double</span>()</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>anotaciones <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(carpeta, <span class="st">"anotaciones_figuras.tsv"</span>),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">col_types =</span> <span class="fu">cols</span>(</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">gene_id =</span> <span class="fu">col_character</span>(), <span class="at">contig =</span> <span class="fu">col_character</span>(),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">start =</span> <span class="fu">col_double</span>(), <span class="at">end =</span> <span class="fu">col_double</span>(),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">functional_category =</span> <span class="fu">col_character</span>()</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">anyDuplicated</span>(conteos[<span class="fu">c</span>(<span class="st">"muestra"</span>, <span class="st">"gene_id"</span>)]),</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>  <span class="sc">!</span><span class="fu">anyDuplicated</span>(anotaciones<span class="sc">$</span>gene_id),</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">all</span>(<span class="sc">!</span><span class="fu">is.na</span>(conteos<span class="sc">$</span>conteo) <span class="sc">&amp;</span> conteos<span class="sc">$</span>conteo <span class="sc">&gt;=</span> <span class="dv">0</span>)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> conteos <span class="sc">%&gt;%</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(anotaciones, <span class="at">by =</span> <span class="fu">join_by</span>(gene_id), <span class="at">relationship =</span> <span class="st">"many-to-one"</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">nrow</span>(datos) <span class="sc">==</span> <span class="fu">nrow</span>(conteos), <span class="sc">!</span><span class="fu">anyNA</span>(datos<span class="sc">$</span>functional_category))</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(datos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 192
+Columns: 8
+$ muestra             &lt;chr&gt; "M01", "M01", "M01", "M01", "M01", "M01", "M01", "…
+$ grupo               &lt;chr&gt; "A", "A", "A", "A", "A", "A", "A", "A", "A", "A", …
+$ gene_id             &lt;chr&gt; "gene_001", "gene_002", "gene_003", "gene_004", "g…
+$ conteo              &lt;dbl&gt; 0, 0, 8, 7, 7, 4, 3, 13, 2, 13, 1, 0, 2, 6, 3, 16,…
+$ contig              &lt;chr&gt; "ctgA", "ctgA", "ctgA", "ctgA", "ctgA", "ctgA", "c…
+$ start               &lt;dbl&gt; 50, 550, 1050, 1550, 2050, 2550, 3050, 3550, 50, 5…
+$ end                 &lt;dbl&gt; 200, 737, 1274, 1811, 2348, 2885, 3422, 3959, 206,…
+$ functional_category &lt;chr&gt; "replication", "unknown", "defense", "energy", "en…</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Antes de graficar">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Antes de graficar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Comprueba qué representa <strong>una fila</strong>: aquí es una combinación de muestra y gen. Una misma categoría funcional aparece en varios genes y muestras. Si deseas contar <strong>genes distintos</strong> por categoría, primero debes eliminar las repeticiones por muestra. Si deseas mostrar <strong>conteos</strong>, debes agregarlos de manera explícita. La función de visualización no decide qué pregunta biológica quieres responder.</p>
+</div>
+</div>
+<section id="de-la-pregunta-a-la-figura" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="de-la-pregunta-a-la-figura"><span class="header-section-number">11.1</span> De la pregunta a la figura</h2>
+<p>Un gráfico es una respuesta visual a una pregunta. Antes de escribir <code>ggplot()</code>, identifica:</p>
+<ul>
+<li><strong>Unidad de observación:</strong> ¿gen, muestra, contig o par muestra–gen?</li>
+<li><strong>Variable representada:</strong> ¿categoría, longitud, conteo o identificador?</li>
+<li><strong>Comparación:</strong> ¿entre genes, entre muestras o entre grupos?</li>
+<li><strong>Limitaciones:</strong> ¿los valores son comparables?, ¿hay datos faltantes?, ¿qué no podemos concluir?</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta descriptiva</th>
+<th>Preparación necesaria</th>
+<th>Figura posible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>¿Cuántos genes hay en cada categoría funcional?</td>
+<td>Un registro por gen</td>
+<td>Barras</td>
+</tr>
+<tr class="even">
+<td>¿Cómo se distribuyen las longitudes anotadas?</td>
+<td>Calcular <code>end - start</code></td>
+<td>Histograma</td>
+</tr>
+<tr class="odd">
+<td>¿Qué conteos aparecen por muestra?</td>
+<td>Datos muestra–gen</td>
+<td>Puntos o paneles</td>
+</tr>
+<tr class="even">
+<td>¿Cómo varían los conteos de genes seleccionados?</td>
+<td>Filtrar genes</td>
+<td>Puntos y facetas</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled" title="No confundir">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>No confundir
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un gráfico de barras de <strong>número de genes anotados</strong> no representa abundancia biológica. Una barra de <strong>suma de conteos</strong> no equivale a expresión diferencial. La interpretación depende de la procedencia y preparación de los datos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Preguntas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Sin programar todavía, decide qué tabla y gráfico utilizarías para:</p>
+<ol type="1">
+<li>Contar genes únicos por categoría funcional.</li>
+<li>Comparar la longitud de las anotaciones entre contigs.</li>
+<li>Mostrar el conteo de <code>gene_001</code> en cada muestra.</li>
+</ol>
+<p>Indica qué representaría una fila de la tabla que usarías para cada gráfico.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Tabla de anotaciones: una fila por <code>gene_id</code>; conteo por <code>functional_category</code>; gráfico de barras.</li>
+<li>Tabla de anotaciones: una fila por gen con longitud calculada; puntos por contig o histogramas por panel.</li>
+<li>Tabla de conteos filtrada por <code>gene_001</code>: una fila por muestra; gráfico de puntos con muestra en X y conteo en Y.</li>
+</ol>
+<p>No existe un único gráfico correcto: se debe justificar qué representa cada marca visual.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="gramática-de-gráficos-con-ggplot2" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="gramática-de-gráficos-con-ggplot2"><span class="header-section-number">11.2</span> Gramática de gráficos con ggplot2</h2>
+<p>La estructura general es:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> tabla, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> variable_x, <span class="at">y =</span> variable_y)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_xxx</span>() <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Título informativo"</span>, <span class="at">x =</span> <span class="st">"Eje X"</span>, <span class="at">y =</span> <span class="st">"Eje Y"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p><code>ggplot()</code> declara datos y mapeos; <code>geom_*()</code> indica cómo representarlos; <code>labs()</code>, <code>scale_*()</code>, <code>facet_*()</code> y <code>theme_*()</code> ajustan el significado y la presentación.</p>
+<section id="primer-gráfico-longitudes-de-anotaciones" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="primer-gráfico-longitudes-de-anotaciones"><span class="header-section-number">11.2.1</span> Primer gráfico: longitudes de anotaciones</h3>
+<p>Las coordenadas de este conjunto sintético usan la convención <strong>inicio cero, fin exclusivo</strong>. Por tanto, la longitud es <code>end - start</code>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>genes <span class="ot">&lt;-</span> anotaciones <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">longitud =</span> end <span class="sc">-</span> start)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">stopifnot</span>(<span class="fu">all</span>(genes<span class="sc">$</span>longitud <span class="sc">&gt;</span> <span class="dv">0</span>))</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>p_longitudes <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(genes, <span class="fu">aes</span>(<span class="at">x =</span> longitud)) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">50</span>, <span class="at">boundary =</span> <span class="dv">0</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"#367A90"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribución de longitudes anotadas"</span>,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Datos sintéticos; cada registro representa un gen"</span>,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Longitud"</span>, <span class="at">y =</span> <span class="st">"Número de genes"</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>p_longitudes</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En este histograma, <code>binwidth</code> controla la anchura de los intervalos; cambiarlo modifica la representación visual.</p>
+</section>
+<section id="mapeos-dentro-y-fuera-de-aes" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="mapeos-dentro-y-fuera-de-aes"><span class="header-section-number">11.2.2</span> Mapeos dentro y fuera de <code>aes()</code></h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>p_categorias <span class="ot">&lt;-</span> genes <span class="sc">%&gt;%</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(functional_category, <span class="at">name =</span> <span class="st">"n_genes"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(functional_category, n_genes), <span class="at">y =</span> n_genes)) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#367A90"</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Genes anotados por categoría funcional"</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Categoría funcional"</span>, <span class="at">y =</span> <span class="st">"Número de genes"</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>p_categorias</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Aquí <code>fill = "#367A90"</code> está <strong>fuera</strong> de <code>aes()</code> porque asignamos un color fijo. Si escribiéramos <code>aes(fill = functional_category)</code>, el color codificaría una variable y se generaría una leyenda.</p>
+</section>
+<section id="geom_bar-y-geom_col-no-hacen-lo-mismo" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="geom_bar-y-geom_col-no-hacen-lo-mismo"><span class="header-section-number">11.2.3</span> <code>geom_bar()</code> y <code>geom_col()</code>: no hacen lo mismo</h3>
+<ul>
+<li><code>geom_bar()</code> cuenta filas automáticamente.</li>
+<li><code>geom_col()</code> utiliza valores de <code>y</code> que <strong>ya calculaste</strong>.</li>
+</ul>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contar registros (un registro por gen en 'genes')</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(genes, <span class="fu">aes</span>(<span class="at">x =</span> functional_category)) <span class="sc">+</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#5C8798"</span>) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Categoría funcional"</span>, <span class="at">y =</span> <span class="st">"Número de genes"</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Detalle importante">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Detalle importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si aplicáramos <code>geom_bar()</code> directamente a <code>datos</code>, contaríamos combinaciones <strong>muestra–gen</strong>, no genes únicos. Esto produciría un gráfico técnicamente válido pero con una interpretación distinta.</p>
+</div>
+</div>
+<p>En ambos ejemplos obtenemos el número de genes por categoría funcional. La diferencia es que, con <code>geom_col()</code>, primero calculamos los conteos mediante <code>count()</code> y después los representamos. En cambio, <code>geom_bar()</code> realiza el conteo automáticamente a partir de las filas de la tabla original. Por tanto, si tenemos una fila por gen, ambos métodos producen las mismas frecuencias, aunque el orden de las categorías puede ser diferente.</p>
+</section>
+<section id="comparación-de-conteos-entre-muestras-mediante-facet_wrap" class="level3" data-number="11.2.4">
+<h3 data-number="11.2.4" class="anchored" data-anchor-id="comparación-de-conteos-entre-muestras-mediante-facet_wrap"><span class="header-section-number">11.2.4</span> Comparación de conteos entre muestras mediante <code>facet_wrap()</code></h3>
+<p>Supongamos que queremos comparar los conteos de distintos genes en las muestras de nuestro conjunto de datos.</p>
+<p>Primero construimos una gráfica de puntos que reúna todas las observaciones:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(conteos, <span class="fu">aes</span>(<span class="at">x =</span> gene_id, <span class="at">y =</span> conteo, <span class="at">color =</span> muestra)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#geom_point(color = "#367A90", size = 2.5) +</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Conteos de genes en todas las muestras"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Gen"</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Conteo"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Muestra"</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)<span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En esta figura, los conteos de todas las muestras aparecen juntos. Como un mismo gen puede tener distintos conteos según la muestra, podemos observar varios puntos para un mismo identificador, pero no distinguir fácilmente a qué muestra corresponde cada uno.</p>
+<p>Para comparar los resultados por separado, utilizamos <code>facet_wrap()</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(conteos, <span class="fu">aes</span>(<span class="at">x =</span> gene_id, <span class="at">y =</span> conteo)) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#367A90"</span>, <span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> muestra) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Conteos de genes por muestra"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Gen"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Conteo"</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>¿Qué hace <code>facet_wrap(~ muestra)</code>?</strong></p>
+<p>La función divide los datos según los valores de la columna <code>muestra</code> y construye un panel para cada una.</p>
+<p>En cada panel se representan únicamente los conteos correspondientes a esa muestra.</p>
+<p>Esto nos permite comparar visualmente:</p>
+<ul>
+<li>Qué genes presentan los conteos más altos en cada muestra.</li>
+<li>Si algunos genes tienen conteos similares entre muestras.</li>
+<li>Si los patrones generales de conteos cambian de una muestra a otra.</li>
+</ul>
+<p>Por defecto, todos los paneles utilizan las mismas escalas, lo que facilita la comparación de los valores.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Por qué utilizar <code>facet_wrap()</code>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las facetas permiten dividir un conjunto de datos en subconjuntos y construir la misma representación gráfica para cada uno.</p>
+<p>En este ejemplo, cada panel corresponde a una muestra distinta. Así podemos comparar los conteos sin mezclar visualmente las observaciones de todas las muestras.</p>
+<p>Es importante recordar que los valores representados son conteos sintéticos. No estamos realizando comparaciones de expresión diferencial ni pruebas estadísticas.</p>
+</div>
+</div>
+</section>
+<section id="capas-añadir-información-sin-modificar-los-datos" class="level3" data-number="11.2.5">
+<h3 data-number="11.2.5" class="anchored" data-anchor-id="capas-añadir-información-sin-modificar-los-datos"><span class="header-section-number">11.2.5</span> Capas: añadir información sin modificar los datos</h3>
+<p>Podemos construir un gráfico por etapas. En <code>ggplot2</code>, las capas se añaden con <code>+</code>; <strong>no</strong> se utiliza <code>%&gt;%</code> para agregar una geometría. El pipe <code>%&gt;%</code> sirve para preparar los datos que recibe <code>ggplot()</code>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>p_base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(genes, <span class="fu">aes</span>(<span class="at">x =</span> longitud))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>p_hist <span class="ot">&lt;-</span> p_base <span class="sc">+</span> <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>p_final <span class="ot">&lt;-</span> p_hist <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Longitud (nt)"</span>, <span class="at">y =</span> <span class="st">"Número de genes"</span>) <span class="sc">+</span> <span class="fu">theme_classic</span>()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>p_final</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Una distinción que conviene recordar
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>datos %&gt;% filter(...) %&gt;% ggplot(aes(...))</code> encadena <strong>transformaciones y funciones</strong>; <code>ggplot(...) + geom_point() + labs(...)</code> construye <strong>capas de una figura</strong>. No son operadores intercambiables.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="comparaciones-distribuciones-y-paneles" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="comparaciones-distribuciones-y-paneles"><span class="header-section-number">11.3</span> Comparaciones, distribuciones y paneles</h2>
+<section id="puntos-conteos-de-un-gen-por-muestra" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="puntos-conteos-de-un-gen-por-muestra"><span class="header-section-number">11.3.1</span> Puntos: conteos de un gen por muestra</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>gen_ejemplo <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gene_id <span class="sc">==</span> <span class="st">"gene_001"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>p_gen <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(gen_ejemplo, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo, <span class="at">color =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Conteos observados para gene_001"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Datos sintéticos sin normalizar"</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Conteo (unidades arbitrarias)"</span>, <span class="at">color =</span> <span class="st">"Grupo"</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>p_gen</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La codificación por color permite identificar el grupo de cada muestra. No implica que las diferencias sean significativas o atribuibles al grupo.</p>
+</section>
+<section id="facetas-varios-genes-sin-mezclar-escalas-conceptuales" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="facetas-varios-genes-sin-mezclar-escalas-conceptuales"><span class="header-section-number">11.3.2</span> Facetas: varios genes sin mezclar escalas conceptuales</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>seleccion <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gene_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"gene_001"</span>, <span class="st">"gene_002"</span>, <span class="st">"gene_003"</span>, <span class="st">"gene_004"</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>p_paneles <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(seleccion, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo, <span class="at">color =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> gene_id, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Conteos de cuatro genes en ocho muestras"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Datos sintéticos; comparación visual descriptiva"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>, <span class="at">color =</span> <span class="st">"Grupo"</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>p_paneles</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>facet_wrap()</code> divide el gráfico en paneles. Mantener una escala Y común facilita comparar magnitudes; usar <code>scales = "free_y"</code> puede facilitar ver patrones internos, pero dificulta comparar alturas entre paneles.</p>
+</section>
+<section id="barras-apiladas-qué-se-está-sumando" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="barras-apiladas-qué-se-está-sumando"><span class="header-section-number">11.3.3</span> Barras apiladas: ¿qué se está sumando?</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>por_muestra_categoria <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(muestra, grupo, functional_category) <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">conteo_total =</span> <span class="fu">sum</span>(conteo), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>p_apilado <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  por_muestra_categoria,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo_total, <span class="at">fill =</span> functional_category)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Suma de conteos por categoría y muestra"</span>,</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Datos sintéticos; conteos sin normalizar"</span>,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Suma de conteos"</span>, <span class="at">fill =</span> <span class="st">"Categoría"</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">11</span>) <span class="sc">+</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>p_apilado</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Las barras apiladas permiten ver composición <strong>en términos de conteos absolutos</strong>, pero los segmentos intermedios son difíciles de comparar. Además, no deben compararse como abundancias relativas entre muestras sin justificar la normalización y la comparabilidad de los conteos.</p>
+</section>
+<section id="distribuciones-entre-grupos-boxplots-y-observaciones-individuales" class="level3" data-number="11.3.4">
+<h3 data-number="11.3.4" class="anchored" data-anchor-id="distribuciones-entre-grupos-boxplots-y-observaciones-individuales"><span class="header-section-number">11.3.4</span> Distribuciones entre grupos: boxplots y observaciones individuales</h3>
+<p>Un diagrama de caja (<code>geom_boxplot()</code>) resume la distribución de una variable numérica por categoría. <strong>No representa todas las observaciones por sí mismo</strong>, por lo que puede ser útil superponer los puntos originales con <code>geom_jitter()</code>.</p>
+<p>Usaremos las longitudes anotadas por contig. Cada punto corresponde a un gen; no estamos comparando muestras biológicas ni realizando pruebas de significancia.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(genes, <span class="fu">aes</span>(<span class="at">x =</span> contig, <span class="at">y =</span> longitud)) <span class="sc">+</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.12</span>, <span class="at">height =</span> <span class="dv">0</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Longitudes de genes anotados por contig"</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Datos sintéticos: cada punto es un gen"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Contig"</span>, <span class="at">y =</span> <span class="st">"Longitud (nt)"</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La línea central de la caja corresponde a la mediana; los bordes suelen representar el primer y tercer cuartil. Los bigotes siguen una regla de representación y <strong>no</strong> son intervalos de confianza. Un boxplot puede resultar poco informativo cuando hay muy pocas observaciones por grupo.</p>
+</section>
+</section>
+<section id="calidad-de-figuras-y-exportación-material-de-consulta-durante-la-práctica" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="calidad-de-figuras-y-exportación-material-de-consulta-durante-la-práctica"><span class="header-section-number">11.4</span> Calidad de figuras y exportación (material de consulta durante la práctica)</h2>
+<section id="lista-de-verificación-para-una-figura-científica" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="lista-de-verificación-para-una-figura-científica"><span class="header-section-number">11.4.1</span> Lista de verificación para una figura científica</h3>
+<ul>
+<li>El título explica <strong>qué</strong> se representa.</li>
+<li>Los ejes tienen etiquetas, unidades cuando corresponden y escalas apropiadas.</li>
+<li>Los colores codifican información útil, no decoración.</li>
+<li>Las categorías y muestras se leen sin esfuerzo.</li>
+<li>El pie o subtítulo aclara si hay datos sintéticos, transformaciones o restricciones.</li>
+<li>No se ocultan valores o grupos mediante filtros injustificados.</li>
+<li>La figura puede reconstruirse ejecutando el código.</li>
+</ul>
+</section>
+<section id="tema-y-ajustes" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="tema-y-ajustes"><span class="header-section-number">11.4.2</span> Tema y ajustes</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p_publicacion <span class="ot">&lt;-</span> p_gen <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="st">"#267B91"</span>, <span class="at">B =</span> <span class="st">"#C17B40"</span>)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>p_publicacion</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En este ejemplo elegimos una paleta fija para grupos nominales. Evita usar únicamente rojo y verde para diferenciar categorías y comprueba que la información sea interpretable también en escala de grises.</p>
+</section>
+<section id="exportar-de-manera-reproducible" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="exportar-de-manera-reproducible"><span class="header-section-number">11.4.3</span> Exportar de manera reproducible</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dir.create</span>(<span class="st">"figures"</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"figures/05_conteos_gene_001.png"</span>,</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> p_publicacion,</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">"in"</span>, <span class="at">dpi =</span> <span class="dv">300</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">filename =</span> <span class="st">"figures/05_conteos_gene_001.pdf"</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">plot =</span> p_publicacion,</span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">width =</span> <span class="dv">7</span>, <span class="at">height =</span> <span class="dv">4</span>, <span class="at">units =</span> <span class="st">"in"</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>PNG es un formato de mapa de bits útil para presentaciones; PDF permite conservar gráficos vectoriales cuando sus elementos son compatibles. El tamaño físico y la resolución importan tanto como el código.</p>
+</section>
+<section id="escalas-y-leyendas-qué-significa-el-color" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="escalas-y-leyendas-qué-significa-el-color"><span class="header-section-number">11.4.4</span> Escalas y leyendas: ¿qué significa el color?</h3>
+<p>En <code>ggplot2</code>, una variable categórica se puede representar mediante <code>color</code> o <code>fill</code>. Si queremos que la leyenda aparezca automáticamente, mapeamos la variable <strong>dentro de <code>aes()</code></strong>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada punto representa un registro muestra–gen.</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_id <span class="sc">==</span> <span class="st">"gene_002"</span>),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo, <span class="at">color =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_brewer</span>(<span class="at">palette =</span> <span class="st">"Dark2"</span>) <span class="sc">+</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Conteos sintéticos de gene_002"</span>, <span class="at">x =</span> <span class="st">"Muestra"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Conteo sin normalizar"</span>, <span class="at">color =</span> <span class="st">"Grupo"</span>) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Escalas y límites:</strong> usar <code>coord_cartesian(ylim = c(0, 100))</code> cambia la ventana visible sin eliminar registros del cálculo de una geometría estadística. En cambio, <code>scale_y_continuous(limits = c(0, 100))</code> puede descartar valores fuera del intervalo. No recortes ejes para ocultar observaciones; explica siempre qué se muestra.</p>
+<p><strong>Para figuras con muchas categorías</strong>, considera <code>coord_flip()</code>, rotar etiquetas, usar paneles o seleccionar una pregunta más concreta antes de aumentar indiscriminadamente el tamaño de la figura.</p>
+</section>
+<section id="estéticas-globales-y-locales-a-qué-capa-afecta-el-color" class="level3" data-number="11.4.5">
+<h3 data-number="11.4.5" class="anchored" data-anchor-id="estéticas-globales-y-locales-a-qué-capa-afecta-el-color"><span class="header-section-number">11.4.5</span> Estéticas globales y locales: ¿a qué capa afecta el color?</h3>
+<p>En un gráfico con varias capas es importante decidir <strong>dónde</strong> se declara una estética. Si la escribimos dentro de <code>ggplot(aes(...))</code>, las capas siguientes la heredan, a menos que la reemplacemos. Si la escribimos dentro de una geometría, afecta solamente a esa capa.</p>
+<p>Consideremos los conteos de un mismo gen en distintas muestras. El primer gráfico asigna <code>color = grupo</code> de manera global:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>datos_gen <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_id <span class="sc">==</span> <span class="st">"gene_005"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>g_global <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(datos_gen, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo, <span class="at">color =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> grupo), <span class="at">linewidth =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Color definido globalmente"</span>, <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>) <span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>g_global</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Las líneas anteriores son <strong>solo un recurso visual para ilustrar la herencia de estéticas</strong>: conectar muestras distintas no representa una trayectoria temporal ni una relación biológica entre ellas. Por eso, para comparar muestras independientes suele ser preferible mostrar únicamente los puntos.</p>
+<p>Ahora indicamos que el color dependa del grupo <strong>solo en los puntos</strong>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>g_local <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(datos_gen, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> grupo), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Color definido localmente"</span>, <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>g_local</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>En ambos casos, <code>grupo</code> es una <strong>variable</strong> y debe escribirse dentro de <code>aes()</code>. En cambio, <code>color = "steelblue"</code> fuera de <code>aes()</code> indica un color <strong>fijo</strong>.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>g_fijo <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(datos_gen, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo)) <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"steelblue"</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>g_fijo</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Un error frecuente">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Un error frecuente
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>aes(color = "steelblue")</code> no significa lo mismo que <code>color = "steelblue"</code>. En el primer caso, <code>ggplot2</code> interpreta el texto como una categoría y construye una escala y, posiblemente, una leyenda. En el segundo caso, fija directamente el color de los puntos.</p>
+</div>
+</div>
+</section>
+<section id="escalas-transformar-la-representación-sin-cambiar-la-tabla" class="level3" data-number="11.4.6">
+<h3 data-number="11.4.6" class="anchored" data-anchor-id="escalas-transformar-la-representación-sin-cambiar-la-tabla"><span class="header-section-number">11.4.6</span> Escalas: transformar la representación sin cambiar la tabla</h3>
+<p>Las escalas controlan cómo se traducen los valores a posiciones, colores y tamaños. No son equivalentes a modificar los datos originales.</p>
+<section id="escalas-continuas" class="level4">
+<h4 class="anchored" data-anchor-id="escalas-continuas">Escalas continuas</h4>
+<p>En una figura de conteos, una transformación logarítmica puede ser útil cuando los valores varían mucho, pero <strong>el logaritmo de cero no está definido</strong>. Para visualizar datos con ceros, podemos crear una columna <code>log10(conteo + 1)</code> y <strong>etiquetar explícitamente la transformación</strong>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>datos_log <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">log_conteo =</span> <span class="fu">log10</span>(conteo <span class="sc">+</span> <span class="dv">1</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_log, <span class="fu">aes</span>(<span class="at">x =</span> log_conteo)) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="fl">0.2</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"log10(conteo + 1)"</span>, <span class="at">y =</span> <span class="st">"Número de registros"</span>,</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Distribución de conteos transformados"</span>) <span class="sc">+</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Este cambio es únicamente de <strong>representación</strong>. No convierte los conteos en mediciones normalizadas ni justifica comparaciones biológicas entre muestras.</p>
+</section>
+<section id="escalas-discretas-y-leyendas" class="level4">
+<h4 class="anchored" data-anchor-id="escalas-discretas-y-leyendas">Escalas discretas y leyendas</h4>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_gen, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo, <span class="at">fill =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">A =</span> <span class="st">"#0072B2"</span>, <span class="at">B =</span> <span class="st">"#D55E00"</span>)) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>, <span class="at">fill =</span> <span class="st">"Grupo"</span>,</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Conteos de un gen por muestra"</span>) <span class="sc">+</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>scale_fill_manual()</code> permite fijar los colores de cada categoría. Se recomienda conservar una correspondencia estable entre grupos y colores en todas las figuras del mismo proyecto. También podemos usar <code>scale_x_discrete()</code> para controlar el orden de categorías y <code>scale_y_continuous()</code> para modificar etiquetas o marcas.</p>
+</section>
+</section>
+<section id="zoom-frente-a-eliminación-de-observaciones" class="level3" data-number="11.4.7">
+<h3 data-number="11.4.7" class="anchored" data-anchor-id="zoom-frente-a-eliminación-de-observaciones"><span class="header-section-number">11.4.7</span> Zoom frente a eliminación de observaciones</h3>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>p_base <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> gene_id, <span class="at">y =</span> conteo)) <span class="sc">+</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.35</span>) <span class="sc">+</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>p_base <span class="sc">+</span> <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">15</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>coord_cartesian(ylim = ...)</code> acerca la vista <strong>sin eliminar los datos antes de calcular las estadísticas de las capas</strong>. En cambio, <code>scale_y_continuous(limits = ...)</code> convierte los valores fuera del rango en ausentes para las capas, lo que puede modificar los cálculos o provocar advertencias. Esta distinción importa especialmente en histogramas, cajas y líneas de ajuste.</p>
+</section>
+<section id="temas-personalizar-solo-lo-necesario" class="level3" data-number="11.4.8">
+<h3 data-number="11.4.8" class="anchored" data-anchor-id="temas-personalizar-solo-lo-necesario"><span class="header-section-number">11.4.8</span> Temas: personalizar solo lo necesario</h3>
+<p><code>theme_minimal()</code>, <code>theme_classic()</code> y <code>theme_bw()</code> ofrecen puntos de partida distintos. La función <code>theme()</code> permite modificar elementos específicos sin reconstruir el gráfico.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>p_tema <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(datos_gen, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo, <span class="at">fill =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Conteos por muestra"</span>, <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>p_tema <span class="sc">+</span> <span class="fu">theme_bw</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>),</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Conviene priorizar la legibilidad:</strong> títulos informativos, unidades correctas, contraste suficiente, tamaños adecuados y leyendas solo cuando aporten información.</p>
+</section>
+</section>
+<section id="exploración-visual-de-las-preguntas-a-las-figuras" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="exploración-visual-de-las-preguntas-a-las-figuras"><span class="header-section-number">11.5</span> Exploración visual: de las preguntas a las figuras</h2>
+<p>En esta parte ya no aprenderemos geometrías de forma aislada. Partiremos de una <strong>pregunta descriptiva</strong>, prepararemos los datos necesarios, elegiremos una representación y discutiremos qué permite concluir.</p>
+<section id="pregunta-qué-categorías-funcionales-tienen-más-genes-anotados" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="pregunta-qué-categorías-funcionales-tienen-más-genes-anotados"><span class="header-section-number">11.5.1</span> Pregunta: ¿qué categorías funcionales tienen más genes anotados?</h3>
+<p><strong>Unidad de observación:</strong> un gen anotado, no una fila de la tabla de conteos por muestra. Si contáramos directamente las filas de <code>datos</code>, repetiríamos cada gen tantas veces como muestras lo contengan.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>resumen_categorias <span class="ot">&lt;-</span> anotaciones <span class="sc">%&gt;%</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(functional_category, <span class="at">name =</span> <span class="st">"n_genes"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n_genes))</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>resumen_categorias</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 2
+  functional_category n_genes
+  &lt;chr&gt;                 &lt;int&gt;
+1 energy                    6
+2 replication               6
+3 defense                   3
+4 translation               3
+5 transport                 3
+6 unknown                   3</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(resumen_categorias,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(functional_category, n_genes), <span class="at">y =</span> n_genes)) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Genes anotados por categoría funcional"</span>,</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Categoría funcional"</span>, <span class="at">y =</span> <span class="st">"Número de genes"</span>) <span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Interpretación:</strong> las barras representan el número de genes en cada categoría del archivo sintético. No representan conteos de lecturas, abundancia de genes ni actividad biológica.</p>
+</section>
+<section id="pregunta-hay-relación-entre-la-longitud-anotada-y-los-conteos" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="pregunta-hay-relación-entre-la-longitud-anotada-y-los-conteos"><span class="header-section-number">11.5.2</span> Pregunta: ¿hay relación entre la longitud anotada y los conteos?</h3>
+<p>Para explorar una relación entre dos variables numéricas podemos utilizar un diagrama de dispersión. Aquí la longitud es una propiedad del gen y el conteo corresponde a una combinación muestra–gen; por ello, un mismo gen aparecerá varias veces con la misma longitud.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>datos_longitud <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">longitud =</span> end <span class="sc">-</span> start)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_longitud, <span class="fu">aes</span>(<span class="at">x =</span> longitud, <span class="at">y =</span> conteo, <span class="at">color =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.65</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Longitud anotada y conteos sintéticos"</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Longitud anotada (nt)"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>, <span class="at">color =</span> <span class="st">"Grupo"</span>) <span class="sc">+</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Preguntas para discutir:</strong> ¿hay una tendencia visual clara? ¿Qué cambia si coloreamos por grupo? ¿Por qué no sería correcto tratar los puntos correspondientes a un mismo gen como observaciones completamente independientes? Una asociación visual no demuestra causalidad.</p>
+</section>
+<section id="pregunta-qué-representación-permite-comparar-mejor-varios-genes-entre-muestras" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="pregunta-qué-representación-permite-comparar-mejor-varios-genes-entre-muestras"><span class="header-section-number">11.5.3</span> Pregunta: ¿qué representación permite comparar mejor varios genes entre muestras?</h3>
+<p>Una misma tabla puede representarse de formas distintas. Compare las barras agrupadas y una matriz de colores; ninguna es universalmente mejor.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>comparacion <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gene_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"gene_001"</span>, <span class="st">"gene_005"</span>, <span class="st">"gene_010"</span>))</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>fig_barras <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(comparacion,</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo, <span class="at">fill =</span> gene_id)) <span class="sc">+</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación con barras agrupadas"</span>,</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>, <span class="at">fill =</span> <span class="st">"Gen"</span>) <span class="sc">+</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>fig_matriz <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(comparacion,</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> gene_id, <span class="at">fill =</span> conteo)) <span class="sc">+</span></span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Comparación mediante matriz de colores"</span>,</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Gen"</span>, <span class="at">fill =</span> <span class="st">"Conteo"</span>) <span class="sc">+</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>fig_barras</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>fig_matriz</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-26-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Las barras facilitan comparar alturas cuando hay pocos genes. La matriz de colores puede ser más compacta al aumentar el número de genes, aunque resulta menos precisa para leer diferencias pequeñas. En ambos casos los valores son <strong>conteos sin normalizar</strong>; no se deben interpretar como evidencia de expresión diferencial.</p>
+</section>
+<section id="una-guía-para-interpretar-y-comunicar-resultados" class="level3" data-number="11.5.4">
+<h3 data-number="11.5.4" class="anchored" data-anchor-id="una-guía-para-interpretar-y-comunicar-resultados"><span class="header-section-number">11.5.4</span> Una guía para interpretar y comunicar resultados</h3>
+<p>Para cada figura, escribe cuatro elementos:</p>
+<ol type="1">
+<li><strong>Pregunta:</strong> ¿qué queríamos averiguar?</li>
+<li><strong>Preparación:</strong> ¿qué se filtró, agrupó o calculó antes de graficar?</li>
+<li><strong>Observación:</strong> ¿qué patrón descriptivo se ve realmente?</li>
+<li><strong>Limitación:</strong> ¿qué no puede concluirse con esos datos?</li>
+</ol>
+<p>Evita frases como «la figura demuestra que el grupo A tiene mayor expresión». Prefiere descripciones precisas, por ejemplo: «en estos datos sintéticos, algunos conteos son mayores en determinadas muestras; no se ha evaluado su comparabilidad biológica».</p>
+</section>
+</section>
+<section id="hábitos-para-comunicar-resultados" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="hábitos-para-comunicar-resultados"><span class="header-section-number">11.6</span> Hábitos para comunicar resultados</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Identifico la unidad de observación <strong>antes</strong> de graficar.</label></li>
+<li><label><input type="checkbox">Distingo conteos de filas, conteos de genes y sumas de mediciones.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué hace <code>aes()</code> y cuándo usar <code>geom_col()</code> o <code>geom_bar()</code>.</label></li>
+<li><label><input type="checkbox">Sé utilizar <code>facet_wrap()</code>, <code>labs()</code>, <code>theme_*()</code> y <code>ggsave()</code>.</label></li>
+<li><label><input type="checkbox">Reviso etiquetas, colores, legibilidad y límites de interpretación.</label></li>
+<li><label><input type="checkbox">Puedo generar mis figuras nuevamente desde código.</label></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled" title="Próxima sesión">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Próxima sesión
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En la <strong>sesión siguiente</strong> aprenderemos a documentar y comunicar análisis reproducibles mediante Quarto. La exploración visual y la interpretación de figuras ya forman parte de esta sesión conjunta.</p>
+</div>
+</div>
+</section>
+<section id="material-de-ampliación-más-geometrías-y-facetas" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="material-de-ampliación-más-geometrías-y-facetas"><span class="header-section-number">11.7</span> Material de ampliación: más geometrías y facetas</h2>
+<blockquote class="blockquote">
+<p><strong>Para practicar después de clase.</strong> Las siguientes herramientas complementan los contenidos esenciales. No es necesario desarrollarlas todas en los 150 minutos presenciales.</p>
+</blockquote>
+<section id="puntos-superpuestos-geom_jitter" class="level3" data-number="11.7.1">
+<h3 data-number="11.7.1" class="anchored" data-anchor-id="puntos-superpuestos-geom_jitter"><span class="header-section-number">11.7.1</span> Puntos superpuestos: <code>geom_jitter()</code></h3>
+<p>Cuando muchos registros comparten coordenadas, los puntos pueden ocultarse unos detrás de otros. <code>geom_jitter()</code> añade una pequeña separación visual; no modifica la tabla original.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> grupo, <span class="at">y =</span> conteo, <span class="at">color =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.15</span>, <span class="at">height =</span> <span class="dv">0</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Grupo"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>, <span class="at">title =</span> <span class="st">"Observaciones individuales"</span>) <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="diagramas-de-violín-geom_violin" class="level3" data-number="11.7.2">
+<h3 data-number="11.7.2" class="anchored" data-anchor-id="diagramas-de-violín-geom_violin"><span class="header-section-number">11.7.2</span> Diagramas de violín: <code>geom_violin()</code></h3>
+<p>Un diagrama de violín representa una <strong>estimación suavizada de la distribución</strong>. No equivale a mostrar los valores exactos; con muestras pequeñas puede resultar engañoso. Aquí se usa para comparar visualmente con el diagrama de caja.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> grupo, <span class="at">y =</span> conteo, <span class="at">fill =</span> grupo)) <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_violin</span>(<span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">trim =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> <span class="fl">0.12</span>, <span class="at">alpha =</span> <span class="fl">0.35</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Grupo"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>, <span class="at">title =</span> <span class="st">"Distribución y registros"</span>) <span class="sc">+</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como cada muestra aporta múltiples genes, los puntos <strong>no son réplicas independientes</strong>. Esta figura es descriptiva y no debe utilizarse para inferir diferencias entre grupos.</p>
+</section>
+<section id="facetas-con-dos-variables-facet_grid" class="level3" data-number="11.7.3">
+<h3 data-number="11.7.3" class="anchored" data-anchor-id="facetas-con-dos-variables-facet_grid"><span class="header-section-number">11.7.3</span> Facetas con dos variables: <code>facet_grid()</code></h3>
+<p><code>facet_wrap()</code> crea paneles para una variable categórica; <code>facet_grid()</code> permite organizar los paneles en filas y columnas mediante dos variables.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>datos_panel <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(gene_id <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"gene_001"</span>, <span class="st">"gene_005"</span>, <span class="st">"gene_010"</span>))</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_panel, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> conteo)) <span class="sc">+</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(grupo <span class="sc">~</span> gene_id) <span class="sc">+</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Conteo"</span>) <span class="sc">+</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gráficos-de-líneas-cuándo-tienen-sentido" class="level3" data-number="11.7.4">
+<h3 data-number="11.7.4" class="anchored" data-anchor-id="gráficos-de-líneas-cuándo-tienen-sentido"><span class="header-section-number">11.7.4</span> Gráficos de líneas: cuándo tienen sentido</h3>
+<p><code>geom_line()</code> conecta valores en orden creciente de la variable horizontal. Solo debe utilizarse cuando <strong>el orden tiene significado</strong>, por ejemplo, mediciones tomadas en diferentes tiempos o posiciones de una secuencia. No es apropiado conectar muestras independientes únicamente porque sus nombres tengan un orden alfabético.</p>
+<p>Construiremos un ejemplo de posiciones y cobertura artificiales:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>cobertura <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">posicion =</span> <span class="fu">seq</span>(<span class="dv">100</span>, <span class="dv">1000</span>, <span class="at">by =</span> <span class="dv">100</span>),</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">cobertura =</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">18</span>, <span class="dv">15</span>, <span class="dv">22</span>, <span class="dv">27</span>, <span class="dv">25</span>, <span class="dv">19</span>, <span class="dv">17</span>, <span class="dv">14</span>, <span class="dv">10</span>)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cobertura, <span class="fu">aes</span>(<span class="at">x =</span> posicion, <span class="at">y =</span> cobertura)) <span class="sc">+</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">color =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Posición (nt)"</span>, <span class="at">y =</span> <span class="st">"Cobertura artificial"</span>,</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Ejemplo ilustrativo de valores a lo largo de una secuencia"</span>) <span class="sc">+</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gráficos-de-mosaico-de-colores-con-geom_tile" class="level3" data-number="11.7.5">
+<h3 data-number="11.7.5" class="anchored" data-anchor-id="gráficos-de-mosaico-de-colores-con-geom_tile"><span class="header-section-number">11.7.5</span> Gráficos de mosaico de colores con <code>geom_tile()</code></h3>
+<p>Cuando queremos comparar muchos genes y muestras, una matriz de colores puede ser más compacta que numerosos gráficos de barras.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>datos_tile <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span> <span class="fu">filter</span>(gene_id <span class="sc">%in%</span> <span class="fu">paste0</span>(<span class="st">"gene_"</span>, <span class="fu">sprintf</span>(<span class="st">"%03d"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)))</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos_tile, <span class="fu">aes</span>(<span class="at">x =</span> muestra, <span class="at">y =</span> gene_id, <span class="at">fill =</span> conteo)) <span class="sc">+</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_tile</span>(<span class="at">color =</span> <span class="st">"white"</span>, <span class="at">linewidth =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">"white"</span>, <span class="at">high =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Gen"</span>, <span class="at">fill =</span> <span class="st">"Conteo"</span>,</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Matriz de conteos sintéticos"</span>) <span class="sc">+</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="parte10_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La escala de colores representa conteos sin normalizar. No es un mapa de calor de expresión diferencial.</p>
+</section>
+</section>
+<section id="ejercicios" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">11.8</span> Ejercicios</h2>
+<section id="ejercicio-1-personalizar-un-gráfico" class="level3" data-number="11.8.1">
+<h3 data-number="11.8.1" class="anchored" data-anchor-id="ejercicio-1-personalizar-un-gráfico"><span class="header-section-number">11.8.1</span> Ejercicio 1: Personalizar un gráfico</h3>
+<p>Usando <code>genes</code>, construye un gráfico de barras horizontales con el número de genes por contig. Debe tener título, ejes en español y barras ordenadas de menor a mayor número.</p>
+</section>
+<section id="ejercicio-2-elegir-la-figura-apropiada" class="level3" data-number="11.8.2">
+<h3 data-number="11.8.2" class="anchored" data-anchor-id="ejercicio-2-elegir-la-figura-apropiada"><span class="header-section-number">11.8.2</span> Ejercicio 2: Elegir la figura apropiada</h3>
+<ol type="1">
+<li>Representa los conteos de <code>gene_005</code> en las ocho muestras mediante puntos.</li>
+<li>Colorea los puntos por grupo y agrega etiquetas.</li>
+<li>Crea un segundo gráfico con <code>gene_005</code> y <code>gene_006</code> utilizando facetas.</li>
+<li>Explica qué conclusión <strong>no</strong> podrías extraer de estos gráficos.</li>
+</ol>
+</section>
+<section id="ejercicio-3-histogramas-y-diagramas-de-caja" class="level3" data-number="11.8.3">
+<h3 data-number="11.8.3" class="anchored" data-anchor-id="ejercicio-3-histogramas-y-diagramas-de-caja"><span class="header-section-number">11.8.3</span> Ejercicio 3: Histogramas y diagramas de caja</h3>
+<ol type="1">
+<li>Construye un histograma de longitudes de genes con <code>binwidth = 100</code>.</li>
+<li>Compáralo con el histograma de <code>binwidth = 50</code>. ¿Qué cambia visualmente? ¿Cambian los datos?</li>
+<li>Construye un diagrama de caja de longitudes por categoría funcional. Superpone los puntos originales.</li>
+<li>Escribe una oración que describa qué representa cada punto y qué <strong>no</strong> permite concluir la figura.</li>
+</ol>
+</section>
+<section id="ejercicio-4-detectar-problemas-de-comunicación" class="level3" data-number="11.8.4">
+<h3 data-number="11.8.4" class="anchored" data-anchor-id="ejercicio-4-detectar-problemas-de-comunicación"><span class="header-section-number">11.8.4</span> Ejercicio 4: Detectar problemas de comunicación</h3>
+<p>El siguiente gráfico se ejecuta, pero tiene varios problemas:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(datos, <span class="fu">aes</span>(<span class="at">x =</span> functional_category, <span class="at">y =</span> conteo)) <span class="sc">+</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Resultados"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<p>Identifica <strong>al menos cuatro problemas</strong>. Después escribe una versión que represente claramente una pregunta concreta.</p>
+</section>
+<section id="ejercicio-5-qué-cambia-si-movemos-una-estética" class="level3" data-number="11.8.5">
+<h3 data-number="11.8.5" class="anchored" data-anchor-id="ejercicio-5-qué-cambia-si-movemos-una-estética"><span class="header-section-number">11.8.5</span> Ejercicio 5: ¿Qué cambia si movemos una estética?</h3>
+<p>Construye dos gráficos de dispersión de <code>longitud</code> frente a <code>conteo</code> usando <code>datos</code> después de crear <code>longitud = end - start</code> con <code>mutate()</code>.</p>
+<ol type="1">
+<li>En el primero, asigna <code>color = grupo</code> dentro de <code>ggplot(aes(...))</code>.</li>
+<li>En el segundo, asigna <code>color = grupo</code> dentro de <code>geom_point(aes(...))</code>.</li>
+<li>Agrega una línea de referencia horizontal fija con <code>geom_hline(yintercept = 10)</code> y explica por qué no cambia de color en ninguno de los casos.</li>
+</ol>
+</section>
+<section id="ejercicio-6-ajustar-una-figura-sin-ocultar-información" class="level3" data-number="11.8.6">
+<h3 data-number="11.8.6" class="anchored" data-anchor-id="ejercicio-6-ajustar-una-figura-sin-ocultar-información"><span class="header-section-number">11.8.6</span> Ejercicio 6: Ajustar una figura sin ocultar información</h3>
+<p>Construye un diagrama de dispersión con <code>conteo</code> en el eje vertical y <code>gene_id</code> en el horizontal. Utiliza <code>coord_cartesian()</code> para observar solamente el intervalo de 0 a 12 en el eje vertical, gira las etiquetas del eje horizontal y agrega un título que indique que se trata de datos sintéticos. ¿Se han borrado las observaciones fuera del intervalo?</p>
+</section>
+<section id="ejercicio-7-dos-figuras-una-misma-pregunta" class="level3" data-number="11.8.7">
+<h3 data-number="11.8.7" class="anchored" data-anchor-id="ejercicio-7-dos-figuras-una-misma-pregunta"><span class="header-section-number">11.8.7</span> Ejercicio 7: Dos figuras, una misma pregunta</h3>
+<p>A partir de <code>comparacion</code>:</p>
+<ol type="1">
+<li>Identifica qué representa una fila y cuáles son las variables categóricas y numéricas.</li>
+<li>Decide cuál de las dos figuras utilizarías para comparar los valores exactos de <code>gene_001</code> entre muestras.</li>
+<li>Decide cuál sería más legible si hubiera 100 genes y 20 muestras.</li>
+<li>Explica por qué el color de la matriz no indica, por sí mismo, una diferencia biológica significativa.</li>
+</ol>
+</section>
+<section id="ejercicio-8-elegir-una-figura-a-partir-de-la-pregunta" class="level3" data-number="11.8.8">
+<h3 data-number="11.8.8" class="anchored" data-anchor-id="ejercicio-8-elegir-una-figura-a-partir-de-la-pregunta"><span class="header-section-number">11.8.8</span> Ejercicio 8: Elegir una figura a partir de la pregunta</h3>
+<p>Para cada pregunta, propone una geometría y explica qué preparación de datos necesitas:</p>
+<ol type="1">
+<li>¿Cómo se distribuyen las longitudes anotadas de los genes?</li>
+<li>¿Cuántos genes diferentes hay en cada categoría funcional?</li>
+<li>¿Cómo varían los conteos de un gen seleccionado entre muestras?</li>
+<li>¿Qué patrones generales aparecen al comparar muchos genes y muestras?</li>
+</ol>
+<p>Después, elige <strong>una</strong> de las preguntas, construye su figura y escribe una interpretación de dos oraciones y una limitación.</p>
+</section>
+<section id="ejercicio-9-mini-galería-de-figuras-reproducibles" class="level3" data-number="11.8.9">
+<h3 data-number="11.8.9" class="anchored" data-anchor-id="ejercicio-9-mini-galería-de-figuras-reproducibles"><span class="header-section-number">11.8.9</span> Ejercicio 9: Mini-galería de figuras reproducibles</h3>
+<p>Elabora un script <code>scripts/05_figuras.R</code> o un archivo <code>.qmd</code> que genere <strong>tres figuras</strong> a partir de los datos de la sesión:</p>
+<ol type="1">
+<li><strong>Una figura categórica:</strong> número de genes por categoría funcional o por contig.</li>
+<li><strong>Una figura de distribución:</strong> longitudes de genes anotados, con unidades y descripción de la convención de coordenadas.</li>
+<li><strong>Una figura de muestras:</strong> conteos de uno o varios genes por muestra, con identificación de grupo.</li>
+</ol>
+<p>Para cada figura, escribe <strong>dos o tres oraciones</strong>: qué muestra, qué pregunta responde y qué no puede concluirse. Guarda al menos una figura en PNG y otra en PDF, con nombres descriptivos. Evita pruebas estadísticas.</p>
+</section>
+</section>
+<section id="créditos-y-lecturas-complementarias" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="créditos-y-lecturas-complementarias"><span class="header-section-number">11.9</span> Créditos y lecturas complementarias</h2>
+<p>Este material fue modificado del material impartido en el curso intersemestral <em>Code &amp; Data Bootcamp: Git, Bash y R</em>, secciones de visualización con <code>ggplot2</code>:</p>
+<ul>
+<li><a href="https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte30.html">¿Por qué visualizar datos?</a></li>
+<li><a href="https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte31.html">La gramática de los gráficos</a></li>
+<li><a href="https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte33.html">Construyendo gráficas capa por capa</a></li>
+<li><a href="https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte35.html">Estéticas globales y locales</a></li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/github\.com\/CursosENESJuriquilla\/Intro_to_R_Bioinfo_2027-1");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./parte9.html" class="pagination-link" aria-label="Integración de datos y automatización de análisis en R">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Integración de datos y automatización de análisis en R</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Introducción a R para Bioinformática I, 3er semestre: Haydeé Peruyero</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

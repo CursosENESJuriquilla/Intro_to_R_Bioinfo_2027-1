@@ -1,0 +1,826 @@
+# Construcción y exploración visual de datos bioinformáticos con ggplot2
+
+Nos enfocaremos en lo siguiente:
+
+1. Elegir una representación gráfica según **la pregunta** y la **estructura de los datos**.
+2. Construir y modificar gráficos mediante la gramática de `ggplot2`.
+3. Diferenciar mapeos estéticos (`aes()`) de propiedades fijas.
+4. Crear gráficos de barras, puntos, distribuciones y paneles con etiquetas comprensibles.
+5. Exportar figuras reproducibles, legibles y adecuadas para un reporte científico.
+6. Identificar errores frecuentes de comunicación visual sin recurrir a pruebas estadísticas.
+7. Formular preguntas descriptivas, comparar gráficos alternativos e interpretar sus limitaciones.
+
+# Antes de comenzar: datos y paquetes
+
+Descarga y descomprime el material de la sesión [`datos_sesion_05_ggplot2.zip`](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_sesion_05_ggplot2.zip) dentro de la carpeta `data_raw/` de tu proyecto de RStudio. La estructura esperada es: 
+
+```text
+mi_proyecto/
+├── mi_proyecto.Rproj
+├── data_raw/
+│   └── datos_sesion_05_ggplot2/
+│       ├── anotaciones_figuras.tsv
+│       ├── conteos_muestras.tsv
+│       └── README.md
+├── figures/
+└── results/
+```
+
+```{r}
+#| eval: false
+install.packages(c("readr", "dplyr", "tidyr", "ggplot2"))
+```
+
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+carpeta <- "data_raw/datos_sesion_05_ggplot2"
+stopifnot(dir.exists(carpeta))
+
+conteos <- read_tsv(
+  file.path(carpeta, "conteos_muestras.tsv"),
+  col_types = cols(
+    muestra = col_character(), grupo = col_character(),
+    gene_id = col_character(), conteo = col_double()
+  )
+)
+anotaciones <- read_tsv(
+  file.path(carpeta, "anotaciones_figuras.tsv"),
+  col_types = cols(
+    gene_id = col_character(), contig = col_character(),
+    start = col_double(), end = col_double(),
+    functional_category = col_character()
+  )
+)
+
+stopifnot(
+  !anyDuplicated(conteos[c("muestra", "gene_id")]),
+  !anyDuplicated(anotaciones$gene_id),
+  all(!is.na(conteos$conteo) & conteos$conteo >= 0)
+)
+
+datos <- conteos %>%
+  left_join(anotaciones, by = join_by(gene_id), relationship = "many-to-one")
+stopifnot(nrow(datos) == nrow(conteos), !anyNA(datos$functional_category))
+
+glimpse(datos)
+```
+
+::: {.callout-important title="Antes de graficar"}
+Comprueba qué representa **una fila**: aquí es una combinación de muestra y gen. Una misma categoría funcional aparece en varios genes y muestras. Si deseas contar **genes distintos** por categoría, primero debes eliminar las repeticiones por muestra. Si deseas mostrar **conteos**, debes agregarlos de manera explícita. La función de visualización no decide qué pregunta biológica quieres responder.
+:::
+
+
+## De la pregunta a la figura
+
+Un gráfico es una respuesta visual a una pregunta. Antes de escribir `ggplot()`, identifica:
+
+- **Unidad de observación:** ¿gen, muestra, contig o par muestra–gen?
+- **Variable representada:** ¿categoría, longitud, conteo o identificador?
+- **Comparación:** ¿entre genes, entre muestras o entre grupos?
+- **Limitaciones:** ¿los valores son comparables?, ¿hay datos faltantes?, ¿qué no podemos concluir?
+
+| Pregunta descriptiva | Preparación necesaria | Figura posible |
+|---|---|---|
+| ¿Cuántos genes hay en cada categoría funcional? | Un registro por gen | Barras |
+| ¿Cómo se distribuyen las longitudes anotadas? | Calcular `end - start` | Histograma |
+| ¿Qué conteos aparecen por muestra? | Datos muestra–gen | Puntos o paneles |
+| ¿Cómo varían los conteos de genes seleccionados? | Filtrar genes | Puntos y facetas |
+
+::: {.callout-warning title="No confundir"}
+Un gráfico de barras de **número de genes anotados** no representa abundancia biológica. Una barra de **suma de conteos** no equivale a expresión diferencial. La interpretación depende de la procedencia y preparación de los datos.
+:::
+
+:::: {.callout-warning icon="false"}
+## 🧠 Preguntas 
+
+Sin programar todavía, decide qué tabla y gráfico utilizarías para:
+
+1. Contar genes únicos por categoría funcional.
+2. Comparar la longitud de las anotaciones entre contigs.
+3. Mostrar el conteo de `gene_001` en cada muestra.
+
+Indica qué representaría una fila de la tabla que usarías para cada gráfico.
+
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+1. Tabla de anotaciones: una fila por `gene_id`; conteo por `functional_category`; gráfico de barras.
+2. Tabla de anotaciones: una fila por gen con longitud calculada; puntos por contig o histogramas por panel.
+3. Tabla de conteos filtrada por `gene_001`: una fila por muestra; gráfico de puntos con muestra en X y conteo en Y.
+
+No existe un único gráfico correcto: se debe justificar qué representa cada marca visual.
+:::
+::::
+
+## Gramática de gráficos con ggplot2
+
+La estructura general es:
+
+```{r}
+#| eval: false
+ggplot(data = tabla, mapping = aes(x = variable_x, y = variable_y)) +
+  geom_xxx() +
+  labs(title = "Título informativo", x = "Eje X", y = "Eje Y")
+```
+
+`ggplot()` declara datos y mapeos; `geom_*()` indica cómo representarlos; `labs()`, `scale_*()`, `facet_*()` y `theme_*()` ajustan el significado y la presentación.
+
+### Primer gráfico: longitudes de anotaciones
+
+Las coordenadas de este conjunto sintético usan la convención **inicio cero, fin exclusivo**. Por tanto, la longitud es `end - start`.
+
+```{r}
+genes <- anotaciones %>%
+  mutate(longitud = end - start)
+
+stopifnot(all(genes$longitud > 0))
+
+p_longitudes <- ggplot(genes, aes(x = longitud)) +
+  geom_histogram(binwidth = 50, boundary = 0,
+                 fill = "#367A90", color = "white") +
+  labs(
+    title = "Distribución de longitudes anotadas",
+    subtitle = "Datos sintéticos; cada registro representa un gen",
+    x = "Longitud", y = "Número de genes"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_longitudes
+```
+
+En este histograma, `binwidth` controla la anchura de los intervalos; cambiarlo modifica la representación visual. 
+
+### Mapeos dentro y fuera de `aes()`
+
+```{r}
+p_categorias <- genes %>%
+  count(functional_category, name = "n_genes") %>%
+  ggplot(aes(x = reorder(functional_category, n_genes), y = n_genes)) +
+  geom_col(fill = "#367A90") +
+  coord_flip() +
+  labs(
+    title = "Genes anotados por categoría funcional",
+    x = "Categoría funcional", y = "Número de genes"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_categorias
+```
+
+Aquí `fill = "#367A90"` está **fuera** de `aes()` porque asignamos un color fijo. Si escribiéramos `aes(fill = functional_category)`, el color codificaría una variable y se generaría una leyenda.
+
+### `geom_bar()` y `geom_col()`: no hacen lo mismo
+
+- `geom_bar()` cuenta filas automáticamente.
+- `geom_col()` utiliza valores de `y` que **ya calculaste**.
+
+```{r}
+# Contar registros (un registro por gen en 'genes')
+ggplot(genes, aes(x = functional_category)) +
+  geom_bar(fill = "#5C8798") +
+  coord_flip() +
+  labs(x = "Categoría funcional", y = "Número de genes") +
+  theme_minimal(base_size = 12)
+```
+
+::: {.callout-note title="Detalle importante"}
+Si aplicáramos `geom_bar()` directamente a `datos`, contaríamos combinaciones **muestra–gen**, no genes únicos. Esto produciría un gráfico técnicamente válido pero con una interpretación distinta.
+:::
+
+
+En ambos ejemplos obtenemos el número de genes por categoría funcional. La diferencia es que, con `geom_col()`, primero calculamos los conteos mediante `count()` y después los representamos. En cambio, `geom_bar()` realiza el conteo automáticamente a partir de las filas de la tabla original. Por tanto, si tenemos una fila por gen, ambos métodos producen las mismas frecuencias, aunque el orden de las categorías puede ser diferente.
+
+
+
+### Comparación de conteos entre muestras mediante `facet_wrap()`
+
+Supongamos que queremos comparar los conteos de distintos genes en las muestras de nuestro conjunto de datos.
+
+Primero construimos una gráfica de puntos que reúna todas las observaciones:
+
+```{r}
+ggplot(conteos, aes(x = gene_id, y = conteo, color = muestra)) +
+  #geom_point(color = "#367A90", size = 2.5) +
+  geom_point(size=2.5) +
+  labs(
+    title = "Conteos de genes en todas las muestras",
+    x = "Gen",
+    y = "Conteo",
+    color = "Muestra"
+  ) +
+  theme_minimal(base_size = 12)+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+En esta figura, los conteos de todas las muestras aparecen juntos. Como un mismo gen puede tener distintos conteos según la muestra, podemos observar varios puntos para un mismo identificador, pero no distinguir fácilmente a qué muestra corresponde cada uno.
+
+Para comparar los resultados por separado, utilizamos `facet_wrap()`:
+
+```{r}
+ggplot(conteos, aes(x = gene_id, y = conteo)) +
+  geom_point(color = "#367A90", size = 2.5) +
+  facet_wrap(~ muestra) +
+  labs(
+    title = "Conteos de genes por muestra",
+    x = "Gen",
+    y = "Conteo"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+**¿Qué hace `facet_wrap(~ muestra)`?**
+
+La función divide los datos según los valores de la columna `muestra` y construye un panel para cada una.
+
+En cada panel se representan únicamente los conteos correspondientes a esa muestra.
+
+Esto nos permite comparar visualmente:
+
+- Qué genes presentan los conteos más altos en cada muestra.
+- Si algunos genes tienen conteos similares entre muestras.
+- Si los patrones generales de conteos cambian de una muestra a otra.
+
+Por defecto, todos los paneles utilizan las mismas escalas, lo que facilita la comparación de los valores.
+
+::: {.callout-note icon="false"}
+## ¿Por qué utilizar `facet_wrap()`?
+
+Las facetas permiten dividir un conjunto de datos en subconjuntos y construir la misma representación gráfica para cada uno.
+
+En este ejemplo, cada panel corresponde a una muestra distinta. Así podemos comparar los conteos sin mezclar visualmente las observaciones de todas las muestras.
+
+Es importante recordar que los valores representados son conteos sintéticos. No estamos realizando comparaciones de expresión diferencial ni pruebas estadísticas.
+:::
+
+
+
+### Capas: añadir información sin modificar los datos
+
+Podemos construir un gráfico por etapas. En `ggplot2`, las capas se añaden con `+`; **no** se utiliza `%>%` para agregar una geometría. El pipe `%>%` sirve para preparar los datos que recibe `ggplot()`.
+
+```{r}
+p_base <- ggplot(genes, aes(x = longitud))
+p_hist <- p_base + geom_histogram(binwidth = 50, fill = "steelblue", color = "white")
+p_final <- p_hist + labs(x = "Longitud (nt)", y = "Número de genes") + theme_classic()
+p_final
+```
+
+::: {.callout-note}
+## Una distinción que conviene recordar
+
+`datos %>% filter(...) %>% ggplot(aes(...))` encadena **transformaciones y funciones**; `ggplot(...) + geom_point() + labs(...)` construye **capas de una figura**. No son operadores intercambiables.
+:::
+
+
+
+## Comparaciones, distribuciones y paneles
+
+### Puntos: conteos de un gen por muestra
+
+```{r}
+gen_ejemplo <- datos %>%
+  filter(gene_id == "gene_001")
+
+p_gen <- ggplot(gen_ejemplo, aes(x = muestra, y = conteo, color = grupo)) +
+  geom_point(size = 3) +
+  labs(
+    title = "Conteos observados para gene_001",
+    subtitle = "Datos sintéticos sin normalizar",
+    x = "Muestra", y = "Conteo (unidades arbitrarias)", color = "Grupo"
+  ) +
+  theme_minimal(base_size = 12)
+
+p_gen
+```
+
+La codificación por color permite identificar el grupo de cada muestra. No implica que las diferencias sean significativas o atribuibles al grupo.
+
+### Facetas: varios genes sin mezclar escalas conceptuales
+
+```{r}
+seleccion <- datos %>%
+  filter(gene_id %in% c("gene_001", "gene_002", "gene_003", "gene_004"))
+
+p_paneles <- ggplot(seleccion, aes(x = muestra, y = conteo, color = grupo)) +
+  geom_point(size = 2.5) +
+  facet_wrap(~ gene_id, ncol = 2) +
+  labs(
+    title = "Conteos de cuatro genes en ocho muestras",
+    subtitle = "Datos sintéticos; comparación visual descriptiva",
+    x = "Muestra", y = "Conteo", color = "Grupo"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+p_paneles
+```
+
+`facet_wrap()` divide el gráfico en paneles. Mantener una escala Y común facilita comparar magnitudes; usar `scales = "free_y"` puede facilitar ver patrones internos, pero dificulta comparar alturas entre paneles.
+
+### Barras apiladas: ¿qué se está sumando?
+
+```{r}
+por_muestra_categoria <- datos %>%
+  group_by(muestra, grupo, functional_category) %>%
+  summarise(conteo_total = sum(conteo), .groups = "drop")
+
+p_apilado <- ggplot(
+  por_muestra_categoria,
+  aes(x = muestra, y = conteo_total, fill = functional_category)
+) +
+  geom_col() +
+  labs(
+    title = "Suma de conteos por categoría y muestra",
+    subtitle = "Datos sintéticos; conteos sin normalizar",
+    x = "Muestra", y = "Suma de conteos", fill = "Categoría"
+  ) +
+  theme_minimal(base_size = 11) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+p_apilado
+```
+
+Las barras apiladas permiten ver composición **en términos de conteos absolutos**, pero los segmentos intermedios son difíciles de comparar. Además, no deben compararse como abundancias relativas entre muestras sin justificar la normalización y la comparabilidad de los conteos.
+
+
+
+
+### Distribuciones entre grupos: boxplots y observaciones individuales
+
+Un diagrama de caja (`geom_boxplot()`) resume la distribución de una variable numérica por categoría. **No representa todas las observaciones por sí mismo**, por lo que puede ser útil superponer los puntos originales con `geom_jitter()`.
+
+Usaremos las longitudes anotadas por contig. Cada punto corresponde a un gen; no estamos comparando muestras biológicas ni realizando pruebas de significancia.
+
+```{r}
+ggplot(genes, aes(x = contig, y = longitud)) +
+  geom_boxplot(fill = "lightblue", outlier.shape = NA) +
+  geom_jitter(width = 0.12, height = 0, alpha = 0.7, size = 2) +
+  labs(
+    title = "Longitudes de genes anotados por contig",
+    subtitle = "Datos sintéticos: cada punto es un gen",
+    x = "Contig", y = "Longitud (nt)"
+  ) +
+  theme_minimal()
+```
+
+La línea central de la caja corresponde a la mediana; los bordes suelen representar el primer y tercer cuartil. Los bigotes siguen una regla de representación y **no** son intervalos de confianza. Un boxplot puede resultar poco informativo cuando hay muy pocas observaciones por grupo.
+
+
+
+## Calidad de figuras y exportación (material de consulta durante la práctica)
+
+### Lista de verificación para una figura científica
+
+- El título explica **qué** se representa.
+- Los ejes tienen etiquetas, unidades cuando corresponden y escalas apropiadas.
+- Los colores codifican información útil, no decoración.
+- Las categorías y muestras se leen sin esfuerzo.
+- El pie o subtítulo aclara si hay datos sintéticos, transformaciones o restricciones.
+- No se ocultan valores o grupos mediante filtros injustificados.
+- La figura puede reconstruirse ejecutando el código.
+
+### Tema y ajustes
+
+```{r}
+p_publicacion <- p_gen +
+  scale_color_manual(values = c(A = "#267B91", B = "#C17B40")) +
+  theme_classic(base_size = 13) +
+  theme(legend.position = "top")
+
+p_publicacion
+```
+
+En este ejemplo elegimos una paleta fija para grupos nominales. Evita usar únicamente rojo y verde para diferenciar categorías y comprueba que la información sea interpretable también en escala de grises.
+
+### Exportar de manera reproducible
+
+```{r}
+dir.create("figures", showWarnings = FALSE, recursive = TRUE)
+
+ggsave(
+  filename = "figures/05_conteos_gene_001.png",
+  plot = p_publicacion,
+  width = 7, height = 4, units = "in", dpi = 300
+)
+
+ggsave(
+  filename = "figures/05_conteos_gene_001.pdf",
+  plot = p_publicacion,
+  width = 7, height = 4, units = "in"
+)
+```
+
+PNG es un formato de mapa de bits útil para presentaciones; PDF permite conservar gráficos vectoriales cuando sus elementos son compatibles. El tamaño físico y la resolución importan tanto como el código.
+
+
+### Escalas y leyendas: ¿qué significa el color?
+
+En `ggplot2`, una variable categórica se puede representar mediante `color` o `fill`. Si queremos que la leyenda aparezca automáticamente, mapeamos la variable **dentro de `aes()`**.
+
+```{r}
+# Cada punto representa un registro muestra–gen.
+ggplot(datos %>% filter(gene_id == "gene_002"),
+       aes(x = muestra, y = conteo, color = grupo)) +
+  geom_point(size = 3) +
+  scale_color_brewer(palette = "Dark2") +
+  labs(title = "Conteos sintéticos de gene_002", x = "Muestra",
+       y = "Conteo sin normalizar", color = "Grupo") +
+  theme_minimal()
+```
+
+**Escalas y límites:** usar `coord_cartesian(ylim = c(0, 100))` cambia la ventana visible sin eliminar registros del cálculo de una geometría estadística. En cambio, `scale_y_continuous(limits = c(0, 100))` puede descartar valores fuera del intervalo. No recortes ejes para ocultar observaciones; explica siempre qué se muestra.
+
+**Para figuras con muchas categorías**, considera `coord_flip()`, rotar etiquetas, usar paneles o seleccionar una pregunta más concreta antes de aumentar indiscriminadamente el tamaño de la figura.
+
+
+
+### Estéticas globales y locales: ¿a qué capa afecta el color?
+
+En un gráfico con varias capas es importante decidir **dónde** se declara una estética. Si la escribimos dentro de `ggplot(aes(...))`, las capas siguientes la heredan, a menos que la reemplacemos. Si la escribimos dentro de una geometría, afecta solamente a esa capa.
+
+Consideremos los conteos de un mismo gen en distintas muestras. El primer gráfico asigna `color = grupo` de manera global:
+
+```{r}
+datos_gen <- datos %>% filter(gene_id == "gene_005")
+
+g_global <- ggplot(datos_gen, aes(x = muestra, y = conteo, color = grupo)) +
+  geom_point(size = 3) +
+  geom_line(aes(group = grupo), linewidth = 0.7) +
+  labs(title = "Color definido globalmente", x = "Muestra", y = "Conteo") +
+  theme_minimal()
+g_global
+```
+
+Las líneas anteriores son **solo un recurso visual para ilustrar la herencia de estéticas**: conectar muestras distintas no representa una trayectoria temporal ni una relación biológica entre ellas. Por eso, para comparar muestras independientes suele ser preferible mostrar únicamente los puntos.
+
+Ahora indicamos que el color dependa del grupo **solo en los puntos**:
+
+```{r}
+g_local <- ggplot(datos_gen, aes(x = muestra, y = conteo)) +
+  geom_point(aes(color = grupo), size = 3) +
+  labs(title = "Color definido localmente", x = "Muestra", y = "Conteo") +
+  theme_minimal()
+g_local
+```
+
+En ambos casos, `grupo` es una **variable** y debe escribirse dentro de `aes()`. En cambio, `color = "steelblue"` fuera de `aes()` indica un color **fijo**.
+
+```{r}
+g_fijo <- ggplot(datos_gen, aes(x = muestra, y = conteo)) +
+  geom_point(color = "steelblue", size = 3) +
+  theme_minimal()
+g_fijo
+```
+
+::: {.callout-note title="Un error frecuente"}
+`aes(color = "steelblue")` no significa lo mismo que `color = "steelblue"`. En el primer caso, `ggplot2` interpreta el texto como una categoría y construye una escala y, posiblemente, una leyenda. En el segundo caso, fija directamente el color de los puntos.
+:::
+
+
+
+### Escalas: transformar la representación sin cambiar la tabla
+
+Las escalas controlan cómo se traducen los valores a posiciones, colores y tamaños. No son equivalentes a modificar los datos originales.
+
+#### Escalas continuas
+
+En una figura de conteos, una transformación logarítmica puede ser útil cuando los valores varían mucho, pero **el logaritmo de cero no está definido**. Para visualizar datos con ceros, podemos crear una columna `log10(conteo + 1)` y **etiquetar explícitamente la transformación**:
+
+```{r}
+datos_log <- datos %>% mutate(log_conteo = log10(conteo + 1))
+
+ggplot(datos_log, aes(x = log_conteo)) +
+  geom_histogram(binwidth = 0.2, fill = "steelblue", color = "white") +
+  labs(x = "log10(conteo + 1)", y = "Número de registros",
+       title = "Distribución de conteos transformados") +
+  theme_minimal()
+```
+
+Este cambio es únicamente de **representación**. No convierte los conteos en mediciones normalizadas ni justifica comparaciones biológicas entre muestras.
+
+#### Escalas discretas y leyendas
+
+```{r}
+ggplot(datos_gen, aes(x = muestra, y = conteo, fill = grupo)) +
+  geom_col() +
+  scale_fill_manual(values = c(A = "#0072B2", B = "#D55E00")) +
+  labs(x = "Muestra", y = "Conteo", fill = "Grupo",
+       title = "Conteos de un gen por muestra") +
+  theme_minimal()
+```
+
+`scale_fill_manual()` permite fijar los colores de cada categoría. Se recomienda conservar una correspondencia estable entre grupos y colores en todas las figuras del mismo proyecto. También podemos usar `scale_x_discrete()` para controlar el orden de categorías y `scale_y_continuous()` para modificar etiquetas o marcas.
+
+### Zoom frente a eliminación de observaciones
+
+```{r}
+p_base <- ggplot(datos, aes(x = gene_id, y = conteo)) +
+  geom_point(alpha = 0.35) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+p_base + coord_cartesian(ylim = c(0, 15))
+```
+
+`coord_cartesian(ylim = ...)` acerca la vista **sin eliminar los datos antes de calcular las estadísticas de las capas**. En cambio, `scale_y_continuous(limits = ...)` convierte los valores fuera del rango en ausentes para las capas, lo que puede modificar los cálculos o provocar advertencias. Esta distinción importa especialmente en histogramas, cajas y líneas de ajuste.
+
+
+
+### Temas: personalizar solo lo necesario
+
+`theme_minimal()`, `theme_classic()` y `theme_bw()` ofrecen puntos de partida distintos. La función `theme()` permite modificar elementos específicos sin reconstruir el gráfico.
+
+```{r}
+p_tema <- ggplot(datos_gen, aes(x = muestra, y = conteo, fill = grupo)) +
+  geom_col() +
+  labs(title = "Conteos por muestra", x = "Muestra", y = "Conteo")
+
+p_tema + theme_bw(base_size = 12) +
+  theme(
+    plot.title = element_text(face = "bold"),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "bottom"
+  )
+```
+
+**Conviene priorizar la legibilidad:** títulos informativos, unidades correctas, contraste suficiente, tamaños adecuados y leyendas solo cuando aporten información.
+
+
+## Exploración visual: de las preguntas a las figuras 
+
+En esta parte ya no aprenderemos geometrías de forma aislada. Partiremos de una **pregunta descriptiva**, prepararemos los datos necesarios, elegiremos una representación y discutiremos qué permite concluir.
+
+### Pregunta: ¿qué categorías funcionales tienen más genes anotados?
+
+**Unidad de observación:** un gen anotado, no una fila de la tabla de conteos por muestra. Si contáramos directamente las filas de `datos`, repetiríamos cada gen tantas veces como muestras lo contengan.
+
+```{r}
+resumen_categorias <- anotaciones %>%
+  count(functional_category, name = "n_genes") %>%
+  arrange(desc(n_genes))
+
+resumen_categorias
+
+ggplot(resumen_categorias,
+       aes(x = reorder(functional_category, n_genes), y = n_genes)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  labs(title = "Genes anotados por categoría funcional",
+       x = "Categoría funcional", y = "Número de genes") +
+  theme_minimal()
+```
+
+**Interpretación:** las barras representan el número de genes en cada categoría del archivo sintético. No representan conteos de lecturas, abundancia de genes ni actividad biológica.
+
+### Pregunta: ¿hay relación entre la longitud anotada y los conteos?
+
+Para explorar una relación entre dos variables numéricas podemos utilizar un diagrama de dispersión. Aquí la longitud es una propiedad del gen y el conteo corresponde a una combinación muestra–gen; por ello, un mismo gen aparecerá varias veces con la misma longitud.
+
+```{r}
+datos_longitud <- datos %>%
+  mutate(longitud = end - start)
+
+ggplot(datos_longitud, aes(x = longitud, y = conteo, color = grupo)) +
+  geom_point(alpha = 0.65, size = 2) +
+  labs(title = "Longitud anotada y conteos sintéticos",
+       x = "Longitud anotada (nt)", y = "Conteo", color = "Grupo") +
+  theme_minimal()
+```
+
+**Preguntas para discutir:** ¿hay una tendencia visual clara? ¿Qué cambia si coloreamos por grupo? ¿Por qué no sería correcto tratar los puntos correspondientes a un mismo gen como observaciones completamente independientes? Una asociación visual no demuestra causalidad.
+
+### Pregunta: ¿qué representación permite comparar mejor varios genes entre muestras?
+
+Una misma tabla puede representarse de formas distintas. Compare las barras agrupadas y una matriz de colores; ninguna es universalmente mejor.
+
+```{r}
+comparacion <- datos %>%
+  filter(gene_id %in% c("gene_001", "gene_005", "gene_010"))
+
+fig_barras <- ggplot(comparacion,
+                     aes(x = muestra, y = conteo, fill = gene_id)) +
+  geom_col(position = "dodge") +
+  labs(title = "Comparación con barras agrupadas",
+       x = "Muestra", y = "Conteo", fill = "Gen") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+fig_matriz <- ggplot(comparacion,
+                     aes(x = muestra, y = gene_id, fill = conteo)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  labs(title = "Comparación mediante matriz de colores",
+       x = "Muestra", y = "Gen", fill = "Conteo") +
+  theme_minimal()
+
+fig_barras
+fig_matriz
+```
+
+Las barras facilitan comparar alturas cuando hay pocos genes. La matriz de colores puede ser más compacta al aumentar el número de genes, aunque resulta menos precisa para leer diferencias pequeñas. En ambos casos los valores son **conteos sin normalizar**; no se deben interpretar como evidencia de expresión diferencial.
+
+
+
+### Una guía para interpretar y comunicar resultados
+
+Para cada figura, escribe cuatro elementos:
+
+1. **Pregunta:** ¿qué queríamos averiguar?
+2. **Preparación:** ¿qué se filtró, agrupó o calculó antes de graficar?
+3. **Observación:** ¿qué patrón descriptivo se ve realmente?
+4. **Limitación:** ¿qué no puede concluirse con esos datos?
+
+Evita frases como «la figura demuestra que el grupo A tiene mayor expresión». Prefiere descripciones precisas, por ejemplo: «en estos datos sintéticos, algunos conteos son mayores en determinadas muestras; no se ha evaluado su comparabilidad biológica».
+
+
+
+
+
+## Hábitos para comunicar resultados
+
+- [ ] Identifico la unidad de observación **antes** de graficar.
+- [ ] Distingo conteos de filas, conteos de genes y sumas de mediciones.
+- [ ] Puedo explicar qué hace `aes()` y cuándo usar `geom_col()` o `geom_bar()`.
+- [ ] Sé utilizar `facet_wrap()`, `labs()`, `theme_*()` y `ggsave()`.
+- [ ] Reviso etiquetas, colores, legibilidad y límites de interpretación.
+- [ ] Puedo generar mis figuras nuevamente desde código.
+
+::: {.callout-note title="Próxima sesión"}
+En la **sesión siguiente** aprenderemos a documentar y comunicar análisis reproducibles mediante Quarto. La exploración visual y la interpretación de figuras ya forman parte de esta sesión conjunta.
+:::
+
+## Material de ampliación: más geometrías y facetas
+
+> **Para practicar después de clase.** Las siguientes herramientas complementan los contenidos esenciales. No es necesario desarrollarlas todas en los 150 minutos presenciales.
+
+### Puntos superpuestos: `geom_jitter()`
+
+Cuando muchos registros comparten coordenadas, los puntos pueden ocultarse unos detrás de otros. `geom_jitter()` añade una pequeña separación visual; no modifica la tabla original.
+
+```{r}
+ggplot(datos, aes(x = grupo, y = conteo, color = grupo)) +
+  geom_jitter(width = 0.15, height = 0, alpha = 0.6) +
+  labs(x = "Grupo", y = "Conteo", title = "Observaciones individuales") +
+  theme_minimal()
+```
+
+### Diagramas de violín: `geom_violin()`
+
+Un diagrama de violín representa una **estimación suavizada de la distribución**. No equivale a mostrar los valores exactos; con muestras pequeñas puede resultar engañoso. Aquí se usa para comparar visualmente con el diagrama de caja.
+
+```{r}
+ggplot(datos, aes(x = grupo, y = conteo, fill = grupo)) +
+  geom_violin(alpha = 0.4, trim = FALSE) +
+  geom_jitter(width = 0.12, alpha = 0.35, size = 1) +
+  labs(x = "Grupo", y = "Conteo", title = "Distribución y registros") +
+  theme_minimal()
+```
+
+Como cada muestra aporta múltiples genes, los puntos **no son réplicas independientes**. Esta figura es descriptiva y no debe utilizarse para inferir diferencias entre grupos.
+
+### Facetas con dos variables: `facet_grid()`
+
+`facet_wrap()` crea paneles para una variable categórica; `facet_grid()` permite organizar los paneles en filas y columnas mediante dos variables.
+
+```{r}
+datos_panel <- datos %>%
+  filter(gene_id %in% c("gene_001", "gene_005", "gene_010"))
+
+ggplot(datos_panel, aes(x = muestra, y = conteo)) +
+  geom_col(fill = "steelblue") +
+  facet_grid(grupo ~ gene_id) +
+  labs(x = "Muestra", y = "Conteo") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+### Gráficos de líneas: cuándo tienen sentido
+
+`geom_line()` conecta valores en orden creciente de la variable horizontal. Solo debe utilizarse cuando **el orden tiene significado**, por ejemplo, mediciones tomadas en diferentes tiempos o posiciones de una secuencia. No es apropiado conectar muestras independientes únicamente porque sus nombres tengan un orden alfabético.
+
+Construiremos un ejemplo de posiciones y cobertura artificiales:
+
+```{r}
+cobertura <- tibble(
+  posicion = seq(100, 1000, by = 100),
+  cobertura = c(12, 18, 15, 22, 27, 25, 19, 17, 14, 10)
+)
+
+ggplot(cobertura, aes(x = posicion, y = cobertura)) +
+  geom_line(linewidth = 0.8, color = "steelblue") +
+  geom_point(size = 2) +
+  labs(x = "Posición (nt)", y = "Cobertura artificial",
+       title = "Ejemplo ilustrativo de valores a lo largo de una secuencia") +
+  theme_minimal()
+```
+
+### Gráficos de mosaico de colores con `geom_tile()`
+
+Cuando queremos comparar muchos genes y muestras, una matriz de colores puede ser más compacta que numerosos gráficos de barras.
+
+```{r}
+datos_tile <- datos %>% filter(gene_id %in% paste0("gene_", sprintf("%03d", 1:10)))
+
+ggplot(datos_tile, aes(x = muestra, y = gene_id, fill = conteo)) +
+  geom_tile(color = "white", linewidth = 0.3) +
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  labs(x = "Muestra", y = "Gen", fill = "Conteo",
+       title = "Matriz de conteos sintéticos") +
+  theme_minimal()
+```
+
+La escala de colores representa conteos sin normalizar. No es un mapa de calor de expresión diferencial.
+
+## Ejercicios
+
+### Ejercicio 1: Personalizar un gráfico
+
+Usando `genes`, construye un gráfico de barras horizontales con el número de genes por contig. Debe tener título, ejes en español y barras ordenadas de menor a mayor número.
+
+### Ejercicio 2: Elegir la figura apropiada
+
+1. Representa los conteos de `gene_005` en las ocho muestras mediante puntos.
+2. Colorea los puntos por grupo y agrega etiquetas.
+3. Crea un segundo gráfico con `gene_005` y `gene_006` utilizando facetas.
+4. Explica qué conclusión **no** podrías extraer de estos gráficos.
+
+### Ejercicio 3: Histogramas y diagramas de caja
+
+1. Construye un histograma de longitudes de genes con `binwidth = 100`.
+2. Compáralo con el histograma de `binwidth = 50`. ¿Qué cambia visualmente? ¿Cambian los datos?
+3. Construye un diagrama de caja de longitudes por categoría funcional. Superpone los puntos originales.
+4. Escribe una oración que describa qué representa cada punto y qué **no** permite concluir la figura.
+
+### Ejercicio 4: Detectar problemas de comunicación
+
+El siguiente gráfico se ejecuta, pero tiene varios problemas:
+
+```{r}
+#| eval: false
+ggplot(datos, aes(x = functional_category, y = conteo)) +
+  geom_col(fill = "red") +
+  labs(title = "Resultados")
+```
+
+Identifica **al menos cuatro problemas**. Después escribe una versión que represente claramente una pregunta concreta.
+
+
+### Ejercicio 5: ¿Qué cambia si movemos una estética?
+
+Construye dos gráficos de dispersión de `longitud` frente a `conteo` usando `datos` después de crear `longitud = end - start` con `mutate()`.
+
+1. En el primero, asigna `color = grupo` dentro de `ggplot(aes(...))`.
+2. En el segundo, asigna `color = grupo` dentro de `geom_point(aes(...))`.
+3. Agrega una línea de referencia horizontal fija con `geom_hline(yintercept = 10)` y explica por qué no cambia de color en ninguno de los casos.
+
+### Ejercicio 6: Ajustar una figura sin ocultar información
+
+Construye un diagrama de dispersión con `conteo` en el eje vertical y `gene_id` en el horizontal. Utiliza `coord_cartesian()` para observar solamente el intervalo de 0 a 12 en el eje vertical, gira las etiquetas del eje horizontal y agrega un título que indique que se trata de datos sintéticos. ¿Se han borrado las observaciones fuera del intervalo?
+
+### Ejercicio 7: Dos figuras, una misma pregunta
+
+A partir de `comparacion`:
+
+1. Identifica qué representa una fila y cuáles son las variables categóricas y numéricas.
+2. Decide cuál de las dos figuras utilizarías para comparar los valores exactos de `gene_001` entre muestras.
+3. Decide cuál sería más legible si hubiera 100 genes y 20 muestras.
+4. Explica por qué el color de la matriz no indica, por sí mismo, una diferencia biológica significativa.
+
+### Ejercicio 8: Elegir una figura a partir de la pregunta
+
+Para cada pregunta, propone una geometría y explica qué preparación de datos necesitas:
+
+1. ¿Cómo se distribuyen las longitudes anotadas de los genes?
+2. ¿Cuántos genes diferentes hay en cada categoría funcional?
+3. ¿Cómo varían los conteos de un gen seleccionado entre muestras?
+4. ¿Qué patrones generales aparecen al comparar muchos genes y muestras?
+
+Después, elige **una** de las preguntas, construye su figura y escribe una interpretación de dos oraciones y una limitación.
+
+### Ejercicio 9: Mini-galería de figuras reproducibles
+Elabora un script `scripts/05_figuras.R` o un archivo `.qmd` que genere **tres figuras** a partir de los datos de la sesión:
+
+1. **Una figura categórica:** número de genes por categoría funcional o por contig.
+2. **Una figura de distribución:** longitudes de genes anotados, con unidades y descripción de la convención de coordenadas.
+3. **Una figura de muestras:** conteos de uno o varios genes por muestra, con identificación de grupo.
+
+Para cada figura, escribe **dos o tres oraciones**: qué muestra, qué pregunta responde y qué no puede concluirse. Guarda al menos una figura en PNG y otra en PDF, con nombres descriptivos. Evita pruebas estadísticas.
+
+
+
+## Créditos y lecturas complementarias
+
+Este material fue modificado del material impartido en el curso intersemestral *Code & Data Bootcamp: Git, Bash y R*, secciones de visualización con `ggplot2`:
+
+- [¿Por qué visualizar datos?](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte30.html)
+- [La gramática de los gráficos](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte31.html)
+- [Construyendo gráficas capa por capa](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte33.html)
+- [Estéticas globales y locales](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte35.html)
+
+

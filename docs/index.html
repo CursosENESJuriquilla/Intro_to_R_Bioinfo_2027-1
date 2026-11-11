@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -13,10 +13,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -42,10 +45,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-256100c28b4d1a71ce469740e6db3c8e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -252,6 +255,23 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><strong>Construcción y exploración visual de datos bioinformáticos con ggplot2</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./parte10.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Construcción y exploración visual de datos bioinformáticos con ggplot2</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -380,44 +400,31 @@ ul.task-list li input[type="checkbox"] {
 <td>Miércoles 18 de noviembre</td>
 <td>3:00–5:30 p.&nbsp;m.</td>
 <td>VI-204</td>
-<td>Visualización científica con <code>ggplot2</code></td>
+<td>Construcción y exploración visual de datos bioinformáticos con <code>ggplot2</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">6</td>
 <td>Jueves 19 de noviembre</td>
 <td>3:30–6:00 p.&nbsp;m.</td>
 <td>VI-PB01</td>
-<td>Exploración visual e interpretación de datos biológicos</td>
+<td>Documentación y reportes reproducibles con Quarto</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">7</td>
 <td>Lunes 23 de noviembre</td>
 <td>3:30–6:00 p.&nbsp;m.</td>
 <td>VI-PB01</td>
-<td>Documentación y reportes reproducibles con Quarto</td>
+<td>Integración y reproducibilidad de proyectos bioinformáticos</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;">8</td>
 <td>Jueves 26 de noviembre</td>
 <td>3:30–6:00 p.&nbsp;m.</td>
 <td>VI-PB01</td>
-<td>Integración y reproducibilidad de proyectos bioinformáticos</td>
+<td>Examen</td>
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Nota</span>Sobre la duración
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Los horarios asignados corresponden a bloques de 2 horas y 30 minutos. Los contenidos se han diseñado para 2 horas efectivas por sesión (16 horas en total). El tiempo adicional podrá utilizarse para instalación, resolución de dudas, prácticas y acompañamiento de proyectos, según las necesidades del grupo.</p>
-</div>
-</div>
 </section>
 <section id="objetivo-principal" class="level3">
 <h3 class="anchored" data-anchor-id="objetivo-principal">🎯 Objetivo principal</h3>

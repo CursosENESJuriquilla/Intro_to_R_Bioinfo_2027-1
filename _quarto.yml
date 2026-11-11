@@ -46,6 +46,10 @@ book:
     - part: "**Integración de datos y automatización de análisis en R**"
       chapters:
         - parte9.qmd # automatización
+    - part: "**Construcción y exploración visual de datos bioinformáticos con ggplot2**"
+      chapters:
+        - parte10.qmd # ggplot
+  
     
   # Information
   repo-url: https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1 # link de Github
