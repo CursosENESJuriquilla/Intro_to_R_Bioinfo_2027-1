@@ -349,6 +349,16 @@ blast %>%
 
 `ungroup()` es útil después de `mutate()` cuando ya no necesitamos conservar el agrupamiento para operaciones posteriores.
 
+
+La función `ungroup()` permite eliminar las agrupaciones establecidas previamente con `group_by()`.
+
+Es especialmente útil después de utilizar `mutate()`, ya que esta función conserva todas las filas originales y también mantiene la estructura de agrupación.
+
+En nuestro ejemplo, primero agrupamos los alineamientos por `query_id` y utilizamos `mutate()` junto con `n()` para contar cuántos alineamientos corresponden a cada secuencia de consulta. Después, `ungroup()` elimina la agrupación, pero conserva los valores calculados.
+
+**Importante:** `ungroup()` no elimina filas ni modifica los valores de las columnas; únicamente hace que las operaciones posteriores vuelvan a trabajar con la tabla completa, sin agrupaciones activas.
+
+
 ### Elegir una fila por grupo: un criterio explícito
 
 Si queremos conservar el registro con el mayor `bitscore` para cada consulta, primero ordenamos y después seleccionamos una fila por grupo:
@@ -491,7 +501,7 @@ La organización adecuada depende de lo que queremos hacer con los datos. El obj
 
 
 
-## Exportación y práctica integradora
+## Exportación
 
 ### Guardar resultados sin sobrescribir los datos originales
 
@@ -518,61 +528,73 @@ file.exists("results/03_conteos_largos.tsv")
 
 ## Ejercicios
 
+Para los siguientes ejercicios trabajaremos con una base de datos simulada de expresión génica en bacterias bajo dos condiciones experimentales: **Control** y **Estrés**.
 
-### Ejercicio 1: Construir una tabla con un pipe
+La base contiene información de 40 genes medidos en seis muestras (tres réplicas por condición), incluyendo conteos de lecturas y anotaciones funcionales.
 
-A partir de `blast`, conserva únicamente los registros con `length >= 150`, muestra las columnas `query_id`, `subject_id`, `length` y `bitscore`, y ordénalos de mayor a menor `bitscore`. Hazlo en **una sola secuencia** con `%>%`.
+El objetivo es utilizar las herramientas de `dplyr` para responder preguntas biológicas mediante la manipulación, agrupación y resumen de datos.
 
-**Hint:** Primero reducimos las filas, después elegimos columnas y finalmente cambiamos el orden de presentación. El objeto original `blast` no se modifica.
+Descarga el archivo [expresion_genica_estres.csv](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/expresion_genica_estres.csv) y guárdalo en la carpeta `data_raw` de tu proyecto.
 
+```{r}
+library(readr)
+library(dplyr)
 
-### Ejercicio 2: Seleccionar resultados de dos consultas
+datos <- read_csv(
+  "data_raw/expresion_genica_estres.csv",
+  show_col_types = FALSE
+)
 
-Obtén los registros de `seq01` y `seq02` con `pident >= 80`. Conserva únicamente `query_id`, `subject_id`, `pident` y `evalue`; renombra `pident` como `identidad` y ordena primero por `query_id` y después por `identidad` descendente.
-
-**Hint**: El orden importa: después de `rename()`, la columna se llama `identidad`, por eso se debe utilizar  el nombre nuevo en `arrange()`.
-
-
-
-### Ejercicio 3: Crear variables a partir de columnas existentes
-
-Agrega a `blast` una columna `identidad_decimal` con `pident / 100` y una columna `categoria` que diga `"Alta"` si `pident >= 90`, `"Media"` si `pident >= 75` y `"Baja"` en los demás casos. Muestra `query_id`, `pident`, `identidad_decimal` y `categoria`.
-
-
-**Hint:** Las etiquetas se definen mediante umbrales arbitrarios, usar `case_when()`.
+glimpse(datos)
+```
 
 
-### Ejercicio 4: Resumir resultados por secuencia
+### Ejercicio 1. Identificación de genes candidatos
 
-Construye una tabla con una fila por `query_id`, el número de alineamientos (`n_alineamientos`), el mayor porcentaje de identidad (`identidad_maxima`) y el mayor `bitscore` (`bitscore_maximo`). Ordénala de mayor a menor `n_alineamientos`.
+Queremos explorar qué genes podrían estar relacionados con la respuesta bacteriana al estrés.
+
+Utilizando `dplyr`:
+
+1. Calcula el conteo promedio de cada gen en cada condición experimental.
+2. Organiza los resultados de manera que puedas comparar los promedios de Control y Estrés para cada gen.
+3. Calcula la razón entre el promedio en Estrés y el promedio en Control.
+4. Identifica los cinco genes con mayor aumento relativo y muestra su anotación funcional.
+
+**Pregunta de interpretación:** ¿Un gen con un aumento relativo grande necesariamente presenta un conteo alto de lecturas? Justifica tu respuesta.
+
+### Ejercicio 2. ¿Qué funciones biológicas predominan?
+
+Queremos investigar cuáles son las funciones biológicas representadas entre los genes con mayores conteos de lecturas.
+
+Utilizando `dplyr`:
+
+1. Calcula el conteo promedio de cada gen considerando todas las muestras.
+2. Identifica los 15 genes con mayor conteo promedio.
+3. Determina cuántos de esos genes pertenecen a cada categoría funcional.
+4. Ordena las categorías funcionales de mayor a menor frecuencia.
+
+**Pregunta de interpretación:** ¿La categoría funcional más frecuente entre estos 15 genes necesariamente es la más importante para la bacteria? Explica.
+
+
+### TAREA. ¿Qué genes destacan dentro de cada muestra?
+
+En un experimento de expresión génica, algunos genes pueden presentar conteos considerablemente mayores que otros dentro de una misma muestra.
+
+Queremos identificar los genes cuyos conteos superan el promedio de su propia muestra.
+
+Utilizando `dplyr`:
+
+1. Calcula el conteo promedio de los genes en cada muestra.
+2. Agrega a la tabla original una columna llamada `promedio_muestra` que contenga ese promedio para cada observación, **sin eliminar ninguna fila**.
+3. Identifica los genes cuyo conteo sea al menos el doble del promedio de su muestra.
+4. Calcula cuántos genes cumplen esta condición en cada muestra y compara los resultados entre Control y Estrés.
+
+**Pregunta de interpretación:** ¿Por qué es más adecuado comparar cada gen con el promedio de su propia muestra en lugar de utilizar un único promedio calculado con todas las muestras?
 
 
 
-### Ejercicio 5: Transformar y resumir conteos
-
-Convierte `conteos` a formato largo, conserva únicamente las filas con `conteo >= 100` y muestra cuántos registros cumplen el criterio en cada muestra. Ordena las muestras alfabéticamente.
-
-### Ejercicio 6: Preparar datos para una visualización
-
-A partir de la tabla `conteos_ejemplo`:
-
-1. Transforma los datos a formato largo.
-2. Conserva únicamente las observaciones de `muestra_A` y `muestra_B`.
-3. Ordena los registros de mayor a menor conteo.
-4. Identifica qué columnas utilizarías para representar las muestras en el eje horizontal y los conteos en el eje vertical.
 
 
-### Ejercicio 7: Preparar una tabla de resultados de BLAST
-
-Crea un objeto llamado `blast_preparado` mediante **una sola secuencia de transformaciones con `%>%`** que:
-
-1.  Conserve registros con `length >= 150` y `pident >= 80`.
-2.  Agregue una columna `identidad_decimal` igual a `pident / 100`.
-3.  Cree una columna `grupo` con `"90 o más"` si `pident >= 90` y `"Menos de 90"` en otro caso.
-4.  Conserve únicamente `query_id`, `subject_id`, `bitscore`, `identidad_decimal` y `grupo`.
-5.  Ordene por `query_id` y `bitscore` descendente.
-
-Después construye `resumen_preparado` con el número de registros por `query_id` y el máximo `bitscore` de cada consulta. Guarda ambas tablas en `results/` como archivos CSV. **No modifiques ni sobrescribas** `resultados_blast.tsv`.
 
 
 
@@ -587,3 +609,221 @@ Hoy utilizamos `dplyr` para transformar **una tabla** y `tidyr` para cambiar su 
 - ¿Por qué conviene guardar resultados en una carpeta distinta de los datos originales?
 
 En la siguiente sesión integraremos información de varias tablas mediante identificadores y aprenderemos a repetir procesos sobre múltiples archivos.
+
+
+
+
+## EXTRA: `group_by`
+
+
+
+### ¿Qué significa `.groups = "drop"` en `summarise()`?
+
+Cuando utilizamos `group_by()`, indicamos a R que las operaciones posteriores deben realizarse de manera independiente para cada grupo.
+
+Al utilizar `summarise()`, obtenemos una tabla resumida, pero **esta tabla puede conservar parte de la agrupación original**.
+
+El argumento `.groups` permite controlar qué sucede con esas agrupaciones después de calcular el resumen.
+
+En particular:
+
+- **`.groups = "drop"`** elimina todas las agrupaciones de la tabla resultante.
+- Si no especificamos `.groups`, `summarise()` generalmente elimina el último nivel de agrupación cuando cada grupo produce una fila, pero puede conservar los niveles anteriores.
+
+Veamos un ejemplo para entender por qué esto es importante.
+
+#### Ejemplo: promedio de mediciones por especie y tratamiento
+
+Supongamos que tenemos mediciones de dos especies (A y B), cada una bajo dos condiciones experimentales: Control y Tratado.
+
+Primero, creamos los datos:
+
+```{r}
+library(dplyr)
+
+datos <- tibble(
+  especie = c("A", "A", "A", "A", "B", "B", "B", "B"),
+  tratamiento = c("Control", "Control", "Tratado", "Tratado",
+                  "Control", "Control", "Tratado", "Tratado"),
+  valor = c(10, 20, 30, 40, 50, 60, 70, 80)
+)
+
+datos
+```
+
+Queremos calcular el promedio de las mediciones para cada combinación de especie y tratamiento.
+
+Para ello, agrupamos utilizando las dos variables:
+
+```r
+group_by(especie, tratamiento)
+```
+
+Esto indica que las observaciones deben organizarse en cuatro grupos:
+
+1. Especie A, Control.
+2. Especie A, Tratado.
+3. Especie B, Control.
+4. Especie B, Tratado.
+
+Ahora veremos qué sucede cuando utilizamos `summarise()` con y sin `.groups = "drop"`.
+
+#### Caso 1. Sin utilizar `.groups = "drop"`
+
+Calculamos el promedio de cada grupo:
+
+```{r}
+resumen1 <- datos %>%
+  group_by(especie, tratamiento) %>%
+  summarise(
+    promedio = mean(valor)
+  )
+
+resumen1
+```
+
+
+Observa que al imprimir el resultado en la consola aparece una indicación similar a:
+
+```text
+# A tibble: 4 × 3
+# Groups: especie [2]
+```
+
+Esto significa que, aunque ya calculamos los promedios para cada combinación de especie y tratamiento, **la tabla continúa agrupada por especie**.
+
+¿Por qué sucede esto?
+
+Porque originalmente agrupamos por dos variables:
+
+```r
+group_by(especie, tratamiento)
+```
+
+Al ejecutar `summarise()`, se elimina el último nivel de agrupación (`tratamiento`), pero se conserva el primero (`especie`).
+
+Podemos comprobar cuáles son las variables de agrupación mediante:
+
+```{r}
+group_vars(resumen1)
+```
+
+El resultado será `"especie"`.
+
+**¿Qué sucede si realizamos otro cálculo?**
+
+Supongamos que ahora queremos calcular el promedio de la columna `promedio`:
+
+```{r}
+resumen1 %>%
+  summarise(
+    media = mean(promedio)
+  )
+```
+
+
+¿Por qué obtuvimos dos resultados?
+
+Porque `resumen1` **todavía está agrupado por especie**. Por lo tanto, el segundo `summarise()` calcula un promedio para cada especie:
+
+- Especie A: `(15 + 35) / 2 = 25`
+- Especie B: `(55 + 75) / 2 = 65`
+
+Es decir, R no calculó un promedio general, sino uno para cada grupo que permanecía activo.
+
+#### Caso 2. Utilizando `.groups = "drop"`
+
+Ahora repetimos el cálculo inicial, pero agregamos `.groups = "drop"`:
+
+```{r}
+resumen2 <- datos %>%
+  group_by(especie, tratamiento) %>%
+  summarise(
+    promedio = mean(valor),
+    .groups = "drop"
+  )
+
+resumen2
+```
+
+Obtenemos exactamente los mismos valores.
+
+Sin embargo, ahora la tabla **ya no conserva ninguna agrupación**.
+
+Podemos comprobarlo:
+
+```{r}
+group_vars(resumen2)
+```
+
+
+
+Esto indica que no existen variables de agrupación activas.
+
+**¿Qué sucede si realizamos el mismo segundo cálculo?**
+
+```{r}
+resumen2 %>%
+  summarise(
+    media = mean(promedio)
+  )
+```
+
+¿Por qué obtenemos un solo resultado?
+
+Porque `resumen2` ya no está agrupado. Por lo tanto, `summarise()` utiliza las cuatro observaciones de la tabla para calcular un único promedio:
+
+$$
+\frac{15+35+55+75}{4}=45.
+$$
+
+#### Comparación de los resultados
+
+Podemos ejecutar ambos cálculos consecutivamente para observar la diferencia:
+
+```{r}
+# Sin eliminar las agrupaciones
+resumen1 %>%
+  summarise(
+    media = mean(promedio)
+  )
+
+# Eliminando las agrupaciones
+resumen2 %>%
+  summarise(
+    media = mean(promedio)
+  )
+```
+
+Aunque `resumen1` y `resumen2` contienen los mismos datos, producen resultados diferentes al aplicar una nueva operación de resumen.
+
+::: {.callout-tip}
+## ¿Qué debemos recordar?
+
+- `group_by()` establece cómo se agrupan las observaciones.
+- `summarise()` calcula un resumen para cada grupo.
+- Si agrupamos por varias variables, `summarise()` puede conservar parte de la agrupación original.
+- `.groups = "drop"` elimina todas las agrupaciones después de calcular el resumen.
+- Eliminar las agrupaciones **no modifica los valores ni elimina filas o columnas**; únicamente cambia cómo se comportarán las operaciones posteriores.
+
+**Recomendación:** cuando ya no necesitemos conservar las agrupaciones, es conveniente utilizar `.groups = "drop"` para evitar que los cálculos posteriores se realicen por grupos de manera inesperada.
+:::
+
+::: {.callout-note}
+## Una observación importante
+
+Si agrupamos por una sola variable, por ejemplo:
+
+```r
+datos %>%
+  group_by(especie) %>%
+  summarise(promedio = mean(valor))
+```
+
+`summarise()` elimina automáticamente esa única agrupación, en su comportamiento predeterminado cuando cada grupo produce una fila.
+
+Por ello, en ejemplos con una sola variable de agrupación, agregar `.groups = "drop"` generalmente no cambia el resultado.
+
+Su utilidad se observa especialmente cuando agrupamos por dos o más variables.
+:::
+

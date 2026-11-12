@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,13 +12,10 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -80,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-256100c28b4d1a71ce469740e6db3c8e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -112,6 +109,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -353,21 +379,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#pivot_wider-de-largo-a-ancho" id="toc-pivot_wider-de-largo-a-ancho" class="nav-link" data-scroll-target="#pivot_wider-de-largo-a-ancho"><span class="header-section-number">8.7.3</span> <code>pivot_wider()</code>: de largo a ancho</a></li>
   </ul></li>
   <li><a href="#por-qué-importa-la-organización-de-los-datos" id="toc-por-qué-importa-la-organización-de-los-datos" class="nav-link" data-scroll-target="#por-qué-importa-la-organización-de-los-datos"><span class="header-section-number">8.8</span> ¿Por qué importa la organización de los datos?</a></li>
-  <li><a href="#exportación-y-práctica-integradora" id="toc-exportación-y-práctica-integradora" class="nav-link" data-scroll-target="#exportación-y-práctica-integradora"><span class="header-section-number">8.9</span> Exportación y práctica integradora</a>
+  <li><a href="#exportación" id="toc-exportación" class="nav-link" data-scroll-target="#exportación"><span class="header-section-number">8.9</span> Exportación</a>
   <ul>
   <li><a href="#guardar-resultados-sin-sobrescribir-los-datos-originales" id="toc-guardar-resultados-sin-sobrescribir-los-datos-originales" class="nav-link" data-scroll-target="#guardar-resultados-sin-sobrescribir-los-datos-originales"><span class="header-section-number">8.9.1</span> Guardar resultados sin sobrescribir los datos originales</a></li>
   </ul></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios"><span class="header-section-number">8.10</span> Ejercicios</a>
   <ul>
-  <li><a href="#ejercicio-1-construir-una-tabla-con-un-pipe" id="toc-ejercicio-1-construir-una-tabla-con-un-pipe" class="nav-link" data-scroll-target="#ejercicio-1-construir-una-tabla-con-un-pipe"><span class="header-section-number">8.10.1</span> Ejercicio 1: Construir una tabla con un pipe</a></li>
-  <li><a href="#ejercicio-2-seleccionar-resultados-de-dos-consultas" id="toc-ejercicio-2-seleccionar-resultados-de-dos-consultas" class="nav-link" data-scroll-target="#ejercicio-2-seleccionar-resultados-de-dos-consultas"><span class="header-section-number">8.10.2</span> Ejercicio 2: Seleccionar resultados de dos consultas</a></li>
-  <li><a href="#ejercicio-3-crear-variables-a-partir-de-columnas-existentes" id="toc-ejercicio-3-crear-variables-a-partir-de-columnas-existentes" class="nav-link" data-scroll-target="#ejercicio-3-crear-variables-a-partir-de-columnas-existentes"><span class="header-section-number">8.10.3</span> Ejercicio 3: Crear variables a partir de columnas existentes</a></li>
-  <li><a href="#ejercicio-4-resumir-resultados-por-secuencia" id="toc-ejercicio-4-resumir-resultados-por-secuencia" class="nav-link" data-scroll-target="#ejercicio-4-resumir-resultados-por-secuencia"><span class="header-section-number">8.10.4</span> Ejercicio 4: Resumir resultados por secuencia</a></li>
-  <li><a href="#ejercicio-5-transformar-y-resumir-conteos" id="toc-ejercicio-5-transformar-y-resumir-conteos" class="nav-link" data-scroll-target="#ejercicio-5-transformar-y-resumir-conteos"><span class="header-section-number">8.10.5</span> Ejercicio 5: Transformar y resumir conteos</a></li>
-  <li><a href="#ejercicio-6-preparar-datos-para-una-visualización" id="toc-ejercicio-6-preparar-datos-para-una-visualización" class="nav-link" data-scroll-target="#ejercicio-6-preparar-datos-para-una-visualización"><span class="header-section-number">8.10.6</span> Ejercicio 6: Preparar datos para una visualización</a></li>
-  <li><a href="#ejercicio-7-preparar-una-tabla-de-resultados-de-blast" id="toc-ejercicio-7-preparar-una-tabla-de-resultados-de-blast" class="nav-link" data-scroll-target="#ejercicio-7-preparar-una-tabla-de-resultados-de-blast"><span class="header-section-number">8.10.7</span> Ejercicio 7: Preparar una tabla de resultados de BLAST</a></li>
+  <li><a href="#ejercicio-1.-identificación-de-genes-candidatos" id="toc-ejercicio-1.-identificación-de-genes-candidatos" class="nav-link" data-scroll-target="#ejercicio-1.-identificación-de-genes-candidatos"><span class="header-section-number">8.10.1</span> Ejercicio 1. Identificación de genes candidatos</a></li>
+  <li><a href="#ejercicio-2.-qué-funciones-biológicas-predominan" id="toc-ejercicio-2.-qué-funciones-biológicas-predominan" class="nav-link" data-scroll-target="#ejercicio-2.-qué-funciones-biológicas-predominan"><span class="header-section-number">8.10.2</span> Ejercicio 2. ¿Qué funciones biológicas predominan?</a></li>
+  <li><a href="#tarea.-qué-genes-destacan-dentro-de-cada-muestra" id="toc-tarea.-qué-genes-destacan-dentro-de-cada-muestra" class="nav-link" data-scroll-target="#tarea.-qué-genes-destacan-dentro-de-cada-muestra"><span class="header-section-number">8.10.3</span> TAREA. ¿Qué genes destacan dentro de cada muestra?</a></li>
   </ul></li>
   <li><a href="#observaciones" id="toc-observaciones" class="nav-link" data-scroll-target="#observaciones"><span class="header-section-number">8.11</span> Observaciones</a></li>
+  <li><a href="#extra-group_by" id="toc-extra-group_by" class="nav-link" data-scroll-target="#extra-group_by"><span class="header-section-number">8.12</span> EXTRA: <code>group_by</code></a>
+  <ul>
+  <li><a href="#qué-significa-.groups-drop-en-summarise" id="toc-qué-significa-.groups-drop-en-summarise" class="nav-link" data-scroll-target="#qué-significa-.groups-drop-en-summarise"><span class="header-section-number">8.12.1</span> ¿Qué significa <code>.groups = "drop"</code> en <code>summarise()</code>?</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-promedio-de-mediciones-por-especie-y-tratamiento" id="toc-ejemplo-promedio-de-mediciones-por-especie-y-tratamiento" class="nav-link" data-scroll-target="#ejemplo-promedio-de-mediciones-por-especie-y-tratamiento">Ejemplo: promedio de mediciones por especie y tratamiento</a></li>
+  <li><a href="#caso-1.-sin-utilizar-.groups-drop" id="toc-caso-1.-sin-utilizar-.groups-drop" class="nav-link" data-scroll-target="#caso-1.-sin-utilizar-.groups-drop">Caso 1. Sin utilizar <code>.groups = "drop"</code></a></li>
+  <li><a href="#caso-2.-utilizando-.groups-drop" id="toc-caso-2.-utilizando-.groups-drop" class="nav-link" data-scroll-target="#caso-2.-utilizando-.groups-drop">Caso 2. Utilizando <code>.groups = "drop"</code></a></li>
+  <li><a href="#comparación-de-los-resultados" id="toc-comparación-de-los-resultados" class="nav-link" data-scroll-target="#comparación-de-los-resultados">Comparación de los resultados</a></li>
+  </ul></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -1380,6 +1412,10 @@ Tip
 </div>
 </div>
 <p><code>ungroup()</code> es útil después de <code>mutate()</code> cuando ya no necesitamos conservar el agrupamiento para operaciones posteriores.</p>
+<p>La función <code>ungroup()</code> permite eliminar las agrupaciones establecidas previamente con <code>group_by()</code>.</p>
+<p>Es especialmente útil después de utilizar <code>mutate()</code>, ya que esta función conserva todas las filas originales y también mantiene la estructura de agrupación.</p>
+<p>En nuestro ejemplo, primero agrupamos los alineamientos por <code>query_id</code> y utilizamos <code>mutate()</code> junto con <code>n()</code> para contar cuántos alineamientos corresponden a cada secuencia de consulta. Después, <code>ungroup()</code> elimina la agrupación, pero conserva los valores calculados.</p>
+<p><strong>Importante:</strong> <code>ungroup()</code> no elimina filas ni modifica los valores de las columnas; únicamente hace que las operaciones posteriores vuelvan a trabajar con la tabla completa, sin agrupaciones activas.</p>
 </section>
 <section id="elegir-una-fila-por-grupo-un-criterio-explícito" class="level3" data-number="8.6.4">
 <h3 data-number="8.6.4" class="anchored" data-anchor-id="elegir-una-fila-por-grupo-un-criterio-explícito"><span class="header-section-number">8.6.4</span> Elegir una fila por grupo: un criterio explícito</h3>
@@ -1634,8 +1670,8 @@ Tip
 </div>
 </div>
 </section>
-<section id="exportación-y-práctica-integradora" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="exportación-y-práctica-integradora"><span class="header-section-number">8.9</span> Exportación y práctica integradora</h2>
+<section id="exportación" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="exportación"><span class="header-section-number">8.9</span> Exportación</h2>
 <section id="guardar-resultados-sin-sobrescribir-los-datos-originales" class="level3" data-number="8.9.1">
 <h3 data-number="8.9.1" class="anchored" data-anchor-id="guardar-resultados-sin-sobrescribir-los-datos-originales"><span class="header-section-number">8.9.1</span> Guardar resultados sin sobrescribir los datos originales</h3>
 <p>La idea es separar los datos originales (<code>data_raw/</code>) de las tablas generadas durante el análisis (<code>results/</code>).</p>
@@ -1670,50 +1706,72 @@ Tip
 </section>
 <section id="ejercicios" class="level2" data-number="8.10">
 <h2 data-number="8.10" class="anchored" data-anchor-id="ejercicios"><span class="header-section-number">8.10</span> Ejercicios</h2>
-<section id="ejercicio-1-construir-una-tabla-con-un-pipe" class="level3" data-number="8.10.1">
-<h3 data-number="8.10.1" class="anchored" data-anchor-id="ejercicio-1-construir-una-tabla-con-un-pipe"><span class="header-section-number">8.10.1</span> Ejercicio 1: Construir una tabla con un pipe</h3>
-<p>A partir de <code>blast</code>, conserva únicamente los registros con <code>length &gt;= 150</code>, muestra las columnas <code>query_id</code>, <code>subject_id</code>, <code>length</code> y <code>bitscore</code>, y ordénalos de mayor a menor <code>bitscore</code>. Hazlo en <strong>una sola secuencia</strong> con <code>%&gt;%</code>.</p>
-<p><strong>Hint:</strong> Primero reducimos las filas, después elegimos columnas y finalmente cambiamos el orden de presentación. El objeto original <code>blast</code> no se modifica.</p>
-</section>
-<section id="ejercicio-2-seleccionar-resultados-de-dos-consultas" class="level3" data-number="8.10.2">
-<h3 data-number="8.10.2" class="anchored" data-anchor-id="ejercicio-2-seleccionar-resultados-de-dos-consultas"><span class="header-section-number">8.10.2</span> Ejercicio 2: Seleccionar resultados de dos consultas</h3>
-<p>Obtén los registros de <code>seq01</code> y <code>seq02</code> con <code>pident &gt;= 80</code>. Conserva únicamente <code>query_id</code>, <code>subject_id</code>, <code>pident</code> y <code>evalue</code>; renombra <code>pident</code> como <code>identidad</code> y ordena primero por <code>query_id</code> y después por <code>identidad</code> descendente.</p>
-<p><strong>Hint</strong>: El orden importa: después de <code>rename()</code>, la columna se llama <code>identidad</code>, por eso se debe utilizar el nombre nuevo en <code>arrange()</code>.</p>
-</section>
-<section id="ejercicio-3-crear-variables-a-partir-de-columnas-existentes" class="level3" data-number="8.10.3">
-<h3 data-number="8.10.3" class="anchored" data-anchor-id="ejercicio-3-crear-variables-a-partir-de-columnas-existentes"><span class="header-section-number">8.10.3</span> Ejercicio 3: Crear variables a partir de columnas existentes</h3>
-<p>Agrega a <code>blast</code> una columna <code>identidad_decimal</code> con <code>pident / 100</code> y una columna <code>categoria</code> que diga <code>"Alta"</code> si <code>pident &gt;= 90</code>, <code>"Media"</code> si <code>pident &gt;= 75</code> y <code>"Baja"</code> en los demás casos. Muestra <code>query_id</code>, <code>pident</code>, <code>identidad_decimal</code> y <code>categoria</code>.</p>
-<p><strong>Hint:</strong> Las etiquetas se definen mediante umbrales arbitrarios, usar <code>case_when()</code>.</p>
-</section>
-<section id="ejercicio-4-resumir-resultados-por-secuencia" class="level3" data-number="8.10.4">
-<h3 data-number="8.10.4" class="anchored" data-anchor-id="ejercicio-4-resumir-resultados-por-secuencia"><span class="header-section-number">8.10.4</span> Ejercicio 4: Resumir resultados por secuencia</h3>
-<p>Construye una tabla con una fila por <code>query_id</code>, el número de alineamientos (<code>n_alineamientos</code>), el mayor porcentaje de identidad (<code>identidad_maxima</code>) y el mayor <code>bitscore</code> (<code>bitscore_maximo</code>). Ordénala de mayor a menor <code>n_alineamientos</code>.</p>
-</section>
-<section id="ejercicio-5-transformar-y-resumir-conteos" class="level3" data-number="8.10.5">
-<h3 data-number="8.10.5" class="anchored" data-anchor-id="ejercicio-5-transformar-y-resumir-conteos"><span class="header-section-number">8.10.5</span> Ejercicio 5: Transformar y resumir conteos</h3>
-<p>Convierte <code>conteos</code> a formato largo, conserva únicamente las filas con <code>conteo &gt;= 100</code> y muestra cuántos registros cumplen el criterio en cada muestra. Ordena las muestras alfabéticamente.</p>
-</section>
-<section id="ejercicio-6-preparar-datos-para-una-visualización" class="level3" data-number="8.10.6">
-<h3 data-number="8.10.6" class="anchored" data-anchor-id="ejercicio-6-preparar-datos-para-una-visualización"><span class="header-section-number">8.10.6</span> Ejercicio 6: Preparar datos para una visualización</h3>
-<p>A partir de la tabla <code>conteos_ejemplo</code>:</p>
+<p>Para los siguientes ejercicios trabajaremos con una base de datos simulada de expresión génica en bacterias bajo dos condiciones experimentales: <strong>Control</strong> y <strong>Estrés</strong>.</p>
+<p>La base contiene información de 40 genes medidos en seis muestras (tres réplicas por condición), incluyendo conteos de lecturas y anotaciones funcionales.</p>
+<p>El objetivo es utilizar las herramientas de <code>dplyr</code> para responder preguntas biológicas mediante la manipulación, agrupación y resumen de datos.</p>
+<p>Descarga el archivo <a href="https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/expresion_genica_estres.csv">expresion_genica_estres.csv</a> y guárdalo en la carpeta <code>data_raw</code> de tu proyecto.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb95"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data_raw/expresion_genica_estres.csv"</span>,</span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">show_col_types =</span> <span class="cn">FALSE</span></span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(datos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 240
+Columns: 8
+$ sample_id     &lt;chr&gt; "CTL_01", "CTL_02", "CTL_03", "EST_01", "EST_02", "EST_0…
+$ condicion     &lt;chr&gt; "Control", "Control", "Control", "Estres", "Estres", "Es…
+$ replica       &lt;dbl&gt; 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1,…
+$ gene_id       &lt;chr&gt; "gene_001", "gene_001", "gene_001", "gene_001", "gene_00…
+$ funcion       &lt;chr&gt; "Función desconocida", "Función desconocida", "Función d…
+$ longitud_pb   &lt;dbl&gt; 1803, 1803, 1803, 1803, 1803, 1803, 891, 891, 891, 891, …
+$ gc_porcentaje &lt;dbl&gt; 58.1, 58.1, 58.1, 58.1, 58.1, 58.1, 43.2, 43.2, 43.2, 43…
+$ conteo        &lt;dbl&gt; 1302, 1263, 1368, 892, 953, 1106, 639, 998, 1108, 733, 9…</code></pre>
+</div>
+</div>
+<section id="ejercicio-1.-identificación-de-genes-candidatos" class="level3" data-number="8.10.1">
+<h3 data-number="8.10.1" class="anchored" data-anchor-id="ejercicio-1.-identificación-de-genes-candidatos"><span class="header-section-number">8.10.1</span> Ejercicio 1. Identificación de genes candidatos</h3>
+<p>Queremos explorar qué genes podrían estar relacionados con la respuesta bacteriana al estrés.</p>
+<p>Utilizando <code>dplyr</code>:</p>
 <ol type="1">
-<li>Transforma los datos a formato largo.</li>
-<li>Conserva únicamente las observaciones de <code>muestra_A</code> y <code>muestra_B</code>.</li>
-<li>Ordena los registros de mayor a menor conteo.</li>
-<li>Identifica qué columnas utilizarías para representar las muestras en el eje horizontal y los conteos en el eje vertical.</li>
+<li>Calcula el conteo promedio de cada gen en cada condición experimental.</li>
+<li>Organiza los resultados de manera que puedas comparar los promedios de Control y Estrés para cada gen.</li>
+<li>Calcula la razón entre el promedio en Estrés y el promedio en Control.</li>
+<li>Identifica los cinco genes con mayor aumento relativo y muestra su anotación funcional.</li>
 </ol>
+<p><strong>Pregunta de interpretación:</strong> ¿Un gen con un aumento relativo grande necesariamente presenta un conteo alto de lecturas? Justifica tu respuesta.</p>
 </section>
-<section id="ejercicio-7-preparar-una-tabla-de-resultados-de-blast" class="level3" data-number="8.10.7">
-<h3 data-number="8.10.7" class="anchored" data-anchor-id="ejercicio-7-preparar-una-tabla-de-resultados-de-blast"><span class="header-section-number">8.10.7</span> Ejercicio 7: Preparar una tabla de resultados de BLAST</h3>
-<p>Crea un objeto llamado <code>blast_preparado</code> mediante <strong>una sola secuencia de transformaciones con <code>%&gt;%</code></strong> que:</p>
+<section id="ejercicio-2.-qué-funciones-biológicas-predominan" class="level3" data-number="8.10.2">
+<h3 data-number="8.10.2" class="anchored" data-anchor-id="ejercicio-2.-qué-funciones-biológicas-predominan"><span class="header-section-number">8.10.2</span> Ejercicio 2. ¿Qué funciones biológicas predominan?</h3>
+<p>Queremos investigar cuáles son las funciones biológicas representadas entre los genes con mayores conteos de lecturas.</p>
+<p>Utilizando <code>dplyr</code>:</p>
 <ol type="1">
-<li>Conserve registros con <code>length &gt;= 150</code> y <code>pident &gt;= 80</code>.</li>
-<li>Agregue una columna <code>identidad_decimal</code> igual a <code>pident / 100</code>.</li>
-<li>Cree una columna <code>grupo</code> con <code>"90 o más"</code> si <code>pident &gt;= 90</code> y <code>"Menos de 90"</code> en otro caso.</li>
-<li>Conserve únicamente <code>query_id</code>, <code>subject_id</code>, <code>bitscore</code>, <code>identidad_decimal</code> y <code>grupo</code>.</li>
-<li>Ordene por <code>query_id</code> y <code>bitscore</code> descendente.</li>
+<li>Calcula el conteo promedio de cada gen considerando todas las muestras.</li>
+<li>Identifica los 15 genes con mayor conteo promedio.</li>
+<li>Determina cuántos de esos genes pertenecen a cada categoría funcional.</li>
+<li>Ordena las categorías funcionales de mayor a menor frecuencia.</li>
 </ol>
-<p>Después construye <code>resumen_preparado</code> con el número de registros por <code>query_id</code> y el máximo <code>bitscore</code> de cada consulta. Guarda ambas tablas en <code>results/</code> como archivos CSV. <strong>No modifiques ni sobrescribas</strong> <code>resultados_blast.tsv</code>.</p>
+<p><strong>Pregunta de interpretación:</strong> ¿La categoría funcional más frecuente entre estos 15 genes necesariamente es la más importante para la bacteria? Explica.</p>
+</section>
+<section id="tarea.-qué-genes-destacan-dentro-de-cada-muestra" class="level3" data-number="8.10.3">
+<h3 data-number="8.10.3" class="anchored" data-anchor-id="tarea.-qué-genes-destacan-dentro-de-cada-muestra"><span class="header-section-number">8.10.3</span> TAREA. ¿Qué genes destacan dentro de cada muestra?</h3>
+<p>En un experimento de expresión génica, algunos genes pueden presentar conteos considerablemente mayores que otros dentro de una misma muestra.</p>
+<p>Queremos identificar los genes cuyos conteos superan el promedio de su propia muestra.</p>
+<p>Utilizando <code>dplyr</code>:</p>
+<ol type="1">
+<li>Calcula el conteo promedio de los genes en cada muestra.</li>
+<li>Agrega a la tabla original una columna llamada <code>promedio_muestra</code> que contenga ese promedio para cada observación, <strong>sin eliminar ninguna fila</strong>.</li>
+<li>Identifica los genes cuyo conteo sea al menos el doble del promedio de su muestra.</li>
+<li>Calcula cuántos genes cumplen esta condición en cada muestra y compara los resultados entre Control y Estrés.</li>
+</ol>
+<p><strong>Pregunta de interpretación:</strong> ¿Por qué es más adecuado comparar cada gen con el promedio de su propia muestra en lugar de utilizar un único promedio calculado con todas las muestras?</p>
 </section>
 </section>
 <section id="observaciones" class="level2" data-number="8.11">
@@ -1727,8 +1785,282 @@ Tip
 <li>¿Por qué conviene guardar resultados en una carpeta distinta de los datos originales?</li>
 </ul>
 <p>En la siguiente sesión integraremos información de varias tablas mediante identificadores y aprenderemos a repetir procesos sobre múltiples archivos.</p>
+</section>
+<section id="extra-group_by" class="level2" data-number="8.12">
+<h2 data-number="8.12" class="anchored" data-anchor-id="extra-group_by"><span class="header-section-number">8.12</span> EXTRA: <code>group_by</code></h2>
+<section id="qué-significa-.groups-drop-en-summarise" class="level3" data-number="8.12.1">
+<h3 data-number="8.12.1" class="anchored" data-anchor-id="qué-significa-.groups-drop-en-summarise"><span class="header-section-number">8.12.1</span> ¿Qué significa <code>.groups = "drop"</code> en <code>summarise()</code>?</h3>
+<p>Cuando utilizamos <code>group_by()</code>, indicamos a R que las operaciones posteriores deben realizarse de manera independiente para cada grupo.</p>
+<p>Al utilizar <code>summarise()</code>, obtenemos una tabla resumida, pero <strong>esta tabla puede conservar parte de la agrupación original</strong>.</p>
+<p>El argumento <code>.groups</code> permite controlar qué sucede con esas agrupaciones después de calcular el resumen.</p>
+<p>En particular:</p>
+<ul>
+<li><strong><code>.groups = "drop"</code></strong> elimina todas las agrupaciones de la tabla resultante.</li>
+<li>Si no especificamos <code>.groups</code>, <code>summarise()</code> generalmente elimina el último nivel de agrupación cuando cada grupo produce una fila, pero puede conservar los niveles anteriores.</li>
+</ul>
+<p>Veamos un ejemplo para entender por qué esto es importante.</p>
+<section id="ejemplo-promedio-de-mediciones-por-especie-y-tratamiento" class="level4">
+<h4 class="anchored" data-anchor-id="ejemplo-promedio-de-mediciones-por-especie-y-tratamiento">Ejemplo: promedio de mediciones por especie y tratamiento</h4>
+<p>Supongamos que tenemos mediciones de dos especies (A y B), cada una bajo dos condiciones experimentales: Control y Tratado.</p>
+<p>Primero, creamos los datos:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb97"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb97-2"><a href="#cb97-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-3"><a href="#cb97-3" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb97-4"><a href="#cb97-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">especie =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>, <span class="st">"B"</span>),</span>
+<span id="cb97-5"><a href="#cb97-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">tratamiento =</span> <span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"Control"</span>, <span class="st">"Tratado"</span>, <span class="st">"Tratado"</span>,</span>
+<span id="cb97-6"><a href="#cb97-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"Control"</span>, <span class="st">"Control"</span>, <span class="st">"Tratado"</span>, <span class="st">"Tratado"</span>),</span>
+<span id="cb97-7"><a href="#cb97-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">valor =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">70</span>, <span class="dv">80</span>)</span>
+<span id="cb97-8"><a href="#cb97-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb97-9"><a href="#cb97-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb97-10"><a href="#cb97-10" aria-hidden="true" tabindex="-1"></a>datos</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 8 × 3
+  especie tratamiento valor
+  &lt;chr&gt;   &lt;chr&gt;       &lt;dbl&gt;
+1 A       Control        10
+2 A       Control        20
+3 A       Tratado        30
+4 A       Tratado        40
+5 B       Control        50
+6 B       Control        60
+7 B       Tratado        70
+8 B       Tratado        80</code></pre>
+</div>
+</div>
+<p>Queremos calcular el promedio de las mediciones para cada combinación de especie y tratamiento.</p>
+<p>Para ello, agrupamos utilizando las dos variables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb99"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(especie, tratamiento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Esto indica que las observaciones deben organizarse en cuatro grupos:</p>
+<ol type="1">
+<li>Especie A, Control.</li>
+<li>Especie A, Tratado.</li>
+<li>Especie B, Control.</li>
+<li>Especie B, Tratado.</li>
+</ol>
+<p>Ahora veremos qué sucede cuando utilizamos <code>summarise()</code> con y sin <code>.groups = "drop"</code>.</p>
+</section>
+<section id="caso-1.-sin-utilizar-.groups-drop" class="level4">
+<h4 class="anchored" data-anchor-id="caso-1.-sin-utilizar-.groups-drop">Caso 1. Sin utilizar <code>.groups = "drop"</code></h4>
+<p>Calculamos el promedio de cada grupo:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb100"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>resumen1 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(especie, tratamiento) <span class="sc">%&gt;%</span></span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">promedio =</span> <span class="fu">mean</span>(valor)</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by especie and tratamiento.
+ℹ Output is grouped by especie.
+ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+ℹ Use `summarise(.by = c(especie, tratamiento))` for per-operation grouping
+  (`?dplyr::dplyr_by`) instead.</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb102"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>resumen1</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+# Groups:   especie [2]
+  especie tratamiento promedio
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 A       Control           15
+2 A       Tratado           35
+3 B       Control           55
+4 B       Tratado           75</code></pre>
+</div>
+</div>
+<p>Observa que al imprimir el resultado en la consola aparece una indicación similar a:</p>
+<pre class="text"><code># A tibble: 4 × 3
+# Groups: especie [2]</code></pre>
+<p>Esto significa que, aunque ya calculamos los promedios para cada combinación de especie y tratamiento, <strong>la tabla continúa agrupada por especie</strong>.</p>
+<p>¿Por qué sucede esto?</p>
+<p>Porque originalmente agrupamos por dos variables:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb105"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(especie, tratamiento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Al ejecutar <code>summarise()</code>, se elimina el último nivel de agrupación (<code>tratamiento</code>), pero se conserva el primero (<code>especie</code>).</p>
+<p>Podemos comprobar cuáles son las variables de agrupación mediante:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb106"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_vars</span>(resumen1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "especie"</code></pre>
+</div>
+</div>
+<p>El resultado será <code>"especie"</code>.</p>
+<p><strong>¿Qué sucede si realizamos otro cálculo?</strong></p>
+<p>Supongamos que ahora queremos calcular el promedio de la columna <code>promedio</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb108"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>resumen1 <span class="sc">%&gt;%</span></span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(promedio)</span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  especie media
+  &lt;chr&gt;   &lt;dbl&gt;
+1 A          25
+2 B          65</code></pre>
+</div>
+</div>
+<p>¿Por qué obtuvimos dos resultados?</p>
+<p>Porque <code>resumen1</code> <strong>todavía está agrupado por especie</strong>. Por lo tanto, el segundo <code>summarise()</code> calcula un promedio para cada especie:</p>
+<ul>
+<li>Especie A: <code>(15 + 35) / 2 = 25</code></li>
+<li>Especie B: <code>(55 + 75) / 2 = 65</code></li>
+</ul>
+<p>Es decir, R no calculó un promedio general, sino uno para cada grupo que permanecía activo.</p>
+</section>
+<section id="caso-2.-utilizando-.groups-drop" class="level4">
+<h4 class="anchored" data-anchor-id="caso-2.-utilizando-.groups-drop">Caso 2. Utilizando <code>.groups = "drop"</code></h4>
+<p>Ahora repetimos el cálculo inicial, pero agregamos <code>.groups = "drop"</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb110"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>resumen2 <span class="ot">&lt;-</span> datos <span class="sc">%&gt;%</span></span>
+<span id="cb110-2"><a href="#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(especie, tratamiento) <span class="sc">%&gt;%</span></span>
+<span id="cb110-3"><a href="#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">promedio =</span> <span class="fu">mean</span>(valor),</span>
+<span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">"drop"</span></span>
+<span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a>resumen2</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  especie tratamiento promedio
+  &lt;chr&gt;   &lt;chr&gt;          &lt;dbl&gt;
+1 A       Control           15
+2 A       Tratado           35
+3 B       Control           55
+4 B       Tratado           75</code></pre>
+</div>
+</div>
+<p>Obtenemos exactamente los mismos valores.</p>
+<p>Sin embargo, ahora la tabla <strong>ya no conserva ninguna agrupación</strong>.</p>
+<p>Podemos comprobarlo:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb112"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">group_vars</span>(resumen2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>character(0)</code></pre>
+</div>
+</div>
+<p>Esto indica que no existen variables de agrupación activas.</p>
+<p><strong>¿Qué sucede si realizamos el mismo segundo cálculo?</strong></p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb114"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>resumen2 <span class="sc">%&gt;%</span></span>
+<span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(promedio)</span>
+<span id="cb114-4"><a href="#cb114-4" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  media
+  &lt;dbl&gt;
+1    45</code></pre>
+</div>
+</div>
+<p>¿Por qué obtenemos un solo resultado?</p>
+<p>Porque <code>resumen2</code> ya no está agrupado. Por lo tanto, <code>summarise()</code> utiliza las cuatro observaciones de la tabla para calcular un único promedio:</p>
+<p><span class="math display">\[
+\frac{15+35+55+75}{4}=45.
+\]</span></p>
+</section>
+<section id="comparación-de-los-resultados" class="level4">
+<h4 class="anchored" data-anchor-id="comparación-de-los-resultados">Comparación de los resultados</h4>
+<p>Podemos ejecutar ambos cálculos consecutivamente para observar la diferencia:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb116"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sin eliminar las agrupaciones</span></span>
+<span id="cb116-2"><a href="#cb116-2" aria-hidden="true" tabindex="-1"></a>resumen1 <span class="sc">%&gt;%</span></span>
+<span id="cb116-3"><a href="#cb116-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb116-4"><a href="#cb116-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(promedio)</span>
+<span id="cb116-5"><a href="#cb116-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  especie media
+  &lt;chr&gt;   &lt;dbl&gt;
+1 A          25
+2 B          65</code></pre>
+</div>
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb118"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Eliminando las agrupaciones</span></span>
+<span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>resumen2 <span class="sc">%&gt;%</span></span>
+<span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb118-4"><a href="#cb118-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">media =</span> <span class="fu">mean</span>(promedio)</span>
+<span id="cb118-5"><a href="#cb118-5" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  media
+  &lt;dbl&gt;
+1    45</code></pre>
+</div>
+</div>
+<p>Aunque <code>resumen1</code> y <code>resumen2</code> contienen los mismos datos, producen resultados diferentes al aplicar una nueva operación de resumen.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Qué debemos recordar?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>group_by()</code> establece cómo se agrupan las observaciones.</li>
+<li><code>summarise()</code> calcula un resumen para cada grupo.</li>
+<li>Si agrupamos por varias variables, <code>summarise()</code> puede conservar parte de la agrupación original.</li>
+<li><code>.groups = "drop"</code> elimina todas las agrupaciones después de calcular el resumen.</li>
+<li>Eliminar las agrupaciones <strong>no modifica los valores ni elimina filas o columnas</strong>; únicamente cambia cómo se comportarán las operaciones posteriores.</li>
+</ul>
+<p><strong>Recomendación:</strong> cuando ya no necesitemos conservar las agrupaciones, es conveniente utilizar <code>.groups = "drop"</code> para evitar que los cálculos posteriores se realicen por grupos de manera inesperada.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Una observación importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si agrupamos por una sola variable, por ejemplo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb120"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>datos <span class="sc">%&gt;%</span></span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(especie) <span class="sc">%&gt;%</span></span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">promedio =</span> <span class="fu">mean</span>(valor))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>summarise()</code> elimina automáticamente esa única agrupación, en su comportamiento predeterminado cuando cada grupo produce una fila.</p>
+<p>Por ello, en ejemplos con una sola variable de agrupación, agregar <code>.groups = "drop"</code> generalmente no cambia el resultado.</p>
+<p>Su utilidad se observa especialmente cuando agrupamos por dos o más variables.</p>
+</div>
+</div>
 
 
+</section>
+</section>
 </section>
 
 </main> <!-- /main -->
