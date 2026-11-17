@@ -49,6 +49,12 @@ book:
     - part: "**Construcción y exploración visual de datos bioinformáticos con ggplot2**"
       chapters:
         - parte10.qmd # ggplot
+    - part: "**Documentación y reproducibilidad de proyectos bioinformáticos con Quarto**"
+      chapters:
+        - parte11.qmd
+    - part: "**EXTRA: Conectar RStudio con Github**"
+      chapters:
+        - extra.qmd
   
     
   # Information

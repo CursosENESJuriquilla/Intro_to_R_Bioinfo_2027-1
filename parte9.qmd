@@ -9,7 +9,6 @@ Ya vimos como **importar y explorar archivos**, y como **transformar una tabla**
 
 Seguiremos utilizando **resultados sintéticos con estructura de salida tabular de BLAST**. No ejecutaremos BLAST ni interpretaremos estos datos como resultados biológicos reales. Los umbrales utilizados serán ejemplos para practicar programación.
 
-
 ## Archivos de trabajo
 
 Descarga y descomprime [`datos_sesion_04_integracion.zip`](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_sesion_04_integracion.zip) dentro de la carpeta `data_raw/` de tu proyecto de RStudio. La estructura esperada es:
@@ -79,7 +78,6 @@ head(blast_A)
 head(metadata)
 ```
 
-
 - `cols()`: define los tipos de datos de las columnas.
 
 - `codigo_muestra = col_character()`: obliga a que la columna codigo_muestra se importe como texto, incluso si contiene únicamente números. Esto permite conservar identificadores como "001" o "002" sin perder los ceros iniciales.
@@ -121,9 +119,7 @@ Esto nos permitirá observar cómo se comportan las distintas uniones.
 
 Una **unión** (*join*) combina columnas de dos tablas a partir de los valores de una o varias claves. En la @fig-tipos-join se muestran los principales tipos de uniones disponibles en `dplyr`, así como las diferencias entre las observaciones que conserva cada operación.
 
-
 ![Tipos de uniones de tablas con dplyr. Las regiones azules indican las filas que se conservan en cada operación.](figures/tipos_join.png){#fig-tipos-join width="95%" fig-align="center"}
-
 
 ### `left_join()`: conservar la tabla de la izquierda
 
@@ -239,8 +235,6 @@ metadata %>%
 
 Una tabla vacía indica que no se encontraron identificadores repetidos.
 
-
-
 ## Apilar resultados de distintas muestras
 
 Hasta ahora hemos relacionado tablas que contienen **información diferente** sobre los mismos identificadores. Ahora tenemos otro problema: varios archivos con **las mismas columnas**, pero con registros diferentes.
@@ -281,340 +275,443 @@ blast_total %>%
 
 En esta sesión no necesitaremos `bind_cols()`: unir columnas por posición puede producir correspondencias equivocadas si las filas no están perfectamente alineadas.
 
+## Funciones: escribir una operación una sola vez
 
-
-## Funciones para automatizar transformaciones
-
-En la sesión 1 aprendimos a escribir funciones. Ahora las utilizaremos para aplicar el mismo conjunto de operaciones a distintas tablas.
-
-Supongamos que queremos conservar alineamientos con una identidad mínima y ordenarlos por puntuación.
-
-Sin una función tendríamos que repetir el mismo bloque de instrucciones para cada muestra. En su lugar, definimos una función que reciba la tabla y el umbral:
+En la sesión 1 aprendimos a escribir funciones. Aquí las recuperamos para que una transformación pueda repetirse con distintos argumentos. Por ejemplo, al trabajar con resultados de BLAST podemos cambiar el umbral sin reescribir el procedimiento:
 
 ```{r}
-filtrar_alineamientos <- function(datos, identidad_minima = 90) {
-  datos %>%
+filtrar_alineamientos <- function(tabla, identidad_minima = 90) {
+  tabla %>%
     filter(pident >= identidad_minima) %>%
     arrange(desc(bitscore))
 }
-```
 
-- `datos` es el argumento que recibe una tabla.
-- `identidad_minima = 90` define un valor predeterminado.
-- La última expresión de la función es la tabla que se devuelve.
-
-```{r}
 filtrar_alineamientos(blast_A)
-
 filtrar_alineamientos(blast_B, identidad_minima = 95)
 ```
 
-Podemos crear funciones que produzcan resúmenes:
+`tabla` es la entrada; `identidad_minima` es un argumento configurable, con valor predeterminado; la última expresión es el resultado devuelto. **Automatizar no exige introducir nuevas funciones complejas:** puede consistir en hacer reutilizable un procedimiento que ya sabemos realizar.
+
+::: {.callout-note}
+## Una herramienta para reconocer, no para memorizar
+
+Si en otro proyecto tenemos rutas como `archivos_blast`, podemos obtener nombres de archivo sin ruta ni extensión con:
 
 ```{r}
-resumir_alineamientos <- function(datos) {
-  datos %>%
-    group_by(query_id) %>%
+#| eval: false
+tools::file_path_sans_ext(basename(archivos_blast))
+```
+
+`basename()` conserva el nombre final de la ruta y `tools::file_path_sans_ext()` elimina la extensión. Existen además herramientas como `lapply()` y `purrr::map()` para aplicar funciones a varios objetos, pero **no las desarrollaremos en esta sesión**.
+:::
+
+## Datos reales de rizosfera: del archivo a la tabla
+
+
+
+Trabajaremos con **un subconjunto de datos reales del proyecto [MicroAgroBiome](https://agrobiom.matmor.unam.mx/)**. Contamos con 75 muestras y una tabla de conteos de 3,330 registros taxonómicos. Los archivos fueron organizados en formatos de texto para facilitar su uso en R.
+
+Los conteos son observaciones de secuenciación, no mediciones directas del número de microorganismos. Además, las muestras provienen de distintos estudios, por lo que las diferencias entre hospederos no pueden atribuirse únicamente a la especie de planta.
+
+Descarga [`datos_rizosfera.zip`](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_rizosfera.zip) y descomprímelo dentro de `data_raw/`:
+
+```text
+mi_proyecto/
+├── mi_proyecto.Rproj
+├── data_raw/
+│   ├── datos_sesion_04_integracion/    
+│   └── datos_rizosfera/
+│       ├── conteos_taxonomia_rizosfera.tsv
+│       └── metadata_rizosfera.csv
+└── results/
+```
+
+### Importar e inspeccionar
+
+```{r}
+library(dplyr)
+library(readr)
+library(tidyr)
+
+carpeta_rizosfera <- "data_raw/datos_rizosfera"
+
+conteos_riz <- read_tsv(
+  file.path(carpeta_rizosfera, "conteos_taxonomia_rizosfera.tsv"),
+  show_col_types = FALSE
+)
+
+metadata_riz <- read_csv(
+  file.path(carpeta_rizosfera, "metadata_rizosfera.csv"),
+  show_col_types = FALSE
+)
+
+dim(conteos_riz)
+glimpse(conteos_riz)
+head(conteos_riz[, 1:9], 3)
+
+metadata_riz %>%
+  count(host_name, sort = TRUE)
+```
+
+En `conteos_riz`, **cada fila corresponde a un registro taxonómico**; las primeras columnas describen su clasificación y las columnas `SRR...` o `ERR...` corresponden a muestras. En `metadata_riz`, **cada fila describe una muestra** mediante `sample_id` y otras variables, como `host_name`.
+
+Los prefijos de la clasificación indican el nivel taxonómico: `k__` (reino), `p__` (filo), `c__` (clase), `o__` (orden), `f__` (familia), `g__` (género) y `s__` (especie). Algunos registros no tienen asignación en todos los niveles.
+
+### Limpiar los valores taxonómicos
+
+Queremos conservar nombres como `Bacteria`, `Bacillota` y `Lactobacillus`, sin sus prefijos. Las columnas ya se llaman `kingdom`, `phylum`, `class`, `order`, `family`, `genus` y `species`.
+
+```{r}
+niveles <- c(
+  "kingdom", "phylum", "class", "order",
+  "family", "genus", "species"
+)
+
+conteos_limpios <- conteos_riz %>%
+  mutate(
+    across(
+      all_of(niveles),
+      ~ na_if(sub("^[a-z]__", "", .x), "")
+    )
+  )
+
+conteos_limpios %>%
+  select(taxon_id, all_of(niveles)) %>%
+  head()
+```
+
+- `sub()` elimina el prefijo al inicio del texto. 
+- `across()` aplica la misma transformación a las siete columnas. 
+- `na_if(..., "")` convierte las asignaciones vacías en `NA`: **sin clasificar no significa que el taxón no exista**.
+
+### Transformar a formato largo e incorporar metadatos
+
+Las columnas de muestras están en formato ancho. Recuperamos `pivot_longer()` para obtener una fila por combinación de registro taxonómico y muestra. Seleccionamos las columnas de muestras utilizando los identificadores de los metadatos, en lugar de depender de una lista de nombres escrita a mano.
+
+```{r}
+ids_muestras <- metadata_riz$sample_id
+
+stopifnot(
+  !anyDuplicated(ids_muestras),
+  all(ids_muestras %in% names(conteos_limpios))
+)
+
+conteos_largos <- conteos_limpios %>%
+  pivot_longer(
+    cols = all_of(ids_muestras),
+    names_to = "sample_id",
+    values_to = "conteo"
+  )
+
+datos_riz <- conteos_largos %>%
+  left_join(
+    metadata_riz %>% select(sample_id, host_name, country, year),
+    by = "sample_id",
+    relationship = "many-to-one"
+  )
+
+glimpse(datos_riz)
+```
+
+¿Por qué `many-to-one`? Porque una muestra aparece en muchas filas de conteos, pero debe tener **una sola fila de metadatos**. Verificamos si hubo muestras sin correspondencia:
+
+```{r}
+conteos_largos %>%
+  anti_join(metadata_riz, by = "sample_id") %>%
+  distinct(sample_id)
+```
+
+
+Si el resultado de `anti_join()` no contiene filas, significa que **todas las muestras de la tabla de conteos tienen un identificador correspondiente en la tabla de metadatos**.
+
+Antes de continuar, necesitamos realizar otra comprobación: verificar que cada muestra tenga conteos suficientes para calcular sus abundancias relativas.
+
+Para ello, agrupamos los datos por `sample_id` y sumamos los conteos de todos los taxones de cada muestra. Esta suma representa el total de lecturas contabilizadas en nuestra tabla para esa muestra.
+
+La instrucción `stopifnot()` verifica que todos estos totales sean mayores que cero. Si alguna muestra tuviera un total igual a cero, no podríamos calcular sus abundancias relativas dividiendo entre ese total.
+
+Esta comprobación es importante porque **en el siguiente paso calcularemos la proporción que representa cada taxón respecto al total de su muestra**.
+
+```{r}
+totales_muestra <- datos_riz %>%
+  group_by(sample_id) %>%
+  summarise(total_lecturas = sum(conteo), .groups = "drop")
+
+stopifnot(all(totales_muestra$total_lecturas > 0))
+head(totales_muestra)
+```
+
+Y lo guardamos porque lo vamos a usar en la sesión de plots.
+
+```{r}
+write_tsv(totales_muestra, "results/totales_muestra.tsv")
+```
+
+### Calcular abundancia relativa correctamente
+
+**La abundancia relativa se calcula dentro de cada muestra**. Para estudiar géneros, primero reunimos los conteos de todos los registros asignados al mismo género; después dividimos entre el total de conteos de esa muestra. Los registros sin asignación de género se mantienen como `Sin clasificar` para no alterar el denominador.
+
+```{r}
+abundancias_genero <- datos_riz %>%
+  mutate(genus = if_else(is.na(genus), "Sin clasificar", genus)) %>%
+  group_by(sample_id, host_name, genus) %>%
+  summarise(conteo = sum(conteo), .groups = "drop") %>%
+  group_by(sample_id) %>%
+  mutate(abundancia_relativa = conteo / sum(conteo)) %>%
+  ungroup()
+
+abundancias_genero %>%
+  select(sample_id, host_name, genus, conteo, abundancia_relativa) %>%
+  head()
+```
+
+Si una muestra tiene 1,000 conteos y 80 pertenecen a un género, su abundancia relativa es `80 / 1000 = 0.08`, es decir, 8 %. No estamos calculando una proporción conjunta de todas las muestras ni promediando muestras todavía.
+
+
+### Agrupar los géneros por debajo del 5 %
+
+Para facilitar la lectura de una gráfica de diversidad, conservaremos por separado los géneros cuya abundancia relativa **en esa muestra** sea al menos 5 %. Los géneros con menos de 5 % se sumarán en `Otros`. Dejaremos `Sin clasificar` como categoría propia, incluso si representa menos del umbral.
+
+```{r}
+generos_5 <- abundancias_genero %>%
+  mutate(
+    taxon_final = if_else(
+      genus != "Sin clasificar" & abundancia_relativa < 0.05,
+      "Otros",
+      genus
+    )
+  ) %>%
+  group_by(sample_id, host_name, taxon_final) %>%
+  summarise(
+    abundancia_relativa = sum(abundancia_relativa),
+    .groups = "drop"
+  )
+
+# Cada muestra debe sumar 1 (salvo pequeñas diferencias numéricas).
+comprobacion <- generos_5 %>%
+  group_by(sample_id) %>%
+  summarise(total = sum(abundancia_relativa), .groups = "drop")
+
+stopifnot(all(abs(comprobacion$total - 1) < 1e-8))
+head(comprobacion)
+```
+
+Un género puede superar el umbral en una muestra y quedar dentro de `Otros` en otra.
+
+
+
+### Automatizar el análisis para distintos niveles taxonómicos
+
+Ya sabemos realizar la transformación. Ahora la convertimos en una función que recibe el **nivel taxonómico** y el **umbral**, de modo que no tengamos que copiar todo el procedimiento para filo, familia, género, etc.
+
+```{r}
+preparar_abundancias <- function(tabla, nivel = "genus", umbral = 0.05) {
+  niveles_validos <- c(
+    "kingdom", "phylum", "class", "order",
+    "family", "genus", "species"
+  )
+
+  stopifnot(
+    nivel %in% niveles_validos,
+    is.numeric(umbral), length(umbral) == 1,
+    !is.na(umbral), umbral >= 0, umbral <= 1
+  )
+  
+  etiqueta_otros <- if (nivel == "phylum") {
+    "Filos < 5%"
+  } else if (nivel == "genus") {
+    "Géneros < 5%"
+  } else {
+    "Taxones < 5%"
+  }
+
+  tabla %>%
+    mutate(
+      taxon = .data[[nivel]],
+      taxon = if_else(is.na(taxon) | taxon == "",
+                      "Sin clasificar", taxon)
+    ) %>%
+    group_by(sample_id, host_name, taxon) %>%
+    summarise(conteo = sum(conteo), .groups = "drop") %>%
+    group_by(sample_id) %>%
+    mutate(abundancia_relativa = conteo / sum(conteo)) %>%
+    ungroup() %>%
+    mutate(
+      taxon_final = if_else(
+        abundancia_relativa < umbral,
+        etiqueta_otros,
+        taxon
+      )
+    ) %>%
+    group_by(sample_id, host_name, taxon_final) %>%
     summarise(
-      numero_alineamientos = n(),
-      bitscore_maximo = max(bitscore, na.rm = TRUE),
+      abundancia_relativa = sum(abundancia_relativa),
       .groups = "drop"
     )
 }
-
-resumir_alineamientos(blast_A)
 ```
 
-::: callout-note
-## ¿Qué significa automatizar aquí?
-
-No significa necesariamente construir un programa complicado. Automatizar consiste en **escribir una operación una sola vez** para poder aplicarla de manera consistente a diferentes entradas.
-:::
-
-
-
-## Procesar múltiples archivos
-
-Imagina que en lugar de tres muestras tenemos treinta. Importarlas una por una sería tedioso y aumentaría la probabilidad de cometer errores.
-
-Podemos construir un procedimiento que descubra los archivos, los lea y combine los resultados.
-
-### Localizar archivos con `list.files()`
+Probamos la misma función con diferentes preguntas:
 
 ```{r}
-archivos_blast <- list.files(
-  path = carpeta_blast,
-  pattern = "\\.tsv$",
-  full.names = TRUE
-)
+generos_5 <- preparar_abundancias(datos_riz, "genus", 0.05)
+filos_5 <- preparar_abundancias(datos_riz, "phylum", 0.05)
+familias_1 <- preparar_abundancias(datos_riz, "family", 0.01)
 
-archivos_blast
+filos_5 %>% head()
 ```
 
-El argumento `pattern` selecciona nombres que terminan en `.tsv`. La expresión `\\.tsv$` utiliza una expresión regular sencilla:
+El resultado tiene una fila por **muestra y categoría taxonómica final**, con su abundancia relativa. Es un formato largo adecuado para graficar barras apiladas y facetas. Si necesitáramos un formato ancho, podríamos utilizar `pivot_wider()`.
 
-- `\\.` representa un punto literal.
-- `tsv` son las letras que buscamos.
-- `$` indica el final del nombre.
-
-Con `full.names = TRUE`, obtenemos rutas que podemos pasar directamente a las funciones de lectura.
-
-### Leer todos los archivos con `lapply()`
-
-`lapply()` recibe una lista o vector y una función. Aplica la función a cada elemento y devuelve una **lista**.
+Guardamos las tablas sin sobrescribir los datos de entrada:
 
 ```{r}
-lista_blast <- lapply(
-  archivos_blast,
-  function(archivo) {
-    read_tsv(archivo, show_col_types = FALSE)
+write_tsv(generos_5, "results/generos_5.tsv")
+write_tsv(filos_5, "results/filos_5.tsv")
+write_tsv(familias_1, "results/familias_1.tsv")
+```
+
+
+### Documentación de funciones
+
+Cuando escribimos una función que utilizaremos varias veces, es importante documentar qué hace, qué argumentos recibe y qué devuelve.
+
+En R, una forma habitual de documentar funciones es utilizar comentarios que comienzan con `#'`. Este formato es utilizado por el paquete `roxygen2` para generar documentación de funciones en paquetes de R.
+
+Aunque aquí no estamos construyendo un paquete, podemos utilizar este estilo para mantener nuestro código organizado y comprensible.
+
+Los elementos principales son:
+
+- **Descripción:** explica qué hace la función.
+- **`@param`:** describe cada argumento.
+- **`@return`:** indica qué tipo de resultado devuelve.
+- **`@examples`:** muestra cómo utilizar la función.
+
+La documentación no modifica el funcionamiento de la función: sirve para que otras personas, o nosotros mismos en el futuro, podamos comprenderla y reutilizarla.
+
+
+### Ejemplo de la misma función documentada
+
+
+```{r}
+#| eval: false
+#' Preparar abundancias relativas por nivel taxonómico
+#'
+#' Agrupa los conteos de una comunidad microbiana según el nivel
+#' taxonómico seleccionado, calcula abundancias relativas por muestra
+#' y reúne los taxones poco abundantes en la categoría "Otros".
+#'
+#' Los taxones sin asignación se conservan como "Sin clasificar".
+#'
+#' @param tabla Tabla con las columnas sample_id, host_name,
+#'   conteo y las columnas de clasificación taxonómica.
+#' @param nivel Nivel taxonómico que se desea analizar.
+#'   Puede ser "kingdom", "phylum", "class", "order",
+#'   "family", "genus" o "species".
+#' @param umbral Abundancia relativa mínima para conservar
+#'   un taxón individualmente. Por defecto, 0.05 (5%).
+#'
+#' @return Una tabla con las columnas sample_id, host_name,
+#'   taxon_final y abundancia_relativa.
+#'   Las abundancias relativas suman 1 dentro de cada muestra.
+#'
+#' @examples
+#' generos_5 <- preparar_abundancias(datos_riz, "genus", 0.05)
+#' filos_1 <- preparar_abundancias(datos_riz, "phylum", 0.01)
+
+preparar_abundancias <- function(tabla, nivel = "genus", umbral = 0.05) {
+
+  # Verificar que los argumentos sean válidos
+  niveles_validos <- c(
+    "kingdom", "phylum", "class", "order",
+    "family", "genus", "species"
+  )
+
+  stopifnot(
+    nivel %in% niveles_validos,
+    is.numeric(umbral), length(umbral) == 1,
+    !is.na(umbral), umbral >= 0, umbral <= 1
+  )
+  
+  etiqueta_otros <- if (nivel == "phylum") {
+    "Filos < 5%"
+  } else if (nivel == "genus") {
+    "Géneros < 5%"
+  } else {
+    "Taxones < 5%"
   }
-)
 
-length(lista_blast)
-names(lista_blast)
+  tabla %>%
+
+    # Seleccionar el nivel taxonómico
+    mutate(
+      taxon = .data[[nivel]],
+      taxon = if_else(
+        is.na(taxon) | taxon == "",
+        "Sin clasificar", taxon
+      )
+    ) %>%
+
+    # Sumar los conteos por taxón y muestra
+    group_by(sample_id, host_name, taxon) %>%
+    summarise(
+      conteo = sum(conteo),
+      .groups = "drop"
+    ) %>%
+
+    # Calcular abundancias relativas dentro de cada muestra
+    group_by(sample_id) %>%
+    mutate(
+      abundancia_relativa = conteo / sum(conteo)
+    ) %>%
+    ungroup() %>%
+
+    # Agrupar los taxones menos abundantes en "Otros"
+    mutate(
+      taxon_final = if_else(
+       abundancia_relativa < umbral,
+        etiqueta_otros, taxon
+      )
+    ) %>%
+
+    # Sumar las abundancias de los taxones agrupados
+    group_by(sample_id, host_name, taxon_final) %>%
+    summarise(
+      abundancia_relativa = sum(abundancia_relativa),
+      .groups = "drop"
+    )
+}
 ```
 
-En este momento `lista_blast` contiene tres tablas, pero sus elementos todavía no tienen nombres descriptivos.
+
+## Actividad breve: ¿la tabla está lista para graficarse?
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio
+
+Sin construir otra función, revisa `generos_5` y responde:
+
+1. ¿Qué representa una fila de `generos_5`?
+2. ¿Por qué un mismo género puede aparecer individualmente en una muestra y dentro de `Otros` en otra?
+3. Si construimos una gráfica de barras apiladas al 100 %, ¿cuánto deben sumar las abundancias relativas de cada muestra? Compruébalo con `group_by()` y `summarise()`.
+4. ¿Qué columna nos permite comparar las muestras según la planta hospedera? ¿De dónde proviene?
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución y discusión
+
+1. Una combinación de muestra (`sample_id`), hospedero (`host_name`) y categoría taxonómica final (`taxon_final`), con su abundancia relativa.
+2. Porque el umbral se aplica **dentro de cada muestra**: la proporción del género puede ser distinta entre muestras.
+3. Deben sumar **1**, equivalente al 100 %:
 
 ```{r}
-nombres_muestras <- tools::file_path_sans_ext(
-  basename(archivos_blast)
-)
-
-names(lista_blast) <- nombres_muestras
-
-names(lista_blast)
+generos_5 %>%
+  group_by(sample_id) %>%
+  summarise(total = sum(abundancia_relativa), .groups = "drop")
 ```
 
-- `basename()` extrae el nombre del archivo sin su ruta.
-- `tools::file_path_sans_ext()` elimina la extensión.
-- `names()` asigna esos nombres a los elementos de la lista.
-
-Podemos acceder a una tabla por su nombre:
-
-```{r}
-head(lista_blast[["muestra_A"]])
-```
-
-### Combinar las tablas de la lista
-
-```{r}
-blast_todos_archivos <- bind_rows(
-  lista_blast,
-  .id = "muestra"
-)
-
-blast_todos_archivos %>%
-  count(muestra)
-```
-
-Esta solución funciona aunque agreguemos más archivos TSV con las mismas columnas a la carpeta. **La condición es que todos tengan una estructura compatible**.
-
-### Aplicar nuestra función a todos los archivos
-
-Podemos utilizar `lapply()` para aplicar `filtrar_alineamientos()` a cada tabla:
-
-```{r}
-lista_filtrada <- lapply(
-  lista_blast,
-  filtrar_alineamientos,
-  identidad_minima = 90,
-  longitud_minima = 100
-)
-
-blast_filtrado <- bind_rows(
-  lista_filtrada,
-  .id = "muestra"
-)
-
-blast_filtrado %>%
-  count(muestra)
-```
-
-Observa que no escribimos tres llamadas distintas a nuestra función: `lapply()` se encarga de repetirla para cada elemento.
-
-### Una alternativa con `purrr::map()`
-
-El paquete `purrr` ofrece herramientas para trabajar con listas. Su función `map()` cumple un propósito parecido al de `lapply()`:
-
-```{r}
-library(purrr)
-
-lista_filtrada_map <- map(
-  lista_blast,
-  filtrar_alineamientos,
-  identidad_minima = 90,
-  longitud_minima = 100
-)
-
-blast_filtrado_map <- bind_rows(
-  lista_filtrada_map,
-  .id = "muestra"
-)
-```
-
-No necesitamos aprender todas las variantes de `map()` en esta sesión. Lo importante es reconocer la idea: **aplicar una misma función a una colección de objetos**.
-
-::: callout-tip
-## ¿`for`, `lapply()` o `map()`?
-
-Las tres alternativas pueden servir para repetir operaciones. Un ciclo `for` es útil cuando queremos controlar cada paso. `lapply()` es una opción de R base para obtener una lista de resultados; `map()` ofrece una interfaz consistente dentro de `purrr`. No es necesario utilizar `map()` para que un análisis sea reproducible.
+4. `host_name`, incorporada desde el archivo de metadatos mediante `left_join()`.
 :::
+::::
 
 
 
-## De varios archivos a una tabla final
-
-Nuestro objetivo será construir un flujo de trabajo completo que pueda ejecutarse nuevamente cuando cambien los archivos de entrada.
-
-El procedimiento tendrá seis pasos:
-
-1.  Encontrar los archivos de resultados.
-2.  Leerlos y conservar el nombre de la muestra.
-3.  Apilar los resultados.
-4.  Agregar los metadatos mediante `left_join()`.
-5.  Aplicar criterios de filtrado.
-6.  Exportar la tabla final.
-
-### Una primera versión del flujo de trabajo
-
-```{r}
-# Paso 1: encontrar los archivos
-archivos <- list.files(
-  carpeta_blast,
-  pattern = "\\.tsv$",
-  full.names = TRUE
-)
-
-# Paso 2: importar las tablas
-tablas <- lapply(
-  archivos,
-  function(x) read_tsv(x, show_col_types = FALSE)
-)
-
-names(tablas) <- tools::file_path_sans_ext(basename(archivos))
-
-# Paso 3: combinar los resultados
-resultados_combinados <- bind_rows(
-  tablas,
-  .id = "muestra"
-)
-
-# Paso 4: agregar metadatos
-resultados_integrados <- resultados_combinados %>%
-  left_join(metadata, by = "query_id")
-
-# Paso 5: seleccionar y ordenar
-resultados_finales <- resultados_integrados %>%
-  filter(pident >= 90, length >= 100) %>%
-  select(
-    muestra, query_id, subject_id,
-    pident, length, evalue, bitscore,
-    organismo, origen, codigo_muestra
-  ) %>%
-  arrange(muestra, desc(bitscore))
-
-# Paso 6: guardar sin modificar los archivos originales
-write_tsv(
-  resultados_finales,
-  "results/04_resultados_blast_integrados.tsv"
-)
-
-head(resultados_finales)
-```
-
-Antes de interpretar la tabla, revisamos si algunas filas no encontraron metadatos:
-
-```{r}
-resultados_combinados %>%
-  anti_join(metadata, by = "query_id") %>%
-  distinct(query_id)
-```
-
-Que existan identificadores sin correspondencia no significa necesariamente que el archivo esté mal: puede indicar que las dos fuentes cubren conjuntos diferentes de secuencias.
-
-
-## Ejercicios
-
-### Ejercicio 1: ¿Qué información se conserva en cada unión?
-
-Utiliza `blast_C` y `metadata` para:
-
-1.  Construir una tabla con `left_join()`.
-2.  Identificar los registros de BLAST sin metadatos.
-3.  Identificar los registros de metadatos sin resultados en `blast_C`.
-4.  Comparar el número de filas de `blast_C`, de la unión izquierda y de la unión interna.
-
-Antes de ejecutar el código, predice en qué operación aparecerá `seq09`.
-
-### Ejercicio 2: ¿Por qué aumentó el número de filas?
-
-Une `blast_A` con `metadata_duplicada`. Compara el número de filas antes y después. Identifica qué `query_id` provoca el aumento y explica por qué sucede.
-
-
-### Ejercicio 3: Reunir resultados y conservar su procedencia
-
-Combina `blast_A`, `blast_B` y `blast_C` en una sola tabla llamada `todos_los_blast`, con una columna `muestra`. Después:
-
-1.  Cuenta cuántos alineamientos hay por muestra.
-2.  Cuenta cuántos identificadores de consulta diferentes aparecen en cada muestra.
-3.  Ordena la tabla por muestra y, dentro de cada muestra, por `bitscore` descendente.
-
-### Ejercicio 4: Una función con dos criterios
-
-Modifica `filtrar_alineamientos()` para que reciba también una longitud mínima del alineamiento, con valor predeterminado de 100. La función debe conservar registros que cumplan ambos criterios y ordenarlos por `bitscore` descendente.
-
-Prueba la función con `blast_A` y con `blast_C` usando diferentes umbrales.
-
-
-### Ejercicio 5: Procesar todos los archivos sin escribir sus nombres
-
-Escribe un bloque de código que:
-
-1.  Localice automáticamente todos los archivos `.tsv` de `blast_muestras/`.
-2.  Importe cada archivo en una lista.
-3.  Asigne a cada elemento el nombre de su muestra.
-4.  Aplique `filtrar_alineamientos()` con identidad mínima de 85 y longitud mínima de 150.
-5.  Combine los resultados en una sola tabla con una columna `muestra`.
-
-### Ejercicio 6: Construir un resumen por muestra
-
-A partir la tabla de `resultados_finales` de la sección 9.8, construye una tabla que contenga, para cada muestra:
-
-1.  El número de alineamientos que cumplieron los criterios.
-2.  El número de identificadores `query_id` diferentes.
-3.  El mayor `bitscore`.
-
-Guarda la tabla en `results/04_resumen_por_muestra.csv`. Después, explica por qué este archivo se puede volver a generar sin modificar los datos originales.
-
-
-## Observaciones
-
-En las sesiones 2, 3 y 4 construimos progresivamente un flujo de trabajo:
-
-``` text
-Archivos de entrada
-       |
-       v
-Importar y explorar                  (Sesión 2)
-       |
-       v
-Seleccionar, filtrar y resumir       (Sesión 3)
-       |
-       v
-Integrar tablas y procesar archivos  (Sesión 4)
-       |
-       v
-Guardar resultados
-```
-
-- **`left_join()`** agrega información a partir de una clave, pero debemos conocer la relación entre los identificadores.
-- **`anti_join()`** permite localizar filas sin correspondencia.
-- **`bind_rows()`** reúne tablas con la misma estructura, apilando registros.
-- **Las funciones** evitan escribir varias veces el mismo procedimiento.
-- **`lapply()` y `map()`** permiten aplicar funciones a varios objetos.
-- **Conservar una columna de procedencia** ayuda a saber de qué muestra viene cada resultado.
-- **Guardar resultados en una carpeta separada** permite conservar intactos los archivos de entrada.
-
-En la sesión siguiente utilizaremos estas tablas organizadas para aprender a construir visualizaciones con `ggplot2`.

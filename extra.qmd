@@ -1,0 +1,9 @@
+# Conectar RStudio con GitHub
+
+Para trabajar con proyectos de R y compartirlos mediante GitHub, es necesario configurar Git y establecer la conexión con RStudio.
+
+- **Si ya configuraron Git:** pueden seguir el tutorial de [R-Ladies Morelia: Conectar RStudio con GitHub](https://r-ladies-morelia.github.io/blog/conectar/).
+
+- **Si todavía no han configurado Git:** primero revisen el material del [Bootcamp de Git, Bash y R: Parte 14](https://eveliacoss.github.io/Codedata_Bootcamp_Git_Bash_R2026_ENESJ/Parte14.html). Una vez completada la configuración, pueden continuar con el tutorial de R-Ladies Morelia.
+
+

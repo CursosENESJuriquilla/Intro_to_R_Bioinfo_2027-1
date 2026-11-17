@@ -9,5 +9,4 @@
 | **3. Manipulación y transformación de datos bioinformáticos con dplyr y tidyr** |
 | **4. Integración de datos y automatización de análisis en R** |
 | **5. Construcción y exploración visual de datos bioinformáticos con ggplot2** |
-| **6. Documentación y reportes reproducibles con Quarto** |
-| **7. Integración y reproducibilidad de proyectos bioinformáticos** |
+| **6. Documentación y reproducibilidad de proyectos bioinformáticos con Quarto** |

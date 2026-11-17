@@ -1,0 +1,134 @@
+# Documentación y reproducibilidad de proyectos bioinformáticos con Quarto
+
+## De un análisis en R a un reporte HTML que podemos compartir
+
+## ¿Por qué documentar nuestros análisis? 
+
+Imagina que obtienes una figura sobre la composición microbiana de la rizosfera y la envías a una compañera. La figura permite ver el resultado, pero no responde por sí sola preguntas como: ¿qué muestras se utilizaron?, ¿qué filtros se aplicaron?, ¿qué código generó la figura? o ¿qué versiones de los paquetes se emplearon?
+
+En un proyecto bioinformático conviene distinguir tres productos:
+
+| Producto | ¿Qué permite hacer? | ¿Qué no garantiza? |
+|---|---|---|
+| **Script `.R`** | Consultar y ejecutar instrucciones | Que los resultados y su interpretación estén explicados |
+| **Reporte `.html`** | Leer resultados, figuras, tablas y explicaciones sin ejecutar R | Que el lector pueda reproducirlos si faltan código o datos |
+| **Proyecto reproducible** | Recuperar código, datos, dependencias e instrucciones para regenerar resultados | Que los resultados sean científicamente correctos por sí mismos |
+
+**Idea central:** un reporte comunica el análisis; un proyecto reproducible permite volver a generarlo. Necesitamos ambas cosas.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Pregunta
+
+Si compartimos únicamente un archivo HTML con figuras, ¿estamos compartiendo necesariamente un análisis reproducible?
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+No necesariamente. El HTML permite **consultar** los resultados, pero para **reproducirlos** también necesitamos el código fuente, los datos requeridos y las instrucciones para ejecutar el análisis.
+:::
+::::
+
+## Nuestro primer documento Quarto 
+
+### Crear un archivo `.qmd` en RStudio
+
+1. Abre el **proyecto de RStudio** que contiene las carpetas `data_raw/` y `results/`.
+2. Selecciona **File → New File → Quarto Document…**.
+3. Escribe un título y selecciona **HTML** como formato de salida.
+4. Guarda el archivo como `reporte_rizosfera.qmd` en la **raíz del proyecto** (al mismo nivel que `results/`).
+
+Un documento Quarto combina **texto escrito en Markdown**, **código ejecutable** y **opciones de presentación**. El archivo de origen termina en `.qmd` y puede generar HTML, PDF u otros formatos.
+
+### El encabezado YAML
+
+Al principio del archivo aparece un bloque entre líneas `---`:
+
+```yaml
+---
+title: "Composición microbiana de la rizosfera"
+author: "Nombre del estudiante"
+date: today
+lang: es
+format:
+  html:
+    toc: true
+    code-fold: true
+execute:
+  warning: false
+  message: false
+---
+```
+
+- `title`, `author` y `date`: información que aparecerá en el reporte.
+- `format: html`: indica que queremos generar una página HTML.
+- `toc: true`: agrega una tabla de contenidos.
+- `code-fold: true`: permite ocultar y desplegar el código en la versión HTML.
+- `warning: false` y `message: false`: evitan mostrar avisos y mensajes rutinarios **en el documento**, pero no corrigen errores del código.
+
+**Atención:** YAML utiliza espacios para indicar jerarquías. No uses tabuladores y respeta la indentación.
+
+### Escribir texto con Markdown
+
+En un archivo `.qmd` podemos escribir:
+
+````markdown
+# Introducción
+
+Este reporte analiza la **composición taxonómica** de muestras de rizosfera.
+
+## Pregunta de investigación
+
+¿Observamos diferencias entre las *plantas hospederas*?
+
+- Primer objetivo.
+- Segundo objetivo.
+
+[Documentación de Quarto](https://quarto.org/docs/)
+````
+
+| Sintaxis | Resultado |
+|---|---|
+| `# Título` | Encabezado principal |
+| `## Subtítulo` | Encabezado de segundo nivel |
+| `**texto**` | Negritas |
+| `*texto*` | Cursivas |
+| `` `filter()` `` | Código en línea |
+| `[texto](https://ejemplo.org)` | Enlace |
+
+### Bloques de código y opciones de ejecución
+
+Los bloques de R comienzan con tres acentos graves y `{r}`, y terminan con tres acentos graves. Por ejemplo, **copia el siguiente bloque en tu reporte nuevo**:
+
+
+```{r}
+#| echo: fenced
+#| eval: false
+
+plot(1:5, (1:5)^2, pch = 19)
+```
+
+
+Las líneas `#|` son **opciones del bloque**. Algunas útiles son:
+
+| Opción | Efecto |
+|---|---|
+| `#| echo: false` | Ejecuta el código, pero no lo muestra en el HTML |
+| `#| eval: false` | Muestra el código sin ejecutarlo |
+| `#| include: false` | Ejecuta el código, pero no muestra ni código ni resultados |
+| `#| fig-cap: "..."` | Añade una leyenda a una figura |
+| `#| fig-width: 9` | Define el ancho de la figura, en pulgadas |
+| `#| fig-height: 5` | Define la altura de la figura, en pulgadas |
+
+**Diferencia importante:** `echo: false` **no** significa que el código deje de ejecutarse. `eval: false` sí evita su ejecución.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Pregunta
+
+Queremos que el HTML muestre una gráfica pero no las instrucciones de R que la producen. ¿Qué opción utilizaríamos?
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+`#| echo: false`: el bloque se ejecuta y la gráfica se muestra, pero el código queda oculto.
+:::
+::::
