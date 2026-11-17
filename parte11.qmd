@@ -108,6 +108,8 @@ plot(1:5, (1:5)^2, pch = 19)
 ```
 
 
+
+
 Las líneas `#|` son **opciones del bloque**. Algunas útiles son:
 
 | Opción | Efecto |
