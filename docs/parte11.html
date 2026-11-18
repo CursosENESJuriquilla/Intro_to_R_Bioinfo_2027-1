@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,13 +12,10 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
+code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -80,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-256100c28b4d1a71ce469740e6db3c8e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -111,6 +108,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Buscar"
   }
 }</script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
 
 
 <link rel="stylesheet" href="styles.css">
@@ -360,6 +361,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#escribir-texto-con-markdown" id="toc-escribir-texto-con-markdown" class="nav-link" data-scroll-target="#escribir-texto-con-markdown"><span class="header-section-number">11.3.3</span> Escribir texto con Markdown</a></li>
   <li><a href="#bloques-de-código-y-opciones-de-ejecución" id="toc-bloques-de-código-y-opciones-de-ejecución" class="nav-link" data-scroll-target="#bloques-de-código-y-opciones-de-ejecución"><span class="header-section-number">11.3.4</span> Bloques de código y opciones de ejecución</a></li>
   </ul></li>
+  <li><a href="#construimos-un-reporte-de-rizosfera" id="toc-construimos-un-reporte-de-rizosfera" class="nav-link" data-scroll-target="#construimos-un-reporte-de-rizosfera"><span class="header-section-number">11.4</span> Construimos un reporte de rizosfera</a>
+  <ul>
+  <li><a href="#estructura-del-reporte-científico" id="toc-estructura-del-reporte-científico" class="nav-link" data-scroll-target="#estructura-del-reporte-científico"><span class="header-section-number">11.4.1</span> Estructura del reporte científico</a></li>
+  <li><a href="#cargar-paquetes-y-archivos" id="toc-cargar-paquetes-y-archivos" class="nav-link" data-scroll-target="#cargar-paquetes-y-archivos"><span class="header-section-number">11.4.2</span> Cargar paquetes y archivos</a></li>
+  <li><a href="#tabla-descriptiva-de-las-muestras" id="toc-tabla-descriptiva-de-las-muestras" class="nav-link" data-scroll-target="#tabla-descriptiva-de-las-muestras"><span class="header-section-number">11.4.3</span> Tabla descriptiva de las muestras</a>
+  <ul class="collapse">
+  <li><a href="#más-sobre-knitrkable" id="toc-más-sobre-knitrkable" class="nav-link" data-scroll-target="#más-sobre-knitrkable">Más sobre <code>knitr::kable()</code></a></li>
+  </ul></li>
+  <li><a href="#primera-figura-profundidad-de-lectura" id="toc-primera-figura-profundidad-de-lectura" class="nav-link" data-scroll-target="#primera-figura-profundidad-de-lectura"><span class="header-section-number">11.4.4</span> Primera figura: profundidad de lectura</a></li>
+  <li><a href="#segunda-figura-composición-taxonómica-por-filo" id="toc-segunda-figura-composición-taxonómica-por-filo" class="nav-link" data-scroll-target="#segunda-figura-composición-taxonómica-por-filo"><span class="header-section-number">11.4.5</span> Segunda figura: composición taxonómica por filo</a></li>
+  <li><a href="#escribir-discusión-y-conclusiones" id="toc-escribir-discusión-y-conclusiones" class="nav-link" data-scroll-target="#escribir-discusión-y-conclusiones"><span class="header-section-number">11.4.6</span> Escribir discusión y conclusiones</a></li>
+  </ul></li>
+  <li><a href="#renderizar-y-comprobar-la-reproducibilidad" id="toc-renderizar-y-comprobar-la-reproducibilidad" class="nav-link" data-scroll-target="#renderizar-y-comprobar-la-reproducibilidad"><span class="header-section-number">11.5</span> Renderizar y comprobar la reproducibilidad</a>
+  <ul>
+  <li><a href="#qué-hace-render" id="toc-qué-hace-render" class="nav-link" data-scroll-target="#qué-hace-render"><span class="header-section-number">11.5.1</span> ¿Qué hace Render?</a></li>
+  <li><a href="#una-prueba-sencilla-de-reproducibilidad" id="toc-una-prueba-sencilla-de-reproducibilidad" class="nav-link" data-scroll-target="#una-prueba-sencilla-de-reproducibilidad"><span class="header-section-number">11.5.2</span> Una prueba sencilla de reproducibilidad</a></li>
+  <li><a href="#errores-frecuentes" id="toc-errores-frecuentes" class="nav-link" data-scroll-target="#errores-frecuentes"><span class="header-section-number">11.5.3</span> Errores frecuentes</a></li>
+  </ul></li>
+  <li><a href="#compartir-el-proyecto-con-github-y-github-pages" id="toc-compartir-el-proyecto-con-github-y-github-pages" class="nav-link" data-scroll-target="#compartir-el-proyecto-con-github-y-github-pages"><span class="header-section-number">11.6</span> Compartir el proyecto con GitHub y GitHub Pages</a>
+  <ul>
+  <li><a href="#qué-debemos-compartir" id="toc-qué-debemos-compartir" class="nav-link" data-scroll-target="#qué-debemos-compartir"><span class="header-section-number">11.6.1</span> 5.1. ¿Qué debemos compartir?</a></li>
+  <li><a href="#generar-un-html-preparado-para-github-pages" id="toc-generar-un-html-preparado-para-github-pages" class="nav-link" data-scroll-target="#generar-un-html-preparado-para-github-pages"><span class="header-section-number">11.6.2</span> Generar un HTML preparado para GitHub Pages</a></li>
+  <li><a href="#subir-el-proyecto-a-github" id="toc-subir-el-proyecto-a-github" class="nav-link" data-scroll-target="#subir-el-proyecto-a-github"><span class="header-section-number">11.6.3</span> Subir el proyecto a GitHub</a></li>
+  <li><a href="#publicar-con-github-pages" id="toc-publicar-con-github-pages" class="nav-link" data-scroll-target="#publicar-con-github-pages"><span class="header-section-number">11.6.4</span> Publicar con GitHub Pages</a></li>
+  </ul></li>
+  <li><a href="#actividad-final" id="toc-actividad-final" class="nav-link" data-scroll-target="#actividad-final"><span class="header-section-number">11.7</span> Actividad Final</a></li>
+  <li><a href="#para-seguir-aprendiendo" id="toc-para-seguir-aprendiendo" class="nav-link" data-scroll-target="#para-seguir-aprendiendo"><span class="header-section-number">11.8</span> Para seguir aprendiendo</a></li>
   </ul>
 </nav>
     </div>
@@ -549,9 +577,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <summary>Código</summary>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| eval: false</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, (<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)<span class="sc">^</span><span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-ejemplo</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Ejemplo de una figura generada desde R"</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, (<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>)<span class="sc">^</span><span class="dv">2</span>, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <p>Las líneas <code>#|</code> son <strong>opciones del bloque</strong>. Algunas útiles son:</p>
@@ -623,9 +653,1216 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="construimos-un-reporte-de-rizosfera" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="construimos-un-reporte-de-rizosfera"><span class="header-section-number">11.4</span> Construimos un reporte de rizosfera</h2>
+<p>En esta sección construiremos el <strong>contenido de un segundo archivo</strong>, <code>reporte_rizosfera.qmd</code>. Los bloques que siguen son fragmentos para <strong>copiar en ese archivo</strong>; los ejemplos del tutorial no sustituyen tu reporte.</p>
+<section id="estructura-del-reporte-científico" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="estructura-del-reporte-científico"><span class="header-section-number">11.4.1</span> Estructura del reporte científico</h3>
+<p>Nuestro reporte tendrá las siguientes secciones:</p>
+<ol type="1">
+<li><strong>Introducción:</strong> contexto y pregunta biológica.</li>
+<li><strong>Datos y metodología:</strong> archivos, variables y procedimientos utilizados.</li>
+<li><strong>Resultados:</strong> una tabla descriptiva y dos visualizaciones.</li>
+<li><strong>Discusión:</strong> interpretación y limitaciones.</li>
+<li><strong>Conclusiones:</strong> hallazgos principales y posibles preguntas futuras.</li>
+</ol>
+<p><strong>No basta con insertar figuras:</strong> cada resultado debe acompañarse de una explicación breve de lo que se observa y de lo que <strong>no</strong> podemos concluir.</p>
+</section>
+<section id="cargar-paquetes-y-archivos" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="cargar-paquetes-y-archivos"><span class="header-section-number">11.4.2</span> Cargar paquetes y archivos</h3>
+<p>Añade este bloque al principio de tu reporte, después de la introducción, cambia <code>#| include: true</code> por <code>#| include: false</code>:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: setup</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| include: true</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(paletteer)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>metadata_riz <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_raw/datos_rizosfera/metadata_rizosfera.csv"</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>totales_muestra <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"results/totales_muestra.tsv"</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>generos_5 <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"results/generos_5.tsv"</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>filos_5 <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"results/filos_5.tsv"</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Preparar el entorno de trabajo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al comenzar un reporte reproducible, es conveniente incluir un bloque de configuración donde carguemos los paquetes y archivos que utilizaremos.</p>
+<p>En un reporte final, normalmente no necesitamos mostrar este código al lector, aunque sí necesitamos que se ejecute. Para ello podemos utilizar:</p>
+<ul>
+<li><code>#| include: false</code>: ejecuta el bloque, pero oculta tanto el código como sus resultados.</li>
+<li><code>#| echo: false</code>: ejecuta el bloque y muestra sus resultados, pero oculta el código.</li>
+</ul>
+</div>
+</div>
+<p><strong>Importante:</strong> las rutas son relativas a la raíz del proyecto. Si en tu computadora cambiaste el nombre o la ubicación de los archivos, ajusta las rutas antes de renderizar. El bloque debe poder ejecutarse sin objetos creados previamente en la consola.</p>
+</section>
+<section id="tabla-descriptiva-de-las-muestras" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="tabla-descriptiva-de-las-muestras"><span class="header-section-number">11.4.3</span> Tabla descriptiva de las muestras</h3>
+<p>Primero mostraremos cuántas muestras tenemos por planta hospedera. Escribe un párrafo que explique qué representa la tabla y agrega:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-muestras-r</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>resumen_hospederos <span class="ot">&lt;-</span> metadata_riz <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(host_name, <span class="at">name =</span> <span class="st">"numero_muestras"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(numero_muestras))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  resumen_hospederos,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Planta hospedera"</span>, <span class="st">"Número de muestras"</span>),</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Número de muestras por planta hospedera"</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-muestras-r" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-muestras-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;11.1: Número de muestras por planta hospedera
+</figcaption>
+<div aria-describedby="tbl-muestras-r-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Planta hospedera</th>
+<th style="text-align: right;">Número de muestras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tomato</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maize</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Soya bean</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peanut</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red pepper</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sorghum</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pea</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common bean</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gramineae</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wheat</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purple bush-bean</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><strong>Para interpretar:</strong> ¿todas las plantas tienen la misma cantidad de muestras? ¿Cómo podría influir esto al comparar sus resultados?</p>
+<section id="más-sobre-knitrkable" class="level4">
+<h4 class="anchored" data-anchor-id="más-sobre-knitrkable">Más sobre <code>knitr::kable()</code></h4>
+<p>En un reporte científico, las tablas permiten presentar resultados de manera organizada. Sin embargo, mostrar directamente un <code>data.frame</code> no siempre produce una presentación adecuada para compartir con otras personas.</p>
+<p>La función <code>knitr::kable()</code> convierte una tabla de R en una tabla con formato para nuestro documento. Podemos utilizarla tanto en reportes HTML como en PDF.</p>
+<p>Por ejemplo, anteriormente calculamos el número de muestras por planta hospedera:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>resumen_hospederos <span class="ot">&lt;-</span> metadata_riz <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(host_name, <span class="at">name =</span> <span class="st">"numero_muestras"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(numero_muestras))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(resumen_hospederos)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">host_name</th>
+<th style="text-align: right;">numero_muestras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tomato</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maize</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Soya bean</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peanut</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red pepper</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sorghum</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pea</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common bean</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gramineae</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wheat</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purple bush-bean</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Aunque la tabla ya es legible, podemos mejorar su presentación mediante diferentes argumentos.</p>
+<section id="agregar-un-título-y-modificar-los-nombres-de-las-columnas" class="level5">
+<h5 class="anchored" data-anchor-id="agregar-un-título-y-modificar-los-nombres-de-las-columnas">Agregar un título y modificar los nombres de las columnas</h5>
+<p>Los argumentos <code>caption</code> y <code>col.names</code> permiten agregar un título descriptivo y utilizar encabezados más claros.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-hospederos</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Número de muestras por planta hospedera"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  resumen_hospederos,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Planta hospedera"</span>, <span class="st">"Número de muestras"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-hospederos" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hospederos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;11.2: Número de muestras por planta hospedera
+</figcaption>
+<div aria-describedby="tbl-hospederos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Planta hospedera</th>
+<th style="text-align: right;">Número de muestras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tomato</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maize</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Soya bean</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peanut</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red pepper</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sorghum</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pea</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common bean</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gramineae</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wheat</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purple bush-bean</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>En este ejemplo:</p>
+<ul>
+<li><code>col.names</code> modifica los nombres que aparecen en la tabla, sin cambiar los nombres originales del objeto en R.</li>
+<li><code>tbl-cap</code> agrega un título a la tabla mediante Quarto.</li>
+<li><code>label: tbl-hospederos</code> permite identificarla y referenciarla desde el texto.</li>
+</ul>
+<p>Por ejemplo, podemos escribir:</p>
+<blockquote class="blockquote">
+<p>En la <a href="#tbl-hospederos" class="quarto-xref">Tabla&nbsp;<span>11.2</span></a> se presenta el número de muestras disponibles para cada planta hospedera.</p>
+</blockquote>
+<p>Quarto genera automáticamente la referencia a la tabla.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>¿Y el argumento <code>caption</code> de <code>kable()</code>?</strong></p>
+<p>También podemos agregar el título directamente:</p>
+<p><code>knitr::kable(resumen_hospederos, caption = "Número de muestras por planta hospedera")</code></p>
+<p>Sin embargo, en Quarto es conveniente utilizar <code>tbl-cap</code> junto con <code>label</code> cuando queremos incorporar referencias cruzadas. No es necesario definir el mismo título en ambos lugares.</p>
+</div>
+</div>
+</section>
+<section id="seleccionar-las-filas-que-queremos-mostrar" class="level5">
+<h5 class="anchored" data-anchor-id="seleccionar-las-filas-que-queremos-mostrar">Seleccionar las filas que queremos mostrar</h5>
+<p>En ocasiones, una tabla contiene demasiadas observaciones para incluirlas completas en un reporte.</p>
+<p>Podemos mostrar únicamente las primeras filas:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(resumen_hospederos, <span class="dv">10</span>),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Planta hospedera"</span>, <span class="st">"Número de muestras"</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Primeras diez plantas según el número de muestras"</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Primeras diez plantas según el número de muestras</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Planta hospedera</th>
+<th style="text-align: right;">Número de muestras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tomato</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maize</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Soya bean</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peanut</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red pepper</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sorghum</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pea</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common bean</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gramineae</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wheat</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>La función <code>head()</code> no modifica la tabla original; solamente selecciona las primeras observaciones para mostrarlas.</p>
+</section>
+<section id="alinear-el-contenido-de-las-columnas" class="level5">
+<h5 class="anchored" data-anchor-id="alinear-el-contenido-de-las-columnas">Alinear el contenido de las columnas</h5>
+<p>El argumento <code>align</code> controla la alineación:</p>
+<ul>
+<li><code>"l"</code>: izquierda (<em>left</em>).</li>
+<li><code>"c"</code>: centro (<em>center</em>).</li>
+<li><code>"r"</code>: derecha (<em>right</em>).</li>
+</ul>
+<p>Podemos establecer una alineación diferente para cada columna:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(resumen_hospederos, <span class="dv">10</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Planta hospedera"</span>, <span class="st">"Número de muestras"</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Número de muestras por planta hospedera"</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Número de muestras por planta hospedera</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Planta hospedera</th>
+<th style="text-align: center;">Número de muestras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tomato</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maize</td>
+<td style="text-align: center;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Soya bean</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peanut</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red pepper</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sorghum</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pea</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common bean</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gramineae</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wheat</td>
+<td style="text-align: center;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>En este caso, los nombres de las plantas se alinean a la izquierda y los conteos al centro.</p>
+</section>
+<section id="controlar-los-decimales" class="level5">
+<h5 class="anchored" data-anchor-id="controlar-los-decimales">Controlar los decimales</h5>
+<p>Cuando trabajamos con abundancias relativas, podemos obtener números con muchos decimales. Para mejorar la lectura, <code>kable()</code> permite controlar cuántos se muestran mediante <code>digits</code>.</p>
+<p>Por ejemplo, calculemos la proporción de muestras correspondiente a cada planta:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tabla_proporciones <span class="ot">&lt;-</span> resumen_hospederos <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">proporcion =</span> numero_muestras <span class="sc">/</span> <span class="fu">sum</span>(numero_muestras),</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">porcentaje =</span> proporcion <span class="sc">*</span> <span class="dv">100</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(host_name, numero_muestras, porcentaje)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  tabla_proporciones,</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Planta hospedera"</span>, <span class="st">"Muestras"</span>, <span class="st">"Porcentaje (%)"</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">digits =</span> <span class="dv">2</span>,</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>, <span class="st">"r"</span>),</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Distribución porcentual de las muestras por planta"</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Distribución porcentual de las muestras por planta</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Planta hospedera</th>
+<th style="text-align: center;">Muestras</th>
+<th style="text-align: right;">Porcentaje (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tomato</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: right;">28.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maize</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: right;">22.67</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Soya bean</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: right;">14.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peanut</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: right;">10.67</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red pepper</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: right;">5.33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sorghum</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: right;">5.33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pea</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: right;">4.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common bean</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;">2.67</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gramineae</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;">2.67</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wheat</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;">2.67</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purple bush-bean</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: right;">1.33</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>El argumento <code>digits = 2</code> muestra los valores numéricos con un máximo de dos cifras decimales, según su formato.</p>
+<p><strong>Importante:</strong> cambiar el número de decimales que se muestran no modifica los valores almacenados en nuestro objeto de R.</p>
+</section>
+<section id="otros-argumentos-útiles" class="level5">
+<h5 class="anchored" data-anchor-id="otros-argumentos-útiles">Otros argumentos útiles</h5>
+<p>La función <code>kable()</code> incluye otras opciones que pueden resultar útiles:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Argumento</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>caption</code></td>
+<td>Agrega un título a la tabla.</td>
+</tr>
+<tr class="even">
+<td><code>col.names</code></td>
+<td>Cambia los encabezados visibles.</td>
+</tr>
+<tr class="odd">
+<td><code>align</code></td>
+<td>Controla la alineación de las columnas.</td>
+</tr>
+<tr class="even">
+<td><code>digits</code></td>
+<td>Controla la cantidad de decimales.</td>
+</tr>
+<tr class="odd">
+<td><code>format.args</code></td>
+<td>Permite utilizar opciones de formato numérico, como separadores de miles.</td>
+</tr>
+<tr class="even">
+<td><code>na</code></td>
+<td>Define cómo se muestran los valores faltantes (<code>NA</code>).</td>
+</tr>
+<tr class="odd">
+<td><code>row.names</code></td>
+<td>Permite mostrar u ocultar los nombres de las filas.</td>
+</tr>
+<tr class="even">
+<td><code>booktabs</code></td>
+<td>Mejora el estilo de las líneas horizontales en tablas LaTeX, especialmente para PDF.</td>
+</tr>
+</tbody>
+</table>
+<p>Por ejemplo, podemos indicar explícitamente que no queremos mostrar los nombres de las filas y utilizar un texto para los valores faltantes:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(resumen_hospederos, <span class="dv">10</span>),</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Planta hospedera"</span>, <span class="st">"Número de muestras"</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">na =</span> <span class="st">"Sin dato"</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"r"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Planta hospedera</th>
+<th style="text-align: right;">Número de muestras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tomato</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maize</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Soya bean</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peanut</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red pepper</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sorghum</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pea</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common bean</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gramineae</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wheat</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Qué ocurre si necesitamos tablas más elaboradas?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>knitr::kable()</code> es suficiente para construir tablas sencillas y legibles. Si necesitamos opciones más avanzadas, como colores alternados por fila, encabezados agrupados, notas al pie o tamaños de letra personalizados, podemos utilizar el paquete <a href="https://haozhu233.github.io/kableExtra/awesome_table_in_html.html"><code>kableExtra</code></a>.</p>
+<p>También existen alternativas como <a href="https://gt.rstudio.com/"><code>gt</code></a>, que permite construir tablas con un diseño más elaborado.</p>
+<p>Para los reportes de este curso, <strong>no es necesario utilizar estos paquetes adicionales</strong>: lo importante es presentar tablas claras, con títulos descriptivos, nombres de columnas comprensibles y un formato numérico adecuado.</p>
+</div>
+</div>
+</section>
+<section id="con-kableextra-podemos-incluir-notas-al-pie-integradas" class="level5">
+<h5 class="anchored" data-anchor-id="con-kableextra-podemos-incluir-notas-al-pie-integradas">Con <code>kableExtra</code> podemos incluir notas al pie integradas</h5>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-hospederos-notas</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Distribución de muestras por planta hospedera"</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>resumen_hospederos <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Planta hospedera"</span>, <span class="st">"Número de muestras"</span>),</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="fu">c</span>(<span class="st">"l"</span>, <span class="st">"c"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">full_width =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">position =</span> <span class="st">"center"</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">footnote</span>(</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">general =</span> <span class="st">"Los conteos corresponden a las muestras disponibles en los metadatos."</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">alphabet =</span> <span class="fu">c</span>(</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>      <span class="st">"La cantidad de muestras no necesariamente es igual entre plantas."</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Las muestras pueden proceder de diferentes estudios."</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">general_title =</span> <span class="st">"Nota: "</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div id="tbl-hospederos-notas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hospederos-notas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;11.3: Distribución de muestras por planta hospedera
+</figcaption>
+<div aria-describedby="tbl-hospederos-notas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table cell caption-top table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Planta hospedera</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Número de muestras</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tomato</td>
+<td style="text-align: center;">21</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maize</td>
+<td style="text-align: center;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Soya bean</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Peanut</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Red pepper</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sorghum</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pea</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Common bean</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gramineae</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wheat</td>
+<td style="text-align: center;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Purple bush-bean</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody><tfoot>
+<tr class="odd">
+<td style="text-align: left; padding: 0;"><span style="font-style: italic;">Nota: </span></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0;"><sup></sup> Los conteos corresponden a las muestras disponibles en los metadatos.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; padding: 0;"><sup>a</sup> La cantidad de muestras no necesariamente es igual entre plantas.</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left; padding: 0;"><sup>b</sup> Las muestras pueden proceder de diferentes estudios.</td>
+<td style="text-align: center;"></td>
+</tr>
+</tfoot>
+
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="primera-figura-profundidad-de-lectura" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="primera-figura-profundidad-de-lectura"><span class="header-section-number">11.4.4</span> Primera figura: profundidad de lectura</h3>
+<p>Recuperamos el total de lecturas por muestra y los metadatos de la planta hospedera:</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-profundidad</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Total de lecturas por muestra, según planta hospedera"</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 10</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>profundidad <span class="ot">&lt;-</span> totales_muestra <span class="sc">%&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    metadata_riz <span class="sc">%&gt;%</span> <span class="fu">select</span>(sample_id, host_name),</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"sample_id"</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(profundidad, <span class="fu">aes</span>(<span class="at">x =</span> host_name, <span class="at">y =</span> total_lecturas)) <span class="sc">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#5A9A91"</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Planta hospedera"</span>,</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Total de lecturas"</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Profundidad de lectura por planta"</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-profundidad" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-profundidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="parte11_files/figure-html/fig-profundidad-1.png" class="img-fluid figure-img" width="960">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-profundidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.1: Total de lecturas por muestra, según planta hospedera
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Debajo de la figura, escribe <strong>dos o tres oraciones</strong>: describe una observación, explica por qué puede importar y evita afirmar causalidad.</p>
+</section>
+<section id="segunda-figura-composición-taxonómica-por-filo" class="level3" data-number="11.4.5">
+<h3 data-number="11.4.5" class="anchored" data-anchor-id="segunda-figura-composición-taxonómica-por-filo"><span class="header-section-number">11.4.5</span> Segunda figura: composición taxonómica por filo</h3>
+<p>Usaremos la tabla <code>filos_5</code>, que <strong>ya contiene abundancias relativas</strong>. No hay que recalcularlas.</p>
+<div class="cell">
+<details open="" class="code-fold">
+<summary>Código</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-filos</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Composición taxonómica por filo en muestras de rizosfera"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-width: 11</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-height: 5</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>orden_filos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sort</span>(<span class="fu">setdiff</span>(<span class="fu">unique</span>(filos_5<span class="sc">$</span>taxon_final), <span class="st">"Filos &lt; 5%"</span>)),</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Filos &lt; 5%"</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>colores <span class="ot">&lt;-</span> <span class="fu">as.character</span>(</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  paletteer<span class="sc">::</span><span class="fu">paletteer_d</span>(<span class="st">"colorBlindness::Blue2Orange8Steps"</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>colores <span class="ot">&lt;-</span> <span class="fu">c</span>(colores[<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>], <span class="st">"#999999"</span>)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>filos_grafica <span class="ot">&lt;-</span> filos_5 <span class="sc">%&gt;%</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    metadata_riz <span class="sc">%&gt;%</span> <span class="fu">select</span>(sample_id, host_name),</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">by =</span> <span class="st">"sample_id"</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">suffix =</span> <span class="fu">c</span>(<span class="st">""</span>, <span class="st">"_metadata"</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Si la tabla ya incluía host_name, conservar esa columna.</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="st">"host_name_metadata"</span> <span class="sc">%in%</span> <span class="fu">names</span>(filos_grafica)) {</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>  filos_grafica <span class="ot">&lt;-</span> filos_grafica <span class="sc">%&gt;%</span></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">host_name =</span> <span class="fu">coalesce</span>(host_name, host_name_metadata)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>host_name_metadata)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>  filos_grafica,</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> sample_id, <span class="at">y =</span> abundancia_relativa, <span class="at">fill =</span> taxon_final)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> colores,</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">breaks =</span> orden_filos) <span class="sc">+</span></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> host_name, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>()) <span class="sc">+</span></span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Muestra"</span>, <span class="at">y =</span> <span class="st">"Abundancia relativa"</span>, <span class="at">fill =</span> <span class="st">"Filo"</span>,</span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Composición taxonómica de la rizosfera"</span></span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-46"><a href="#cb14-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb14-47"><a href="#cb14-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">6</span>))</span>
+<span id="cb14-48"><a href="#cb14-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-filos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-filos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="parte11_files/figure-html/fig-filos-1.png" class="img-fluid figure-img" width="1056">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-filos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;11.2: Composición taxonómica por filo en muestras de rizosfera
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Si hay demasiadas muestras para leer sus etiquetas, puedes aumentar <code>fig-width</code>, filtrar una selección de plantas o ajustar el diseño. <strong>No modifiques los datos solamente para que la figura se vea más bonita:</strong> explica siempre los criterios de selección.</p>
+</section>
+<section id="escribir-discusión-y-conclusiones" class="level3" data-number="11.4.6">
+<h3 data-number="11.4.6" class="anchored" data-anchor-id="escribir-discusión-y-conclusiones"><span class="header-section-number">11.4.6</span> Escribir discusión y conclusiones</h3>
+<p>En tu reporte añade texto <strong>fuera de los bloques de R</strong>. Una discusión breve debería responder:</p>
+<ul>
+<li>¿Qué diferencias o semejanzas se observan entre plantas?</li>
+<li>¿Qué limitaciones tienen las comparaciones (número de muestras, procedencia, protocolos, etc.)?</li>
+<li>¿Qué análisis adicional sería necesario para sustentar una explicación biológica?</li>
+</ul>
+<p>En las conclusiones resume <strong>lo que efectivamente muestran tus resultados</strong>. Evita frases como “la planta causa esta composición” si el análisis solo es descriptivo.</p>
+</section>
+</section>
+<section id="renderizar-y-comprobar-la-reproducibilidad" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="renderizar-y-comprobar-la-reproducibilidad"><span class="header-section-number">11.5</span> Renderizar y comprobar la reproducibilidad</h2>
+<section id="qué-hace-render" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="qué-hace-render"><span class="header-section-number">11.5.1</span> ¿Qué hace Render?</h3>
+<p>Al seleccionar <strong>Render</strong> en RStudio, Quarto procesa el <code>.qmd</code>, ejecuta sus bloques de código y produce un archivo HTML. <strong>Renderizar no es lo mismo que guardar</strong>: guardar conserva el texto del archivo; renderizar genera el documento final con resultados actualizados.</p>
+<p>Puedes usar el botón <strong>Render</strong> de RStudio o la terminal, situada en la raíz del proyecto:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render reporte_rizosfera.qmd <span class="at">--to</span> html</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Se generará <code>reporte_rizosfera.html</code>. Ábrelo en un navegador y comprueba que incluya las tablas, las figuras y las interpretaciones.</p>
+</section>
+<section id="una-prueba-sencilla-de-reproducibilidad" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="una-prueba-sencilla-de-reproducibilidad"><span class="header-section-number">11.5.2</span> Una prueba sencilla de reproducibilidad</h3>
+<ol type="1">
+<li>Guarda tu <code>.qmd</code> y todos los archivos necesarios.</li>
+<li>Reinicia R (<strong>Session → Restart R</strong>).</li>
+<li>Renderiza el documento completo sin ejecutar manualmente bloques en la consola.</li>
+<li>Comprueba que el HTML se genera correctamente.</li>
+</ol>
+<p><strong>¿Por qué reiniciar R?</strong> Para detectar si el reporte depende de objetos que estaban en la memoria pero no se crean dentro del documento.</p>
+</section>
+<section id="errores-frecuentes" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="errores-frecuentes"><span class="header-section-number">11.5.3</span> Errores frecuentes</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Síntoma</th>
+<th>Posible causa</th>
+<th>Qué revisar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cannot open file</code></td>
+<td>Ruta o nombre incorrecto</td>
+<td>Ubicación del <code>.qmd</code> y rutas relativas</td>
+</tr>
+<tr class="even">
+<td><code>object 'x' not found</code></td>
+<td>Objeto creado solo en la consola</td>
+<td>Orden de los bloques y creación de objetos</td>
+</tr>
+<tr class="odd">
+<td><code>could not find function</code></td>
+<td>Falta cargar un paquete</td>
+<td>Bloque inicial con <code>library()</code></td>
+</tr>
+<tr class="even">
+<td>El HTML no muestra una figura</td>
+<td><code>eval: false</code>, <code>include: false</code> o un error</td>
+<td>Opciones del bloque y mensajes de renderizado</td>
+</tr>
+<tr class="odd">
+<td>El reporte funciona solo en tu equipo</td>
+<td>Rutas absolutas o archivos faltantes</td>
+<td>Organización del proyecto y archivos compartidos</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consejo:</strong> no ocultes los errores con <code>error: true</code> para “hacer que renderice”. Corrige primero la causa.</p>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧠 Pregunta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un bloque utiliza <code>datos_filtrados</code>, pero ese objeto se creó ayer en la consola y nunca aparece definido en el <code>.qmd</code>. ¿Qué sucederá al renderizar desde una sesión limpia?</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>El documento fallará con un error de objeto no encontrado. Debemos incluir en el <code>.qmd</code> las instrucciones que crean <code>datos_filtrados</code>, o cargarlo explícitamente desde un archivo disponible.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="compartir-el-proyecto-con-github-y-github-pages" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="compartir-el-proyecto-con-github-y-github-pages"><span class="header-section-number">11.6</span> Compartir el proyecto con GitHub y GitHub Pages</h2>
+<section id="qué-debemos-compartir" class="level3" data-number="11.6.1">
+<h3 data-number="11.6.1" class="anchored" data-anchor-id="qué-debemos-compartir"><span class="header-section-number">11.6.1</span> 5.1. ¿Qué debemos compartir?</h3>
+<p>Una organización posible es:</p>
+<pre class="text"><code>reporte_rizosfera/
+├── reporte_rizosfera.qmd
+├── README.md
+├── data_raw/
+│   └── datos_rizosfera/
+│       └── metadata_rizosfera.csv
+├── results/
+│   ├── totales_muestra.tsv
+│   ├── generos_5.tsv
+│   └── filos_5.tsv
+└── docs/
+    └── index.html</code></pre>
+<p><strong>Nota:</strong> este esquema muestra los archivos necesarios para <strong>el reporte de ejemplo</strong>, que lee tablas ya procesadas. Para reproducir también el procesamiento de las sesiones anteriores, habría que conservar los datos originales y los scripts correspondientes. Si existen restricciones de privacidad, licencia o tamaño, no subas datos que no deban compartirse públicamente.</p>
+<p>El archivo <code>README.md</code> debe explicar qué contiene el proyecto, cómo abrir el reporte y cómo reproducirlo. Por ejemplo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Análisis de la rizosfera</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Reporte elaborado con R y Quarto para explorar la composición</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>microbiana de muestras de rizosfera.</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Archivos</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`reporte_rizosfera.qmd`</span>: código y texto del reporte.</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`results/`</span>: tablas procesadas utilizadas en el reporte.</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`docs/index.html`</span>: versión HTML publicada.</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reproducir</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Abrir el proyecto en RStudio.</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Instalar los paquetes requeridos.</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Renderizar <span class="in">`reporte_rizosfera.qmd`</span>.</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="generar-un-html-preparado-para-github-pages" class="level3" data-number="11.6.2">
+<h3 data-number="11.6.2" class="anchored" data-anchor-id="generar-un-html-preparado-para-github-pages"><span class="header-section-number">11.6.2</span> Generar un HTML preparado para GitHub Pages</h3>
+<p>GitHub puede <strong>almacenar</strong> archivos HTML, pero no los presenta automáticamente como un sitio web. Para publicarlos como página, usaremos <strong>GitHub Pages</strong>.</p>
+<p>Desde la terminal, en la raíz del proyecto, ejecuta:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render reporte_rizosfera.qmd <span class="at">--to</span> html <span class="at">--output</span> index.html <span class="at">--output-dir</span> docs</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Esto genera <code>docs/index.html</code>. <strong>El <code>.qmd</code> sigue en la raíz del proyecto</strong>, de modo que sus rutas a <code>results/</code> y <code>data_raw/</code> se resuelven durante el renderizado desde allí. La carpeta <code>docs/</code> contendrá el resultado que publicaremos.</p>
+<p>Para facilitar que el HTML sea autocontenido, puedes agregar al YAML del <strong>reporte</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Esta opción incorpora los recursos compatibles (como estilos y figuras generadas) dentro del HTML y facilita compartir un solo archivo. <strong>No incrusta automáticamente los datos de entrada ni el código fuente</strong>; esos deben compartirse por separado si buscamos reproducibilidad.</p>
+</section>
+<section id="subir-el-proyecto-a-github" class="level3" data-number="11.6.3">
+<h3 data-number="11.6.3" class="anchored" data-anchor-id="subir-el-proyecto-a-github"><span class="header-section-number">11.6.3</span> Subir el proyecto a GitHub</h3>
+<p>Si ya tienes un repositorio conectado con Git en RStudio, puedes usar el panel <strong>Git</strong> para revisar los cambios, hacer <strong>Commit</strong> y después <strong>Push</strong>. Si trabajas desde la terminal y tu repositorio remoto ya está configurado:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add reporte_rizosfera.qmd README.md docs/ results/ data_raw/datos_rizosfera/metadata_rizosfera.csv</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Agregar reporte reproducible de rizosfera"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Importante:</strong> estos comandos suponen que ya inicializaste Git, configuraste tu identidad y conectaste el repositorio con GitHub. Si todavía no lo has hecho, primero crea un repositorio en GitHub y conéctalo siguiendo el flujo de Git de RStudio. Antes de hacer <code>git add</code>, revisa que no incluyas datos privados, archivos temporales o archivos grandes innecesarios.</p>
+</section>
+<section id="publicar-con-github-pages" class="level3" data-number="11.6.4">
+<h3 data-number="11.6.4" class="anchored" data-anchor-id="publicar-con-github-pages"><span class="header-section-number">11.6.4</span> Publicar con GitHub Pages</h3>
+<p>En GitHub, abre tu repositorio y sigue estos pasos:</p>
+<ol type="1">
+<li>Entra a <strong>Settings → Pages</strong>.</li>
+<li>En <strong>Build and deployment</strong>, selecciona <strong>Deploy from a branch</strong>.</li>
+<li>Elige la rama donde subiste los archivos (por ejemplo, <code>main</code>).</li>
+<li>Selecciona la carpeta <strong><code>/docs</code></strong> y guarda los cambios.</li>
+<li>Espera a que GitHub indique la dirección de publicación. La primera publicación puede tardar unos minutos.</li>
+<li>Abre el enlace público y comprueba que se vea el reporte completo.</li>
+</ol>
+<p>La dirección suele tener una estructura como:</p>
+<pre class="text"><code>https://USUARIO.github.io/NOMBRE-REPOSITORIO/</code></pre>
+<p><strong>No confundas dos enlaces:</strong> la URL del repositorio muestra los archivos y su historial; la URL de GitHub Pages abre el reporte como una página web.</p>
+<p>Si modificas el <code>.qmd</code>, debes <strong>renderizar de nuevo</strong>, guardar los cambios en Git y hacer <strong>Push</strong> para actualizar la versión publicada. El HTML no se actualiza por sí solo cuando editas el código fuente.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Y si no queremos publicar un sitio?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>También puedes entregar el archivo HTML ya renderizado junto con el <code>.qmd</code> y los datos necesarios. La persona que lo reciba podrá abrir el HTML localmente en su navegador. <strong>GitHub Pages es una forma cómoda de compartir el reporte mediante un enlace, pero no es un requisito para que el análisis sea reproducible.</strong></p>
+</div>
+</div>
+</section>
+</section>
+<section id="actividad-final" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="actividad-final"><span class="header-section-number">11.7</span> Actividad Final</h2>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>🧪 Actividad. Revisión de nuestras entregas reproducibles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ahora que conocemos cómo funcionan los reportes reproducibles, regresa a las <strong>tareas que has realizado durante el curso</strong> y revisa que estén preparadas correctamente para su entrega.</p>
+<p>Verifica lo siguiente:</p>
+<ol type="1">
+<li><strong>Archivos renderizados:</strong> todos tus ejercicios deben estar disponibles en un formato que permita consultar directamente sus resultados, como HTML o PDF. No basta con subir únicamente los archivos <code>.qmd</code> o <code>.Rmd</code>.</li>
+<li><strong>Código ejecutado:</strong> comprueba que las tablas, gráficas y resultados aparezcan correctamente en los documentos renderizados.</li>
+<li><strong>Ejercicios completos:</strong> asegúrate de que cada ejercicio incluya las respuestas, explicaciones y resultados solicitados.</li>
+<li><strong>Organización del repositorio:</strong> revisa que los archivos estén organizados y tengan nombres claros que permitan identificar a qué tema o sesión pertenecen.</li>
+<li><strong>Acceso a los documentos:</strong> abre los archivos renderizados y verifica que puedan consultarse sin necesidad de ejecutar R. Si utilizas GitHub Pages, comprueba que los enlaces funcionen correctamente.</li>
+<li><strong>Reproducibilidad:</strong> cuando corresponda, verifica que los archivos fuente, datos y rutas utilizados permitan volver a generar los resultados.</li>
+</ol>
+<p><strong>Comprobación final:</strong> imagina que otra persona abre tu repositorio de GitHub sin tener R ni RStudio instalados. ¿Puede encontrar tus tareas, abrir los documentos y revisar todas tus soluciones y resultados?</p>
+<p>Si la respuesta es no, realiza las correcciones necesarias antes de entregar.</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Recomendación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Antes de finalizar, abre tu repositorio directamente desde GitHub y revisa los archivos como si fueras la persona que evaluará tus tareas.</p>
+<p>Recuerda que <strong>no se revisarán cuadernos que requieran ejecutar el código para visualizar sus resultados</strong>. Los documentos deben estar previamente renderizados y ser legibles.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Lista de verificación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul class="task-list">
+<li><label><input type="checkbox">El documento tiene introducción, metodología, resultados y conclusiones.</label></li>
+<li><label><input type="checkbox">Los archivos de entrada existen en las rutas utilizadas.</label></li>
+<li><label><input type="checkbox">El reporte se renderiza sin depender de objetos de la consola.</label></li>
+<li><label><input type="checkbox">Las tablas y figuras aparecen correctamente en el HTML.</label></li>
+<li><label><input type="checkbox">Cada figura tiene una interpretación, no solo un título.</label></li>
+<li><label><input type="checkbox">El <code>.qmd</code>, el HTML y el <code>README.md</code> están guardados.</label></li>
+<li><label><input type="checkbox">El enlace compartido permite consultar el resultado.</label></li>
+<li><label><input type="checkbox">No se publicaron datos privados ni archivos innecesarios.</label></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="para-seguir-aprendiendo" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="para-seguir-aprendiendo"><span class="header-section-number">11.8</span> Para seguir aprendiendo</h2>
+<ul>
+<li><a href="https://quarto.org/docs/get-started/hello/rstudio.html">Quarto: guía de inicio con RStudio</a></li>
+<li><a href="https://quarto.org/docs/computations/execution-options.html">Quarto: opciones de ejecución</a></li>
+<li><a href="https://quarto.org/docs/output-formats/html-basics.html">Quarto: formato HTML</a></li>
+<li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">GitHub Docs: configuración de GitHub Pages</a></li>
+<li><a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a></li>
+</ul>
+<p><strong>Cierre:</strong> un análisis bioinformático está mejor documentado cuando otra persona puede entender <strong>qué hicimos, por qué lo hicimos y cómo obtener nuevamente los resultados</strong>.</p>
+
+
 </section>
 
 </main> <!-- /main -->

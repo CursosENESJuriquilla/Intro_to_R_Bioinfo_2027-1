@@ -2,14 +2,14 @@
 
 ## De un análisis en R a un reporte HTML que podemos compartir
 
-## ¿Por qué documentar nuestros análisis? 
+## ¿Por qué documentar nuestros análisis?
 
 Imagina que obtienes una figura sobre la composición microbiana de la rizosfera y la envías a una compañera. La figura permite ver el resultado, pero no responde por sí sola preguntas como: ¿qué muestras se utilizaron?, ¿qué filtros se aplicaron?, ¿qué código generó la figura? o ¿qué versiones de los paquetes se emplearon?
 
 En un proyecto bioinformático conviene distinguir tres productos:
 
 | Producto | ¿Qué permite hacer? | ¿Qué no garantiza? |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | **Script `.R`** | Consultar y ejecutar instrucciones | Que los resultados y su interpretación estén explicados |
 | **Reporte `.html`** | Leer resultados, figuras, tablas y explicaciones sin ejecutar R | Que el lector pueda reproducirlos si faltan código o datos |
 | **Proyecto reproducible** | Recuperar código, datos, dependencias e instrucciones para regenerar resultados | Que los resultados sean científicamente correctos por sí mismos |
@@ -28,14 +28,14 @@ No necesariamente. El HTML permite **consultar** los resultados, pero para **rep
 :::
 ::::
 
-## Nuestro primer documento Quarto 
+## Nuestro primer documento Quarto
 
 ### Crear un archivo `.qmd` en RStudio
 
-1. Abre el **proyecto de RStudio** que contiene las carpetas `data_raw/` y `results/`.
-2. Selecciona **File → New File → Quarto Document…**.
-3. Escribe un título y selecciona **HTML** como formato de salida.
-4. Guarda el archivo como `reporte_rizosfera.qmd` en la **raíz del proyecto** (al mismo nivel que `results/`).
+1.  Abre el **proyecto de RStudio** que contiene las carpetas `data_raw/` y `results/`.
+2.  Selecciona **File → New File → Quarto Document…**.
+3.  Escribe un título y selecciona **HTML** como formato de salida.
+4.  Guarda el archivo como `reporte_rizosfera.qmd` en la **raíz del proyecto** (al mismo nivel que `results/`).
 
 Un documento Quarto combina **texto escrito en Markdown**, **código ejecutable** y **opciones de presentación**. El archivo de origen termina en `.qmd` y puede generar HTML, PDF u otros formatos.
 
@@ -43,7 +43,7 @@ Un documento Quarto combina **texto escrito en Markdown**, **código ejecutable*
 
 Al principio del archivo aparece un bloque entre líneas `---`:
 
-```yaml
+``` yaml
 ---
 title: "Composición microbiana de la rizosfera"
 author: "Nombre del estudiante"
@@ -71,7 +71,7 @@ execute:
 
 En un archivo `.qmd` podemos escribir:
 
-````markdown
+``` markdown
 # Introducción
 
 Este reporte analiza la **composición taxonómica** de muestras de rizosfera.
@@ -84,36 +84,34 @@ Este reporte analiza la **composición taxonómica** de muestras de rizosfera.
 - Segundo objetivo.
 
 [Documentación de Quarto](https://quarto.org/docs/)
-````
+```
 
-| Sintaxis | Resultado |
-|---|---|
-| `# Título` | Encabezado principal |
-| `## Subtítulo` | Encabezado de segundo nivel |
-| `**texto**` | Negritas |
-| `*texto*` | Cursivas |
-| `` `filter()` `` | Código en línea |
-| `[texto](https://ejemplo.org)` | Enlace |
+| Sintaxis                       | Resultado                   |
+|--------------------------------|-----------------------------|
+| `# Título`                     | Encabezado principal        |
+| `## Subtítulo`                 | Encabezado de segundo nivel |
+| `**texto**`                    | Negritas                    |
+| `*texto*`                      | Cursivas                    |
+| `` `filter()` ``               | Código en línea             |
+| `[texto](https://ejemplo.org)` | Enlace                      |
 
 ### Bloques de código y opciones de ejecución
 
 Los bloques de R comienzan con tres acentos graves y `{r}`, y terminan con tres acentos graves. Por ejemplo, **copia el siguiente bloque en tu reporte nuevo**:
 
-
 ```{r}
 #| echo: fenced
 #| eval: false
+#| label: fig-ejemplo
+#| fig-cap: "Ejemplo de una figura generada desde R"
 
 plot(1:5, (1:5)^2, pch = 19)
 ```
 
-
-
-
 Las líneas `#|` son **opciones del bloque**. Algunas útiles son:
 
 | Opción | Efecto |
-|---|---|
+|------------------------------------|------------------------------------|
 | `#| echo: false` | Ejecuta el código, pero no lo muestra en el HTML |
 | `#| eval: false` | Muestra el código sin ejecutarlo |
 | `#| include: false` | Ejecuta el código, pero no muestra ni código ni resultados |
@@ -134,3 +132,594 @@ Queremos que el HTML muestre una gráfica pero no las instrucciones de R que la 
 `#| echo: false`: el bloque se ejecuta y la gráfica se muestra, pero el código queda oculto.
 :::
 ::::
+
+## Construimos un reporte de rizosfera
+
+En esta sección construiremos el **contenido de un segundo archivo**, `reporte_rizosfera.qmd`. Los bloques que siguen son fragmentos para **copiar en ese archivo**; los ejemplos del tutorial no sustituyen tu reporte.
+
+### Estructura del reporte científico
+
+Nuestro reporte tendrá las siguientes secciones:
+
+1.  **Introducción:** contexto y pregunta biológica.
+2.  **Datos y metodología:** archivos, variables y procedimientos utilizados.
+3.  **Resultados:** una tabla descriptiva y dos visualizaciones.
+4.  **Discusión:** interpretación y limitaciones.
+5.  **Conclusiones:** hallazgos principales y posibles preguntas futuras.
+
+**No basta con insertar figuras:** cada resultado debe acompañarse de una explicación breve de lo que se observa y de lo que **no** podemos concluir.
+
+### Cargar paquetes y archivos
+
+Añade este bloque al principio de tu reporte, después de la introducción, cambia `#| include: true` por `#| include: false`:
+
+```{r}
+#| echo: fenced
+#| label: setup
+#| include: true
+#| message: false
+#| warning: false
+ 
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(paletteer)
+library(kableExtra)
+
+metadata_riz <- read_csv("data_raw/datos_rizosfera/metadata_rizosfera.csv")
+totales_muestra <- read_tsv("results/totales_muestra.tsv")
+generos_5 <- read_tsv("results/generos_5.tsv")
+filos_5 <- read_tsv("results/filos_5.tsv")
+```
+
+::: callout-note
+### Preparar el entorno de trabajo
+
+Al comenzar un reporte reproducible, es conveniente incluir un bloque de configuración donde carguemos los paquetes y archivos que utilizaremos.
+
+En un reporte final, normalmente no necesitamos mostrar este código al lector, aunque sí necesitamos que se ejecute. Para ello podemos utilizar:
+
+- `#| include: false`: ejecuta el bloque, pero oculta tanto el código como sus resultados.
+- `#| echo: false`: ejecuta el bloque y muestra sus resultados, pero oculta el código.
+
+
+:::
+
+
+
+**Importante:** las rutas son relativas a la raíz del proyecto. Si en tu computadora cambiaste el nombre o la ubicación de los archivos, ajusta las rutas antes de renderizar. El bloque debe poder ejecutarse sin objetos creados previamente en la consola.
+
+### Tabla descriptiva de las muestras
+
+Primero mostraremos cuántas muestras tenemos por planta hospedera. Escribe un párrafo que explique qué representa la tabla y agrega:
+
+```{r}
+#| echo: fenced
+#| label: tbl-muestras-r
+
+
+resumen_hospederos <- metadata_riz %>%
+  count(host_name, name = "numero_muestras") %>%
+  arrange(desc(numero_muestras))
+
+knitr::kable(
+  resumen_hospederos,
+  col.names = c("Planta hospedera", "Número de muestras"),
+  caption = "Número de muestras por planta hospedera"
+)
+```
+
+**Para interpretar:** ¿todas las plantas tienen la misma cantidad de muestras? ¿Cómo podría influir esto al comparar sus resultados?
+
+
+
+#### Más sobre `knitr::kable()`
+
+En un reporte científico, las tablas permiten presentar resultados de manera organizada. Sin embargo, mostrar directamente un `data.frame` no siempre produce una presentación adecuada para compartir con otras personas.
+
+La función `knitr::kable()` convierte una tabla de R en una tabla con formato para nuestro documento. Podemos utilizarla tanto en reportes HTML como en PDF.
+
+Por ejemplo, anteriormente calculamos el número de muestras por planta hospedera:
+
+```{r}
+#| echo: fenced
+
+resumen_hospederos <- metadata_riz %>%
+  count(host_name, name = "numero_muestras") %>%
+  arrange(desc(numero_muestras))
+
+knitr::kable(resumen_hospederos)
+```
+
+Aunque la tabla ya es legible, podemos mejorar su presentación mediante diferentes argumentos.
+
+##### Agregar un título y modificar los nombres de las columnas
+
+Los argumentos `caption` y `col.names` permiten agregar un título descriptivo y utilizar encabezados más claros.
+
+```{r}
+#| echo: fenced
+#| label: tbl-hospederos
+#| tbl-cap: "Número de muestras por planta hospedera"
+
+knitr::kable(
+  resumen_hospederos,
+  col.names = c("Planta hospedera", "Número de muestras")
+)
+```
+
+En este ejemplo:
+
+- `col.names` modifica los nombres que aparecen en la tabla, sin cambiar los nombres originales del objeto en R.
+- `tbl-cap` agrega un título a la tabla mediante Quarto.
+- `label: tbl-hospederos` permite identificarla y referenciarla desde el texto.
+
+Por ejemplo, podemos escribir:
+
+> En la @tbl-hospederos se presenta el número de muestras disponibles para cada planta hospedera.
+
+Quarto genera automáticamente la referencia a la tabla.
+
+::: {.callout-note icon="false"}
+**¿Y el argumento `caption` de `kable()`?**
+
+También podemos agregar el título directamente:
+
+`knitr::kable(resumen_hospederos, caption = "Número de muestras por planta hospedera")`
+
+Sin embargo, en Quarto es conveniente utilizar `tbl-cap` junto con `label` cuando queremos incorporar referencias cruzadas. No es necesario definir el mismo título en ambos lugares.
+:::
+
+##### Seleccionar las filas que queremos mostrar
+
+En ocasiones, una tabla contiene demasiadas observaciones para incluirlas completas en un reporte.
+
+Podemos mostrar únicamente las primeras filas:
+
+```{r}
+#| echo: fenced
+
+knitr::kable(
+  head(resumen_hospederos, 10),
+  col.names = c("Planta hospedera", "Número de muestras"),
+  caption = "Primeras diez plantas según el número de muestras"
+)
+```
+
+La función `head()` no modifica la tabla original; solamente selecciona las primeras observaciones para mostrarlas.
+
+##### Alinear el contenido de las columnas
+
+El argumento `align` controla la alineación:
+
+- `"l"`: izquierda (*left*).
+- `"c"`: centro (*center*).
+- `"r"`: derecha (*right*).
+
+Podemos establecer una alineación diferente para cada columna:
+
+```{r}
+#| echo: fenced
+
+knitr::kable(
+  head(resumen_hospederos, 10),
+  col.names = c("Planta hospedera", "Número de muestras"),
+  align = c("l", "c"),
+  caption = "Número de muestras por planta hospedera"
+)
+```
+
+En este caso, los nombres de las plantas se alinean a la izquierda y los conteos al centro.
+
+##### Controlar los decimales
+
+Cuando trabajamos con abundancias relativas, podemos obtener números con muchos decimales. Para mejorar la lectura, `kable()` permite controlar cuántos se muestran mediante `digits`.
+
+Por ejemplo, calculemos la proporción de muestras correspondiente a cada planta:
+
+```{r}
+#| echo: fenced
+
+tabla_proporciones <- resumen_hospederos %>%
+  mutate(
+    proporcion = numero_muestras / sum(numero_muestras),
+    porcentaje = proporcion * 100
+  ) %>%
+  select(host_name, numero_muestras, porcentaje)
+
+knitr::kable(
+  tabla_proporciones,
+  col.names = c("Planta hospedera", "Muestras", "Porcentaje (%)"),
+  digits = 2,
+  align = c("l", "c", "r"),
+  caption = "Distribución porcentual de las muestras por planta"
+)
+```
+
+El argumento `digits = 2` muestra los valores numéricos con un máximo de dos cifras decimales, según su formato.
+
+**Importante:** cambiar el número de decimales que se muestran no modifica los valores almacenados en nuestro objeto de R.
+
+
+
+##### Otros argumentos útiles
+
+La función `kable()` incluye otras opciones que pueden resultar útiles:
+
+| Argumento | Función |
+|---|---|
+| `caption` | Agrega un título a la tabla. |
+| `col.names` | Cambia los encabezados visibles. |
+| `align` | Controla la alineación de las columnas. |
+| `digits` | Controla la cantidad de decimales. |
+| `format.args` | Permite utilizar opciones de formato numérico, como separadores de miles. |
+| `na` | Define cómo se muestran los valores faltantes (`NA`). |
+| `row.names` | Permite mostrar u ocultar los nombres de las filas. |
+| `booktabs` | Mejora el estilo de las líneas horizontales en tablas LaTeX, especialmente para PDF. |
+
+Por ejemplo, podemos indicar explícitamente que no queremos mostrar los nombres de las filas y utilizar un texto para los valores faltantes:
+
+```{r}
+#| echo: fenced
+
+knitr::kable(
+  head(resumen_hospederos, 10),
+  col.names = c("Planta hospedera", "Número de muestras"),
+  row.names = FALSE,
+  na = "Sin dato",
+  align = c("l", "r")
+)
+```
+
+::: {.callout-note icon="false"}
+## ¿Qué ocurre si necesitamos tablas más elaboradas?
+
+`knitr::kable()` es suficiente para construir tablas sencillas y legibles. Si necesitamos opciones más avanzadas, como colores alternados por fila, encabezados agrupados, notas al pie o tamaños de letra personalizados, podemos utilizar el paquete [`kableExtra`](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html).
+
+También existen alternativas como [`gt`](https://gt.rstudio.com/), que permite construir tablas con un diseño más elaborado.
+
+Para los reportes de este curso, **no es necesario utilizar estos paquetes adicionales**: lo importante es presentar tablas claras, con títulos descriptivos, nombres de columnas comprensibles y un formato numérico adecuado.
+:::
+
+
+##### Con `kableExtra` podemos incluir notas al pie integradas
+
+
+```{r}
+#| echo: fenced
+#| label: tbl-hospederos-notas
+#| tbl-cap: "Distribución de muestras por planta hospedera"
+
+
+resumen_hospederos %>%
+  knitr::kable(
+    col.names = c("Planta hospedera", "Número de muestras"),
+    align = c("l", "c")
+  ) %>%
+  kableExtra::kable_styling(
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  kableExtra::footnote(
+    general = "Los conteos corresponden a las muestras disponibles en los metadatos.",
+    alphabet = c(
+      "La cantidad de muestras no necesariamente es igual entre plantas.",
+      "Las muestras pueden proceder de diferentes estudios."
+    ),
+    general_title = "Nota: "
+  )
+```
+
+
+
+### Primera figura: profundidad de lectura
+
+Recuperamos el total de lecturas por muestra y los metadatos de la planta hospedera:
+
+```{r}
+#| echo: fenced
+#| label: fig-profundidad
+#| fig-cap: "Total de lecturas por muestra, según planta hospedera"
+#| fig-width: 10
+#| fig-height: 5
+
+
+profundidad <- totales_muestra %>%
+  left_join(
+    metadata_riz %>% select(sample_id, host_name),
+    by = "sample_id"
+  )
+
+ggplot(profundidad, aes(x = host_name, y = total_lecturas)) +
+  geom_boxplot(fill = "#5A9A91", alpha = 0.8) +
+  coord_flip() +
+  labs(
+    x = "Planta hospedera",
+    y = "Total de lecturas",
+    title = "Profundidad de lectura por planta"
+  ) +
+  theme_minimal()
+```
+
+Debajo de la figura, escribe **dos o tres oraciones**: describe una observación, explica por qué puede importar y evita afirmar causalidad.
+
+### Segunda figura: composición taxonómica por filo
+
+Usaremos la tabla `filos_5`, que **ya contiene abundancias relativas**. No hay que recalcularlas.
+
+```{r}
+#| echo: fenced
+#| label: fig-filos
+#| fig-cap: "Composición taxonómica por filo en muestras de rizosfera"
+#| fig-width: 11
+#| fig-height: 5
+
+orden_filos <- c(
+  sort(setdiff(unique(filos_5$taxon_final), "Filos < 5%")),
+  "Filos < 5%"
+)
+
+
+colores <- as.character(
+  paletteer::paletteer_d("colorBlindness::Blue2Orange8Steps")
+)
+
+colores <- c(colores[1:7], "#999999")
+
+filos_grafica <- filos_5 %>%
+  left_join(
+    metadata_riz %>% select(sample_id, host_name),
+    by = "sample_id",
+    suffix = c("", "_metadata")
+  )
+
+# Si la tabla ya incluía host_name, conservar esa columna.
+if ("host_name_metadata" %in% names(filos_grafica)) {
+  filos_grafica <- filos_grafica %>%
+    mutate(host_name = coalesce(host_name, host_name_metadata)) %>%
+    select(-host_name_metadata)
+}
+
+ggplot(
+  filos_grafica,
+  aes(x = sample_id, y = abundancia_relativa, fill = taxon_final)
+) +
+  geom_col() +
+  scale_fill_manual(values = colores,
+                    breaks = orden_filos) +
+  facet_wrap(~ host_name, scales = "free_x") +
+  scale_y_continuous(labels = scales::label_percent()) +
+  labs(
+    x = "Muestra", y = "Abundancia relativa", fill = "Filo",
+    title = "Composición taxonómica de la rizosfera"
+  ) +
+  theme_minimal(base_size = 10) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 6))
+```
+
+Si hay demasiadas muestras para leer sus etiquetas, puedes aumentar `fig-width`, filtrar una selección de plantas o ajustar el diseño. **No modifiques los datos solamente para que la figura se vea más bonita:** explica siempre los criterios de selección.
+
+### Escribir discusión y conclusiones
+
+En tu reporte añade texto **fuera de los bloques de R**. Una discusión breve debería responder:
+
+- ¿Qué diferencias o semejanzas se observan entre plantas?
+- ¿Qué limitaciones tienen las comparaciones (número de muestras, procedencia, protocolos, etc.)?
+- ¿Qué análisis adicional sería necesario para sustentar una explicación biológica?
+
+En las conclusiones resume **lo que efectivamente muestran tus resultados**. Evita frases como “la planta causa esta composición” si el análisis solo es descriptivo.
+
+
+
+## Renderizar y comprobar la reproducibilidad
+
+### ¿Qué hace Render?
+
+Al seleccionar **Render** en RStudio, Quarto procesa el `.qmd`, ejecuta sus bloques de código y produce un archivo HTML. **Renderizar no es lo mismo que guardar**: guardar conserva el texto del archivo; renderizar genera el documento final con resultados actualizados.
+
+Puedes usar el botón **Render** de RStudio o la terminal, situada en la raíz del proyecto:
+
+```bash
+quarto render reporte_rizosfera.qmd --to html
+```
+
+Se generará `reporte_rizosfera.html`. Ábrelo en un navegador y comprueba que incluya las tablas, las figuras y las interpretaciones.
+
+### Una prueba sencilla de reproducibilidad
+
+1. Guarda tu `.qmd` y todos los archivos necesarios.
+2. Reinicia R (**Session → Restart R**).
+3. Renderiza el documento completo sin ejecutar manualmente bloques en la consola.
+4. Comprueba que el HTML se genera correctamente.
+
+**¿Por qué reiniciar R?** Para detectar si el reporte depende de objetos que estaban en la memoria pero no se crean dentro del documento.
+
+### Errores frecuentes
+
+| Síntoma | Posible causa | Qué revisar |
+|---|---|---|
+| `cannot open file` | Ruta o nombre incorrecto | Ubicación del `.qmd` y rutas relativas |
+| `object 'x' not found` | Objeto creado solo en la consola | Orden de los bloques y creación de objetos |
+| `could not find function` | Falta cargar un paquete | Bloque inicial con `library()` |
+| El HTML no muestra una figura | `eval: false`, `include: false` o un error | Opciones del bloque y mensajes de renderizado |
+| El reporte funciona solo en tu equipo | Rutas absolutas o archivos faltantes | Organización del proyecto y archivos compartidos |
+
+**Consejo:** no ocultes los errores con `error: true` para “hacer que renderice”. Corrige primero la causa.
+
+:::: {.callout-warning icon="false"}
+## 🧠 Pregunta
+
+Un bloque utiliza `datos_filtrados`, pero ese objeto se creó ayer en la consola y nunca aparece definido en el `.qmd`. ¿Qué sucederá al renderizar desde una sesión limpia?
+
+::: {.callout-tip collapse="true" icon="false"}
+## Solución
+
+El documento fallará con un error de objeto no encontrado. Debemos incluir en el `.qmd` las instrucciones que crean `datos_filtrados`, o cargarlo explícitamente desde un archivo disponible.
+:::
+::::
+
+
+## Compartir el proyecto con GitHub y GitHub Pages
+
+### 5.1. ¿Qué debemos compartir?
+
+Una organización posible es:
+
+```text
+reporte_rizosfera/
+├── reporte_rizosfera.qmd
+├── README.md
+├── data_raw/
+│   └── datos_rizosfera/
+│       └── metadata_rizosfera.csv
+├── results/
+│   ├── totales_muestra.tsv
+│   ├── generos_5.tsv
+│   └── filos_5.tsv
+└── docs/
+    └── index.html
+```
+
+**Nota:** este esquema muestra los archivos necesarios para **el reporte de ejemplo**, que lee tablas ya procesadas. Para reproducir también el procesamiento de las sesiones anteriores, habría que conservar los datos originales y los scripts correspondientes. Si existen restricciones de privacidad, licencia o tamaño, no subas datos que no deban compartirse públicamente.
+
+El archivo `README.md` debe explicar qué contiene el proyecto, cómo abrir el reporte y cómo reproducirlo. Por ejemplo:
+
+````markdown
+# Análisis de la rizosfera
+
+Reporte elaborado con R y Quarto para explorar la composición
+microbiana de muestras de rizosfera.
+
+## Archivos
+- `reporte_rizosfera.qmd`: código y texto del reporte.
+- `results/`: tablas procesadas utilizadas en el reporte.
+- `docs/index.html`: versión HTML publicada.
+
+## Reproducir
+1. Abrir el proyecto en RStudio.
+2. Instalar los paquetes requeridos.
+3. Renderizar `reporte_rizosfera.qmd`.
+````
+
+### Generar un HTML preparado para GitHub Pages
+
+GitHub puede **almacenar** archivos HTML, pero no los presenta automáticamente como un sitio web. Para publicarlos como página, usaremos **GitHub Pages**.
+
+Desde la terminal, en la raíz del proyecto, ejecuta:
+
+```bash
+quarto render reporte_rizosfera.qmd --to html --output index.html --output-dir docs
+```
+
+Esto genera `docs/index.html`. **El `.qmd` sigue en la raíz del proyecto**, de modo que sus rutas a `results/` y `data_raw/` se resuelven durante el renderizado desde allí. La carpeta `docs/` contendrá el resultado que publicaremos.
+
+Para facilitar que el HTML sea autocontenido, puedes agregar al YAML del **reporte**:
+
+```yaml
+format:
+  html:
+    toc: true
+    code-fold: true
+    embed-resources: true
+```
+
+Esta opción incorpora los recursos compatibles (como estilos y figuras generadas) dentro del HTML y facilita compartir un solo archivo. **No incrusta automáticamente los datos de entrada ni el código fuente**; esos deben compartirse por separado si buscamos reproducibilidad.
+
+### Subir el proyecto a GitHub
+
+Si ya tienes un repositorio conectado con Git en RStudio, puedes usar el panel **Git** para revisar los cambios, hacer **Commit** y después **Push**. Si trabajas desde la terminal y tu repositorio remoto ya está configurado:
+
+```bash
+git status
+git add reporte_rizosfera.qmd README.md docs/ results/ data_raw/datos_rizosfera/metadata_rizosfera.csv
+git commit -m "Agregar reporte reproducible de rizosfera"
+git push
+```
+
+**Importante:** estos comandos suponen que ya inicializaste Git, configuraste tu identidad y conectaste el repositorio con GitHub. Si todavía no lo has hecho, primero crea un repositorio en GitHub y conéctalo siguiendo el flujo de Git de RStudio. Antes de hacer `git add`, revisa que no incluyas datos privados, archivos temporales o archivos grandes innecesarios.
+
+### Publicar con GitHub Pages
+
+En GitHub, abre tu repositorio y sigue estos pasos:
+
+1. Entra a **Settings → Pages**.
+2. En **Build and deployment**, selecciona **Deploy from a branch**.
+3. Elige la rama donde subiste los archivos (por ejemplo, `main`).
+4. Selecciona la carpeta **`/docs`** y guarda los cambios.
+5. Espera a que GitHub indique la dirección de publicación. La primera publicación puede tardar unos minutos.
+6. Abre el enlace público y comprueba que se vea el reporte completo.
+
+La dirección suele tener una estructura como:
+
+```text
+https://USUARIO.github.io/NOMBRE-REPOSITORIO/
+```
+
+**No confundas dos enlaces:** la URL del repositorio muestra los archivos y su historial; la URL de GitHub Pages abre el reporte como una página web.
+
+Si modificas el `.qmd`, debes **renderizar de nuevo**, guardar los cambios en Git y hacer **Push** para actualizar la versión publicada. El HTML no se actualiza por sí solo cuando editas el código fuente.
+
+::: {.callout-note icon="false"}
+## ¿Y si no queremos publicar un sitio?
+
+También puedes entregar el archivo HTML ya renderizado junto con el `.qmd` y los datos necesarios. La persona que lo reciba podrá abrir el HTML localmente en su navegador. **GitHub Pages es una forma cómoda de compartir el reporte mediante un enlace, pero no es un requisito para que el análisis sea reproducible.**
+:::
+
+
+
+
+## Actividad Final
+
+:::: {.callout-warning icon="false"}
+## 🧪 Actividad. Revisión de nuestras entregas reproducibles
+
+Ahora que conocemos cómo funcionan los reportes reproducibles, regresa a las **tareas que has realizado durante el curso** y revisa que estén preparadas correctamente para su entrega.
+
+Verifica lo siguiente:
+
+1. **Archivos renderizados:** todos tus ejercicios deben estar disponibles en un formato que permita consultar directamente sus resultados, como HTML o PDF. No basta con subir únicamente los archivos `.qmd` o `.Rmd`.
+2. **Código ejecutado:** comprueba que las tablas, gráficas y resultados aparezcan correctamente en los documentos renderizados.
+3. **Ejercicios completos:** asegúrate de que cada ejercicio incluya las respuestas, explicaciones y resultados solicitados.
+4. **Organización del repositorio:** revisa que los archivos estén organizados y tengan nombres claros que permitan identificar a qué tema o sesión pertenecen.
+5. **Acceso a los documentos:** abre los archivos renderizados y verifica que puedan consultarse sin necesidad de ejecutar R. Si utilizas GitHub Pages, comprueba que los enlaces funcionen correctamente.
+6. **Reproducibilidad:** cuando corresponda, verifica que los archivos fuente, datos y rutas utilizados permitan volver a generar los resultados.
+
+**Comprobación final:** imagina que otra persona abre tu repositorio de GitHub sin tener R ni RStudio instalados. ¿Puede encontrar tus tareas, abrir los documentos y revisar todas tus soluciones y resultados?
+
+Si la respuesta es no, realiza las correcciones necesarias antes de entregar.
+
+::: {.callout-tip collapse="true" icon="false"}
+## Recomendación
+
+Antes de finalizar, abre tu repositorio directamente desde GitHub y revisa los archivos como si fueras la persona que evaluará tus tareas.
+
+Recuerda que **no se revisarán cuadernos que requieran ejecutar el código para visualizar sus resultados**. Los documentos deben estar previamente renderizados y ser legibles.
+:::
+::::
+
+
+
+::: {.callout-tip icon="false"}
+## Lista de verificación 
+
+- [ ] El documento tiene introducción, metodología, resultados y conclusiones.
+- [ ] Los archivos de entrada existen en las rutas utilizadas.
+- [ ] El reporte se renderiza sin depender de objetos de la consola.
+- [ ] Las tablas y figuras aparecen correctamente en el HTML.
+- [ ] Cada figura tiene una interpretación, no solo un título.
+- [ ] El `.qmd`, el HTML y el `README.md` están guardados.
+- [ ] El enlace compartido permite consultar el resultado.
+- [ ] No se publicaron datos privados ni archivos innecesarios.
+:::
+
+
+## Para seguir aprendiendo
+
+- [Quarto: guía de inicio con RStudio](https://quarto.org/docs/get-started/hello/rstudio.html)
+- [Quarto: opciones de ejecución](https://quarto.org/docs/computations/execution-options.html)
+- [Quarto: formato HTML](https://quarto.org/docs/output-formats/html-basics.html)
+- [GitHub Docs: configuración de GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site)
+- [Happy Git and GitHub for the useR](https://happygitwithr.com/)
+
+**Cierre:** un análisis bioinformático está mejor documentado cuando otra persona puede entender **qué hicimos, por qué lo hicimos y cómo obtener nuevamente los resultados**.

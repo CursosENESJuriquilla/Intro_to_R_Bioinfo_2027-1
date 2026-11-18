@@ -1,6 +1,6 @@
 # Información general {.unnumbered}
 
-:::::: {.panel-tabset group="globalInfo"}
+::::: {.panel-tabset group="globalInfo"}
 ## Contenido del curso 📌
 
 ::: {style="text-align: center;"}
@@ -12,7 +12,7 @@
 :::
 
 - **Periodo:** noviembre de 2026.
-- **Duración del contenido:** 16 horas, distribuidas en 8 sesiones de 2 horas efectivas.
+- **Duración del contenido:** 16 horas, distribuidas en 8 sesiones de 2 horas y 30 minutos.
 - **Horario asignado:** bloques de 2 horas y 30 minutos, según el calendario siguiente.
 - **Modalidad:** teórico-práctica, con énfasis en programación y trabajo con datos biológicos.
 - **Herramientas:** R, RStudio, tidyverse, ggplot2, purrr, Quarto y herramientas de reproducibilidad.
@@ -25,11 +25,10 @@
 | 2 | Jueves 5 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Importación y exploración de datos bioinformáticos en R |
 | 3 | Miércoles 11 de noviembre | 3:00–5:30 p. m. | VI-204 | Manipulación y transformación de datos bioinformáticos con `dplyr` y `tidyr` |
 | 4 | Jueves 12 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Integración de datos y automatización de análisis en R |
-| 5 | Miércoles 18 de noviembre | 3:00–5:30 p. m. | VI-204 | Construcción y exploración visual de datos bioinformáticos con `ggplot2` |
-| 6 | Jueves 19 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Documentación y reportes reproducibles con Quarto |
-| 7 | Lunes 23 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Integración y reproducibilidad de proyectos bioinformáticos |
-| 8 | Jueves 26 de noviembre | 3:30–6:00 p. m. | VI-PB01 |  Examen |
-
+| 5 | Miércoles 18 de noviembre | 3:00–5:30 p. m. | VI-204 | Integración de datos y automatización de análisis en R y Construcción y exploración visual de datos bioinformáticos con `ggplot2` |
+| 6 | Jueves 19 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Construcción y exploración visual de datos bioinformáticos con `ggplot2` y Documentación y reproducibilidad de proyectos bioinformáticos con Quarto |
+| 7 | Lunes 23 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Documentación y reproducibilidad de proyectos bioinformáticos con Quarto |
+| 8 | Jueves 26 de noviembre | 3:30–6:00 p. m. | VI-PB01 | Examen |
 
 ### 🎯 Objetivo principal
 
@@ -120,4 +119,4 @@ Las prácticas y tareas se documentarán y entregarán en el **repositorio Git**
 - [Documentación de purrr](https://purrr.tidyverse.org/).
 - [Bioconductor](https://bioconductor.org/).
 - [Documentación de renv](https://rstudio.github.io/renv/).
-::::::
+:::::
