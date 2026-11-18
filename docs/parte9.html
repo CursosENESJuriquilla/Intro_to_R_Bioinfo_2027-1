@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,13 @@
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -77,10 +80,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-256100c28b4d1a71ce469740e6db3c8e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-c366763be4b3545af05400088cd48f18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -1442,97 +1445,6 @@ $ year      &lt;dbl&gt; 2021, 2021, 2020, 2021, 2020, 2021, 2023, 2021, 2020, 20
 </section>
 <section id="ejemplo-de-la-misma-función-documentada" class="level3" data-number="9.7.8">
 <h3 data-number="9.7.8" class="anchored" data-anchor-id="ejemplo-de-la-misma-función-documentada"><span class="header-section-number">9.7.8</span> Ejemplo de la misma función documentada</h3>
-<div class="cell">
-<details open="" class="code-fold">
-<summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Preparar abundancias relativas por nivel taxonómico</span></span>
-<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Agrupa los conteos de una comunidad microbiana según el nivel</span></span>
-<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="co">#' taxonómico seleccionado, calcula abundancias relativas por muestra</span></span>
-<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' y reúne los taxones poco abundantes en la categoría "Otros".</span></span>
-<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' Los taxones sin asignación se conservan como "Sin clasificar".</span></span>
-<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param tabla Tabla con las columnas sample_id, host_name,</span></span>
-<span id="cb74-10"><a href="#cb74-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'   conteo y las columnas de clasificación taxonómica.</span></span>
-<span id="cb74-11"><a href="#cb74-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param nivel Nivel taxonómico que se desea analizar.</span></span>
-<span id="cb74-12"><a href="#cb74-12" aria-hidden="true" tabindex="-1"></a><span class="co">#'   Puede ser "kingdom", "phylum", "class", "order",</span></span>
-<span id="cb74-13"><a href="#cb74-13" aria-hidden="true" tabindex="-1"></a><span class="co">#'   "family", "genus" o "species".</span></span>
-<span id="cb74-14"><a href="#cb74-14" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param umbral Abundancia relativa mínima para conservar</span></span>
-<span id="cb74-15"><a href="#cb74-15" aria-hidden="true" tabindex="-1"></a><span class="co">#'   un taxón individualmente. Por defecto, 0.05 (5%).</span></span>
-<span id="cb74-16"><a href="#cb74-16" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb74-17"><a href="#cb74-17" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Una tabla con las columnas sample_id, host_name,</span></span>
-<span id="cb74-18"><a href="#cb74-18" aria-hidden="true" tabindex="-1"></a><span class="co">#'   taxon_final y abundancia_relativa.</span></span>
-<span id="cb74-19"><a href="#cb74-19" aria-hidden="true" tabindex="-1"></a><span class="co">#'   Las abundancias relativas suman 1 dentro de cada muestra.</span></span>
-<span id="cb74-20"><a href="#cb74-20" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
-<span id="cb74-21"><a href="#cb74-21" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
-<span id="cb74-22"><a href="#cb74-22" aria-hidden="true" tabindex="-1"></a><span class="co">#' generos_5 &lt;- preparar_abundancias(datos_riz, "genus", 0.05)</span></span>
-<span id="cb74-23"><a href="#cb74-23" aria-hidden="true" tabindex="-1"></a><span class="co">#' filos_1 &lt;- preparar_abundancias(datos_riz, "phylum", 0.01)</span></span>
-<span id="cb74-24"><a href="#cb74-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-25"><a href="#cb74-25" aria-hidden="true" tabindex="-1"></a>preparar_abundancias <span class="ot">&lt;-</span> <span class="cf">function</span>(tabla, <span class="at">nivel =</span> <span class="st">"genus"</span>, <span class="at">umbral =</span> <span class="fl">0.05</span>) {</span>
-<span id="cb74-26"><a href="#cb74-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-27"><a href="#cb74-27" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Verificar que los argumentos sean válidos</span></span>
-<span id="cb74-28"><a href="#cb74-28" aria-hidden="true" tabindex="-1"></a>  niveles_validos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb74-29"><a href="#cb74-29" aria-hidden="true" tabindex="-1"></a>    <span class="st">"kingdom"</span>, <span class="st">"phylum"</span>, <span class="st">"class"</span>, <span class="st">"order"</span>,</span>
-<span id="cb74-30"><a href="#cb74-30" aria-hidden="true" tabindex="-1"></a>    <span class="st">"family"</span>, <span class="st">"genus"</span>, <span class="st">"species"</span></span>
-<span id="cb74-31"><a href="#cb74-31" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb74-32"><a href="#cb74-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-33"><a href="#cb74-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stopifnot</span>(</span>
-<span id="cb74-34"><a href="#cb74-34" aria-hidden="true" tabindex="-1"></a>    nivel <span class="sc">%in%</span> niveles_validos,</span>
-<span id="cb74-35"><a href="#cb74-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">is.numeric</span>(umbral), <span class="fu">length</span>(umbral) <span class="sc">==</span> <span class="dv">1</span>,</span>
-<span id="cb74-36"><a href="#cb74-36" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(umbral), umbral <span class="sc">&gt;=</span> <span class="dv">0</span>, umbral <span class="sc">&lt;=</span> <span class="dv">1</span></span>
-<span id="cb74-37"><a href="#cb74-37" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb74-38"><a href="#cb74-38" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb74-39"><a href="#cb74-39" aria-hidden="true" tabindex="-1"></a>  etiqueta_otros <span class="ot">&lt;-</span> <span class="cf">if</span> (nivel <span class="sc">==</span> <span class="st">"phylum"</span>) {</span>
-<span id="cb74-40"><a href="#cb74-40" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Filos &lt; 5%"</span></span>
-<span id="cb74-41"><a href="#cb74-41" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (nivel <span class="sc">==</span> <span class="st">"genus"</span>) {</span>
-<span id="cb74-42"><a href="#cb74-42" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Géneros &lt; 5%"</span></span>
-<span id="cb74-43"><a href="#cb74-43" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb74-44"><a href="#cb74-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Taxones &lt; 5%"</span></span>
-<span id="cb74-45"><a href="#cb74-45" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb74-46"><a href="#cb74-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-47"><a href="#cb74-47" aria-hidden="true" tabindex="-1"></a>  tabla <span class="sc">%&gt;%</span></span>
-<span id="cb74-48"><a href="#cb74-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-49"><a href="#cb74-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Seleccionar el nivel taxonómico</span></span>
-<span id="cb74-50"><a href="#cb74-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb74-51"><a href="#cb74-51" aria-hidden="true" tabindex="-1"></a>      <span class="at">taxon =</span> .data[[nivel]],</span>
-<span id="cb74-52"><a href="#cb74-52" aria-hidden="true" tabindex="-1"></a>      <span class="at">taxon =</span> <span class="fu">if_else</span>(</span>
-<span id="cb74-53"><a href="#cb74-53" aria-hidden="true" tabindex="-1"></a>        <span class="fu">is.na</span>(taxon) <span class="sc">|</span> taxon <span class="sc">==</span> <span class="st">""</span>,</span>
-<span id="cb74-54"><a href="#cb74-54" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Sin clasificar"</span>, taxon</span>
-<span id="cb74-55"><a href="#cb74-55" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb74-56"><a href="#cb74-56" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb74-57"><a href="#cb74-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-58"><a href="#cb74-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sumar los conteos por taxón y muestra</span></span>
-<span id="cb74-59"><a href="#cb74-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sample_id, host_name, taxon) <span class="sc">%&gt;%</span></span>
-<span id="cb74-60"><a href="#cb74-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb74-61"><a href="#cb74-61" aria-hidden="true" tabindex="-1"></a>      <span class="at">conteo =</span> <span class="fu">sum</span>(conteo),</span>
-<span id="cb74-62"><a href="#cb74-62" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb74-63"><a href="#cb74-63" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb74-64"><a href="#cb74-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-65"><a href="#cb74-65" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calcular abundancias relativas dentro de cada muestra</span></span>
-<span id="cb74-66"><a href="#cb74-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sample_id) <span class="sc">%&gt;%</span></span>
-<span id="cb74-67"><a href="#cb74-67" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb74-68"><a href="#cb74-68" aria-hidden="true" tabindex="-1"></a>      <span class="at">abundancia_relativa =</span> conteo <span class="sc">/</span> <span class="fu">sum</span>(conteo)</span>
-<span id="cb74-69"><a href="#cb74-69" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb74-70"><a href="#cb74-70" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb74-71"><a href="#cb74-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-72"><a href="#cb74-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Agrupar los taxones menos abundantes en "Otros"</span></span>
-<span id="cb74-73"><a href="#cb74-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
-<span id="cb74-74"><a href="#cb74-74" aria-hidden="true" tabindex="-1"></a>      <span class="at">taxon_final =</span> <span class="fu">if_else</span>(</span>
-<span id="cb74-75"><a href="#cb74-75" aria-hidden="true" tabindex="-1"></a>       abundancia_relativa <span class="sc">&lt;</span> umbral,</span>
-<span id="cb74-76"><a href="#cb74-76" aria-hidden="true" tabindex="-1"></a>        etiqueta_otros, taxon</span>
-<span id="cb74-77"><a href="#cb74-77" aria-hidden="true" tabindex="-1"></a>      )</span>
-<span id="cb74-78"><a href="#cb74-78" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span></span>
-<span id="cb74-79"><a href="#cb74-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-80"><a href="#cb74-80" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sumar las abundancias de los taxones agrupados</span></span>
-<span id="cb74-81"><a href="#cb74-81" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(sample_id, host_name, taxon_final) <span class="sc">%&gt;%</span></span>
-<span id="cb74-82"><a href="#cb74-82" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(</span>
-<span id="cb74-83"><a href="#cb74-83" aria-hidden="true" tabindex="-1"></a>      <span class="at">abundancia_relativa =</span> <span class="fu">sum</span>(abundancia_relativa),</span>
-<span id="cb74-84"><a href="#cb74-84" aria-hidden="true" tabindex="-1"></a>      <span class="at">.groups =</span> <span class="st">"drop"</span></span>
-<span id="cb74-85"><a href="#cb74-85" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb74-86"><a href="#cb74-86" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
-</details>
-</div>
 </section>
 </section>
 <section id="actividad-breve-la-tabla-está-lista-para-graficarse" class="level2" data-number="9.8">
@@ -1574,9 +1486,9 @@ $ year      &lt;dbl&gt; 2021, 2021, 2020, 2021, 2020, 2021, 2023, 2021, 2020, 20
 <div class="cell">
 <details open="" class="code-fold">
 <summary>Código</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>generos_5 <span class="sc">%&gt;%</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample_id) <span class="sc">%&gt;%</span></span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(abundancia_relativa), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>generos_5 <span class="sc">%&gt;%</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(sample_id) <span class="sc">%&gt;%</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total =</span> <span class="fu">sum</span>(abundancia_relativa), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 75 × 2

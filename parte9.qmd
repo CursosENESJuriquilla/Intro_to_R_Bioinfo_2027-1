@@ -292,7 +292,7 @@ filtrar_alineamientos(blast_B, identidad_minima = 95)
 
 `tabla` es la entrada; `identidad_minima` es un argumento configurable, con valor predeterminado; la última expresión es el resultado devuelto. **Automatizar no exige introducir nuevas funciones complejas:** puede consistir en hacer reutilizable un procedimiento que ya sabemos realizar.
 
-::: {.callout-note}
+::: callout-note
 ## Una herramienta para reconocer, no para memorizar
 
 Si en otro proyecto tenemos rutas como `archivos_blast`, podemos obtener nombres de archivo sin ruta ni extensión con:
@@ -307,15 +307,13 @@ tools::file_path_sans_ext(basename(archivos_blast))
 
 ## Datos reales de rizosfera: del archivo a la tabla
 
-
-
 Trabajaremos con **un subconjunto de datos reales del proyecto [MicroAgroBiome](https://agrobiom.matmor.unam.mx/)**. Contamos con 75 muestras y una tabla de conteos de 3,330 registros taxonómicos. Los archivos fueron organizados en formatos de texto para facilitar su uso en R.
 
 Los conteos son observaciones de secuenciación, no mediciones directas del número de microorganismos. Además, las muestras provienen de distintos estudios, por lo que las diferencias entre hospederos no pueden atribuirse únicamente a la especie de planta.
 
 Descarga [`datos_rizosfera.zip`](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_rizosfera.zip) y descomprímelo dentro de `data_raw/`:
 
-```text
+``` text
 mi_proyecto/
 ├── mi_proyecto.Rproj
 ├── data_raw/
@@ -380,8 +378,8 @@ conteos_limpios %>%
   head()
 ```
 
-- `sub()` elimina el prefijo al inicio del texto. 
-- `across()` aplica la misma transformación a las siete columnas. 
+- `sub()` elimina el prefijo al inicio del texto.
+- `across()` aplica la misma transformación a las siete columnas.
 - `na_if(..., "")` convierte las asignaciones vacías en `NA`: **sin clasificar no significa que el taxón no exista**.
 
 ### Transformar a formato largo e incorporar metadatos
@@ -420,7 +418,6 @@ conteos_largos %>%
   anti_join(metadata_riz, by = "sample_id") %>%
   distinct(sample_id)
 ```
-
 
 Si el resultado de `anti_join()` no contiene filas, significa que **todas las muestras de la tabla de conteos tienen un identificador correspondiente en la tabla de metadatos**.
 
@@ -467,7 +464,6 @@ abundancias_genero %>%
 
 Si una muestra tiene 1,000 conteos y 80 pertenecen a un género, su abundancia relativa es `80 / 1000 = 0.08`, es decir, 8 %. No estamos calculando una proporción conjunta de todas las muestras ni promediando muestras todavía.
 
-
 ### Agrupar los géneros por debajo del 5 %
 
 Para facilitar la lectura de una gráfica de diversidad, conservaremos por separado los géneros cuya abundancia relativa **en esa muestra** sea al menos 5 %. Los géneros con menos de 5 % se sumarán en `Otros`. Dejaremos `Sin clasificar` como categoría propia, incluso si representa menos del umbral.
@@ -497,8 +493,6 @@ head(comprobacion)
 ```
 
 Un género puede superar el umbral en una muestra y quedar dentro de `Otros` en otra.
-
-
 
 ### Automatizar el análisis para distintos niveles taxonómicos
 
@@ -571,7 +565,6 @@ write_tsv(filos_5, "results/filos_5.tsv")
 write_tsv(familias_1, "results/familias_1.tsv")
 ```
 
-
 ### Documentación de funciones
 
 Cuando escribimos una función que utilizaremos varias veces, es importante documentar qué hace, qué argumentos recibe y qué devuelve.
@@ -589,12 +582,11 @@ Los elementos principales son:
 
 La documentación no modifica el funcionamiento de la función: sirve para que otras personas, o nosotros mismos en el futuro, podamos comprenderla y reutilizarla.
 
-
 ### Ejemplo de la misma función documentada
-
 
 ```{r}
 #| eval: false
+#| include: false
 #' Preparar abundancias relativas por nivel taxonómico
 #'
 #' Agrupa los conteos de una comunidad microbiana según el nivel
@@ -683,7 +675,6 @@ preparar_abundancias <- function(tabla, nivel = "genus", umbral = 0.05) {
 }
 ```
 
-
 ## Actividad breve: ¿la tabla está lista para graficarse?
 
 :::: {.callout-warning icon="false"}
@@ -691,17 +682,17 @@ preparar_abundancias <- function(tabla, nivel = "genus", umbral = 0.05) {
 
 Sin construir otra función, revisa `generos_5` y responde:
 
-1. ¿Qué representa una fila de `generos_5`?
-2. ¿Por qué un mismo género puede aparecer individualmente en una muestra y dentro de `Otros` en otra?
-3. Si construimos una gráfica de barras apiladas al 100 %, ¿cuánto deben sumar las abundancias relativas de cada muestra? Compruébalo con `group_by()` y `summarise()`.
-4. ¿Qué columna nos permite comparar las muestras según la planta hospedera? ¿De dónde proviene?
+1.  ¿Qué representa una fila de `generos_5`?
+2.  ¿Por qué un mismo género puede aparecer individualmente en una muestra y dentro de `Otros` en otra?
+3.  Si construimos una gráfica de barras apiladas al 100 %, ¿cuánto deben sumar las abundancias relativas de cada muestra? Compruébalo con `group_by()` y `summarise()`.
+4.  ¿Qué columna nos permite comparar las muestras según la planta hospedera? ¿De dónde proviene?
 
 ::: {.callout-tip collapse="true" icon="false"}
 ## Solución y discusión
 
-1. Una combinación de muestra (`sample_id`), hospedero (`host_name`) y categoría taxonómica final (`taxon_final`), con su abundancia relativa.
-2. Porque el umbral se aplica **dentro de cada muestra**: la proporción del género puede ser distinta entre muestras.
-3. Deben sumar **1**, equivalente al 100 %:
+1.  Una combinación de muestra (`sample_id`), hospedero (`host_name`) y categoría taxonómica final (`taxon_final`), con su abundancia relativa.
+2.  Porque el umbral se aplica **dentro de cada muestra**: la proporción del género puede ser distinta entre muestras.
+3.  Deben sumar **1**, equivalente al 100 %:
 
 ```{r}
 generos_5 %>%
@@ -709,9 +700,6 @@ generos_5 %>%
   summarise(total = sum(abundancia_relativa), .groups = "drop")
 ```
 
-4. `host_name`, incorporada desde el archivo de metadatos mediante `left_join()`.
+4.  `host_name`, incorporada desde el archivo de metadatos mediante `left_join()`.
 :::
 ::::
-
-
-
