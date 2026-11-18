@@ -677,6 +677,14 @@ preparar_abundancias <- function(tabla, nivel = "genus", umbral = 0.05) {
 
 ## Actividad breve: ¿la tabla está lista para graficarse?
 
+
+:::: {.callout-warning icon="false"}
+## 🧠 Ejercicio
+
+Documentar la función.
+
+::::
+
 :::: {.callout-warning icon="false"}
 ## 🧠 Ejercicio
 
