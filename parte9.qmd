@@ -586,7 +586,6 @@ La documentación no modifica el funcionamiento de la función: sirve para que o
 
 ```{r}
 #| eval: false
-#| include: false
 #' Preparar abundancias relativas por nivel taxonómico
 #'
 #' Agrupa los conteos de una comunidad microbiana según el nivel
@@ -677,13 +676,11 @@ preparar_abundancias <- function(tabla, nivel = "genus", umbral = 0.05) {
 
 ## Actividad breve: ¿la tabla está lista para graficarse?
 
-
-:::: {.callout-warning icon="false"}
+::: {.callout-warning icon="false"}
 ## 🧠 Ejercicio
 
 Documentar la función.
-
-::::
+:::
 
 :::: {.callout-warning icon="false"}
 ## 🧠 Ejercicio
