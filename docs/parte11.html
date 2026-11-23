@@ -381,13 +381,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#compartir-el-proyecto-con-github-y-github-pages" id="toc-compartir-el-proyecto-con-github-y-github-pages" class="nav-link" data-scroll-target="#compartir-el-proyecto-con-github-y-github-pages"><span class="header-section-number">11.6</span> Compartir el proyecto con GitHub y GitHub Pages</a>
   <ul>
-  <li><a href="#qué-debemos-compartir" id="toc-qué-debemos-compartir" class="nav-link" data-scroll-target="#qué-debemos-compartir"><span class="header-section-number">11.6.1</span> 5.1. ¿Qué debemos compartir?</a></li>
+  <li><a href="#qué-debemos-compartir" id="toc-qué-debemos-compartir" class="nav-link" data-scroll-target="#qué-debemos-compartir"><span class="header-section-number">11.6.1</span> ¿Qué debemos compartir?</a></li>
   <li><a href="#generar-un-html-preparado-para-github-pages" id="toc-generar-un-html-preparado-para-github-pages" class="nav-link" data-scroll-target="#generar-un-html-preparado-para-github-pages"><span class="header-section-number">11.6.2</span> Generar un HTML preparado para GitHub Pages</a></li>
   <li><a href="#subir-el-proyecto-a-github" id="toc-subir-el-proyecto-a-github" class="nav-link" data-scroll-target="#subir-el-proyecto-a-github"><span class="header-section-number">11.6.3</span> Subir el proyecto a GitHub</a></li>
   <li><a href="#publicar-con-github-pages" id="toc-publicar-con-github-pages" class="nav-link" data-scroll-target="#publicar-con-github-pages"><span class="header-section-number">11.6.4</span> Publicar con GitHub Pages</a></li>
   </ul></li>
-  <li><a href="#actividad-final" id="toc-actividad-final" class="nav-link" data-scroll-target="#actividad-final"><span class="header-section-number">11.7</span> Actividad Final</a></li>
-  <li><a href="#para-seguir-aprendiendo" id="toc-para-seguir-aprendiendo" class="nav-link" data-scroll-target="#para-seguir-aprendiendo"><span class="header-section-number">11.8</span> Para seguir aprendiendo</a></li>
+  <li><a href="#personalización-del-reporte-mediante-_quarto.yml" id="toc-personalización-del-reporte-mediante-_quarto.yml" class="nav-link" data-scroll-target="#personalización-del-reporte-mediante-_quarto.yml"><span class="header-section-number">11.7</span> Personalización del reporte mediante <code>_quarto.yml</code></a>
+  <ul>
+  <li><a href="#crear-el-archivo-_quarto.yml" id="toc-crear-el-archivo-_quarto.yml" class="nav-link" data-scroll-target="#crear-el-archivo-_quarto.yml"><span class="header-section-number">11.7.1</span> Crear el archivo <code>_quarto.yml</code></a></li>
+  <li><a href="#elegir-un-tema-visual" id="toc-elegir-un-tema-visual" class="nav-link" data-scroll-target="#elegir-un-tema-visual"><span class="header-section-number">11.7.2</span> Elegir un tema visual</a></li>
+  <li><a href="#personalizar-los-colores" id="toc-personalizar-los-colores" class="nav-link" data-scroll-target="#personalizar-los-colores"><span class="header-section-number">11.7.3</span> Personalizar los colores</a></li>
+  <li><a href="#renderizar-el-proyecto-con-la-nueva-configuración" id="toc-renderizar-el-proyecto-con-la-nueva-configuración" class="nav-link" data-scroll-target="#renderizar-el-proyecto-con-la-nueva-configuración"><span class="header-section-number">11.7.4</span> Renderizar el proyecto con la nueva configuración</a></li>
+  <li><a href="#qué-ventajas-tiene-esta-organización" id="toc-qué-ventajas-tiene-esta-organización" class="nav-link" data-scroll-target="#qué-ventajas-tiene-esta-organización"><span class="header-section-number">11.7.5</span> ¿Qué ventajas tiene esta organización?</a></li>
+  </ul></li>
+  <li><a href="#actividad-final" id="toc-actividad-final" class="nav-link" data-scroll-target="#actividad-final"><span class="header-section-number">11.8</span> Actividad Final</a></li>
+  <li><a href="#para-seguir-aprendiendo" id="toc-para-seguir-aprendiendo" class="nav-link" data-scroll-target="#para-seguir-aprendiendo"><span class="header-section-number">11.9</span> Para seguir aprendiendo</a></li>
   </ul>
 </nav>
     </div>
@@ -1701,7 +1709,7 @@ Figura&nbsp;11.2: Composición taxonómica por filo en muestras de rizosfera
 <section id="compartir-el-proyecto-con-github-y-github-pages" class="level2" data-number="11.6">
 <h2 data-number="11.6" class="anchored" data-anchor-id="compartir-el-proyecto-con-github-y-github-pages"><span class="header-section-number">11.6</span> Compartir el proyecto con GitHub y GitHub Pages</h2>
 <section id="qué-debemos-compartir" class="level3" data-number="11.6.1">
-<h3 data-number="11.6.1" class="anchored" data-anchor-id="qué-debemos-compartir"><span class="header-section-number">11.6.1</span> 5.1. ¿Qué debemos compartir?</h3>
+<h3 data-number="11.6.1" class="anchored" data-anchor-id="qué-debemos-compartir"><span class="header-section-number">11.6.1</span> ¿Qué debemos compartir?</h3>
 <p>Una organización posible es:</p>
 <pre class="text"><code>reporte_rizosfera/
 ├── reporte_rizosfera.qmd
@@ -1745,14 +1753,38 @@ Figura&nbsp;11.2: Composición taxonómica por filo en muestras de rizosfera
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Esta opción incorpora los recursos compatibles (como estilos y figuras generadas) dentro del HTML y facilita compartir un solo archivo. <strong>No incrusta automáticamente los datos de entrada ni el código fuente</strong>; esos deben compartirse por separado si buscamos reproducibilidad.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Otra forma de configurar la carpeta de salida
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En lugar de indicar la carpeta de salida cada vez que renderizamos desde la terminal, podemos configurarla directamente en nuestro proyecto de Quarto.</p>
+<p>Para ello, creamos un archivo llamado <code>_quarto.yml</code> en la carpeta principal del proyecto, con el siguiente contenido:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>De esta manera, Quarto guardará automáticamente los documentos renderizados en la carpeta <code>docs/</code>.</p>
+<p>Si además queremos que nuestro reporte se llame <code>index.html</code>, podemos agregar al encabezado YAML de <code>reporte_rizosfera.qmd</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output-file</span><span class="kw">:</span><span class="at"> index.html</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Así, bastará con ejecutar:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render reporte_rizosfera.qmd</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>El resultado será <code>docs/index.html</code>, que podremos utilizar como página principal al publicar nuestro reporte mediante GitHub Pages.</p>
+<p><strong>Ambas formas son válidas:</strong> podemos especificar las opciones al ejecutar el comando o dejarlas configuradas en los archivos del proyecto.</p>
+</div>
+</div>
 </section>
 <section id="subir-el-proyecto-a-github" class="level3" data-number="11.6.3">
 <h3 data-number="11.6.3" class="anchored" data-anchor-id="subir-el-proyecto-a-github"><span class="header-section-number">11.6.3</span> Subir el proyecto a GitHub</h3>
 <p>Si ya tienes un repositorio conectado con Git en RStudio, puedes usar el panel <strong>Git</strong> para revisar los cambios, hacer <strong>Commit</strong> y después <strong>Push</strong>. Si trabajas desde la terminal y tu repositorio remoto ya está configurado:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add reporte_rizosfera.qmd README.md docs/ results/ data_raw/datos_rizosfera/metadata_rizosfera.csv</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Agregar reporte reproducible de rizosfera"</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add reporte_rizosfera.qmd README.md docs/ results/ data_raw/datos_rizosfera/metadata_rizosfera.csv</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Agregar reporte reproducible de rizosfera"</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Importante:</strong> estos comandos suponen que ya inicializaste Git, configuraste tu identidad y conectaste el repositorio con GitHub. Si todavía no lo has hecho, primero crea un repositorio en GitHub y conéctalo siguiendo el flujo de Git de RStudio. Antes de hacer <code>git add</code>, revisa que no incluyas datos privados, archivos temporales o archivos grandes innecesarios.</p>
 </section>
 <section id="publicar-con-github-pages" class="level3" data-number="11.6.4">
@@ -1785,8 +1817,255 @@ Figura&nbsp;11.2: Composición taxonómica por filo en muestras de rizosfera
 </div>
 </section>
 </section>
-<section id="actividad-final" class="level2" data-number="11.7">
-<h2 data-number="11.7" class="anchored" data-anchor-id="actividad-final"><span class="header-section-number">11.7</span> Actividad Final</h2>
+<section id="personalización-del-reporte-mediante-_quarto.yml" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="personalización-del-reporte-mediante-_quarto.yml"><span class="header-section-number">11.7</span> Personalización del reporte mediante <code>_quarto.yml</code></h2>
+<p>Hasta ahora hemos configurado nuestro reporte utilizando el encabezado YAML del archivo <code>reporte_rizosfera.qmd</code>. Sin embargo, Quarto también permite establecer una <strong>configuración general para todo el proyecto</strong> mediante un archivo llamado <code>_quarto.yml</code>.</p>
+<p>Este archivo es especialmente útil cuando queremos:</p>
+<ul>
+<li>Definir dónde se guardarán los documentos renderizados.</li>
+<li>Elegir un tema visual para nuestro reporte.</li>
+<li>Personalizar colores, tipografía y apariencia.</li>
+<li>Evitar repetir las mismas opciones en diferentes documentos.</li>
+<li>Preparar nuestro reporte para publicarlo mediante GitHub Pages.</li>
+</ul>
+<section id="crear-el-archivo-_quarto.yml" class="level3" data-number="11.7.1">
+<h3 data-number="11.7.1" class="anchored" data-anchor-id="crear-el-archivo-_quarto.yml"><span class="header-section-number">11.7.1</span> Crear el archivo <code>_quarto.yml</code></h3>
+<p>En la carpeta principal de nuestro proyecto de RStudio, creamos un archivo llamado <code>_quarto.yml</code>.</p>
+<p>Podemos comenzar con la siguiente configuración:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">output-dir</span><span class="kw">:</span><span class="at"> docs</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc-depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-tools</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">embed-resources</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">    # Apariencia</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> cosmo</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">mainfont</span><span class="kw">:</span><span class="at"> </span><span class="st">"Arial"</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">fontsize</span><span class="kw">:</span><span class="at"> 12pt</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">linkcolor</span><span class="kw">:</span><span class="at"> </span><span class="st">"#267D86"</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">warning</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">message</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Algunas de las opciones más importantes son:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Opción</th>
+<th>Función</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>type: default</code></td>
+<td>Indica que trabajamos con un proyecto Quarto convencional.</td>
+</tr>
+<tr class="even">
+<td><code>output-dir: docs</code></td>
+<td>Guarda los archivos renderizados en la carpeta <code>docs/</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>toc: true</code></td>
+<td>Genera una tabla de contenidos.</td>
+</tr>
+<tr class="even">
+<td><code>toc-depth: 3</code></td>
+<td>Incluye encabezados hasta el tercer nivel.</td>
+</tr>
+<tr class="odd">
+<td><code>code-fold: true</code></td>
+<td>Permite mostrar u ocultar el código.</td>
+</tr>
+<tr class="even">
+<td><code>code-tools: true</code></td>
+<td>Agrega herramientas para consultar el código fuente.</td>
+</tr>
+<tr class="odd">
+<td><code>embed-resources: true</code></td>
+<td>Integra los recursos auxiliares en el HTML, cuando es posible.</td>
+</tr>
+<tr class="even">
+<td><code>theme: cosmo</code></td>
+<td>Establece el tema visual del documento.</td>
+</tr>
+<tr class="odd">
+<td><code>mainfont</code></td>
+<td>Define la fuente principal del texto.</td>
+</tr>
+<tr class="even">
+<td><code>fontsize</code></td>
+<td>Establece el tamaño de fuente.</td>
+</tr>
+<tr class="odd">
+<td><code>linkcolor</code></td>
+<td>Modifica el color de los enlaces.</td>
+</tr>
+</tbody>
+</table>
+<p>Con esta configuración, nuestro archivo <code>reporte_rizosfera.qmd</code> puede conservar un encabezado YAML más sencillo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Composición microbiana de la rizosfera"</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Nombre del estudiante"</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lang</span><span class="kw">:</span><span class="at"> es</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">output-file</span><span class="kw">:</span><span class="at"> index.html</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>La configuración general se encuentra en <code>_quarto.yml</code>, mientras que el encabezado de <code>reporte_rizosfera.qmd</code> contiene la información particular de nuestro reporte.</p>
+</section>
+<section id="elegir-un-tema-visual" class="level3" data-number="11.7.2">
+<h3 data-number="11.7.2" class="anchored" data-anchor-id="elegir-un-tema-visual"><span class="header-section-number">11.7.2</span> Elegir un tema visual</h3>
+<p>Quarto incluye diferentes temas prediseñados basados en Bootstrap. Para utilizarlos, únicamente debemos modificar la opción <code>theme</code>.</p>
+<p>Por ejemplo:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span><span class="at"> minty</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Algunos temas disponibles son:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tema</th>
+<th>Características</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>cosmo</code></td>
+<td>Diseño moderno, limpio y profesional.</td>
+</tr>
+<tr class="even">
+<td><code>flatly</code></td>
+<td>Estilo sencillo, con colores sobrios.</td>
+</tr>
+<tr class="odd">
+<td><code>minty</code></td>
+<td>Colores suaves y tonos verdes.</td>
+</tr>
+<tr class="even">
+<td><code>journal</code></td>
+<td>Apariencia editorial, apropiada para reportes.</td>
+</tr>
+<tr class="odd">
+<td><code>litera</code></td>
+<td>Diseño minimalista con énfasis en la lectura.</td>
+</tr>
+<tr class="even">
+<td><code>darkly</code></td>
+<td>Tema oscuro.</td>
+</tr>
+</tbody>
+</table>
+<p>Podemos probar distintos temas y elegir el que resulte más apropiado para presentar nuestros resultados.</p>
+<p>Para explorar otros temas, podemos consultar la <a href="https://quarto.org/docs/output-formats/html-themes.html">documentación oficial de Quarto</a>.</p>
+</section>
+<section id="personalizar-los-colores" class="level3" data-number="11.7.3">
+<h3 data-number="11.7.3" class="anchored" data-anchor-id="personalizar-los-colores"><span class="header-section-number">11.7.3</span> Personalizar los colores</h3>
+<p>Además de utilizar temas prediseñados, podemos modificar colores específicos mediante un archivo de estilos SCSS.</p>
+<p>Por ejemplo, podemos crear un archivo llamado <code>estilos.scss</code> en la carpeta principal del proyecto.</p>
+<p>Su contenido podría ser:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode scss code-with-copy"><code class="sourceCode scss"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">/*-- scss:defaults --*/</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="va">$primary</span>: <span class="cn">#267D86</span><span class="op">;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="va">$link-color</span>: <span class="cn">#267D86</span><span class="op">;</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="va">$body-bg</span>: <span class="cn">#FFFFFF</span><span class="op">;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="va">$body-color</span>: <span class="cn">#263238</span><span class="op">;</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="va">$headings-color</span>: <span class="cn">#17636B</span><span class="op">;</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="va">$font-family-sans-serif</span>: <span class="st">"Arial"</span><span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Estos parámetros permiten controlar:</p>
+<ul>
+<li><code>$primary</code>: color principal del tema.</li>
+<li><code>$link-color</code>: color de los enlaces.</li>
+<li><code>$body-bg</code>: color de fondo del documento.</li>
+<li><code>$body-color</code>: color del texto.</li>
+<li><code>$headings-color</code>: color de los encabezados.</li>
+<li><code>$font-family-sans-serif</code>: tipografía principal.</li>
+</ul>
+<p>Para aplicar estos estilos, modificamos nuestro archivo <code>_quarto.yml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> cosmo</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> estilos.scss</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Quarto utilizará el tema <code>cosmo</code> como base y aplicará las modificaciones definidas en <code>estilos.scss</code>.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Colores del reporte y colores de las gráficas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Los temas y estilos de Quarto modifican la apariencia del <strong>documento HTML</strong>, pero no cambian automáticamente los colores de las gráficas creadas con <code>ggplot2</code>.</p>
+<p>Para personalizar las gráficas debemos continuar utilizando funciones como <code>scale_fill_manual()</code>, <code>scale_color_manual()</code>, <code>theme()</code> o <code>theme_minimal()</code>.</p>
+</div>
+</div>
+</section>
+<section id="renderizar-el-proyecto-con-la-nueva-configuración" class="level3" data-number="11.7.4">
+<h3 data-number="11.7.4" class="anchored" data-anchor-id="renderizar-el-proyecto-con-la-nueva-configuración"><span class="header-section-number">11.7.4</span> Renderizar el proyecto con la nueva configuración</h3>
+<p>Una vez que hemos creado o modificado <code>_quarto.yml</code>, necesitamos renderizar nuevamente nuestro reporte.</p>
+<p>Desde la <strong>terminal de RStudio</strong>, ubicada en la carpeta principal del proyecto, ejecutamos:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render reporte_rizosfera.qmd</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Como hemos definido <code>output-dir: docs</code> y <code>output-file: index.html</code>, el archivo resultante se guardará en:</p>
+<pre class="text"><code>docs/index.html</code></pre>
+<p>Nuestra estructura de archivos será similar a la siguiente:</p>
+<pre class="text"><code>reporte_rizosfera/
+├── _quarto.yml
+├── estilos.scss
+├── reporte_rizosfera.qmd
+├── data_raw/
+├── results/
+└── docs/
+    └── index.html</code></pre>
+<div class="callout callout-style-default callout-warning no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>¡Importante! Verificar qué archivo HTML estamos abriendo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Al trabajar con proyectos Quarto, es posible que al utilizar el botón <strong>Render</strong> de RStudio se abra una vista previa del documento que no corresponda al archivo HTML que estamos utilizando para publicar el reporte.</p>
+<p>Por ejemplo, podríamos encontrar dos archivos:</p>
+<ul>
+<li><code>reporte_rizosfera.html</code>, generado previamente o mediante otro procedimiento de renderizado.</li>
+<li><code>docs/index.html</code>, generado con la configuración del proyecto.</li>
+</ul>
+<p>Si modificamos el tema o los colores y aparentemente <strong>no observamos ningún cambio</strong>, debemos verificar que estamos abriendo el archivo correcto.</p>
+<p>Para evitar confusiones:</p>
+<ol type="1">
+<li>Guardamos los cambios realizados en <code>_quarto.yml</code> y <code>estilos.scss</code>.</li>
+<li>Abrimos la terminal de RStudio.</li>
+<li>Nos aseguramos de estar en la carpeta principal del proyecto.</li>
+<li>Ejecutamos <code>quarto render reporte_rizosfera.qmd</code>.</li>
+<li>Abrimos el archivo <code>docs/index.html</code> y comprobamos que se aplicaron los cambios.</li>
+</ol>
+<p><strong>Nota:</strong> el botón Render también puede utilizar la configuración del proyecto cuando este se reconoce correctamente. Si observamos resultados distintos, debemos revisar el directorio de trabajo, el archivo que se está renderizando y la ubicación del HTML generado.</p>
+<p>Para publicar en GitHub Pages, el archivo que nos interesa es <code>docs/index.html</code>.</p>
+</div>
+</div>
+</section>
+<section id="qué-ventajas-tiene-esta-organización" class="level3" data-number="11.7.5">
+<h3 data-number="11.7.5" class="anchored" data-anchor-id="qué-ventajas-tiene-esta-organización"><span class="header-section-number">11.7.5</span> ¿Qué ventajas tiene esta organización?</h3>
+<p>Separar la configuración general del contenido de nuestro reporte permite mantener un proyecto más organizado y reproducible.</p>
+<p>Si posteriormente queremos modificar el tema, la tipografía o los colores, podemos hacerlo desde <code>_quarto.yml</code> o <code>estilos.scss</code>, sin necesidad de modificar el análisis estadístico ni las gráficas de nuestro documento.</p>
+<p>Además, al conservar el archivo <code>index.html</code> dentro de <code>docs/</code>, facilitamos su publicación mediante GitHub Pages.</p>
+</section>
+</section>
+<section id="actividad-final" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="actividad-final"><span class="header-section-number">11.8</span> Actividad Final</h2>
 <div class="callout callout-style-default callout-warning no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1810,7 +2089,7 @@ Figura&nbsp;11.2: Composición taxonómica por filo en muestras de rizosfera
 <p><strong>Comprobación final:</strong> imagina que otra persona abre tu repositorio de GitHub sin tener R ni RStudio instalados. ¿Puede encontrar tus tareas, abrir los documentos y revisar todas tus soluciones y resultados?</p>
 <p>Si la respuesta es no, realiza las correcciones necesarias antes de entregar.</p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled">
-<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -1819,7 +2098,7 @@ Figura&nbsp;11.2: Composición taxonómica por filo en muestras de rizosfera
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>Antes de finalizar, abre tu repositorio directamente desde GitHub y revisa los archivos como si fueras la persona que evaluará tus tareas.</p>
 <p>Recuerda que <strong>no se revisarán cuadernos que requieran ejecutar el código para visualizar sus resultados</strong>. Los documentos deben estar previamente renderizados y ser legibles.</p>
@@ -1851,8 +2130,8 @@ Figura&nbsp;11.2: Composición taxonómica por filo en muestras de rizosfera
 </div>
 </div>
 </section>
-<section id="para-seguir-aprendiendo" class="level2" data-number="11.8">
-<h2 data-number="11.8" class="anchored" data-anchor-id="para-seguir-aprendiendo"><span class="header-section-number">11.8</span> Para seguir aprendiendo</h2>
+<section id="para-seguir-aprendiendo" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="para-seguir-aprendiendo"><span class="header-section-number">11.9</span> Para seguir aprendiendo</h2>
 <ul>
 <li><a href="https://quarto.org/docs/get-started/hello/rstudio.html">Quarto: guía de inicio con RStudio</a></li>
 <li><a href="https://quarto.org/docs/computations/execution-options.html">Quarto: opciones de ejecución</a></li>
