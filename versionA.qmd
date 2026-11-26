@@ -1,0 +1,80 @@
+---
+title: "Examen final de Introducción a R - Versión A"
+subtitle: "Bioinformática I — Versión A"
+author: "Nombre del estudiante"
+lang: es
+format:
+  html:
+    toc: true
+    code-fold: true
+    embed-resources: true
+execute:
+  warning: false
+  message: false
+---
+
+## Instrucciones generales
+
+**Duración: 120 minutos. Valor total: 100 puntos.**
+
+El objetivo es reproducir dos figuras a partir de datos reales de mieles de abejas sin aguijón. Los conteos proporcionados corresponden únicamente a bacterias con asignación taxonómica a nivel de género. Se incluyen 17 muestras de dos especies de abejas.
+
+Trabaja en tu proyecto de RStudio y utiliza este documento como [plantilla](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/versionA.qmd). Sustituye el nombre del autor por el tuyo. Agrega tus bloques de código R ejecutables y tus respuestas en las secciones correspondientes. Conserva las rutas relativas y muestra el procedimiento completo. Las figuras de referencia son una guía: no es necesario reproducir exactamente la tipografía ni los tamaños.
+
+## Importación y exploración (10 puntos)
+
+Descarga y descomprime [datos_A.zip](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_A.zip). 
+Importa con `readr` los archivos `conteos_genero_miel_bacterias.tsv` y `datos/metadata_miel_examen.csv`. 
+
+- Indica las dimensiones de ambas tablas y el número de muestras por especie de abeja.
+- Identifica si existen valores faltantes en los metadatos e indica en qué variable o variables.
+
+## Integración y abundancia relativa (20 puntos)
+
+Integra las dos tablas mediante el identificador `sample_id`. Calcula la abundancia relativa de cada género dentro de cada muestra, dividiendo su conteo entre la suma de los conteos de esa muestra. Conserva las abundancias como proporciones entre 0 y 1.
+
+## Figura 1: los 10 géneros más abundantes (25 puntos)
+
+Calcula la abundancia relativa promedio de cada género considerando las 17 muestras, incluidos los conteos cero. Selecciona los diez con mayor promedio y reproduce la gráfica de barras horizontales ordenadas de mayor a menor. Muestra el eje de abundancia en porcentajes y agrega etiquetas apropiadas.
+
+![Figura 1. Referencia.](figures/figura_1_A.png)
+
+## Figura 2: composición bacteriana por muestra (30 puntos)
+
+Utiliza las abundancias relativas del apartado 2, **no solamente los diez taxones de la figura anterior**.
+
+- Dentro de cada muestra, agrupa los géneros cuya abundancia relativa sea estrictamente menor al 5 % en la categoría `Géneros < 5%`. Suma las abundancias de esa categoría.
+- Construye una gráfica de barras apiladas, una barra por muestra, separando las especies de abejas mediante facetas. Cada barra debe sumar 100 %.
+- Utiliza la paleta proporcionada y coloca la leyenda debajo de la gráfica.
+
+Paleta de referencia (puedes copiarla en un bloque de R) o puedes usar otra paleta de colores:
+
+``` r
+genus_colors <- c(
+  "Acetilactobacillus" = "#002868",
+  "Apilactobacillus" = "#0077C2",
+  "Lactobacillus" = "#66B2FF",
+  "Nicoliella" = "#ADD8E1",
+  "Pantoea" = "#008080",
+  "Tatumella" = "#98FB98",
+  "Fructobacillus" = "#007BA7",
+  "Géneros < 5%" = "#778899"
+)
+```
+
+![Figura 2. Referencia.](figures/figura_2_A.png)
+
+## Interpretación (5 puntos)
+
+Responde brevemente con base en tus resultados:
+
+1.  ¿Cuál es el género con mayor abundancia relativa promedio?
+2.  ¿Qué diferencias o similitudes observas en la composición de las muestras de las dos especies de abejas? 
+
+**Nota**: Todas las muestras pertenecen al mismo estudio y fueron procesadas con la misma metodología.
+
+## Reporte reproducible y entrega (10 puntos)
+
+Renderiza el documento a HTML y sube a tu repositorio de GitHub el archivo `.qmd`, el HTML generado y las carpetas de datos y figuras necesarias. Verifica que el HTML muestre tus resultados y gráficas sin necesidad de ejecutar el código nuevamente. Entrega el enlace al repositorio.
+
+Si tienes un problema técnico con GitHub, conserva el `.qmd` y el HTML y notifícalo a la profesora antes de finalizar el examen.

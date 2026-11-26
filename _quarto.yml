@@ -55,6 +55,10 @@ book:
     - part: "**EXTRA: Conectar RStudio con Github**"
       chapters:
         - extra.qmd
+    - part: "**Examen**"
+      chapters:
+        - versionA.qmd
+        - versionB.qmd
   
     
   # Information

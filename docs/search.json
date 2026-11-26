@@ -2746,5 +2746,313 @@
       "**Documentación y reproducibilidad de proyectos bioinformáticos con Quarto**",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Documentación y reproducibilidad de proyectos bioinformáticos con Quarto</span>"
     ]
+  },
+  {
+    "objectID": "examenA/versionA.html",
+    "href": "examenA/versionA.html",
+    "title": "13  Examen final de Introducción a R",
+    "section": "",
+    "text": "13.1 Instrucciones generales\nDuración: 120 minutos. Valor total: 100 puntos.\nEl objetivo es reproducir dos figuras a partir de datos reales de mieles de abejas sin aguijón. Los conteos proporcionados corresponden únicamente a bacterias con asignación taxonómica a nivel de género. Se incluyen 17 muestras de dos especies de abejas.\nTrabaja en tu proyecto de RStudio y utiliza este documento como plantilla. Sustituye el nombre del autor por el tuyo. Agrega tus bloques de código R ejecutables y tus respuestas en las secciones correspondientes. Conserva las rutas relativas y muestra el procedimiento completo. Las figuras de referencia son una guía: no es necesario reproducir exactamente la tipografía ni los tamaños.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenA/versionA.html#importación-y-exploración-10-puntos",
+    "href": "examenA/versionA.html#importación-y-exploración-10-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.2 Importación y exploración (10 puntos)",
+    "text": "13.2 Importación y exploración (10 puntos)\nImporta con readr los archivos conteos_genero_miel_bacterias.tsv y datos/metadata_miel_examen.csv.\n\nIndica las dimensiones de ambas tablas y el número de muestras por especie de abeja.\nIdentifica si existen valores faltantes en los metadatos e indica en qué variable o variables.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenA/versionA.html#integración-y-abundancia-relativa-20-puntos",
+    "href": "examenA/versionA.html#integración-y-abundancia-relativa-20-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.3 Integración y abundancia relativa (20 puntos)",
+    "text": "13.3 Integración y abundancia relativa (20 puntos)\nIntegra las dos tablas mediante el identificador sample_id. Calcula la abundancia relativa de cada género dentro de cada muestra, dividiendo su conteo entre la suma de los conteos de esa muestra. Conserva las abundancias como proporciones entre 0 y 1.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenA/versionA.html#figura-1-los-10-géneros-más-abundantes-25-puntos",
+    "href": "examenA/versionA.html#figura-1-los-10-géneros-más-abundantes-25-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.4 Figura 1: los 10 géneros más abundantes (25 puntos)",
+    "text": "13.4 Figura 1: los 10 géneros más abundantes (25 puntos)\nCalcula la abundancia relativa promedio de cada género considerando las 17 muestras, incluidos los conteos cero. Selecciona los diez con mayor promedio y reproduce la gráfica de barras horizontales ordenadas de mayor a menor. Muestra el eje de abundancia en porcentajes y agrega etiquetas apropiadas.\n\n\n\nFigura 1. Referencia.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenA/versionA.html#figura-2-composición-bacteriana-por-muestra-30-puntos",
+    "href": "examenA/versionA.html#figura-2-composición-bacteriana-por-muestra-30-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.5 Figura 2: composición bacteriana por muestra (30 puntos)",
+    "text": "13.5 Figura 2: composición bacteriana por muestra (30 puntos)\nUtiliza las abundancias relativas del apartado 2, no solamente los diez taxones de la figura anterior.\n\nDentro de cada muestra, agrupa los géneros cuya abundancia relativa sea estrictamente menor al 5 % en la categoría Géneros &lt; 5%. Suma las abundancias de esa categoría.\nConstruye una gráfica de barras apiladas, una barra por muestra, separando las especies de abejas mediante facetas. Cada barra debe sumar 100 %.\nUtiliza la paleta proporcionada y coloca la leyenda debajo de la gráfica.\n\nPaleta de referencia (puedes copiarla en un bloque de R) o puedes usar otra paleta de colores:\ngenus_colors &lt;- c(\n  \"Acetilactobacillus\" = \"#002868\",\n  \"Apilactobacillus\" = \"#0077C2\",\n  \"Lactobacillus\" = \"#66B2FF\",\n  \"Nicoliella\" = \"#ADD8E1\",\n  \"Pantoea\" = \"#008080\",\n  \"Tatumella\" = \"#98FB98\",\n  \"Fructobacillus\" = \"#007BA7\",\n  \"Géneros &lt; 5%\" = \"#778899\"\n)\n\n\n\nFigura 2. Referencia.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenA/versionA.html#interpretación-5-puntos",
+    "href": "examenA/versionA.html#interpretación-5-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.6 Interpretación (5 puntos)",
+    "text": "13.6 Interpretación (5 puntos)\nResponde brevemente con base en tus resultados:\n\n¿Cuál es el género con mayor abundancia relativa promedio?\n¿Qué diferencias o similitudes observas en la composición de las muestras de las dos especies de abejas? Describe lo observado sin atribuir causalidad.\n\nNota: Todas las muestras pertenecen al mismo estudio y fueron procesadas con la misma metodología.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenA/versionA.html#reporte-reproducible-y-entrega-10-puntos",
+    "href": "examenA/versionA.html#reporte-reproducible-y-entrega-10-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.7 Reporte reproducible y entrega (10 puntos)",
+    "text": "13.7 Reporte reproducible y entrega (10 puntos)\nRenderiza el documento a HTML y sube a tu repositorio de GitHub el archivo .qmd, el HTML generado y las carpetas de datos y figuras necesarias. Verifica que el HTML muestre tus resultados y gráficas sin necesidad de ejecutar el código nuevamente. Entrega el enlace al repositorio.\nSi tienes un problema técnico con GitHub, conserva el .qmd y el HTML y notifícalo a la profesora antes de finalizar el examen.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenB/versionB.html",
+    "href": "examenB/versionB.html",
+    "title": "14  Examen final de Introducción a R",
+    "section": "",
+    "text": "14.1 Instrucciones generales\nDuración: 120 minutos. Valor total: 100 puntos.\nEl objetivo es reproducir dos figuras a partir de datos reales de mieles de abejas sin aguijón. Los conteos proporcionados corresponden únicamente a bacterias con asignación taxonómica a nivel de filo. Se incluyen 17 muestras de dos especies de abejas.\nTrabaja en tu proyecto de RStudio y utiliza este documento como plantilla. Sustituye el nombre del autor por el tuyo. Agrega tus bloques de código R ejecutables y tus respuestas en las secciones correspondientes. Conserva las rutas relativas y muestra el procedimiento completo. Las figuras de referencia son una guía: no es necesario reproducir exactamente la tipografía ni los tamaños.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenB/versionB.html#importación-y-exploración-10-puntos",
+    "href": "examenB/versionB.html#importación-y-exploración-10-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.2 1. Importación y exploración (10 puntos)",
+    "text": "14.2 1. Importación y exploración (10 puntos)\nImporta con readr los archivos datos/conteos_filo_miel_bacterias.tsv y datos/metadata_miel_examen.csv.\n\nIndica las dimensiones de ambas tablas y el número de muestras por especie de abeja.\nIdentifica si existen valores faltantes en los metadatos e indica en qué variable o variables.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenB/versionB.html#integración-y-abundancia-relativa-20-puntos",
+    "href": "examenB/versionB.html#integración-y-abundancia-relativa-20-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.3 2. Integración y abundancia relativa (20 puntos)",
+    "text": "14.3 2. Integración y abundancia relativa (20 puntos)\nIntegra las dos tablas mediante el identificador sample_id. Calcula la abundancia relativa de cada filo dentro de cada muestra, dividiendo su conteo entre la suma de los conteos de esa muestra. Conserva las abundancias como proporciones entre 0 y 1.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenB/versionB.html#figura-1-los-10-filos-más-abundantes-25-puntos",
+    "href": "examenB/versionB.html#figura-1-los-10-filos-más-abundantes-25-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.4 3. Figura 1: los 10 filos más abundantes (25 puntos)",
+    "text": "14.4 3. Figura 1: los 10 filos más abundantes (25 puntos)\nCalcula la abundancia relativa promedio de cada filo considerando las 17 muestras, incluidos los conteos cero. Selecciona los diez con mayor promedio y reproduce la gráfica de barras horizontales ordenadas de mayor a menor. Muestra el eje de abundancia en porcentajes y agrega etiquetas apropiadas.\n\n\n\nFigura 1. Referencia.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenB/versionB.html#figura-2-composición-bacteriana-por-muestra-30-puntos",
+    "href": "examenB/versionB.html#figura-2-composición-bacteriana-por-muestra-30-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.5 4. Figura 2: composición bacteriana por muestra (30 puntos)",
+    "text": "14.5 4. Figura 2: composición bacteriana por muestra (30 puntos)\nUtiliza las abundancias relativas del apartado 2, no solamente los diez taxones de la figura anterior.\n\nDentro de cada muestra, agrupa los filos cuya abundancia relativa sea estrictamente menor al 5 % en la categoría Filos &lt; 5%. Suma las abundancias de esa categoría.\nConstruye una gráfica de barras apiladas, una barra por muestra, separando las especies de abejas mediante facetas. Cada barra debe sumar 100 %.\nUtiliza la paleta proporcionada y coloca la leyenda debajo de la gráfica.\n\nPaleta de referencia (puedes copiarla en un bloque de R):\nphylum_colors_rel &lt;- c(\n  \"Bacillota\" = \"#0078A0\",\n  \"Pseudomonadota\" = \"#499878\",\n  \"Filos &lt; 5%\" = \"#778899\"\n)\n\n\n\nFigura 2. Referencia.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenB/versionB.html#interpretación-5-puntos",
+    "href": "examenB/versionB.html#interpretación-5-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.6 5. Interpretación (5 puntos)",
+    "text": "14.6 5. Interpretación (5 puntos)\nResponde brevemente con base en tus resultados:\n\n¿Cuál es el filo con mayor abundancia relativa promedio?\n¿Qué diferencias o similitudes observas en la composición de las muestras de las dos especies de abejas? Describe lo observado sin atribuir causalidad.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "examenB/versionB.html#reporte-reproducible-y-entrega-10-puntos",
+    "href": "examenB/versionB.html#reporte-reproducible-y-entrega-10-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.7 6. Reporte reproducible y entrega (10 puntos)",
+    "text": "14.7 6. Reporte reproducible y entrega (10 puntos)\nRenderiza el documento a HTML y sube a tu repositorio de GitHub el archivo .qmd, el HTML generado y las carpetas de datos y figuras necesarias. Verifica que el HTML muestre tus resultados y gráficas sin necesidad de ejecutar el código nuevamente. Entrega el enlace al repositorio.\nSi tienes un problema técnico con GitHub, conserva el .qmd y el HTML y notifícalo a la profesora antes de finalizar el examen.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R</span>"
+    ]
+  },
+  {
+    "objectID": "versionA.html",
+    "href": "versionA.html",
+    "title": "13  Examen final de Introducción a R",
+    "section": "",
+    "text": "13.1 Instrucciones generales\nDuración: 120 minutos. Valor total: 100 puntos.\nEl objetivo es reproducir dos figuras a partir de datos reales de mieles de abejas sin aguijón. Los conteos proporcionados corresponden únicamente a bacterias con asignación taxonómica a nivel de género. Se incluyen 17 muestras de dos especies de abejas.\nTrabaja en tu proyecto de RStudio y utiliza este documento como plantilla. Sustituye el nombre del autor por el tuyo. Agrega tus bloques de código R ejecutables y tus respuestas en las secciones correspondientes. Conserva las rutas relativas y muestra el procedimiento completo. Las figuras de referencia son una guía: no es necesario reproducir exactamente la tipografía ni los tamaños.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión A</span>"
+    ]
+  },
+  {
+    "objectID": "versionA.html#importación-y-exploración-10-puntos",
+    "href": "versionA.html#importación-y-exploración-10-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.2 Importación y exploración (10 puntos)",
+    "text": "13.2 Importación y exploración (10 puntos)\nDescarga y descomprime datos_A.zip. Importa con readr los archivos conteos_genero_miel_bacterias.tsv y datos/metadata_miel_examen.csv.\n\nIndica las dimensiones de ambas tablas y el número de muestras por especie de abeja.\nIdentifica si existen valores faltantes en los metadatos e indica en qué variable o variables.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión A</span>"
+    ]
+  },
+  {
+    "objectID": "versionA.html#integración-y-abundancia-relativa-20-puntos",
+    "href": "versionA.html#integración-y-abundancia-relativa-20-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.3 Integración y abundancia relativa (20 puntos)",
+    "text": "13.3 Integración y abundancia relativa (20 puntos)\nIntegra las dos tablas mediante el identificador sample_id. Calcula la abundancia relativa de cada género dentro de cada muestra, dividiendo su conteo entre la suma de los conteos de esa muestra. Conserva las abundancias como proporciones entre 0 y 1.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión A</span>"
+    ]
+  },
+  {
+    "objectID": "versionA.html#figura-1-los-10-géneros-más-abundantes-25-puntos",
+    "href": "versionA.html#figura-1-los-10-géneros-más-abundantes-25-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.4 Figura 1: los 10 géneros más abundantes (25 puntos)",
+    "text": "13.4 Figura 1: los 10 géneros más abundantes (25 puntos)\nCalcula la abundancia relativa promedio de cada género considerando las 17 muestras, incluidos los conteos cero. Selecciona los diez con mayor promedio y reproduce la gráfica de barras horizontales ordenadas de mayor a menor. Muestra el eje de abundancia en porcentajes y agrega etiquetas apropiadas.\n\n\n\nFigura 1. Referencia.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión A</span>"
+    ]
+  },
+  {
+    "objectID": "versionA.html#figura-2-composición-bacteriana-por-muestra-30-puntos",
+    "href": "versionA.html#figura-2-composición-bacteriana-por-muestra-30-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.5 Figura 2: composición bacteriana por muestra (30 puntos)",
+    "text": "13.5 Figura 2: composición bacteriana por muestra (30 puntos)\nUtiliza las abundancias relativas del apartado 2, no solamente los diez taxones de la figura anterior.\n\nDentro de cada muestra, agrupa los géneros cuya abundancia relativa sea estrictamente menor al 5 % en la categoría Géneros &lt; 5%. Suma las abundancias de esa categoría.\nConstruye una gráfica de barras apiladas, una barra por muestra, separando las especies de abejas mediante facetas. Cada barra debe sumar 100 %.\nUtiliza la paleta proporcionada y coloca la leyenda debajo de la gráfica.\n\nPaleta de referencia (puedes copiarla en un bloque de R) o puedes usar otra paleta de colores:\ngenus_colors &lt;- c(\n  \"Acetilactobacillus\" = \"#002868\",\n  \"Apilactobacillus\" = \"#0077C2\",\n  \"Lactobacillus\" = \"#66B2FF\",\n  \"Nicoliella\" = \"#ADD8E1\",\n  \"Pantoea\" = \"#008080\",\n  \"Tatumella\" = \"#98FB98\",\n  \"Fructobacillus\" = \"#007BA7\",\n  \"Géneros &lt; 5%\" = \"#778899\"\n)\n\n\n\nFigura 2. Referencia.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión A</span>"
+    ]
+  },
+  {
+    "objectID": "versionA.html#interpretación-5-puntos",
+    "href": "versionA.html#interpretación-5-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.6 Interpretación (5 puntos)",
+    "text": "13.6 Interpretación (5 puntos)\nResponde brevemente con base en tus resultados:\n\n¿Cuál es el género con mayor abundancia relativa promedio?\n¿Qué diferencias o similitudes observas en la composición de las muestras de las dos especies de abejas? Describe lo observado sin atribuir causalidad.\n\nNota: Todas las muestras pertenecen al mismo estudio y fueron procesadas con la misma metodología.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión A</span>"
+    ]
+  },
+  {
+    "objectID": "versionA.html#reporte-reproducible-y-entrega-10-puntos",
+    "href": "versionA.html#reporte-reproducible-y-entrega-10-puntos",
+    "title": "13  Examen final de Introducción a R",
+    "section": "13.7 Reporte reproducible y entrega (10 puntos)",
+    "text": "13.7 Reporte reproducible y entrega (10 puntos)\nRenderiza el documento a HTML y sube a tu repositorio de GitHub el archivo .qmd, el HTML generado y las carpetas de datos y figuras necesarias. Verifica que el HTML muestre tus resultados y gráficas sin necesidad de ejecutar el código nuevamente. Entrega el enlace al repositorio.\nSi tienes un problema técnico con GitHub, conserva el .qmd y el HTML y notifícalo a la profesora antes de finalizar el examen.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión A</span>"
+    ]
+  },
+  {
+    "objectID": "versionB.html",
+    "href": "versionB.html",
+    "title": "14  Examen final de Introducción a R",
+    "section": "",
+    "text": "14.1 Instrucciones generales\nDuración: 120 minutos. Valor total: 100 puntos.\nEl objetivo es reproducir dos figuras a partir de datos reales de mieles de abejas sin aguijón. Los conteos proporcionados corresponden únicamente a bacterias con asignación taxonómica a nivel de filo. Se incluyen 17 muestras de dos especies de abejas.\nTrabaja en tu proyecto de RStudio y utiliza este documento como plantilla Sustituye el nombre del autor por el tuyo. Agrega tus bloques de código R ejecutables y tus respuestas en las secciones correspondientes. Conserva las rutas relativas y muestra el procedimiento completo. Las figuras de referencia son una guía: no es necesario reproducir exactamente la tipografía ni los tamaños.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión B</span>"
+    ]
+  },
+  {
+    "objectID": "versionB.html#importación-y-exploración-10-puntos",
+    "href": "versionB.html#importación-y-exploración-10-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.2 Importación y exploración (10 puntos)",
+    "text": "14.2 Importación y exploración (10 puntos)\nDescarga y descomprime datos_B.zip. Importa con readr los archivos datos/conteos_filo_miel_bacterias.tsv y datos/metadata_miel_examen.csv.\n\nIndica las dimensiones de ambas tablas y el número de muestras por especie de abeja.\nIdentifica si existen valores faltantes en los metadatos e indica en qué variable o variables.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión B</span>"
+    ]
+  },
+  {
+    "objectID": "versionB.html#integración-y-abundancia-relativa-20-puntos",
+    "href": "versionB.html#integración-y-abundancia-relativa-20-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.3 Integración y abundancia relativa (20 puntos)",
+    "text": "14.3 Integración y abundancia relativa (20 puntos)\nIntegra las dos tablas mediante el identificador sample_id. Calcula la abundancia relativa de cada filo dentro de cada muestra, dividiendo su conteo entre la suma de los conteos de esa muestra. Conserva las abundancias como proporciones entre 0 y 1.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión B</span>"
+    ]
+  },
+  {
+    "objectID": "versionB.html#figura-1-los-10-filos-más-abundantes-25-puntos",
+    "href": "versionB.html#figura-1-los-10-filos-más-abundantes-25-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.4 Figura 1: los 10 filos más abundantes (25 puntos)",
+    "text": "14.4 Figura 1: los 10 filos más abundantes (25 puntos)\nCalcula la abundancia relativa promedio de cada filo considerando las 17 muestras, incluidos los conteos cero. Selecciona los diez con mayor promedio y reproduce la gráfica de barras horizontales ordenadas de mayor a menor. Muestra el eje de abundancia en porcentajes y agrega etiquetas apropiadas.\n\n\n\nFigura 1. Referencia.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión B</span>"
+    ]
+  },
+  {
+    "objectID": "versionB.html#figura-2-composición-bacteriana-por-muestra-30-puntos",
+    "href": "versionB.html#figura-2-composición-bacteriana-por-muestra-30-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.5 Figura 2: composición bacteriana por muestra (30 puntos)",
+    "text": "14.5 Figura 2: composición bacteriana por muestra (30 puntos)\nUtiliza las abundancias relativas del apartado 2, no solamente los diez taxones de la figura anterior.\n\nDentro de cada muestra, agrupa los filos cuya abundancia relativa sea estrictamente menor al 5 % en la categoría Filos &lt; 5%. Suma las abundancias de esa categoría.\nConstruye una gráfica de barras apiladas, una barra por muestra, separando las especies de abejas mediante facetas. Cada barra debe sumar 100 %.\nUtiliza la paleta proporcionada y coloca la leyenda debajo de la gráfica.\n\nPaleta de referencia (puedes copiarla en un bloque de R) o puedes usar otra paleta de colores:\nphylum_colors_rel &lt;- c(\n  \"Bacillota\" = \"#0078A0\",\n  \"Pseudomonadota\" = \"#499878\",\n  \"Filos &lt; 5%\" = \"#778899\"\n)\n\n\n\nFigura 2. Referencia.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión B</span>"
+    ]
+  },
+  {
+    "objectID": "versionB.html#interpretación-5-puntos",
+    "href": "versionB.html#interpretación-5-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.6 Interpretación (5 puntos)",
+    "text": "14.6 Interpretación (5 puntos)\nResponde brevemente con base en tus resultados:\n\n¿Cuál es el filo con mayor abundancia relativa promedio?\n¿Qué diferencias o similitudes observas en la composición de las muestras de las dos especies de abejas?\n\nNota: Todas las muestras pertenecen al mismo estudio y fueron procesadas con la misma metodología.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión B</span>"
+    ]
+  },
+  {
+    "objectID": "versionB.html#reporte-reproducible-y-entrega-10-puntos",
+    "href": "versionB.html#reporte-reproducible-y-entrega-10-puntos",
+    "title": "14  Examen final de Introducción a R",
+    "section": "14.7 Reporte reproducible y entrega (10 puntos)",
+    "text": "14.7 Reporte reproducible y entrega (10 puntos)\nRenderiza el documento a HTML y sube a tu repositorio de GitHub el archivo .qmd, el HTML generado y las carpetas de datos y figuras necesarias. Verifica que el HTML muestre tus resultados y gráficas sin necesidad de ejecutar el código nuevamente. Entrega el enlace al repositorio.\nSi tienes un problema técnico con GitHub, conserva el .qmd y el HTML y notifícalo a la profesora antes de finalizar el examen.",
+    "crumbs": [
+      "**Examen**",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Examen final de Introducción a R - Versión B</span>"
+    ]
   }
 ]
