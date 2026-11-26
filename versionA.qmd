@@ -23,8 +23,7 @@ Trabaja en tu proyecto de RStudio y utiliza este documento como [plantilla](http
 
 ## Importación y exploración (10 puntos)
 
-Descarga y descomprime [datos_A.zip](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_A.zip). 
-Importa con `readr` los archivos `conteos_genero_miel_bacterias.tsv` y `datos/metadata_miel_examen.csv`. 
+Descarga y descomprime [datos_A.zip](https://github.com/CursosENESJuriquilla/Intro_to_R_Bioinfo_2027-1/raw/refs/heads/main/data/datos_A.zip). Importa con `readr` los archivos `conteos_genero_miel_bacterias.tsv` y `datos/metadata_miel_examen.csv`.
 
 - Indica las dimensiones de ambas tablas y el número de muestras por especie de abeja.
 - Identifica si existen valores faltantes en los metadatos e indica en qué variable o variables.
@@ -69,7 +68,7 @@ genus_colors <- c(
 Responde brevemente con base en tus resultados:
 
 1.  ¿Cuál es el género con mayor abundancia relativa promedio?
-2.  ¿Qué diferencias o similitudes observas en la composición de las muestras de las dos especies de abejas? 
+2.  ¿Qué diferencias o similitudes observas en la composición de las muestras de las dos especies de abejas?
 
 **Nota**: Todas las muestras pertenecen al mismo estudio y fueron procesadas con la misma metodología.
 
